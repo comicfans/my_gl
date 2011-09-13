@@ -21,6 +21,7 @@
 #define UNTYPED_SCOPED_ARRAY_HPP
 
 #include <cstddef>
+#include <cassert>
 #include <cstdint>
 
 namespace my_gl {
@@ -32,12 +33,15 @@ namespace my_gl {
 
 	  void operator=(const UntypedScopedArray& rhs)=delete;
 
+	  void replace(ptrdiff_t offset,size_t size,void *data)noexcept;
+
 	  size_t size()const noexcept;
 
 	  template<typename T>
 	       T & operator[](size_t idx)const noexcept
 	       {
-	       return static_cast<T*>(_pointer)[idx];
+		    assert(idx<_size/sizeof(T));
+		    return static_cast<T*>(_pointer)[idx];
 	       }
 	  template<typename T>
 	       T * get()const noexcept

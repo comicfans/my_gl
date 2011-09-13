@@ -27,7 +27,7 @@ namespace my_gl {
      TextureObject::TextureObject (size_t width,size_t height,
 		  ImageFormat format,StoreType type,void *p)
 	  :_width(width),_height(height),_format(format),_type(type),
-	  _pointer(p,width*height*TYPE_SIZE[int(type)]);
+	  _pointer(p,width*height*TYPE_SIZE[int(type)])
      {
      }
 	

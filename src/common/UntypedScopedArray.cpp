@@ -40,6 +40,15 @@ namespace my_gl {
      {
 	  return _size;
      }
+
+     void UntypedScopedArray::replace
+	  (ptrdiff_t offset,  size_t size,  void *data)noexcept
+	  {
+	       assert(offset>0);
+	       assert(offset+size<_size);
+	       int8_t *temp=static_cast<int8_t*>(data);
+	       copy_n(temp,size,_pointer+offset);
+	  }
 	
      
 } /* my_gl */
