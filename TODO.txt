@@ -1,0 +1,64 @@
+目标：编写一个简单的OpenGL ES管线实现，能够实现最基本的固定功能流水线功能
+不支持 glBegin/End glPoint 类调用
+而支持 glBindBuffer/glDrawElements 类调用
+
+分为三种具体实现：
+
+软件实现：使用C++和多线程完成渲染
+GLSL实现：使用shader完成
+OpenCL实现：使用OpenCL完成
+
+支持：多边形渲染，窗口变换glViewPort，投影变换glFrustum，
+变换矩阵 glPushMatrix glPopMatrix glTransform glRotate glScale
+支持材质映射，材质矩阵，phong光照模型，灯光基本参数设置
+
+
+根据OpenGL ES 1.1 man手册，具体实现功能如下：
+glBindBuffer
+glBindTexture
+glBufferData
+glBufferSubData
+glClear
+glClearColor
+glClearDepth
+glClipPlane ?
+glColor
+glColorPointer
+glCopyTexImage2D
+glCopyTexSubImage2D
+glCullFace
+glDeleteBuffers
+glDeleteTextures
+glDrawArrays
+glDrawElements
+glFinish
+glFlush
+glFrontFace ?
+glFrustum
+glGenBuffers
+glGenTextures
+glIsBuffer
+glIsTexture
+glLight
+glLightModel
+glLineWidth ?
+glLoadIdentity
+glLoadMatrix
+glMaterial 
+glMatrixMode
+glMultMatrix
+glNormal
+glNormalPointer
+glOrtho
+glPointSize ?
+glPopMatrix
+glPushMatrix
+glRotate
+glScale
+glShadeModel
+glTexCoordPointer
+glTexImage2D
+glTexParameter
+glTexSubImage2D
+glTranslate
+glViewPort
