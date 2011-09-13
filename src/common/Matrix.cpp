@@ -92,6 +92,10 @@ namespace my_gl {
      {
 	  Matrix ret;
 
+	  ret(0,0)=x;
+	  ret(1,1)=y;
+	  ret(2,2)=z;
+
 	  return ret;
      }
 
