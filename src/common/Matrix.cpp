@@ -99,6 +99,17 @@ namespace my_gl {
 	  return ret;
      }
 
+     Matrix Matrix::scale(float x,float y,float z)noexcept
+     {
+	  Matrix ret=identity();
+
+	  ret(0,0)=x;
+	  ret(1,1)=y;
+	  ret(2,2)=z;
+
+	  return ret;
+     }
+
      void inplaceMultiVector(const Matrix& lhs,float *pointer)
      {
 

@@ -48,6 +48,11 @@ namespace my_gl {
 
 	  static Matrix translate(float x,float y,float z) noexcept;
 
+	  static Matrix scale(float x,float y,float z) noexcept;
+
+	  //TODO 
+	  static Matrix rotate() noexcept;
+
 	  void swap(Matrix& rhs) noexcept;
 
 	  const static int LENGTH=4;
