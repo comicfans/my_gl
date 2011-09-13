@@ -18,11 +18,12 @@
 
 #include "BufferObject.hpp"
 
+
 namespace my_gl {
 
 
-     BufferObject::BufferObject(Target target,size_t size,void *data)
-	  noexcept :_target(target),_size(size),_data(data)
+     BufferObject::BufferObject(BufferTarget target,size_t size,void *data)
+	  noexcept :_target(target),_data(data,size)
      {}
 	
 } /* my_gl */

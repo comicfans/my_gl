@@ -22,20 +22,17 @@
 
 #include <cstddef>
 
+#include "Enum.hpp"
 #include "common/UntypedScopedArray.hpp"
-
 
 namespace my_gl {
      class BufferObject {
      public:
 
-	  enum Target{ARRAY_BUFFER,ELEMENT_ARRAY_BUFFER};
-
-	  BufferObject(Target target,size_t size,void *data) noexcept;
+	  BufferObject(BufferTarget target,size_t size,void *data) noexcept;
      
      private:
-	       Target _target;
-	       size_t _size;
+	       BufferTarget _target;
 	       UntypedScopedArray _data;
      };
 	

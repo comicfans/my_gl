@@ -21,12 +21,18 @@
 #define UNTYPED_SCOPED_ARRAY_HPP
 
 #include <cstddef>
+#include <cstdint>
 
 namespace my_gl {
 
+     using std::int8_t;
      class UntypedScopedArray {
      public:
-	  explicit UntypedScopedArray(void *p)noexcept;
+	  explicit UntypedScopedArray(void *p,size_t size)noexcept;
+
+	  void operator=(const UntypedScopedArray& rhs)=delete;
+
+	  size_t size()const noexcept;
 
 	  template<typename T>
 	       T & operator[](size_t idx)const noexcept
@@ -41,7 +47,8 @@ namespace my_gl {
 
 	  ~UntypedScopedArray() noexcept;
      private:
-	  void * _pointer;
+	  int8_t *_pointer;
+	  size_t _size;
      };
 	
 } /* my */
