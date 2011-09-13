@@ -23,7 +23,7 @@
 
 using std::fill_n;
 using std::copy;
-using std::swap;
+
 namespace my_gl {
 
      Matrix::Matrix(bool fillZero)noexcept
@@ -62,7 +62,7 @@ namespace my_gl {
 
      void Matrix::swap(my_gl::Matrix &rhs)noexcept
      {
-	  ::swap(_rowFirstArray,rhs._rowFirstArray);
+	  std::swap(_rowFirstArray,rhs._rowFirstArray);
      }
 
      float& Matrix::operator()(size_t rowIdx,  size_t columnIdx)noexcept
@@ -84,6 +84,22 @@ namespace my_gl {
 	       ret(i,i)=1;
 	  }
 	  return ret;
+     }
+
+     void inplaceMultiVector(const Matrix& lhs,float *pointer)
+     {
+
+
+	  float temp[Matrix::LENGTH]={0,0,0,0};
+	  for (int i=0; i<Matrix::LENGTH; ++i)
+	  {
+	       for (int j=0; j<Matrix::LENGTH; ++j)
+	       {
+		    temp[i]+=lhs(i,j)*pointer[j];
+	       }
+	  }
+
+	  copy(temp,temp+Matrix::LENGTH,pointer);
      }
 	
 } /* my_gl */
