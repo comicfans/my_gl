@@ -1,1 +1,1 @@
-SUBDIRS(soft_impl opencl_impl glsl_impl)
+SUBDIRS(soft_impl common)
