@@ -28,6 +28,11 @@ namespace my_gl {
      class Matrix {
      public:
 
+	  /** 
+	   * @brief construct a matrix with zero (but w coord is 1)
+	   * 
+	   * @param fillZero
+	   */
 	  Matrix(bool fillZero=true) noexcept;
 
 	  Matrix& operator=(const Matrix& rhs) noexcept;
@@ -40,6 +45,8 @@ namespace my_gl {
 	       const noexcept;
 
 	  static Matrix identity() noexcept;
+
+	  static Matrix translate(float x,float y,float z) noexcept;
 
 	  void swap(Matrix& rhs) noexcept;
 

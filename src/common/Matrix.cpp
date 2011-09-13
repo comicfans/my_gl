@@ -32,6 +32,8 @@ namespace my_gl {
 	  {
 	  fill_n(_rowFirstArray,ELEMENTS_NUMBER,0);
 	  }
+	  //init w to 1
+	  (*this)(LENGTH-1,LENGTH-1)=1;
      }
 
      Matrix & Matrix::operator=(const Matrix &rhs)noexcept
@@ -79,10 +81,17 @@ namespace my_gl {
      Matrix Matrix::identity()noexcept
      {
 	  Matrix ret;
-	  for (int i=0; i<LENGTH; ++i)
+	  for (int i=0; i<LENGTH-1; ++i)
 	  {
 	       ret(i,i)=1;
 	  }
+	  return ret;
+     }
+
+     Matrix Matrix::translate(float x,  float y,  float z)noexcept
+     {
+	  Matrix ret;
+
 	  return ret;
      }
 
