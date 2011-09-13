@@ -90,11 +90,11 @@ namespace my_gl {
 
      Matrix Matrix::translate(float x,  float y,  float z)noexcept
      {
-	  Matrix ret;
+	  Matrix ret=identity();
 
-	  ret(0,0)=x;
-	  ret(1,1)=y;
-	  ret(2,2)=z;
+	  ret(0,3)=x;
+	  ret(1,3)=y;
+	  ret(2,3)=z;
 
 	  return ret;
      }
