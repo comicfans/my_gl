@@ -23,10 +23,11 @@ namespace my_gl {
 
 
      BufferObject::BufferObject(BufferTarget target,size_t size,void *data)
-	  noexcept :_target(target),_data(data,size)
+	  noexcept :_target(target),_data(size,data)
      {}
 
      void BufferObject::subData(ptrdiff_t offset,  size_t size,  void *data)
+	  noexcept
      {
 	  assert(offset>=0);
 	  assert(offset<_data.size());

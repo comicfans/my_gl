@@ -21,11 +21,24 @@
 
 #define VECTOR_HPP
 
+#include <cstddef>
+
 namespace my_gl {
      class Vector{
     
 	  public:
+
+	       Vector(bool fillZero=true)noexcept;
+	       float& x;
+	       float& y;
+	       float& z;
+	       float& w;
+	       static const int LENGTH=4;
+
+	       float& operator()(size_t idx)noexcept;
+	       const float& operator()(size_t idx)const noexcept;
 	  private:
+	       float _values[LENGTH];
      	/* data */
      };
 	

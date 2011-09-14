@@ -24,7 +24,7 @@
 
 #include "Enum.hpp"
 
-#include "common/UntypedScopedArray.hpp"
+#include "common/UntypedCowArray.hpp"
 
 namespace my_gl {
 
@@ -45,7 +45,7 @@ namespace my_gl {
 	size_t _height;
 	ImageFormat _format;
 	StoreType _type;
-	UntypedScopedArray _pointer;
+	UntypedCowArray _pointer;
      };
 	
 } /* my_gl */

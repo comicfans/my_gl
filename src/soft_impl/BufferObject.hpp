@@ -23,7 +23,7 @@
 #include <cstddef>
 
 #include "Enum.hpp"
-#include "common/UntypedScopedArray.hpp"
+#include "common/UntypedCowArray.hpp"
 
 namespace my_gl {
      class BufferObject {
@@ -35,7 +35,7 @@ namespace my_gl {
      
      private:
 	       BufferTarget _target;
-	       UntypedScopedArray _data;
+	       UntypedCowArray _data;
      };
 	
 } /* my */

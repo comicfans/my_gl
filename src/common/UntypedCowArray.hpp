@@ -1,7 +1,7 @@
 /*
  * =====================================================================================
  *
- *       Filename:  UntypedScopedArray.hpp
+ *       Filename:  UntypedCowArray.hpp
  *
  *    Description:  to impl void * array RAII
  *
@@ -16,45 +16,48 @@
  * =====================================================================================
  */
 
-#ifndef UNTYPED_SCOPED_ARRAY_HPP
+#ifndef UNTYPED_COW_ARRAY_HPP
 
-#define UNTYPED_SCOPED_ARRAY_HPP
+#define UNTYPED_COW_ARRAY_HPP 
 
 #include <cstddef>
 #include <cassert>
 #include <cstdint>
 
+#include <boost/shared_array.hpp>
+
 namespace my_gl {
 
      using std::int8_t;
-     class UntypedScopedArray {
-     public:
-	  explicit UntypedScopedArray(void *p,size_t size);
+     using boost::shared_array;
 
-	  void operator=(const UntypedScopedArray& rhs)=delete;
+     class UntypedCowArray{
+     public:
+	  explicit UntypedCowArray(size_t size,void *p);
 
 	  void replace(ptrdiff_t offset,size_t size,void *data)noexcept;
 
 	  size_t size()const noexcept;
 
 	  template<typename T>
-	       T & operator[](size_t idx)const noexcept
+	       T const & operator[](size_t idx)const noexcept
 	       {
 		    assert(idx<_size/sizeof(T));
-		    return static_cast<T*>(_pointer)[idx];
+		    return static_cast<T*>(_cowArray.get())[idx];
 	       }
-	  template<typename T>
-	       T * get()const noexcept
+	  template<typename T=int8_t>
+	       T const * get()const noexcept
 	       {
-		    return static_cast<T*>(_pointer);
+		    return static_cast<T*>(_cowArray.get());
 	       }
 
-	  ~UntypedScopedArray() noexcept;
      private:
-	  int8_t *_pointer;
-	  size_t _size;
+
+	  const size_t _size;
+	  shared_array<int8_t> _cowArray;
+
      };
 	
 } /* my */
 
-#endif /* end of include guard: UNTYPED_SCOPED_ARRAY_HPP */
+#endif /* end of include guard: UNTYPED_COW_ARRAY_HPP */

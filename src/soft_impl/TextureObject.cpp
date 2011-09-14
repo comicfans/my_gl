@@ -31,12 +31,12 @@ namespace my_gl {
      TextureObject::TextureObject (size_t width,size_t height,
 		  ImageFormat format,StoreType type,void *p)
 	  :_width(width),_height(height),_format(format),_type(type),
-	  _pointer(p,byteSize(width,height,type))
+	  _pointer(byteSize(width,height,type),p)
      {
      }
 
      void TextureObject::subImage(int xOffset,  int yOffset,
-	        size_t width,  size_t height,  void *p)
+	        size_t width,  size_t height,  void *p)noexcept
      {
 	  assert(xOffset>=0 && xOffset<_width);
 	  assert(yOffset>=0 && yOffset<_height);
