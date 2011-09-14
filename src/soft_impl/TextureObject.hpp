@@ -32,6 +32,14 @@ namespace my_gl {
      public:
 	TextureObject (size_t width,size_t height,
 		  ImageFormat format,StoreType type,void *p);
+
+	ImageFormat getFormat()const noexcept;
+
+	StoreType getType()const noexcept;
+
+	void subImage(int xOffset,int yOffset,
+		  size_t width,size_t height,void *p)noexcept;
+
      private:
 	size_t _width;
 	size_t _height;

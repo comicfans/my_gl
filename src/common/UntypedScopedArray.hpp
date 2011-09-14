@@ -29,7 +29,7 @@ namespace my_gl {
      using std::int8_t;
      class UntypedScopedArray {
      public:
-	  explicit UntypedScopedArray(void *p,size_t size)noexcept;
+	  explicit UntypedScopedArray(void *p,size_t size);
 
 	  void operator=(const UntypedScopedArray& rhs)=delete;
 

@@ -24,7 +24,7 @@ using std::copy_n;
 namespace my_gl {
 
      UntypedScopedArray::UntypedScopedArray
-	  (void *p,size_t size) noexcept 
+	  (void *p,size_t size) 
 	  :_size(size)
 	  {
 	       _pointer=new int8_t[_size];
