@@ -30,6 +30,8 @@ namespace my_gl {
      public:
 
 	  BufferObject(BufferTarget target,size_t size,void *data) noexcept;
+
+	  void subData(ptrdiff_t offset,size_t size,void *data) noexcept;
      
      private:
 	       BufferTarget _target;

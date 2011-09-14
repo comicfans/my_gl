@@ -18,7 +18,6 @@
 
 #include "TextureObject.hpp"
 
-#include <cassert>
 
 namespace my_gl {
 

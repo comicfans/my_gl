@@ -25,5 +25,15 @@ namespace my_gl {
      BufferObject::BufferObject(BufferTarget target,size_t size,void *data)
 	  noexcept :_target(target),_data(data,size)
      {}
+
+     void BufferObject::subData(ptrdiff_t offset,  size_t size,  void *data)
+     {
+	  assert(offset>=0);
+	  assert(offset<_data.size());
+	  assert(size>=0);
+	  assert(offset+size<_data.size());
+
+	  _data.replace(offset, size, data);
+     }
 	
 } /* my_gl */
