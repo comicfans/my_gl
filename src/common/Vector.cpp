@@ -22,6 +22,7 @@
 #include <algorithm>
 
 using std::fill_n;
+using std::copy_n;
 
 namespace my_gl {
 
@@ -46,5 +47,10 @@ namespace my_gl {
      const float& Vector::operator()(size_t idx) const noexcept
      {
 	  return const_cast<Vector&>(*this)(idx);
+     }
+
+     Vector& Vector::operator=(const Vector& rhs)
+     {
+	  copy_n(rhs._values,LENGTH,_values);
      }
 } /* my_gl */

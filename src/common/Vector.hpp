@@ -29,6 +29,9 @@ namespace my_gl {
 	  public:
 
 	       Vector(bool fillZero=true)noexcept;
+
+	       Vector& operator=(const Vector& rhs);
+
 	       float& x;
 	       float& y;
 	       float& z;

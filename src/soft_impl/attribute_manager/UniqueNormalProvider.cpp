@@ -19,12 +19,12 @@
 
 namespace my_gl {
 
-     Vector UniqueNormalProvider::get()
+     Vector UniqueNormalProvider::get() noexcept
      {
 	  return _normal;
      }
 
-     void UniqueNormalProvider::set(my_gl::Vector normal)
+     void UniqueNormalProvider::set(my_gl::Vector normal) noexcept
      {
 	  _normal=normal;
      }

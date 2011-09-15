@@ -1,12 +1,12 @@
 /*
  * =====================================================================================
  *
- *       Filename:  SoftContext.hpp
+ *       Filename:  BufferObjectManager.hpp
  *
- *    Description:  C++/thread impl of whole opengl pipeline
+ *    Description:  object to manager multi BufferObject
  *
  *        Version:  1.0
- *        Created:  2011-9-13 15:26:50
+ *        Created:  2011-9-14 17:39:17
  *       Revision:  none
  *       Compiler:  gcc
  *
@@ -16,21 +16,17 @@
  * =====================================================================================
  */
 
-#ifndef SOFT_CONTEXT_HPP
+#ifndef BUFFER_OBJECT_MANAGER_HPP
 
-#define SOFT_CONTEXT_HPP
+#define BUFFER_OBJECT_MANAGER_HPP
 
-#include "Context.hpp"
 
 namespace my_gl {
 
-     class SoftContext :public Context{
+     class BufferObjectManager {
      public:
-     	SoftContext ();
-
-	BufferObject const* getActiveBufferObject()const;
-
-     	virtual ~SoftContext ();
+     	BufferObjectManager (arguments);
+     	virtual ~BufferObjectManager ();
      
      private:
      	/* data */
@@ -39,4 +35,4 @@ namespace my_gl {
 } /* my_gl */
 
 
-#endif /* end of include guard: SOFT_CONTEXT_HPP */
+#endif /* end of include guard: BUFFER_OBJECT_MANAGER_HPP */
