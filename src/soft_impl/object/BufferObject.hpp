@@ -3,7 +3,7 @@
  *
  *       Filename:  BufferObject.hpp
  *
- *    Description:  data respect to glBufferData
+ *    Description:  data respect to glBufferData/glTexImage2D
  *
  *        Version:  1.0
  *        Created:  2011-9-13 20:11:03
@@ -22,20 +22,27 @@
 
 #include <cstddef>
 
-#include "Enum.hpp"
+#include <boost/noncopyable.hpp>
+
+#include "Typedef.hpp"
 #include "common/UntypedCowArray.hpp"
 
 namespace my_gl {
-     class BufferObject {
+
+     using boost::noncopyable;
+
+     class BufferObject : noncopyable {
      public:
 
-	  BufferObject(BufferTarget target,size_t size,void *data) noexcept;
+	  BufferObject(Name name,size_t size,void *data) noexcept;
 
 	  void subData(ptrdiff_t offset,size_t size,void *data) noexcept;
-     
+
+	  ~BufferObject();
+
      private:
-	       BufferTarget _target;
-	       UntypedCowArray _data;
+	  const Name _name;
+	  UntypedCowArray _data;
      };
 	
 } /* my */

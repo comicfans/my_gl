@@ -22,15 +22,15 @@
 
 #include <cstddef>
 
+#include "BufferObject.hpp"
 #include "Enum.hpp"
-
 #include "common/UntypedCowArray.hpp"
 
 namespace my_gl {
 
-     class TextureObject {
+     class TextureObject :protected BufferObject{
      public:
-	TextureObject (size_t width,size_t height,
+	TextureObject (Name name,size_t width,size_t height,
 		  ImageFormat format,StoreType type,void *p);
 
 	ImageFormat getFormat()const noexcept;
@@ -41,11 +41,10 @@ namespace my_gl {
 		  size_t width,size_t height,void *p)noexcept;
 
      private:
-	size_t _width;
-	size_t _height;
+	const size_t _width;
+	const size_t _height;
 	ImageFormat _format;
 	StoreType _type;
-	UntypedCowArray _pointer;
      };
 	
 } /* my_gl */

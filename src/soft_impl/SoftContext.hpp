@@ -21,8 +21,11 @@
 #define SOFT_CONTEXT_HPP
 
 #include "Context.hpp"
+#include "object/ObjectNameManager.hpp"
 
 namespace my_gl {
+
+     class BufferObject;
 
      class SoftContext :public Context{
      public:
@@ -31,8 +34,16 @@ namespace my_gl {
 	BufferObject const* getActiveBufferObject()const;
 
      	virtual ~SoftContext ();
+
+
+	//glGenBuffers
+	void genBuffers(size_t size,Name *names);
+	//glDeleteBuffers
+	void deleteBuffers(size_t size,Name *names);
      
      private:
+
+	ObjectNameManager _objectNameManager;
      	/* data */
      };
 	

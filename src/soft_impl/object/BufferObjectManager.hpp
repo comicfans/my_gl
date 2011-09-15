@@ -25,8 +25,6 @@ namespace my_gl {
 
      class BufferObjectManager {
      public:
-     	BufferObjectManager (arguments);
-     	virtual ~BufferObjectManager ();
      
      private:
      	/* data */

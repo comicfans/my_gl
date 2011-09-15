@@ -54,7 +54,9 @@ namespace my_gl{
      {
 	  for (int i=0; i<size; ++i)
 	  {
-	       _usedNames.erase(*(names+i));
+	       Name thisName=*(names+i);
+	       assert(contains(_usedNames,thisName));
+	       _usedNames.erase(thisName);
 	  }
      }
 	

@@ -22,8 +22,8 @@
 namespace my_gl {
 
 
-     BufferObject::BufferObject(BufferTarget target,size_t size,void *data)
-	  noexcept :_target(target),_data(size,data)
+     BufferObject::BufferObject(Name name,size_t size,void *data)
+	  noexcept :_name(name),_data(size,data)
      {}
 
      void BufferObject::subData(ptrdiff_t offset,  size_t size,  void *data)

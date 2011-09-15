@@ -28,10 +28,10 @@ namespace my_gl {
 	  return width*height*TYPE_SIZE[int(type)];
      }
 
-     TextureObject::TextureObject (size_t width,size_t height,
+     TextureObject::TextureObject (Name name,size_t width,size_t height,
 		  ImageFormat format,StoreType type,void *p)
-	  :_width(width),_height(height),_format(format),_type(type),
-	  _pointer(byteSize(width,height,type),p)
+	  :BufferObject(name,byteSize(width,height,type),p),
+	  _width(width),_height(height),_format(format),_type(type)
      {
      }
 
@@ -42,7 +42,7 @@ namespace my_gl {
 	  assert(yOffset>=0 && yOffset<_height);
 
 	  int offset=byteSize(_width,yOffset,_type)+xOffset;
-	  _pointer.replace(offset, byteSize(width,height,_type),p);
+	  subData(offset, byteSize(width,height,_type),p);
      }
 	
 } /* my_gl */
