@@ -1,4 +1,7 @@
+INCLUDE_DIRECTORIES( .)
+
 SUBDIRS(attribute_manager object)
+
 ADD_LIBRARY(SoftImpl 
      SoftContext.cpp
      )

@@ -33,9 +33,10 @@ namespace my_gl {
 
      class UntypedCowArray{
      public:
-	  explicit UntypedCowArray(size_t size,void *p);
+	  explicit UntypedCowArray(size_t size,const void *p);
 
-	  void replace(ptrdiff_t offset,size_t size,void *data)noexcept;
+	  void replace(ptrdiff_t offset,size_t size,
+		    const void *data)noexcept;
 
 	  size_t size()const noexcept;
 

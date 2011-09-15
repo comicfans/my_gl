@@ -27,7 +27,7 @@ namespace my_gl {
      class ArrayBufferObject :public BufferObject{
      public:
      	ArrayBufferObject (Name name,BufferTarget target,
-		  size_t size,void * data);
+		  size_t size,const void * data);
      
      private:
 	BufferTarget _target;

@@ -20,12 +20,16 @@
 
 #define CONTEXT_HPP
 
+#include "Typedef.hpp"
+
 namespace my_gl {
 
      class Context {
      public:
      	Context ();
      	virtual ~Context ();
+
+	virtual bool isBuffer(Name name) const noexcept;
      
      private:
      	/* data */

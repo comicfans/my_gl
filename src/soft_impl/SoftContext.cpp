@@ -21,7 +21,7 @@ namespace my_gl {
 
      void SoftContext::genBuffers(size_t size,  Name *names)
      {
-	  _objectNameManager.generateNames(size, names);
+	  //TODO
      }
 
      void SoftContext::deleteBuffers(size_t size,  Name *names)

@@ -39,8 +39,6 @@ namespace my_gl {
      
 	  void recycleNames(size_t size,Name* names);
 
-	  const static Name RESERVED=0;
-
      private:
 
 	  interval_set<Name> _usedNames;

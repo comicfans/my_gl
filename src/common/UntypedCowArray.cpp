@@ -27,11 +27,11 @@ using std::move;
 namespace my_gl {
 
      UntypedCowArray::UntypedCowArray
-	  (size_t size,void *p) 
+	  (size_t size,const void *p) 
 	  :_size(size),_cowArray(new int8_t[size])
 	  {
 
-	       int8_t *temp=static_cast<int8_t*>(p);
+	       const int8_t *temp=static_cast<const int8_t*>(p);
 
 	       //see GL notes
 	       //If data is NULL, a data store of the specified size 
@@ -51,7 +51,7 @@ namespace my_gl {
      }
 
      void UntypedCowArray::replace
-	  (ptrdiff_t offset,  size_t size,  void *data)noexcept
+	  (ptrdiff_t offset,  size_t size, const void *data)noexcept
 	  {
 	       //cow 
 	       assert(offset>0);

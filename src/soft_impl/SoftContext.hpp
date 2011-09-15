@@ -22,6 +22,7 @@
 
 #include "Context.hpp"
 #include "object/ObjectNameManager.hpp"
+#include "object/ArrayBufferObjectManager.hpp"
 
 namespace my_gl {
 
@@ -31,8 +32,6 @@ namespace my_gl {
      public:
      	SoftContext ();
 
-	BufferObject const* getActiveBufferObject()const;
-
      	virtual ~SoftContext ();
 
 
@@ -40,10 +39,16 @@ namespace my_gl {
 	void genBuffers(size_t size,Name *names);
 	//glDeleteBuffers
 	void deleteBuffers(size_t size,Name *names);
+
+	ObjectNameManager& getObjectNameManager();
+
+	static SoftContext& getInstance();
      
      private:
 
 	ObjectNameManager _objectNameManager;
+
+	ArrayBufferObjectManager _arrayBufferObjectManager;
      	/* data */
      };
 	

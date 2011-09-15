@@ -23,6 +23,8 @@
 namespace my_gl {
 	
      typedef unsigned Name;
+
+     const Name RESERVED=0;
 } /* my_gl */
 
 

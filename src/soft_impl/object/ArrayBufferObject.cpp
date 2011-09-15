@@ -20,7 +20,7 @@
 namespace my_gl {
      
      ArrayBufferObject::ArrayBufferObject 
-	  (Name name,BufferTarget target,size_t size,void * data)
+	  (Name name,BufferTarget target,size_t size,const void * data)
 	  :BufferObject(name,size,data),_target(target)
 	  {}
 	
