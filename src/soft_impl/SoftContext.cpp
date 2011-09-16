@@ -21,12 +21,12 @@ namespace my_gl {
 
      void SoftContext::genBuffers(size_t size,  Name *names)
      {
-	  //TODO
+	  _arrayBufferObjectManager.genBuffers(size,names);
      }
 
      void SoftContext::deleteBuffers(size_t size,  Name *names)
      {
-	  //TODO release buffer object
+	  _arrayBufferObjectManager.deleteBuffers(size,names);
      }
 
      bool SoftContext::isBuffer(Name name)
