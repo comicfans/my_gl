@@ -28,11 +28,21 @@ namespace my_gl {
 	  return width*height*TYPE_SIZE[int(type)];
      }
 
-     TextureObject::TextureObject (Name name,size_t width,size_t height,
-		  ImageFormat format,StoreType type,void *p)
-	  :BufferObject(name,byteSize(width,height,type),p),
-	  _width(width),_height(height),_format(format),_type(type)
+     TextureObject::TextureObject (Name name)
+	  :BufferObject(name)
      {
+     }
+
+     
+
+     void TextureObject::bindImage(size_t width,size_t height,
+		  ImageFormat format,StoreType type,void *p)
+     {
+	  _width=width;
+	  _height=height;
+	  _type=type;
+	  _format=format;
+	  bindData(byteSize(width,height,type),p);
      }
 
      void TextureObject::subImage(int xOffset,  int yOffset,

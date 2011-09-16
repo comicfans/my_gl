@@ -28,5 +28,10 @@ namespace my_gl {
      {
 	  //TODO release buffer object
      }
+
+     bool SoftContext::isBuffer(Name name)
+     {
+	  return _arrayBufferObjectManager.isBuffer(name);
+     }
 	
 } /* my_gl */

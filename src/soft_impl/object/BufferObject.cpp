@@ -22,13 +22,24 @@
 namespace my_gl {
 
 
-     BufferObject::BufferObject(Name name,size_t size,void *data)
-	  noexcept :_name(name),_data(size,data)
+     BufferObject::BufferObject(Name name)
+	  noexcept :_name(name)
      {}
 
-     void BufferObject::subData(ptrdiff_t offset,  size_t size,  void *data)
+     void BufferObject::bindData(size_t size,const void *data)
+     {
+	  _dataPointer.reset(new UntypedCowArray(size,data));
+     }
+
+     UntypedCowArray BufferObject::copyArray()const noexcept
+     {
+	  return *_dataPointer;
+     }
+
+     void BufferObject::subData(ptrdiff_t offset,  size_t size,const void *data)
 	  noexcept
      {
+	  auto& _data=*_dataPointer;
 	  assert(offset>=0);
 	  assert(offset<_data.size());
 	  assert(size>=0);
@@ -36,5 +47,8 @@ namespace my_gl {
 
 	  _data.replace(offset, size, data);
      }
+
+     Name BufferObject::name()const noexcept
+     {return _name;}
 	
 } /* my_gl */

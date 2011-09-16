@@ -56,6 +56,7 @@ namespace my_gl{
 	  {
 	       Name thisName=*(names+i);
 	       assert(contains(_usedNames,thisName));
+	       assert(thisName>0);
 	       _usedNames.erase(thisName);
 	  }
      }

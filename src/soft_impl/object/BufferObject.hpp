@@ -21,6 +21,8 @@
 #define BUFFER_OBJECT_HPP
 
 #include <cstddef>
+#include <memory>
+#include <vector>
 
 #include <boost/noncopyable.hpp>
 
@@ -29,20 +31,28 @@
 
 namespace my_gl {
 
+     using std::unique_ptr;
+     using std::vector;
+
      using boost::noncopyable;
 
      class BufferObject : noncopyable {
      public:
 
-	  BufferObject(Name name,size_t size,void *data) noexcept;
+	  BufferObject(Name name) noexcept;
 
-	  void subData(ptrdiff_t offset,size_t size,void *data) noexcept;
+	  void bindData(size_t size,const void *data);
 
-	  ~BufferObject();
+	  void subData(ptrdiff_t offset,size_t size,const void *data) noexcept;
+
+	  UntypedCowArray copyArray()const noexcept;
+
+	  Name name()const noexcept;
 
      private:
+
 	  const Name _name;
-	  UntypedCowArray _data;
+	  unique_ptr<UntypedCowArray> _dataPointer;
      };
 	
 } /* my */

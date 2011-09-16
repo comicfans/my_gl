@@ -28,9 +28,11 @@
 
 namespace my_gl {
 
-     class TextureObject :protected BufferObject{
+     class TextureObject :public BufferObject{
      public:
-	TextureObject (Name name,size_t width,size_t height,
+	TextureObject (Name name);
+
+	void bindImage(size_t width,size_t height,
 		  ImageFormat format,StoreType type,void *p);
 
 	ImageFormat getFormat()const noexcept;
@@ -41,8 +43,8 @@ namespace my_gl {
 		  size_t width,size_t height,void *p)noexcept;
 
      private:
-	const size_t _width;
-	const size_t _height;
+	size_t _width;
+	size_t _height;
 	ImageFormat _format;
 	StoreType _type;
      };

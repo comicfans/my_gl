@@ -22,15 +22,14 @@
 
 
 #include <unordered_map>
-#include <unordered_set>
 #include <memory>
 
-#include "ArrayBufferObject.hpp"
+#include "Enum.hpp"
+#include "BufferObject.hpp"
 
 namespace my_gl {
 
      using std::unordered_map;
-     using std::unordered_set;
      using std::unique_ptr;
 
      class ArrayBufferObjectManager {
@@ -40,34 +39,29 @@ namespace my_gl {
 
 	  void genBuffers(size_t size,Name *names) ;
 
+	  void deleteBuffers(size_t size, Name *names) noexcept;
+
 	  void bindBuffer(BufferTarget target,Name name)noexcept;
 
 	  void bufferData(BufferTarget target,size_t size,
 		    const void* data, DataUsage usage);
 
-	  ArrayBufferObject* getArrayBuffer()const noexcept;
+	  void bufferSubData(BufferTarget target,ptrdiff_t offset,
+		    size_t size,const void* data);
 
-	  ArrayBufferObject* getElementsBuffer() const noexcept;
+	  BufferObject* getArrayBuffer()const noexcept;
+
+	  BufferObject* getElementsBuffer() const noexcept;
 
 	  bool isBuffer(Name name)const noexcept;
      
      private:
 
+	  BufferObject *_arrayAndElements[2];
 
-	  void bindNewObject(BufferTarget target,size_t size,
-		    const void* data, DataUsage usage);
-
-	  ArrayBufferObject *_arrayAndElements[2];
-
-	  Name _currentName;
-
-	  BufferTarget _currentTarget;
-
-	  typedef unique_ptr<ArrayBufferObject> UniquePointer;
+	  typedef unique_ptr<BufferObject> UniquePointer;
 
 	  unordered_map<Name,UniquePointer> _objects;
-
-	  unordered_set<Name> _objectNames;
 
      };
 	

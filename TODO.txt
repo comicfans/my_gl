@@ -35,9 +35,9 @@ glFinish
 glFlush
 glFrontFace ?
 glFrustum
-glGenBuffers
+glGenBuffers       OK
 glGenTextures
-glIsBuffer
+glIsBuffer	OK
 glIsTexture
 glLight
 glLightModel

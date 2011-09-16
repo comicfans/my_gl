@@ -39,6 +39,8 @@ namespace my_gl {
 	void genBuffers(size_t size,Name *names);
 	//glDeleteBuffers
 	void deleteBuffers(size_t size,Name *names);
+	//glIsBuffer
+	bool isBuffer(Name name);
 
 	ObjectNameManager& getObjectNameManager();
 
