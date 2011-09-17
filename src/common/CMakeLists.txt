@@ -1,5 +1,5 @@
 SET (Common_Src Matrix.cpp MatrixStack.cpp UntypedCowArray.cpp
-     Vector.cpp AlignedValueVectorReader.cpp)
+     Vector.cpp AlignedValueVectorReader.cpp AbstractVectorReader.cpp)
 
 ADD_LIBRARY(Common ${Common_Src})
 

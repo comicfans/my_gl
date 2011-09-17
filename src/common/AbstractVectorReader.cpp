@@ -27,9 +27,9 @@ namespace my_gl {
      }
 
 
-     float const * AbstractVectorReader::next(size_t steps=1) noexcept
+     float const * AbstractVectorReader::next(size_t steps) noexcept
      {
-	  _pointer+=_jumpBytes*steps;
+	  _rawPointer+=_jumpBytes*steps;
 	  return nextImpl();
      }
 

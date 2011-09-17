@@ -45,8 +45,9 @@ namespace my_gl {
 	template<typename T>
 	  void copyToFloats()
 	  {
-	       T const *tp=static_cast<T const*>(rawPointer());
-	       copy_n(tp,componentNumber,_internalBuffer);
+	       void const *p=rawPointer();
+	       T const *tp=static_cast<T const*>(p);
+	       copy_n(tp,_componentNumber,_internalBuffer);
 	  }
 
 	const DataType _dataType;

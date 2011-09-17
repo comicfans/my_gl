@@ -30,12 +30,11 @@ namespace my_gl {
 	  (const UntypedCowArray& array, DataType dataType,
 	   int componentNumber,size_t offset,size_t stride):
 	       AbstractVectorReader(array,offset,
-			 DATA_TYPE_SIZE[dataType]*componentNumber
+			 DATA_TYPE_SIZE[int(dataType)]*componentNumber
 			 ,stride),_dataType(dataType),
 	       _componentNumber(componentNumber)
      {
-	  _nextImpl();
-
+	  nextImpl();
      }
 
      float const * AlignedValueVectorReader::values()noexcept
@@ -43,20 +42,18 @@ namespace my_gl {
 	  return _internalBuffer;
      }
 
-     float const * nextImpl()noexcept
+     float const * AlignedValueVectorReader::nextImpl()noexcept
      {
-	  const void *p=this->pointer();
-
 	  switch(_dataType)
 	  {
 	       case DataType::BYTE:
 		    {copyToFloats<int8_t>(); break;}
 	       case DataType::SHORT:
-			 {copyToFloats<int16_t>();break;}
+		    {copyToFloats<int16_t>();break;}
 	       case DataType::FIXED:
-			 {copyToFloats<int32_t>();break;}
+		    {copyToFloats<int32_t>();break;}
 	       case DataType::FLOAT:
-			 {copyToFloats<float>(),break;}
+		    {copyToFloats<float>();break;}
 	  }
 	  return _internalBuffer;
      }

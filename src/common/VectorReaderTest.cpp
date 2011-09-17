@@ -20,6 +20,7 @@
 
 using my_gl::AlignedValueVectorReader;
 using my_gl::UntypedCowArray;
+using my_gl::DataType;
 
 int main(int argc, const char *argv[])
 {
@@ -38,7 +39,7 @@ int main(int argc, const char *argv[])
 
      UntypedCowArray array1(byteSize,p);
 
-     AlignedValueVectorReader<float> floatReader(array1,4,0,0);
+     AlignedValueVectorReader floatReader(array1,DataType::FLOAT,4,0,0);
 
 
      assert(floatReader.values()[0]==p[0]);
@@ -47,7 +48,7 @@ int main(int argc, const char *argv[])
 
      assert(floatReader.values()[0]==p[4]);
 
-     AlignedValueVectorReader<float> floatReader2(array1,3,4,0);
+     AlignedValueVectorReader floatReader2(array1,DataType::FLOAT,3,4,0);
 
      assert(floatReader2.values()[0]==p[1]);
 
