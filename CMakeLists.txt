@@ -6,4 +6,6 @@ SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x -Wall")
 
 INCLUDE_DIRECTORIES( include src )
 
+
+ENABLE_TESTING()
 SUBDIRS(src)

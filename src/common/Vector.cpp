@@ -28,7 +28,9 @@ namespace my_gl {
 
      Vector::Vector(bool fillZero)noexcept
 	  :x(_values[0]),y(_values[1]),
-	  z(_values[2]),w(_values[3])
+	  z(_values[2]),w(_values[3]),
+	  r(_values[0]),g(_values[1]),
+	  b(_values[2]),a(_values[3]),
      {
 	  if (fillZero)
 	  {

@@ -49,7 +49,8 @@ namespace my_gl {
 	  template<typename T=int8_t>
 	       T const * get()const noexcept
 	       {
-		    return static_cast<T*>(_cowArray.get());
+		    void* p=_cowArray.get();
+		    return static_cast<T*>(p);
 	       }
 
      private:
@@ -58,6 +59,7 @@ namespace my_gl {
 	  shared_array<int8_t> _cowArray;
 
      };
+
 	
 } /* my */
 

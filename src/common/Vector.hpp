@@ -24,7 +24,7 @@
 #include <cstddef>
 
 namespace my_gl {
-     class Vector{
+     struct Vector{
     
 	  public:
 
@@ -36,6 +36,12 @@ namespace my_gl {
 	       float& y;
 	       float& z;
 	       float& w;
+
+	       float& r;
+	       float& g;
+	       float& b;
+	       float& a;
+
 	       static const int LENGTH=4;
 
 	       float& operator()(size_t idx)noexcept;

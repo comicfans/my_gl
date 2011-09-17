@@ -55,7 +55,7 @@ namespace my_gl {
 	  {
 	       //cow 
 	       assert(offset>0);
-	       assert(offset+size<_size);
+	       assert(offset+size<=_size);
 
 	       shared_array<int8_t> deepCopy(new int8_t[_size]);
 
