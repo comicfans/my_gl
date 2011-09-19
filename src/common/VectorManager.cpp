@@ -20,7 +20,7 @@
 
 namespace my_gl{
 	
-     VectorManager::VectorManager(BindState bindState)
+     VectorManager::VectorManager(BindState bindState)noexcept
 	  :_bindState(bindState),_bindedArrayBufferObject(nullptr)
      {}
 
@@ -30,8 +30,14 @@ namespace my_gl{
 	  _bindedArrayBufferObject=toBind;
      }
 
-     const ArrayBufferObject* VectorManager::getBindedBufferObject() const 
+     BindState VectorManager::getBindState()
      {
 	  return _bindState;
+     }
+
+     const ArrayBufferObject* VectorManager::getBindedBufferObject() 
+	  const noexcept
+     {
+	  return _bindedArrayBufferObject;
      }
 } /* my_gl */

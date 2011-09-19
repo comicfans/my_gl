@@ -20,13 +20,19 @@
 
 #define SOFT_CONTEXT_HPP
 
+#include <boost/ptr_container/ptr_vector.hpp>
+
 #include "Context.hpp"
 #include "object/ObjectNameManager.hpp"
 #include "object/ArrayBufferObjectManager.hpp"
 
+
 namespace my_gl {
 
+     using boost::ptr_vector;
+
      class BufferObject;
+     class VectorManager;
 
      class SoftContext :public Context{
      public:
@@ -51,7 +57,8 @@ namespace my_gl {
 	ObjectNameManager _objectNameManager;
 
 	ArrayBufferObjectManager _arrayBufferObjectManager;
-     	/* data */
+
+	ptr_vector<VectorManager> _allVectorManager;
      };
 	
 } /* my_gl */
