@@ -23,14 +23,13 @@
 #include <cstddef>
 #include <cassert>
 #include <cstdint>
+#include <memory>
 
-#include <boost/scoped_array.hpp>
 #include <boost/noncopyable.hpp>
 
 namespace my_gl {
 
-     using std::int8_t;
-     using boost::scoped_array;
+     using std::unique_ptr;
      using boost::noncopyable;
 
      class UntypedArray:boost::noncopyable{
@@ -64,7 +63,7 @@ namespace my_gl {
      private:
 
 	  const size_t _size;
-	  scoped_array<int8_t> _array;
+	  unique_ptr<int8_t[]> _array;
 
      };
 

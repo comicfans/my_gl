@@ -34,6 +34,7 @@ namespace my_gl {
      class BufferObject;
      class VectorManager;
 
+
      class SoftContext :public Context{
      public:
      	SoftContext ();
@@ -59,6 +60,7 @@ namespace my_gl {
 	ArrayBufferObjectManager _arrayBufferObjectManager;
 
 	ptr_vector<VectorManager> _allVectorManager;
+
      };
 	
 } /* my_gl */
