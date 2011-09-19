@@ -23,15 +23,17 @@
 
 #include <unordered_map>
 #include <memory>
+#include <cstddef>
 
 #include "Enum.hpp"
-#include "ArrayBufferObject.hpp"
+#include "Typedef.hpp"
 
 namespace my_gl {
 
      using std::unordered_map;
      using std::unique_ptr;
 
+     class ArrayBufferObject;
      class ArrayBufferObjectManager {
      public:
 

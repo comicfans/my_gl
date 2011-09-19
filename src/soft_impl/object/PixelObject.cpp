@@ -18,7 +18,7 @@
 
 #include "PixelObject.hpp"
 #include "common/PixelUnpacker.hpp"
-
+#include "common/UntypedArray.hpp"
 
 namespace my_gl {
 

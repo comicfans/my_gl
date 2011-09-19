@@ -17,7 +17,7 @@
  */
 
 #include "BufferObject.hpp"
-
+#include "common/UntypedArray.hpp"
 
 namespace my_gl {
 

@@ -22,8 +22,10 @@
 #include <algorithm>
 #include <iterator>
 
+#include "common/UntypedArray.hpp"
 #include "ObjectNameManager.hpp"
 #include "SoftContext.hpp"
+#include "ArrayBufferObject.hpp"
 
 namespace my_gl {
 

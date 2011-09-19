@@ -24,15 +24,19 @@
 #include <memory>
 #include <vector>
 
+#include <boost/noncopyable.hpp>
+
 
 #include "Typedef.hpp"
-#include "common/UntypedArray.hpp"
 
 namespace my_gl {
 
      using std::unique_ptr;
      using std::vector;
+     
+     using boost::noncopyable;
 
+     class UntypedArray;
 
      class BufferObject : noncopyable {
      public:
