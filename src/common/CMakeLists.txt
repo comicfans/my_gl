@@ -1,5 +1,7 @@
-SET (Common_Src Matrix.cpp MatrixStack.cpp UntypedCowArray.cpp
-     Vector.cpp AlignedValueVectorReader.cpp AbstractVectorReader.cpp)
+SET (Common_Src Matrix.cpp MatrixStack.cpp UntypedArray.cpp
+     PixelUnpacker.cpp  AlignedValueVectorReader.cpp AbstractVectorReader.cpp)
+
+ADD_LIBRARY(Vector Vector.cpp)
 
 ADD_LIBRARY(Common ${Common_Src})
 
@@ -9,5 +11,10 @@ TARGET_LINK_LIBRARIES(VectorReaderTest Common)
 ADD_EXECUTABLE(UntypedCowArrayTest UntypedCowArrayTest.cpp)
 TARGET_LINK_LIBRARIES(UntypedCowArrayTest Common)
 
+ADD_EXECUTABLE(VectorTest VectorTest.cpp)
+TARGET_LINK_LIBRARIES(VectorTest Common)
+
 ADD_TEST(Test1 UntypedCowArrayTest)
 ADD_TEST(Test2 VectorReaderTest)
+ADD_TEST(Test3 VectorTest)
+
