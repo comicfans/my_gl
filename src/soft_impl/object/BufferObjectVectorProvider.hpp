@@ -29,7 +29,7 @@ namespace my_gl {
      class BufferObjectVectorProvider :public ArrayVectorProvider{
      public:
      	BufferObjectVectorProvider (const BufferObject& bufferObject,
-		  size_t offset,DataType dataType,int componentNumber,
+		  size_t offset,size_t jumpBlocks,DataType dataType,int componentNumber,
 		  size_t stride,bool normalize);
 
 	virtual Vector vector()noexcept;

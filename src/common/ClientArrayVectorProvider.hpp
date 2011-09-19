@@ -26,7 +26,7 @@ namespace my_gl {
 	
      class ClientArrayVectorProvider :public ArrayVectorProvider{
      public:
-     	ClientArrayVectorProvider (const void* pointer,size_t offset,
+     	ClientArrayVectorProvider (const void* pointer,size_t offset,size_t jumpBlocks,
 		  DataType dataType,int componentNumber,
 		  size_t stride,bool normalize);
 

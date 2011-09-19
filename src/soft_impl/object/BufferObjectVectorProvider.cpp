@@ -23,10 +23,10 @@ namespace my_gl {
 
      BufferObjectVectorProvider::BufferObjectVectorProvider 
 	  (const BufferObject& bufferObject,
-		  size_t offset,DataType dataType,int componentNumber,
+		  size_t offset,size_t jumpBlocks,DataType dataType,int componentNumber,
 		  size_t stride,bool normalize)
 	  :ArrayVectorProvider(dataType,componentNumber,stride,normalize),
-	  _bufferObject(bufferObject),_currentOffset(offset)
+	  _bufferObject(bufferObject),_currentOffset(offset+jumpBlocks*_blockSize)
 	  {}
      Vector BufferObjectVectorProvider::vector()noexcept
      {
