@@ -30,6 +30,8 @@ namespace my_gl {
 
 	       Vector(bool fillZero=true)noexcept;
 
+	       Vector(float fx,float fy,float fz=0,float fw=1)noexcept;
+
 	       Vector& operator=(const Vector& rhs);
 
 	       float& x;
