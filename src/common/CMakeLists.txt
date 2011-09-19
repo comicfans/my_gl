@@ -8,8 +8,11 @@ ADD_LIBRARY(VectorProvider
      ArrayVectorProvider.cpp
      ClientArrayVectorProvider.cpp
      )
+ADD_LIBRARY(VectorManager VectorManager.cpp)
 
 TARGET_LINK_LIBRARIES(VectorProvider Vector)
+
+TARGET_LINK_LIBRARIES(VectorManager VectorProvider)
 
 ADD_LIBRARY(Common UntypedArray.cpp PixelUnpacker.cpp)
 
