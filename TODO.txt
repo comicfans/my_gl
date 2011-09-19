@@ -12,6 +12,8 @@ OpenCL实现：使用OpenCL完成
 变换矩阵 glPushMatrix glPopMatrix glTransform glRotate glScale
 支持材质映射，材质矩阵，phong光照模型，灯光基本参数设置
 
+不支持FIXED ?
+
 
 根据OpenGL ES 1.1 man手册，具体实现功能如下：
 glBindBuffer
