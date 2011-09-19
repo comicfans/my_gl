@@ -21,6 +21,7 @@
 #define PIXEL_UNPACKER_HPP
 
 #include <cstdint>
+#include <cstddef>
 #include <functional>
 
 #include "Enum.hpp"
@@ -35,15 +36,14 @@ namespace my_gl {
 		  ImageFormat format,StoreType type,
 		  size_t jumpBlocks=0);
 
-	static size_t calcTotalExpandedSize(size_t width,size_t height,
-		  ImageFormat format, StoreType type);
 	void unpack();
      private:
 
-	const int8_t *_currentSource;
-	const void * const _sourceEnd;
-	float * _currentDest;
 	const size_t _blockSize;
+
+	const int8_t *_currentSource;
+	float * _currentDest;
+	const void * const _sourceEnd;
 
 	function<void(const void* ,float* )> _unpacker;
 

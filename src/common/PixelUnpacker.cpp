@@ -40,15 +40,6 @@ namespace my_gl {
 	  }
      }
 
-     static size_t calcTotalExpandedSize
-	  (size_t width, size_t height, 
-	   ImageFormat format, StoreType type)
-     {
-	  return calcBlockSize(format,type)*width*height;
-
-     }
-
-
      static void RGBUnpack(const void *source,float *dest)
      {
 	  const uint8_t *pUbyte=static_cast<const uint8_t*>(source);
@@ -105,7 +96,7 @@ namespace my_gl {
 	       float* dest,size_t width,size_t height,
 	       ImageFormat format,StoreType type,
 	       size_t jumpBlocks)
-	  :_blockSize(calcBlockSize(format,type,stride)),
+	  :_blockSize(calcBlockSize(format,type)),
 	  _currentSource(static_cast<const int8_t*>(source)
 		    +_blockSize*jumpBlocks),
 	  _currentDest(dest+4*sizeof(float)*jumpBlocks),

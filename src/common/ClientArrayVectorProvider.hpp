@@ -16,3 +16,26 @@
  * =====================================================================================
  */
 
+#ifndef CLIENT_ARRAY_VECTOR_PROVIDER_HPP
+
+#define CLIENT_ARRAY_VECTOR_PROVIDER_HPP
+
+#include "ArrayVectorProvider.hpp"
+
+namespace my_gl {
+	
+     class ClientArrayVectorProvider :public ArrayVectorProvider{
+     public:
+     	ClientArrayVectorProvider (const void* pointer,DataType dataType,
+		  int componentNumber,size_t stride,size_t offset);
+
+	virtual Vector vector()noexcept;
+     
+     private:
+	const void *_currentPointer;
+     };
+} /* my_gl */
+
+
+
+#endif /* end of include guard: CLIENT_ARRAY_VECTOR_PROVIDER_HPP */

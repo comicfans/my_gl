@@ -2,6 +2,8 @@
 
 #define VECTOR_PROVIDER_HPP
 
+#include "Vector.hpp"
+
 namespace my_gl {
      class VectorProvider {
      public:

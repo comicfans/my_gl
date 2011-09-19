@@ -17,43 +17,51 @@
  */
 
 #include "ArrayVectorProvider.hpp"
+
+#include <cassert>
+
 namespace my_gl {
 
-     const int DATA_TYPE_SIZE={1,2,4,4};
      static size_t calcBlockSize(DataType type,int componentNumber,
 	       size_t stride)
      {
-	  return DATA_TYPE_SIZE[int(type)]*componentNumber+stride;
+	  return DATA_TYPE_UNDERLINE_SIZE[int(type)]*componentNumber+stride;
      }
 
      ArrayVectorProvider::ArrayVectorProvider
 	  (DataType type,int componentNumber,size_t stride)
 	  :_dataType(type),_componentNumber(componentNumber),
-	  _stride(stride),
 	  _blockSize(calcBlockSize(type,componentNumber,stride))
      {}
 
-     template<typename T>
-	  void copyToFloats(const void* p)
-	  {
-	       T const *tp=static_cast<T const*>(p);
-	       copy_n(tp,_componentNumber,_internalBuffer);
-	  }
 
 
      Vector ArrayVectorProvider::castRead
-	  (const void* pointer)const noexcept
+	  (const void* pointer,bool normalize)const noexcept
 	  {
 	       switch(_dataType)
 	       {
 		    case DataType::BYTE:
-			 {copyToFloats<int8_t>(pointer); break;}
+			 {return this->copyToFloats<DataType::BYTE>
+			      (pointer,normalize);}
+		    case DataType::UNSIGNED_BYTE:
+			      {return copyToFloats<DataType::UNSIGNED_BYTE>
+			      (pointer,normalize);}
 		    case DataType::SHORT:
-			 {copyToFloats<int16_t>(pointer);break;}
+			 {return copyToFloats<DataType::SHORT>
+			      (pointer,normalize);}
+		    case DataType::UNSIGNED_SHORT:
+			 {return copyToFloats<DataType::UNSIGNED_SHORT>
+			      (pointer,normalize);}
 		    case DataType::FIXED:
-			 {copyToFloats<int32_t>(pointer);break;}
+			 {return copyToFloats<DataType::FIXED>
+			      (pointer,normalize);}
 		    case DataType::FLOAT:
-			 {copyToFloats<float>(pointer);break;}
+			      {return copyToFloats<DataType::FLOAT>
+				   (pointer,normalize);}
+		    default:
+				   {assert(false);}
+
 	       }
 	  }
 

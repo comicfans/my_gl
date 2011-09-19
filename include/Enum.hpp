@@ -28,7 +28,8 @@ namespace my_gl {
      enum class StoreType{UNSIGNED_BYTE,UNSIGNED_SHORT_5_6_5,
 	       UNSIGNED_SHORT_4_4_4_4,UNSIGNED_SHORT_5_5_5_1};
 
-     enum class DataType{BYTE,SHORT,FIXED,FLOAT};
+     enum class DataType{BYTE,UNSIGNED_BYTE,
+	  SHORT,UNSIGNED_SHORT,FIXED,FLOAT};
     
      enum class BufferTarget{ARRAY_BUFFER,ELEMENT_ARRAY_BUFFER};
 

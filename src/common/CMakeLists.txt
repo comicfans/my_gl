@@ -1,5 +1,5 @@
 SET (Common_Src Matrix.cpp MatrixStack.cpp UntypedArray.cpp
-     PixelUnpacker.cpp  AlignedValueVectorReader.cpp AbstractVectorReader.cpp)
+     PixelUnpacker.cpp  ArrayVectorProvider.cpp)
 
 ADD_LIBRARY(Vector Vector.cpp)
 
