@@ -1,7 +1,7 @@
 /*
  * =====================================================================================
  *
- *       Filename:  UntypedCowArray.hpp
+ *       Filename:  UntypedArray.hpp
  *
  *    Description:  to impl void * array RAII
  *
@@ -16,24 +16,26 @@
  * =====================================================================================
  */
 
-#ifndef UNTYPED_COW_ARRAY_HPP
+#ifndef UNTYPED_ARRAY_HPP
 
-#define UNTYPED_COW_ARRAY_HPP 
+#define UNTYPED_ARRAY_HPP 
 
 #include <cstddef>
 #include <cassert>
 #include <cstdint>
 
-#include <boost/shared_array.hpp>
+#include <boost/scoped_array.hpp>
+#include <boost/noncopyable.hpp>
 
 namespace my_gl {
 
      using std::int8_t;
-     using boost::shared_array;
+     using boost::scoped_array;
+     using boost::noncopyable;
 
-     class UntypedCowArray{
+     class UntypedArray:boost::noncopyable{
      public:
-	  explicit UntypedCowArray(size_t size,const void *p);
+	  explicit UntypedArray(size_t size,const void *p);
 
 	  void replace(ptrdiff_t offset,size_t size,
 		    const void *data)noexcept;
@@ -44,23 +46,29 @@ namespace my_gl {
 	       T const & operator[](size_t idx)const noexcept
 	       {
 		    assert(idx<_size/sizeof(T));
-		    return static_cast<T*>(_cowArray.get())[idx];
+		    return static_cast<T*>(_array.get())[idx];
 	       }
 	  template<typename T=int8_t>
 	       T const * get()const noexcept
 	       {
-		    void* p=_cowArray.get();
+		    void* p=_array.get();
+		    return static_cast<T*>(p);
+	       }
+	  template<typename T=int8_t>
+	       T * get() noexcept
+	       { 
+		    void *p=_array.get();
 		    return static_cast<T*>(p);
 	       }
 
      private:
 
 	  const size_t _size;
-	  shared_array<int8_t> _cowArray;
+	  scoped_array<int8_t> _array;
 
      };
 
 	
-} /* my */
+} /* my_gl */
 
-#endif /* end of include guard: UNTYPED_COW_ARRAY_HPP */
+#endif /* end of include guard: UNTYPED_ARRAY_HPP */

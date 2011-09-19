@@ -25,7 +25,7 @@
 #include <memory>
 
 #include "Enum.hpp"
-#include "BufferObject.hpp"
+#include "ArrayBufferObject.hpp"
 
 namespace my_gl {
 
@@ -49,17 +49,17 @@ namespace my_gl {
 	  void bufferSubData(BufferTarget target,ptrdiff_t offset,
 		    size_t size,const void* data);
 
-	  BufferObject* getArrayBuffer()const noexcept;
+	  ArrayBufferObject* getArrayBuffer()const noexcept;
 
-	  BufferObject* getElementsBuffer() const noexcept;
+	  ArrayBufferObject* getElementsBuffer() const noexcept;
 
 	  bool isBuffer(Name name)const noexcept;
      
      private:
 
-	  BufferObject *_arrayAndElements[2];
+	  ArrayBufferObject *_arrayAndElements[2];
 
-	  typedef unique_ptr<BufferObject> UniquePointer;
+	  typedef unique_ptr<ArrayBufferObject> UniquePointer;
 
 	  unordered_map<Name,UniquePointer> _objects;
 

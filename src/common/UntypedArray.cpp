@@ -1,9 +1,9 @@
 /*
  * =====================================================================================
  *
- *       Filename:  UntypedCowArray.cpp
+ *       Filename:  UntypedArray.cpp
  *
- *    Description:  implementation of UntypedCowArray
+ *    Description:  implementation of UntypedArray
  *
  *        Version:  1.0
  *        Created:  2011-9-13 20:23:03
@@ -16,7 +16,7 @@
  * =====================================================================================
  */
 
-#include "UntypedCowArray.hpp"
+#include "UntypedArray.hpp"
 
 #include <algorithm>
 #include <utility>
@@ -26,9 +26,9 @@ using std::move;
 
 namespace my_gl {
 
-     UntypedCowArray::UntypedCowArray
+     UntypedArray::UntypedArray
 	  (size_t size,const void *p) 
-	  :_size(size),_cowArray(new int8_t[size])
+	  :_size(size),_array(new int8_t[size])
 	  {
 
 	       const int8_t *temp=static_cast<const int8_t*>(p);
@@ -42,26 +42,24 @@ namespace my_gl {
 		    return;
 	       }
 
-	       copy_n(temp, _size, _cowArray.get() );
+	       copy_n(temp, _size, _array.get() );
 	  }
 
-     size_t UntypedCowArray::size()const noexcept
+     size_t UntypedArray::size()const noexcept
      {
 	  return _size;
      }
 
-     void UntypedCowArray::replace
+     void UntypedArray::replace
 	  (ptrdiff_t offset,  size_t size, const void *data)noexcept
 	  {
 	       //cow 
 	       assert(offset>0);
 	       assert(offset+size<=_size);
 
-	       shared_array<int8_t> deepCopy(new int8_t[_size]);
+	       int8_t const *p=static_cast<int8_t const*>(data);
 
-	       copy_n(_cowArray.get(),_size,deepCopy.get() );
-
-	       _cowArray.swap(deepCopy);	
+	       copy_n(p,size,_array.get());
 	  }
 
      

@@ -24,35 +24,27 @@
 #include <memory>
 #include <vector>
 
-#include <boost/noncopyable.hpp>
 
 #include "Typedef.hpp"
-#include "common/UntypedCowArray.hpp"
+#include "common/UntypedArray.hpp"
 
 namespace my_gl {
 
      using std::unique_ptr;
      using std::vector;
 
-     using boost::noncopyable;
 
      class BufferObject : noncopyable {
      public:
 
 	  BufferObject(Name name) noexcept;
 
-	  void bindData(size_t size,const void *data);
-
-	  void subData(ptrdiff_t offset,size_t size,const void *data) noexcept;
-
-	  UntypedCowArray copyArray()const noexcept;
-
 	  Name name()const noexcept;
 
-     private:
+     protected:
 
 	  const Name _name;
-	  unique_ptr<UntypedCowArray> _dataPointer;
+	  unique_ptr<UntypedArray> _dataPointer;
      };
 	
 } /* my */

@@ -36,7 +36,7 @@ namespace my_gl {
 	  fill_n(_arrayAndElements,2,nullptr);
      }
 
-     BufferObject* ArrayBufferObjectManager::
+     ArrayBufferObject* ArrayBufferObjectManager::
 	  getArrayBuffer()const noexcept
      {
 	  auto p=_arrayAndElements[int(BufferTarget::ARRAY_BUFFER)];
@@ -48,7 +48,7 @@ namespace my_gl {
      void ArrayBufferObjectManager::bindBuffer
 	  (BufferTarget target,Name name) noexcept
      {
-	  //must be a BufferObject
+	  //must be a ArrayBufferObject
 	  assert(isBuffer(name));
 
 	  //already has data, to bind
@@ -75,13 +75,13 @@ namespace my_gl {
 	   const void* data, DataUsage usage)
 	  {
 
-	       BufferObject *pBuffer=_arrayAndElements[int(target)];
+	       ArrayBufferObject *pBuffer=_arrayAndElements[int(target)];
 	       assert(pBuffer);
 	       pBuffer->bindData(size,data);
 
 	  }
 
-     BufferObject * ArrayBufferObjectManager::
+     ArrayBufferObject * ArrayBufferObjectManager::
 	  getElementsBuffer() const noexcept
 	  {
 	       auto p=_arrayAndElements
@@ -99,7 +99,7 @@ namespace my_gl {
 	  for (int i = 0; i < size; i++) {
 	       Name thisName=*(names+i);
 	  	_objects.insert(make_pair(thisName,UniquePointer(
-				    new BufferObject(thisName))));
+				    new ArrayBufferObject(thisName))));
 	  }
      }
 
