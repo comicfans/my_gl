@@ -18,10 +18,10 @@
 #include <algorithm>
 #include <cassert>
 
-#include "UntypedCowArray.hpp"
+#include "UntypedArray.hpp"
 
 
-using my_gl::UntypedCowArray;
+using my_gl::UntypedArray;
 using std::mismatch;
 
 int main(int argc, const char *argv[])
@@ -33,12 +33,11 @@ int main(int argc, const char *argv[])
 
      int byteSize=size*sizeof(int);
 
-     UntypedCowArray array1(byteSize,p);
+     UntypedArray array1(byteSize,p);
 
      assert(mismatch(p,p+size,array1.get<int>()).first-p==size);
 
-     UntypedCowArray array2=array1;
-
+     UntypedArray array2(byteSize,p);
 
      int *sub=new int[byteSize/2];
 

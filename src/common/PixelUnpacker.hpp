@@ -35,6 +35,8 @@ namespace my_gl {
 		  size_t width,size_t height,
 		  ImageFormat format,StoreType type,
 		  size_t jumpBlocks=0);
+	static size_t calcTotalExpandedSize(size_t width,size_t height,
+		  ImageFormat format,StoreType type);
 
 	void unpack();
      private:

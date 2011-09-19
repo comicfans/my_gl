@@ -39,6 +39,8 @@ namespace my_gl {
 
 	  BufferObject(Name name) noexcept;
 
+	  const void * getBufferPointer()const noexcept;
+
 	  Name name()const noexcept;
 
      protected:

@@ -54,5 +54,6 @@ namespace my_gl {
      Vector& Vector::operator=(const Vector& rhs)
      {
 	  copy_n(rhs._values,LENGTH,_values);
+	  return *this;
      }
 } /* my_gl */

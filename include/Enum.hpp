@@ -33,7 +33,7 @@ namespace my_gl {
     
      enum class BufferTarget{ARRAY_BUFFER,ELEMENT_ARRAY_BUFFER};
 
-     enum class BindState{VERTEX,NORMAL,COLOR,ELEMENTS};
+     enum class BindState{VERTEX,NORMAL,COLOR,ELEMENTS,TEXCOORD};
 
      enum class DataUsage{STATIC_DRAW,DYNAMIC_DRAW};
 } /* my_gl */

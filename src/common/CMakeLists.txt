@@ -1,9 +1,17 @@
-SET (Common_Src Matrix.cpp MatrixStack.cpp UntypedArray.cpp
-     PixelUnpacker.cpp  ArrayVectorProvider.cpp)
 
 ADD_LIBRARY(Vector Vector.cpp)
 
-ADD_LIBRARY(Common ${Common_Src})
+ADD_LIBRARY(Matrix Matrix.cpp MatrixStack.cpp)
+
+ADD_LIBRARY(VectorProvider 
+     UniqueVectorProvider.cpp 
+     ArrayVectorProvider.cpp
+     ClientArrayVectorProvider.cpp
+     )
+
+TARGET_LINK_LIBRARIES(VectorProvider Vector)
+
+ADD_LIBRARY(Common UntypedArray.cpp PixelUnpacker.cpp)
 
 ADD_EXECUTABLE(VectorReaderTest VectorReaderTest.cpp)
 TARGET_LINK_LIBRARIES(VectorReaderTest Common)

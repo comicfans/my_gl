@@ -28,5 +28,10 @@ namespace my_gl {
 
      Name BufferObject::name()const noexcept
      {return _name;}
+
+     const void* BufferObject::getBufferPointer()const noexcept
+     {
+	  return _dataPointer->get();
+     }
 	
 } /* my_gl */

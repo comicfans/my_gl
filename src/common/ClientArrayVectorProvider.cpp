@@ -19,17 +19,16 @@
 
 namespace my_gl {
      ClientArrayVectorProvider::ClientArrayVectorProvider 
-	  (const void* pointer,DataType dataType, 
-	   int componentNumber,size_t stride,size_t offset,bool normalize)
-	  :ArrayVectorProvider(dataType,componentNumber,stride),
-	   _normalize(normalize)
+	  (const void* pointer,size_t offset,DataType dataType, 
+	   int componentNumber,size_t stride,bool normalize)
+	  :ArrayVectorProvider(dataType,componentNumber,stride,normalize)
 	  {
 	       _currentPointer=static_cast<const int8_t*>(pointer)+offset;
 	  }
 
      Vector ClientArrayVectorProvider::vector()noexcept
      {
-	  Vector ret=castRead(_currentPointer,_normalize);
+	  Vector ret=castRead(_currentPointer);
 	  _currentPointer+=_blockSize;
 	  return ret;
      }

@@ -32,19 +32,20 @@ namespace my_gl {
      class ArrayVectorProvider :public VectorProvider{
      public:
 	  ArrayVectorProvider(DataType type,int componentNumber,
-		    size_t stride=0);
+		    size_t stride,bool normalize);
 
      protected:
 
-	  Vector castRead(const void* pointer,bool normalize=false)
+	  Vector castRead(const void* pointer)
 	       const noexcept;
 
 	  const DataType _dataType;
 	  const int _componentNumber;
 	  const size_t _blockSize;
+	  const bool _normalize;
      private:
 	  template<DataType dataType>
-	       Vector copyToFloats(const void* p,bool normalize)
+	       Vector copyToFloats(const void* p)
 	       const noexcept
 	       {
 		    typedef typename 
@@ -52,12 +53,18 @@ namespace my_gl {
 		    type const *tp=static_cast<type const*>(p);
 		    Vector ret;
 		    copy_n(tp,_componentNumber,&ret.x);
+
+		    if (_normalize)
+		    {
+			 for (int i=0; i<_componentNumber; ++i)
+			 {
+			      ret(i)=DataTypeTraits<dataType>::
+				   normalize(ret(i));
+			 }
+		    }
+
 		    return ret;
 	       }
-
-
-
-
 
      };
 } /* my_gl */

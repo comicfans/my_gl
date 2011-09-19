@@ -29,36 +29,37 @@ namespace my_gl {
      }
 
      ArrayVectorProvider::ArrayVectorProvider
-	  (DataType type,int componentNumber,size_t stride)
+	  (DataType type,int componentNumber,size_t stride,bool normalize)
 	  :_dataType(type),_componentNumber(componentNumber),
-	  _blockSize(calcBlockSize(type,componentNumber,stride))
+	  _blockSize(calcBlockSize(type,componentNumber,stride)),
+	  _normalize(normalize)
      {}
 
 
 
      Vector ArrayVectorProvider::castRead
-	  (const void* pointer,bool normalize)const noexcept
+	  (const void* pointer)const noexcept
 	  {
 	       switch(_dataType)
 	       {
 		    case DataType::BYTE:
 			 {return this->copyToFloats<DataType::BYTE>
-			      (pointer,normalize);}
+			      (pointer);}
 		    case DataType::UNSIGNED_BYTE:
 			      {return copyToFloats<DataType::UNSIGNED_BYTE>
-			      (pointer,normalize);}
+			      (pointer);}
 		    case DataType::SHORT:
 			 {return copyToFloats<DataType::SHORT>
-			      (pointer,normalize);}
+			      (pointer);}
 		    case DataType::UNSIGNED_SHORT:
 			 {return copyToFloats<DataType::UNSIGNED_SHORT>
-			      (pointer,normalize);}
+			      (pointer);}
 		    case DataType::FIXED:
 			 {return copyToFloats<DataType::FIXED>
-			      (pointer,normalize);}
+			      (pointer);}
 		    case DataType::FLOAT:
 			      {return copyToFloats<DataType::FLOAT>
-				   (pointer,normalize);}
+				   (pointer);}
 		    default:
 				   {assert(false);}
 
