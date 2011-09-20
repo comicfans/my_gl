@@ -29,10 +29,12 @@ namespace my_gl {
      class BufferObjectVectorProvider :public ArrayVectorProvider{
      public:
      	BufferObjectVectorProvider (const BufferObject& bufferObject,
-		  size_t offset,size_t jumpBlocks,DataType dataType,int componentNumber,
-		  size_t stride,bool normalize);
+		  size_t offset,int componentNumber,DataType dataType,
+		  size_t stride,bool normalize=false);
 
-	virtual Vector vector()noexcept;
+	virtual Vector value()noexcept;
+
+	virtual void next(size_t steps=1)noexcept;
      
      private:
 	const BufferObject& _bufferObject;

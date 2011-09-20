@@ -29,8 +29,15 @@ namespace my_gl {
      	Context ();
      	virtual ~Context ();
 
+	//glIsBuffer
 	virtual bool isBuffer(Name name) const noexcept;
-     
+	//glGenBuffers
+     	virtual void genBuffers(size_t size,Name *names);
+	//glDeleteBuffers
+	virtual void deleteBuffers(size_t size,Name *names);
+	//glNormal3f/x
+	virtual void normal(float nx,float ny,float nz);
+	
      private:
      	/* data */
      };

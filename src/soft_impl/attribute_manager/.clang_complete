@@ -1,1 +1,1 @@
--I ../../../src -I ../../../include
+-I ../../soft_impl  -I ../../../include -I ../../

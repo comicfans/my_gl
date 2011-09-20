@@ -28,6 +28,9 @@ namespace my_gl {
      {
 	  _value=value;
      }
+
+     void UniqueVectorProvider::next(size_t steps)noexcept
+     {}
 	
 } /* my_gl */
 

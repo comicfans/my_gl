@@ -23,17 +23,19 @@ namespace my_gl {
 
      BufferObjectVectorProvider::BufferObjectVectorProvider 
 	  (const BufferObject& bufferObject,
-		  size_t offset,size_t jumpBlocks,DataType dataType,int componentNumber,
+		  size_t offset,int componentNumber,DataType dataType,
 		  size_t stride,bool normalize)
-	  :ArrayVectorProvider(dataType,componentNumber,stride,normalize),
-	  _bufferObject(bufferObject),_currentOffset(offset+jumpBlocks*_blockSize)
+	  :ArrayVectorProvider(componentNumber,dataType,stride,normalize),
+	  _bufferObject(bufferObject),_currentOffset(offset)
 	  {}
-     Vector BufferObjectVectorProvider::vector()noexcept
+     Vector BufferObjectVectorProvider::value()noexcept
      {
-	  Vector ret=castRead(_bufferObject.getBufferPointer());
-
-	  _currentOffset+=_blockSize;
-
-	  return ret;
+	  return castRead(_bufferObject.getBufferPointer());
      }
+
+     void BufferObjectVectorProvider::next(size_t steps)noexcept
+     {
+	  _currentOffset+=_blockSize*steps;
+     }
+
 } /* my_gl */

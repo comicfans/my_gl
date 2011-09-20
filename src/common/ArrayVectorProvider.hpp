@@ -31,7 +31,7 @@ namespace my_gl {
      using std::copy_n;
      class ArrayVectorProvider :public VectorProvider{
      public:
-	  ArrayVectorProvider(DataType type,int componentNumber,
+	  ArrayVectorProvider(int componentNumber,DataType type,
 		    size_t stride,bool normalize);
 
      protected:

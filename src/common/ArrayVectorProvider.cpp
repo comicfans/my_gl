@@ -29,7 +29,7 @@ namespace my_gl {
      }
 
      ArrayVectorProvider::ArrayVectorProvider
-	  (DataType type,int componentNumber,size_t stride,bool normalize)
+	  (int componentNumber,DataType type,size_t stride,bool normalize)
 	  :_dataType(type),_componentNumber(componentNumber),
 	  _blockSize(calcBlockSize(type,componentNumber,stride)),
 	  _normalize(normalize)

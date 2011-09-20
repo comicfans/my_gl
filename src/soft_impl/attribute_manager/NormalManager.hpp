@@ -22,15 +22,11 @@
 
 #include <memory>
 
-#include "common/VectorProvider.hpp"
-#include "common/VectorManager.hpp"
-
-#include "Enum.hpp"
+#include "TwoSourceVectorManager.hpp"
 
 namespace my_gl{
 
-     using std::unique_ptr;
-     class NormalManager :public VectorManager{
+     class NormalManager :public TwoSourceVectorManager{
      public:
 
 	  NormalManager();
@@ -42,13 +38,6 @@ namespace my_gl{
 	  void normalPointer(DataType type,size_t stride,
 		    const void* pointer);
 
-	  virtual VectorProvider& getProvider()noexcept;
-     
-     private:
-
-	  unique_ptr<VectorProvider> _pImpl;
-
-	  bool _normalArrayEnabled;
      };
 	
 } /* my_gl */

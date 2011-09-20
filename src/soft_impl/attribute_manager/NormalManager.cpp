@@ -26,14 +26,8 @@ namespace my_gl {
 
      // GL Client Normal Array is Disabled by default
      NormalManager::NormalManager()
-	  :VectorManager(BindState::NORMAL),_normalArrayEnabled(false)
+	  :TwoSourceVectorManager(BindState::NORMAL)
      {
-	  _pImpl.reset(new UniqueVectorProvider());
-     }
-
-     VectorProvider& NormalManager::getProvider()noexcept
-     {
-	  return *_pImpl;
      }
 
      void NormalManager::normal(float nx,float ny,float nz)
@@ -43,10 +37,17 @@ namespace my_gl {
 	  //when glNormal3f is called?
 	  //currently only assert false;
 
-	  assert(!_normalArrayEnabled);
+	  assert(!vertexArrayEnabled());
 
-	  static_cast<UniqueVectorProvider*>(_pImpl.get())
-	       ->setValue(Vector(nx,ny,nz));
+	  setValue(Vector(nx,ny,nz));
+
      }
-	
+
+     void NormalManager::normalPointer(DataType type,
+	       size_t stride, const void *pointer)
+     {
+	  vertexArrayChange(3,type,stride,pointer);
+     }
+
+
 } /* my_gl */

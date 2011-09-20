@@ -30,6 +30,8 @@ namespace my_gl {
 
 	virtual Vector value()noexcept;
 
+	virtual void next(size_t steps=1)noexcept;
+
 	void setValue(const Vector& value)noexcept;
      
      private:

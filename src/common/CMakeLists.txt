@@ -1,3 +1,4 @@
+INCLUDE_DIRECTORIES(../soft_impl/)
 
 ADD_LIBRARY(Vector Vector.cpp)
 

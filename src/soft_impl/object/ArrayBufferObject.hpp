@@ -24,7 +24,7 @@
 
 namespace my_gl {
 
-     class ArrayBufferObject : BufferObject{
+     class ArrayBufferObject : public BufferObject{
      public:
 
 	  ArrayBufferObject(Name name) noexcept;

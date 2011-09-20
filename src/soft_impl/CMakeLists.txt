@@ -1,5 +1,3 @@
-INCLUDE_DIRECTORIES( .)
-
 SUBDIRS(attribute_manager object)
 
 

@@ -7,7 +7,8 @@
 namespace my_gl {
      class VectorProvider {
      public:
-     	virtual Vector value()=0;
+     	virtual Vector value()noexcept=0;
+	virtual void next(size_t steps=1)noexcept;
      };
 	
 } /* my_gl */

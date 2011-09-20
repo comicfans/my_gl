@@ -1,3 +1,4 @@
+INCLUDE_DIRECTORIES(../)
 ADD_LIBRARY(Object 
      BufferObject.cpp 
      ObjectNameManager.cpp

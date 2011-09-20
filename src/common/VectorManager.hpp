@@ -20,32 +20,48 @@
 
 #define VECTOR_MANAGER_HPP
 
+#include <memory>
+
 #include "Enum.hpp"
 
+
 namespace my_gl {
+
+     using std::unique_ptr;
 
      class VectorProvider;
      class ArrayBufferObject;
      class VectorManager {
      public:
 
-	  VectorManager(BindState bindState)noexcept;
+	  VectorManager(BindState bindState) noexcept;
 
-	  virtual VectorProvider& getProvider()noexcept=0;
+	  VectorProvider& getProvider() noexcept;
 
 	  void bindArrayBufferObject(const ArrayBufferObject* toBind);
 
-	  BindState getBindState();
+	  BindState getBindState()const noexcept;
+
+	  void enableVertexArray(bool value)noexcept;
+
+	  bool vertexArrayEnabled()const noexcept;
 
      protected:
 
-	  const ArrayBufferObject * getBindedBufferObject()const noexcept;
+	  virtual void clientStateChangeCallback(bool value);
+
+	  void vertexArrayChange(int componentSize,
+		    DataType type,size_t stride,const void* pointer);
+
+	  unique_ptr<VectorProvider> _pImpl;
 
      private:
 
-	  BindState _bindState;
-
 	  const ArrayBufferObject *_bindedArrayBufferObject;
+
+	  const BindState _bindState;
+
+	  bool _vertexArrayEnabled;
 
      };
 	

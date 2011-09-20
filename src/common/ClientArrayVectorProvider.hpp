@@ -26,11 +26,13 @@ namespace my_gl {
 	
      class ClientArrayVectorProvider :public ArrayVectorProvider{
      public:
-     	ClientArrayVectorProvider (const void* pointer,size_t offset,size_t jumpBlocks,
-		  DataType dataType,int componentNumber,
-		  size_t stride,bool normalize);
+     	ClientArrayVectorProvider (const void* pointer,
+		  int componentNumber,DataType dataType,
+		  size_t stride,bool normalize=false)noexcept;
 
-	virtual Vector vector()noexcept;
+	virtual Vector value()noexcept;
+
+	virtual void next(size_t steps=1)noexcept;
      
      private:
 	const int8_t *_currentPointer;
