@@ -1,58 +1,11 @@
-/*
- * =====================================================================================
- *
- *       Filename:  test.cpp
- *
- *    Description:  
- *
- *        Version:  1.0
- *        Created:  2011-9-17 11:06:07
- *       Revision:  none
- *       Compiler:  gcc
- *
- *         Author:  YOUR NAME (), 
- *        Company:  
- *
- * =====================================================================================
- */
-#include <typeinfo>
-#include <iostream>
 
-using std::type_info;
-using std::cout;
-class Base{
-public:
+#include "test.h"
 
-     virtual void call()
-     {
-	  cout<<"base";
-     }
+template<typename T>
+T tpl::get(){return T(value);}
 
-private:
-	/* data */
-};
 
-class Div
+void tpl::call()
 {
-public:
-	Div ()
-	{
-	     cout<<typeid(this).name()<<'\n';
-	     call();
-	}
-
-	virtual void call()
-	{
-	     cout<<"div\n";
-	}
-
-private:
-	/* data */
-};
-
-int main(int argc, const char *argv[])
-{
-	
-     Div div;
-	return 0;
+     float f=get<float>();
 }

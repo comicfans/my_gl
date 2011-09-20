@@ -47,7 +47,9 @@ namespace my_gl {
 	//glDeleteBuffers
 	void deleteBuffers(size_t size,Name *names);
 	//glIsBuffer
-	bool isBuffer(Name name);
+	bool isBuffer(Name name) const noexcept;
+
+	void normal(float nx,float ny,float nz);
 
 	ObjectNameManager& getObjectNameManager();
 
@@ -60,6 +62,9 @@ namespace my_gl {
 	ArrayBufferObjectManager _arrayBufferObjectManager;
 
 	ptr_vector<VectorManager> _allVectorManager;
+
+	template<typename T>
+	     T& getVectorManager(BindState bindState);
 
      };
 	

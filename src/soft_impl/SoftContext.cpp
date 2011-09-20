@@ -17,6 +17,8 @@
  */
 
 #include "SoftContext.hpp"
+
+#include "attribute_manager/NormalManager.hpp"
 namespace my_gl {
 
      void SoftContext::genBuffers(size_t size,  Name *names)
@@ -29,9 +31,19 @@ namespace my_gl {
 	  _arrayBufferObjectManager.deleteBuffers(size,names);
      }
 
-     bool SoftContext::isBuffer(Name name)
+     bool SoftContext::isBuffer(Name name) const noexcept
      {
 	  return _arrayBufferObjectManager.isBuffer(name);
      }
+
+     void SoftContext::normal(float nx,float ny,float nz)
+     {
+	  getVectorManager<NormalManager>(BindState::NORMAL).normal(nx,ny,nz);
+     }
+
+
+     template<typename T>
+	  T& SoftContext::getVectorManager(BindState bindState)
+	  { return static_cast<T&>(_allVectorManager[int(bindState)]);}
 	
 } /* my_gl */
