@@ -6,3 +6,5 @@ ADD_LIBRARY(AttributeVertexManagers
      ColorManager.cpp
      VertexManager.cpp
      TexCoordManager.cpp)
+
+TARGET_LINK_LIBRARIES(AttributeVertexManagers VectorManager )

@@ -20,26 +20,25 @@
 
 #define CONTEXT_HPP
 
+#include <cstddef>
+
 #include "Typedef.hpp"
 
 namespace my_gl {
 
      class Context {
      public:
-     	Context ();
-     	virtual ~Context ();
 
 	//glIsBuffer
-	virtual bool isBuffer(Name name) const noexcept;
+	virtual bool isBuffer(Name name) const noexcept=0;
 	//glGenBuffers
-     	virtual void genBuffers(size_t size,Name *names);
+     	virtual void genBuffers(size_t size,Name *names)=0;
 	//glDeleteBuffers
-	virtual void deleteBuffers(size_t size,Name *names);
+	virtual void deleteBuffers(size_t size,Name *names)=0;
 	//glNormal3f/x
-	virtual void normal(float nx,float ny,float nz);
+	virtual void normal3f(float nx,float ny,float nz)=0;
 	
-     private:
-     	/* data */
+	virtual ~Context()noexcept;
      };
 	
 } /* my_gl */

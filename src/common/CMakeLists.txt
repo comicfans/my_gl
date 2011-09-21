@@ -1,21 +1,26 @@
-INCLUDE_DIRECTORIES(../soft_impl/)
+INCLUDE_DIRECTORIES(../soft_impl)
 
 ADD_LIBRARY(Vector Vector.cpp)
 
 ADD_LIBRARY(Matrix Matrix.cpp MatrixStack.cpp)
 
-ADD_LIBRARY(VectorProvider 
-     UniqueVectorProvider.cpp 
-     ArrayVectorProvider.cpp
-     ClientArrayVectorProvider.cpp
-     )
 ADD_LIBRARY(VectorManager VectorManager.cpp)
 
+
+ADD_LIBRARY(VectorProvider 
+     VectorProvider.cpp
+     UniqueVectorProvider.cpp 
+     ArrayVectorProvider.cpp
+     BufferObjectVectorProvider.cpp
+     ClientArrayVectorProvider.cpp
+     )
 TARGET_LINK_LIBRARIES(VectorProvider Vector)
 
 TARGET_LINK_LIBRARIES(VectorManager VectorProvider)
 
-ADD_LIBRARY(Common UntypedArray.cpp PixelUnpacker.cpp)
+ADD_LIBRARY(Context Context.cpp)
+
+ADD_LIBRARY(Common UntypedArray.cpp PixelUnpacker.cpp )
 
 ADD_EXECUTABLE(VectorReaderTest VectorReaderTest.cpp)
 TARGET_LINK_LIBRARIES(VectorReaderTest Common)

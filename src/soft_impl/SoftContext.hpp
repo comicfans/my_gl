@@ -22,7 +22,7 @@
 
 #include <boost/ptr_container/ptr_array.hpp>
 
-#include "Context.hpp"
+#include "common/Context.hpp"
 #include "object/ObjectNameManager.hpp"
 #include "object/ArrayBufferObjectManager.hpp"
 
@@ -39,7 +39,7 @@ namespace my_gl {
      public:
      	SoftContext ();
 
-     	virtual ~SoftContext ();
+     	virtual ~SoftContext ()noexcept;
 
 
 	//glGenBuffers

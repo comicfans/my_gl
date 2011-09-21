@@ -20,7 +20,7 @@
 
 #include <cassert>
 
-#include "object/BufferObjectVectorProvider.hpp"
+#include "BufferObjectVectorProvider.hpp"
 #include "ClientArrayVectorProvider.hpp"
 #include "object/ArrayBufferObject.hpp"
 

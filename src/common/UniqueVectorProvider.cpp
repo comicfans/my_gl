@@ -19,6 +19,10 @@
 
 namespace my_gl {
 
+     UniqueVectorProvider::UniqueVectorProvider
+	  (const Vector& value)noexcept
+	  :_value(value){}
+
      Vector UniqueVectorProvider::value()noexcept
      {
 	  return _value;

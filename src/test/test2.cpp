@@ -15,11 +15,28 @@
  *
  * =====================================================================================
  */
-#include "test.h"
+
+#include <iostream>
+
+using std::cout;
+class Base {
+public:
+
+     virtual ~Base() {};
+};
+
+class Div:public Base
+{
+public:
+	virtual ~Div (){cout<<"div destructor";}
+
+private:
+};
 
 int main(int argc, const char *argv[])
 {
-     tpl tp;
-     tp.call();
+     Base *p=new Div();
+
+     delete p;
 	
 }

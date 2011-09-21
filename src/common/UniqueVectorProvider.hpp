@@ -26,7 +26,7 @@ namespace my_gl {
 
      class UniqueVectorProvider :public VectorProvider{
      public:
-     	UniqueVectorProvider (Vector value=Vector());
+     	UniqueVectorProvider (const Vector& value=Vector())noexcept;
 
 	virtual Vector value()noexcept;
 

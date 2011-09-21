@@ -18,7 +18,7 @@
 
 #include "VertexManager.hpp"
 
-#include "object/BufferObjectVectorProvider.hpp"
+#include "common/BufferObjectVectorProvider.hpp"
 
 namespace my_gl {
 

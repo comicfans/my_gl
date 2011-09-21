@@ -17,12 +17,16 @@
  */
 
 #include "ArrayBufferObject.hpp"
+#include "common/UntypedArray.hpp"
 
 namespace my_gl {
+
+     ArrayBufferObject::ArrayBufferObject(Name name)noexcept
+	  :BufferObject(name){}
 	
      void ArrayBufferObject::bindData(size_t size,const void *data)
      {
-	  _dataPointer.reset(new UntypedCowArray(size,data));
+	  _dataPointer.reset(new UntypedArray(size,data));
      }
 
      void ArrayBufferObject::subData(ptrdiff_t offset,  size_t size,const void *data)

@@ -36,6 +36,14 @@ namespace my_gl {
 	  _allVectorManager.replace(int(BindState::TEXCOORD),new TexCoordManager());
      }
 
+     SoftContext::~SoftContext()noexcept{}
+
+     SoftContext& SoftContext::getInstance()
+     {
+	  static SoftContext instance;
+	  return instance;
+     }
+
      void SoftContext::genBuffers(size_t size,  Name *names)
      {
 	  _arrayBufferObjectManager.genBuffers(size,names);
@@ -99,5 +107,10 @@ namespace my_gl {
      template<typename T>
 	  T& SoftContext::getVectorManager()
 	  { return static_cast<T&>(_allVectorManager[int(T::BIND_STATE)]);}
+
+     ObjectNameManager& SoftContext::getObjectNameManager()
+     {
+	  return _objectNameManager;
+     }
 	
 } /* my_gl */
