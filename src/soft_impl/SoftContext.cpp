@@ -56,6 +56,11 @@ namespace my_gl {
 	  getVectorManager<NormalManager>().normal3f(nx,ny,nz);
      }
 
+     void SoftContext::normalPointer(DataType type,size_t stride, const void *pointer)
+     {
+	  getVectorManager<NormalManager>().normalPointer(type, stride, pointer);
+     }
+
      void SoftContext::color4f(float red,float green,
 		  float blue,float alpha) noexcept
      {
@@ -69,7 +74,26 @@ namespace my_gl {
 		  color4ub(red, green, blue, alpha);
 	}
 
+	void SoftContext::colorPointer(int componentSize,
+		  DataType type,size_t stride,const void *pointer)
+	{
+	     getVectorManager<ColorManager>().
+		  colorPointer(componentSize, type, stride, pointer);
+	}
 
+	void SoftContext::vertexPointer(int componentSize, 
+		  DataType type, size_t stride, const void* pointer)
+	{
+	     getVectorManager<VertexManager>().vertexPointer
+		  (componentSize, type, stride, pointer);
+	}
+
+	void SoftContext::texCoordPointer(int componentSize, 
+		  DataType type, size_t stride, const void* pointer)
+	{
+	     getVectorManager<TexCoordManager>().texCoordPointer
+		  (componentSize, type, stride, pointer);
+	}
 
 
      template<typename T>

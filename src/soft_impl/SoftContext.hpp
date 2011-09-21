@@ -49,13 +49,25 @@ namespace my_gl {
 	//glIsBuffer
 	bool isBuffer(Name name) const noexcept;
 
+	void vertexPointer(int componentSize,DataType type, 
+		  size_t stride, const void* pointer);
+
 	void normal3f(float nx,float ny,float nz)noexcept;
+
+	void normalPointer(DataType type,
+		  size_t stride,const void *pointer);
 
 	void color4f(float red,float green,
 		  float blue,float alpha) noexcept;
 
 	void color4ub(uint8_t red,uint8_t green,
 		  uint8_t blue,uint8_t alpha) noexcept;
+
+	void colorPointer(int componentSize,DataType type,
+		  size_t stride,const void *pointer);
+
+	void texCoordPointer(int componentSize, 
+		  DataType type, size_t stride, const void* pointer);
 
 	ObjectNameManager& getObjectNameManager();
 
