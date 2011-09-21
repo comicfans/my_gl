@@ -46,26 +46,7 @@ namespace my_gl {
      private:
 	  template<DataType dataType>
 	       Vector copyToFloats(const void* p)
-	       const noexcept
-	       {
-		    typedef typename 
-			 DataTypeTraits<dataType>::underlineType type;
-		    type const *tp=static_cast<type const*>(p);
-		    Vector ret;
-		    copy_n(tp,_componentNumber,&ret.x);
-
-		    if (_normalize)
-		    {
-			 for (int i=0; i<_componentNumber; ++i)
-			 {
-			      ret(i)=DataTypeTraits<dataType>::
-				   normalize(ret(i));
-			 }
-		    }
-
-		    return ret;
-	       }
-
+	       const noexcept;
      };
 } /* my_gl */
 

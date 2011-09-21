@@ -25,21 +25,13 @@
 
 namespace my_gl {
 
-     class TwoSourceVectorManager :protected VectorManager{
+     class TwoSourceVectorManager :public VectorManager{
      
 	  public:
 
 	       TwoSourceVectorManager(BindState bindState);
 
-	       using VectorManager::bindArrayBufferObject;
-	       using VectorManager::enableVertexArray;
-	       using VectorManager::getBindState;
-	       using VectorManager::getProvider;
-	       using VectorManager::vertexArrayEnabled;
-
 	  protected:
-
-	       using VectorManager::vertexArrayChange;
 
 	       virtual void clientStateChangeCallback(bool vertexArrayEnabled);
 

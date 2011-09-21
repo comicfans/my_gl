@@ -26,11 +26,11 @@ namespace my_gl {
 
      // GL Client Normal Array is Disabled by default
      NormalManager::NormalManager()
-	  :TwoSourceVectorManager(BindState::NORMAL)
+	  :TwoSourceVectorManager(BIND_STATE)
      {
      }
 
-     void NormalManager::normal(float nx,float ny,float nz)
+     void NormalManager::normal3f(float nx,float ny,float nz)
      {
 	  //TODO 
 	  //if normal array is enabled ,what behavie is defined 

@@ -23,7 +23,7 @@
 namespace my_gl {
 
      VertexManager::VertexManager()noexcept
-	  :VectorManager(BindState::VERTEX)
+	  :VectorManager(BIND_STATE)
 	  {}
 
      void VertexManager::vertexPointer(int componentSize, 

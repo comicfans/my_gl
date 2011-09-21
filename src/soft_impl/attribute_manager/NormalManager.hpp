@@ -32,11 +32,13 @@ namespace my_gl{
 	  NormalManager();
 
 	  //glNormal3f
-	  void normal(float nx,float ny,float nz);
+	  void normal3f(float nx,float ny,float nz);
 
 	  //glNormalPointer
 	  void normalPointer(DataType type,size_t stride,
 		    const void* pointer);
+
+	  static const BindState BIND_STATE=BindState::NORMAL;
 
      };
 	

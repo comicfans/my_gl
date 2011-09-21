@@ -35,6 +35,28 @@ namespace my_gl {
 	  _normalize(normalize)
      {}
 
+	  template<DataType dataType>
+	       Vector ArrayVectorProvider::copyToFloats(const void* p)
+	       const noexcept
+	       {
+		    typedef typename 
+			 DataTypeTraits<dataType>::underlineType type;
+		    type const *tp=static_cast<type const*>(p);
+		    Vector ret;
+		    copy_n(tp,_componentNumber,&ret.x);
+
+		    if (_normalize)
+		    {
+			 for (int i=0; i<_componentNumber; ++i)
+			 {
+			      ret(i)=DataTypeTraits<dataType>::
+				   normalize(ret(i));
+			 }
+		    }
+
+		    return ret;
+	       }
+
 
 
      Vector ArrayVectorProvider::castRead

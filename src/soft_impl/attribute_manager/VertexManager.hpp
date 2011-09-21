@@ -32,6 +32,8 @@ namespace my_gl {
 	//glVertexPointer
 	void vertexPointer(int componentSize,DataType type,size_t stride,const void* pointer);
 
+	static const BindState BIND_STATE=BindState::VERTEX;
+
      };
 	
 } /* my_gl */

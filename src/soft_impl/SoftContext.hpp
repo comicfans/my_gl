@@ -20,7 +20,7 @@
 
 #define SOFT_CONTEXT_HPP
 
-#include <boost/ptr_container/ptr_vector.hpp>
+#include <boost/ptr_container/ptr_array.hpp>
 
 #include "Context.hpp"
 #include "object/ObjectNameManager.hpp"
@@ -29,7 +29,7 @@
 
 namespace my_gl {
 
-     using boost::ptr_vector;
+     using boost::ptr_array;
 
      class BufferObject;
      class VectorManager;
@@ -49,7 +49,13 @@ namespace my_gl {
 	//glIsBuffer
 	bool isBuffer(Name name) const noexcept;
 
-	void normal(float nx,float ny,float nz);
+	void normal3f(float nx,float ny,float nz)noexcept;
+
+	void color4f(float red,float green,
+		  float blue,float alpha) noexcept;
+
+	void color4ub(uint8_t red,uint8_t green,
+		  uint8_t blue,uint8_t alpha) noexcept;
 
 	ObjectNameManager& getObjectNameManager();
 
@@ -61,10 +67,10 @@ namespace my_gl {
 
 	ArrayBufferObjectManager _arrayBufferObjectManager;
 
-	ptr_vector<VectorManager> _allVectorManager;
+	ptr_array<VectorManager,4> _allVectorManager;
 
 	template<typename T>
-	     T& getVectorManager(BindState bindState);
+	     T& getVectorManager();
 
      };
 	
