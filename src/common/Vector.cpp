@@ -59,6 +59,12 @@ namespace my_gl {
 	  return _values[idx];
      }
 
+     float& Vector::operator[](size_t idx)noexcept
+     {return operator()(idx);}
+
+     const float& Vector::operator[](size_t idx)const noexcept
+     {return operator[](idx);}
+
      const float& Vector::operator()(size_t idx) const noexcept
      {
 	  return const_cast<Vector&>(*this)(idx);

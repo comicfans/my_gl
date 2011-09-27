@@ -64,9 +64,18 @@ namespace my_gl {
 
      };
 
-     void inplaceMultiVector(const Matrix& lhs,float *pointer);
+     void inplaceMultiVector(const Matrix& lhs,float *pointer) noexcept;
 
-	
+     struct Vector;
+
+     void inplaceMultiVector(const Matrix& lhs,Vector& vector) noexcept;
+
+     void multiVectorTo(const Matrix& lhs,const Vector& vector,float *result) noexcept;
+
+     void multiVectorTo(const Matrix& lhs,const float* vector,float * result)noexcept;
+
+     void multiVectorTo(const Matrix& lhs,const Vector& vector, Vector& result) noexcept;
+
 } /* my_gl */
 
 

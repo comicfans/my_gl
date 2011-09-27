@@ -48,6 +48,9 @@ namespace my_gl {
 
 	       float& operator()(size_t idx)noexcept;
 	       const float& operator()(size_t idx)const noexcept;
+
+	       float& operator[](size_t idx)noexcept;
+	       const float& operator[](size_t idx)const noexcept;
 	  private:
 	       float _values[LENGTH];
      	/* data */

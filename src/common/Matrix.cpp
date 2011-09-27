@@ -21,8 +21,10 @@
 #include <algorithm>
 #include <utility>
 
+#include "Vector.hpp"
+
 using std::fill_n;
-using std::copy;
+using std::copy_n;
 
 namespace my_gl {
 
@@ -38,7 +40,7 @@ namespace my_gl {
 
      Matrix & Matrix::operator=(const Matrix &rhs)noexcept
      {
-	  copy(rhs._rowFirstArray,rhs._rowFirstArray+ELEMENTS_NUMBER,
+	  copy_n(rhs._rowFirstArray,ELEMENTS_NUMBER,
 		    _rowFirstArray);
 	  return *this;
      }
@@ -110,20 +112,45 @@ namespace my_gl {
 	  return ret;
      }
 
-     void inplaceMultiVector(const Matrix& lhs,float *pointer)
+     void multiVectorTo(const Matrix& lhs, const float* vector, float *result) noexcept
      {
+	  fill_n(result,Matrix::LENGTH,0);
 
-
-	  float temp[Matrix::LENGTH]={0,0,0,0};
 	  for (int i=0; i<Matrix::LENGTH; ++i)
 	  {
 	       for (int j=0; j<Matrix::LENGTH; ++j)
 	       {
-		    temp[i]+=lhs(i,j)*pointer[j];
+		    result[i]+=lhs(i,j)*vector[j];
 	       }
 	  }
-
-	  copy(temp,temp+Matrix::LENGTH,pointer);
      }
 	
+
+     void inplaceMultiVector(const Matrix& lhs,float *pointer) noexcept
+     {
+
+	  float temp[Matrix::LENGTH];
+
+	  multiVectorTo(lhs,pointer,temp);
+
+	  copy_n(temp,Matrix::LENGTH,pointer);
+     }
+
+     void inplaceMultiVector(const Matrix& lhs,Vector& vector) noexcept
+     {
+	  inplaceMultiVector(lhs,&vector[0]);
+     }
+
+     void multiVectorTo(const Matrix& lhs, const Vector& vector, Vector& result) noexcept
+     {
+	  multiVectorTo(lhs,&vector[0],&result[0]);
+     }
+
+     void multiVectorTo(const Matrix& lhs, const Vector& vector, float *result) noexcept
+     {
+	  multiVectorTo(lhs,vector,result);
+     }
+
+
+
 } /* my_gl */
