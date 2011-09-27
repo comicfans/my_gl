@@ -36,6 +36,11 @@ namespace my_gl {
      enum class BindState{VERTEX,NORMAL,COLOR,TEXCOORD,ELEMENTS};
 
      enum class DataUsage{STATIC_DRAW,DYNAMIC_DRAW};
+
+     /** 
+      * @brief glMatrixMode()
+      */
+     enum class MatrixMode{MODEL_VIEW,PROJECTION,TEXTURE};
 } /* my_gl */
 
 

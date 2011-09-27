@@ -35,7 +35,25 @@ namespace my_gl {
 	  fill_n(_rowFirstArray,ELEMENTS_NUMBER,0);
 	  }
 	  //init w to 1
-	  (*this)(LENGTH-1,LENGTH-1)=1;
+	  _rowFirstArray[ELEMENTS_NUMBER-1]=1;
+     }
+
+     Matrix::Matrix(const float* values,bool rowFirst)noexcept
+     {
+	  if (rowFirst)
+	  {
+	       copy_n(values,ELEMENTS_NUMBER,_rowFirstArray);
+	  }
+	  else
+	  {
+	       for (int column=0; column<LENGTH; ++column)
+	       {
+		    for (int row=0; row<LENGTH; ++row)
+		    {
+			 _rowFirstArray[row*LENGTH+column]=values[column*LENGTH+row];
+		    }
+	       }
+	  }
      }
 
      Matrix & Matrix::operator=(const Matrix &rhs)noexcept
@@ -90,6 +108,42 @@ namespace my_gl {
 	  return ret;
      }
 
+     Matrix Matrix::rotate(float angle,float x,float y,float z)noexcept
+     {
+	  Matrix ret;
+
+	  float rotateAxis[3]={x,y,z};
+
+	  normalize(rotateAxis);
+
+	  x=rotateAxis[0];
+	  y=rotateAxis[1];
+	  z=rotateAxis[2];
+
+	  const float 
+	       c=cos(angle),
+	       onePlusC=1-c,
+	       s=sin(angle),
+	       xy=x*y,
+	       xz=x*z,
+	       yz=y*z,
+	       xs=x*s,
+	       ys=y*s,
+	       zs=z*s;
+
+	  ret(0,0)=x*x*onePlusC+c;
+	  ret(0,1)=xy*onePlusC-zs;
+	  ret(0,2)=xz*onePlusC+ys;
+	  ret(1,0)=xy*onePlusC+zs;
+	  ret(1,1)=y*y*onePlusC+c;
+	  ret(1,2)=yz*onePlusC-xs;
+	  ret(2,0)=xz*onePlusC-ys;
+	  ret(2,1)=yz*onePlusC+xs;
+	  ret(2,2)=z*z*onePlusC+c;
+
+	  return ret;
+     }
+
      Matrix Matrix::translate(float x,  float y,  float z)noexcept
      {
 	  Matrix ret=identity();
@@ -124,6 +178,9 @@ namespace my_gl {
 	       }
 	  }
      }
+
+     const float* Matrix::values()const noexcept
+     {return _rowFirstArray;}
 	
 
      void inplaceMultiVector(const Matrix& lhs,float *pointer) noexcept

@@ -23,6 +23,7 @@
 #include <boost/ptr_container/ptr_array.hpp>
 
 #include "common/Context.hpp"
+#include "common/MatrixStack.hpp"
 #include "object/ObjectNameManager.hpp"
 #include "object/ArrayBufferObjectManager.hpp"
 
@@ -43,37 +44,52 @@ namespace my_gl {
 
 
 	//glGenBuffers
-	void genBuffers(size_t size,Name *names);
+	virtual void genBuffers(size_t size,Name *names);
 	//glDeleteBuffers
-	void deleteBuffers(size_t size,Name *names);
+	virtual void deleteBuffers(size_t size,Name *names);
 	//glIsBuffer
-	bool isBuffer(Name name) const noexcept;
+	virtual bool isBuffer(Name name) const noexcept;
 
 	//glVertexPointer
-	void vertexPointer(int componentSize,DataType type, 
+	virtual void vertexPointer(int componentSize,DataType type, 
 		  size_t stride, const void* pointer);
 
 	//glNormal3f
-	void normal3f(float nx,float ny,float nz)noexcept;
+	virtual void normal3f(float nx,float ny,float nz)noexcept;
 
 	//glNormalPointer
-	void normalPointer(DataType type,
+	virtual void normalPointer(DataType type,
 		  size_t stride,const void *pointer);
 	//glColor4f
-	void color4f(float red,float green,
+	virtual void color4f(float red,float green,
 		  float blue,float alpha) noexcept;
 
 	//glColor4ub
-	void color4ub(uint8_t red,uint8_t green,
+	virtual void color4ub(uint8_t red,uint8_t green,
 		  uint8_t blue,uint8_t alpha) noexcept;
 
 	//glColorPointer
-	void colorPointer(int componentSize,DataType type,
+	virtual void colorPointer(int componentSize,DataType type,
 		  size_t stride,const void *pointer);
 
 	//glTexCoordPointer
-	void texCoordPointer(int componentSize, 
+	virtual void texCoordPointer(int componentSize, 
 		  DataType type, size_t stride, const void* pointer);
+
+	//glMatrixMode
+	virtual void matrixMode(MatrixMode matrixMode)noexcept;
+
+	//glTranlatef
+	virtual void translatef(float x,float y,float z)noexcept;
+
+	//glScalef
+	virtual void scalef(float x,float y,float z)noexcept;
+
+	//glRotatef
+	virtual void rotatef(float angle,float x,float y,float z)noexcept;
+
+	//glMultMatrixf
+	virtual void multMatrixf(const float* matrix)noexcept;
 
 	ObjectNameManager& getObjectNameManager();
 
@@ -89,6 +105,12 @@ namespace my_gl {
 
 	template<typename T>
 	     T& getVectorManager();
+
+	MatrixMode _matrixMode;
+
+	MatrixStack _matrixStacks[3];
+
+	void multMatrixf(const Matrix& matrix)noexcept;
 
      };
 	

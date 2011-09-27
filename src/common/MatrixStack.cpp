@@ -28,9 +28,9 @@ namespace my_gl {
 	  stack<Matrix>::push(top());
      }
 
-     void MatrixStack::multiTop(const my_gl::Matrix &lhs)noexcept
+     void MatrixStack::multiTop(const my_gl::Matrix &rhs)noexcept
      {
-	  top()*=topMatrix;
+	  top()*=rhs;
      }
 	
 } /* my_gl */

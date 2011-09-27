@@ -26,11 +26,16 @@
 
 namespace my_gl {
 
+     using std::stack;
 
-     class MatrixStack:public std::stack<Matrix> {
+     class MatrixStack:protected stack<Matrix> {
      public:
 
-	  void push();
+	  void multiTop(const Matrix& rhs)noexcept;
+
+	  void push()noexcept;
+
+	  using stack<Matrix>::top;
      
      };
 

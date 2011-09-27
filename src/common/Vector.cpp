@@ -19,10 +19,19 @@
 #include "Vector.hpp"
 
 #include <cassert>
+#include <cmath>
 #include <algorithm>
+#include <functional>
 
 using std::fill_n;
 using std::copy_n;
+using std::sin;
+using std::cos;
+using std::sqrt;
+using std::for_each;
+using std::divides;
+using std::bind;
+using std::placeholders::_1;
 
 namespace my_gl {
 
@@ -75,4 +84,20 @@ namespace my_gl {
 	  copy_n(rhs._values,LENGTH,_values);
 	  return *this;
      }
+
+     const float* Vector::values()const noexcept
+     {return _values;}
+
+     inline float sq(float value){return value*value;}
+
+     void normalize(float * values)
+     {
+	  float lengthSq=sq(values[0])+sq(values[1])+sq(values[2]);
+
+	  float length=sqrt(lengthSq);
+
+	  for_each(values,values+3,bind(divides<float>(),_1,length));
+     }
+
+
 } /* my_gl */

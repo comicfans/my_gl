@@ -35,6 +35,8 @@ namespace my_gl {
 	   */
 	  Matrix(bool fillZero=true) noexcept;
 
+	  Matrix(const float* values,bool rowFirst=true) noexcept;
+
 	  Matrix& operator=(const Matrix& rhs) noexcept;
 
 	  void operator*=(const Matrix& rhs) noexcept;
@@ -44,6 +46,8 @@ namespace my_gl {
 	  float const& operator()(size_t rowIdx,size_t columnIdx) 
 	       const noexcept;
 
+	  const float* values()const noexcept;
+
 	  static Matrix identity() noexcept;
 
 	  static Matrix translate(float x,float y,float z) noexcept;
@@ -51,7 +55,7 @@ namespace my_gl {
 	  static Matrix scale(float x,float y,float z) noexcept;
 
 	  //TODO 
-	  static Matrix rotate() noexcept;
+	  static Matrix rotate(float angle,float x,float y,float z) noexcept;
 
 	  void swap(Matrix& rhs) noexcept;
 

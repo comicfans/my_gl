@@ -51,10 +51,14 @@ namespace my_gl {
 
 	       float& operator[](size_t idx)noexcept;
 	       const float& operator[](size_t idx)const noexcept;
+
+	       const float* values()const noexcept;
 	  private:
 	       float _values[LENGTH];
      	/* data */
      };
+
+     void normalize(float * values);
 	
 } /* my_gl */
 

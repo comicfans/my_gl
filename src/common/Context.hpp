@@ -64,6 +64,9 @@ namespace my_gl {
 	virtual void  texCoordPointer(int componentSize, 
 		  DataType type, size_t stride, const void * pointer)=0;
 
+	//glMatrixMode
+	virtual void matrixMode(MatrixMode matrixMode) noexcept =0 ;
+
 	virtual ~Context()noexcept;
      };
 	

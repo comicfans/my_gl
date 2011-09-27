@@ -103,6 +103,37 @@ namespace my_gl {
 		  (componentSize, type, stride, pointer);
 	}
 
+	void SoftContext::matrixMode(MatrixMode matrixMode) noexcept
+	{
+	     _matrixMode=matrixMode;
+	}
+
+	void SoftContext::scalef(float x,float y, float z) noexcept
+	{
+	     multMatrixf(Matrix::scale(x, y, z));
+	}
+
+	void SoftContext::translatef(float x, float y, float z) noexcept
+	{
+	     multMatrixf(Matrix::translate(x, y, z));
+	}
+
+	void SoftContext::rotatef(float angle, float x, float y, float z) noexcept
+	{
+	     multMatrixf(Matrix::rotate(angle, x, y, z));
+	}
+
+	void SoftContext::multMatrixf(const Matrix& matrix)noexcept
+	{
+	     _matrixStacks[int(_matrixMode)].multiTop
+		  (matrix);
+	}
+
+	void SoftContext::multMatrixf(const float* matrix) noexcept
+	{
+	     multMatrixf(Matrix(matrix,false));
+	}
+
 
      template<typename T>
 	  T& SoftContext::getVectorManager()
