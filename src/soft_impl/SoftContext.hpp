@@ -79,6 +79,12 @@ namespace my_gl {
 	//glMatrixMode
 	virtual void matrixMode(MatrixMode matrixMode)noexcept;
 
+	//glPushMatrix
+	virtual void pushMatrix()noexcept;
+
+	//glPopMatrix
+	virtual void popMatrix()noexcept;
+
 	//glTranlatef
 	virtual void translatef(float x,float y,float z)noexcept;
 
@@ -111,6 +117,8 @@ namespace my_gl {
 	MatrixStack _matrixStacks[3];
 
 	void multMatrixf(const Matrix& matrix)noexcept;
+
+	MatrixStack& currentMatrixStack() noexcept;
 
      };
 	

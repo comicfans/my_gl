@@ -41,6 +41,9 @@ namespace my_gl {
       * @brief glMatrixMode()
       */
      enum class MatrixMode{MODEL_VIEW,PROJECTION,TEXTURE};
+
+     enum class PrimitiveType{POINTS,LINE_STRIP,LINE_LOOP,LINES,
+	  TRIANGLE_STRIP,TRIANGLE_FAN,TRIANGLES};
 } /* my_gl */
 
 

@@ -65,7 +65,27 @@ namespace my_gl {
 		  DataType type, size_t stride, const void * pointer)=0;
 
 	//glMatrixMode
-	virtual void matrixMode(MatrixMode matrixMode) noexcept =0 ;
+	virtual void matrixMode(MatrixMode matrixMode)noexcept=0;
+
+	//glPushMatrix
+	virtual void pushMatrix()noexcept=0;
+
+	//glPopMatrix
+	virtual void popMatrix()noexcept=0;
+
+
+	//glTranlatef
+	virtual void translatef(float x,float y,float z)noexcept=0;
+
+	//glScalef
+	virtual void scalef(float x,float y,float z)noexcept=0;
+
+	//glRotatef
+	virtual void rotatef(float angle,float x,float y,float z)noexcept=0;
+
+	//glMultMatrixf
+	virtual void multMatrixf(const float* matrix)noexcept=0;
+
 
 	virtual ~Context()noexcept;
      };

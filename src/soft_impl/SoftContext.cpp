@@ -108,6 +108,19 @@ namespace my_gl {
 	     _matrixMode=matrixMode;
 	}
 
+	MatrixStack& SoftContext::currentMatrixStack()noexcept
+	{return _matrixStacks[int(_matrixMode)];}
+
+	void SoftContext::pushMatrix()noexcept
+	{
+	     currentMatrixStack().push();
+	}
+
+	void SoftContext::popMatrix()noexcept
+	{
+	     currentMatrixStack().pop();
+	}
+
 	void SoftContext::scalef(float x,float y, float z) noexcept
 	{
 	     multMatrixf(Matrix::scale(x, y, z));
@@ -125,7 +138,7 @@ namespace my_gl {
 
 	void SoftContext::multMatrixf(const Matrix& matrix)noexcept
 	{
-	     _matrixStacks[int(_matrixMode)].multiTop
+	     currentMatrixStack().multiTop
 		  (matrix);
 	}
 

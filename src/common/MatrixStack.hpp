@@ -35,7 +35,7 @@ namespace my_gl {
 
 	  void push()noexcept;
 
-	  using stack<Matrix>::top;
+	  using stack<Matrix>::pop;
      
      };
 
