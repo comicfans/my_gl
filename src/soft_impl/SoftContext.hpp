@@ -97,6 +97,14 @@ namespace my_gl {
 	//glMultMatrixf
 	virtual void multMatrixf(const float* matrix)noexcept;
 
+	//glDrawArrays TODO
+	virtual void drawArrays(PrimitiveMode primitiveMode,
+		  int first,size_t count);
+
+	//glDrawElements TODO
+	virtual void drawElements(PrimitiveMode primitiveMode,
+		  size_t count,DataType dataType,const void* indices);
+
 	ObjectNameManager& getObjectNameManager();
 
 	static SoftContext& getInstance();

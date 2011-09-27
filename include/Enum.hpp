@@ -42,7 +42,7 @@ namespace my_gl {
       */
      enum class MatrixMode{MODEL_VIEW,PROJECTION,TEXTURE};
 
-     enum class PrimitiveType{POINTS,LINE_STRIP,LINE_LOOP,LINES,
+     enum class PrimitiveMode{POINTS,LINE_STRIP,LINE_LOOP,LINES,
 	  TRIANGLE_STRIP,TRIANGLE_FAN,TRIANGLES};
 } /* my_gl */
 

@@ -36,6 +36,8 @@ namespace my_gl {
 
 	  VectorManager(BindState bindState) noexcept;
 
+	  virtual ~VectorManager()noexcept;
+
 	  VectorProvider& getProvider() noexcept;
 
 	  void bindArrayBufferObject(const ArrayBufferObject* toBind);

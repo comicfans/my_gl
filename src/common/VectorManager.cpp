@@ -31,6 +31,9 @@ namespace my_gl{
 	  _bindState(bindState),_vertexArrayEnabled(false)
      {}
 
+     VectorManager::~VectorManager()noexcept
+     {}
+
      void VectorManager::bindArrayBufferObject
 	  (const ArrayBufferObject *toBind)
      {

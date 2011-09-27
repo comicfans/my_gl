@@ -147,6 +147,21 @@ namespace my_gl {
 	     multMatrixf(Matrix(matrix,false));
 	}
 
+	void SoftContext::drawArrays(PrimitiveMode primitiveMode, int first, size_t count)
+	{
+	     //TODO
+	}
+
+	void SoftContext::drawElements(PrimitiveMode primitiveMode, size_t count, 
+		  DataType dataType, const void* indices)
+	{
+	     //TODO
+	     assert(dataType==DataType::UNSIGNED_BYTE || 
+		       dataType==DataType::UNSIGNED_SHORT);
+	     {
+
+	     }
+	}
 
      template<typename T>
 	  T& SoftContext::getVectorManager()
