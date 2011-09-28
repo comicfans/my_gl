@@ -37,13 +37,13 @@ namespace my_gl {
      class ArrayBufferObjectManager {
      public:
 
-	  ArrayBufferObjectManager()noexcept;
+	  ArrayBufferObjectManager();
 
 	  void genBuffers(size_t size,Name *names) ;
 
-	  void deleteBuffers(size_t size, Name *names) noexcept;
+	  void deleteBuffers(size_t size, Name *names) ;
 
-	  void bindBuffer(BufferTarget target,Name name)noexcept;
+	  void bindBuffer(BufferTarget target,Name name);
 
 	  void bufferData(BufferTarget target,size_t size,
 		    const void* data, DataUsage usage);
@@ -51,11 +51,11 @@ namespace my_gl {
 	  void bufferSubData(BufferTarget target,ptrdiff_t offset,
 		    size_t size,const void* data);
 
-	  ArrayBufferObject* getArrayBuffer()const noexcept;
+	  ArrayBufferObject* getArrayBuffer()const ;
 
-	  ArrayBufferObject* getElementsBuffer() const noexcept;
+	  ArrayBufferObject* getElementsBuffer() const ;
 
-	  bool isBuffer(Name name)const noexcept;
+	  bool isBuffer(Name name)const ;
      
      private:
 

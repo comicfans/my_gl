@@ -33,31 +33,31 @@ namespace my_gl {
 	   * 
 	   * @param fillZero
 	   */
-	  Matrix(bool fillZero=true) noexcept;
+	  Matrix(bool fillZero=true) ;
 
-	  Matrix(const float* values,bool rowFirst=true) noexcept;
+	  Matrix(const float* values,bool rowFirst=true) ;
 
-	  Matrix& operator=(const Matrix& rhs) noexcept;
+	  Matrix& operator=(const Matrix& rhs) ;
 
-	  void operator*=(const Matrix& rhs) noexcept;
+	  void operator*=(const Matrix& rhs) ;
 
-	  float& operator()(size_t rowIdx,size_t columnIdx) noexcept;
+	  float& operator()(size_t rowIdx,size_t columnIdx) ;
 
 	  float const& operator()(size_t rowIdx,size_t columnIdx) 
-	       const noexcept;
+	       const ;
 
-	  const float* values()const noexcept;
+	  const float* values()const ;
 
-	  static Matrix identity() noexcept;
+	  static Matrix identity() ;
 
-	  static Matrix translate(float x,float y,float z) noexcept;
+	  static Matrix translate(float x,float y,float z) ;
 
-	  static Matrix scale(float x,float y,float z) noexcept;
+	  static Matrix scale(float x,float y,float z) ;
 
 	  //TODO 
-	  static Matrix rotate(float angle,float x,float y,float z) noexcept;
+	  static Matrix rotate(float angle,float x,float y,float z) ;
 
-	  void swap(Matrix& rhs) noexcept;
+	  void swap(Matrix& rhs) ;
 
 	  const static int LENGTH=4;
 
@@ -68,17 +68,17 @@ namespace my_gl {
 
      };
 
-     void inplaceMultiVector(const Matrix& lhs,float *pointer) noexcept;
+     void inplaceMultiVec4(const Matrix& lhs,float *pointer) ;
 
-     struct Vector;
+     struct Vec4;
 
-     void inplaceMultiVector(const Matrix& lhs,Vector& vector) noexcept;
+     void inplaceMultiVec4(const Matrix& lhs,Vec4& vector) ;
 
-     void multiVectorTo(const Matrix& lhs,const Vector& vector,float *result) noexcept;
+     void multiVec4To(const Matrix& lhs,const Vec4& vector,float *result) ;
 
-     void multiVectorTo(const Matrix& lhs,const float* vector,float * result)noexcept;
+     void multiVec4To(const Matrix& lhs,const float* vector,float * result);
 
-     void multiVectorTo(const Matrix& lhs,const Vector& vector, Vector& result) noexcept;
+     void multiVec4To(const Matrix& lhs,const Vec4& vector, Vec4& result) ;
 
 } /* my_gl */
 

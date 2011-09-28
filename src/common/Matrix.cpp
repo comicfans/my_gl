@@ -21,14 +21,14 @@
 #include <algorithm>
 #include <utility>
 
-#include "Vector.hpp"
+#include "Vec4.hpp"
 
 using std::fill_n;
 using std::copy_n;
 
 namespace my_gl {
 
-     Matrix::Matrix(bool fillZero)noexcept
+     Matrix::Matrix(bool fillZero)
      {
 	  if (fillZero)
 	  {
@@ -38,7 +38,7 @@ namespace my_gl {
 	  _rowFirstArray[ELEMENTS_NUMBER-1]=1;
      }
 
-     Matrix::Matrix(const float* values,bool rowFirst)noexcept
+     Matrix::Matrix(const float* values,bool rowFirst)
      {
 	  if (rowFirst)
 	  {
@@ -56,14 +56,14 @@ namespace my_gl {
 	  }
      }
 
-     Matrix & Matrix::operator=(const Matrix &rhs)noexcept
+     Matrix & Matrix::operator=(const Matrix &rhs)
      {
 	  copy_n(rhs._rowFirstArray,ELEMENTS_NUMBER,
 		    _rowFirstArray);
 	  return *this;
      }
 
-     void Matrix::operator*=(const my_gl::Matrix &rhs)noexcept
+     void Matrix::operator*=(const my_gl::Matrix &rhs)
      {
 	  Matrix temp;
 
@@ -82,23 +82,23 @@ namespace my_gl {
 	  this->swap(temp);
      }
 
-     void Matrix::swap(my_gl::Matrix &rhs)noexcept
+     void Matrix::swap(my_gl::Matrix &rhs)
      {
 	  std::swap(_rowFirstArray,rhs._rowFirstArray);
      }
 
-     float& Matrix::operator()(size_t rowIdx,  size_t columnIdx)noexcept
+     float& Matrix::operator()(size_t rowIdx,  size_t columnIdx)
      {
 	  return _rowFirstArray[rowIdx*LENGTH+columnIdx];
      }
 
      float const& Matrix::operator()
-	  (size_t rowIdx,size_t columnIdx)const  noexcept
+	  (size_t rowIdx,size_t columnIdx)const  
 	  {
 	       return const_cast<Matrix&>(*this)(rowIdx,columnIdx);
 	  }
 
-     Matrix Matrix::identity()noexcept
+     Matrix Matrix::identity()
      {
 	  Matrix ret;
 	  for (int i=0; i<LENGTH-1; ++i)
@@ -108,7 +108,7 @@ namespace my_gl {
 	  return ret;
      }
 
-     Matrix Matrix::rotate(float angle,float x,float y,float z)noexcept
+     Matrix Matrix::rotate(float angle,float x,float y,float z)
      {
 	  Matrix ret;
 
@@ -144,7 +144,7 @@ namespace my_gl {
 	  return ret;
      }
 
-     Matrix Matrix::translate(float x,  float y,  float z)noexcept
+     Matrix Matrix::translate(float x,  float y,  float z)
      {
 	  Matrix ret=identity();
 
@@ -155,7 +155,7 @@ namespace my_gl {
 	  return ret;
      }
 
-     Matrix Matrix::scale(float x,float y,float z)noexcept
+     Matrix Matrix::scale(float x,float y,float z)
      {
 	  Matrix ret=identity();
 
@@ -166,7 +166,7 @@ namespace my_gl {
 	  return ret;
      }
 
-     void multiVectorTo(const Matrix& lhs, const float* vector, float *result) noexcept
+     void multiVec4To(const Matrix& lhs, const float* vector, float *result) 
      {
 	  fill_n(result,Matrix::LENGTH,0);
 
@@ -179,33 +179,33 @@ namespace my_gl {
 	  }
      }
 
-     const float* Matrix::values()const noexcept
+     const float* Matrix::values()const 
      {return _rowFirstArray;}
 	
 
-     void inplaceMultiVector(const Matrix& lhs,float *pointer) noexcept
+     void inplaceMultiVec4(const Matrix& lhs,float *pointer) 
      {
 
 	  float temp[Matrix::LENGTH];
 
-	  multiVectorTo(lhs,pointer,temp);
+	  multiVec4To(lhs,pointer,temp);
 
 	  copy_n(temp,Matrix::LENGTH,pointer);
      }
 
-     void inplaceMultiVector(const Matrix& lhs,Vector& vector) noexcept
+     void inplaceMultiVec4(const Matrix& lhs,Vec4& vector) 
      {
-	  inplaceMultiVector(lhs,&vector[0]);
+	  inplaceMultiVec4(lhs,&vector[0]);
      }
 
-     void multiVectorTo(const Matrix& lhs, const Vector& vector, Vector& result) noexcept
+     void multiVec4To(const Matrix& lhs, const Vec4& vector, Vec4& result) 
      {
-	  multiVectorTo(lhs,&vector[0],&result[0]);
+	  multiVec4To(lhs,&vector[0],&result[0]);
      }
 
-     void multiVectorTo(const Matrix& lhs, const Vector& vector, float *result) noexcept
+     void multiVec4To(const Matrix& lhs, const Vec4& vector, float *result) 
      {
-	  multiVectorTo(lhs,vector,result);
+	  multiVec4To(lhs,vector,result);
      }
 
 

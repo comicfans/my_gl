@@ -37,24 +37,24 @@ namespace my_gl {
 	  explicit UntypedArray(size_t size,const void *p);
 
 	  void replace(ptrdiff_t offset,size_t size,
-		    const void *data)noexcept;
+		    const void *data);
 
-	  size_t size()const noexcept;
+	  size_t size()const ;
 
 	  template<typename T>
-	       T const & operator[](size_t idx)const noexcept
+	       T const & operator[](size_t idx)const 
 	       {
 		    assert(idx<_size/sizeof(T));
 		    return static_cast<T*>(_array.get())[idx];
 	       }
 	  template<typename T=int8_t>
-	       T const * get()const noexcept
+	       T const * get()const 
 	       {
 		    void* p=_array.get();
 		    return static_cast<T*>(p);
 	       }
 	  template<typename T=int8_t>
-	       T * get() noexcept
+	       T * get() 
 	       { 
 		    void *p=_array.get();
 		    return static_cast<T*>(p);

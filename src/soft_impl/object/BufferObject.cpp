@@ -23,13 +23,13 @@ namespace my_gl {
 
 
      BufferObject::BufferObject(Name name)
-	  noexcept :_name(name)
+	   :_name(name)
      {}
 
-     Name BufferObject::name()const noexcept
+     Name BufferObject::name()const 
      {return _name;}
 
-     const void* BufferObject::getBufferPointer()const noexcept
+     const void* BufferObject::getBufferPointer()const 
      {
 	  return _dataPointer->get();
      }

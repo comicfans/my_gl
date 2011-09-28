@@ -1,9 +1,9 @@
 /*
  * =====================================================================================
  *
- *       Filename:  TwoSourceVectorManager.hpp
+ *       Filename:  TwoSourceVec4Manager.hpp
  *
- *    Description:  can use vetex array/buffer object or single UniqueVectorProvider 
+ *    Description:  can use vetex array/buffer object or single UniqueVec4Provider 
  *
  *        Version:  1.0
  *        Created:  2011-9-21 1:36:56
@@ -16,30 +16,30 @@
  * =====================================================================================
  */
 
-#ifndef TWO_SOURCE_VECTOR_MANAGER_HPP
+#ifndef TWO_SOURCE_VEC4_MANAGER_HPP
 
-#define TWO_SOURCE_VECTOR_MANAGER_HPP
+#define TWO_SOURCE_VEC4_MANAGER_HPP
 
-#include "common/VectorManager.hpp"
-#include "common/Vector.hpp"
+#include "common/Vec4Manager.hpp"
+#include "common/Vec4.hpp"
 
 namespace my_gl {
 
-     class TwoSourceVectorManager :public VectorManager{
+     class TwoSourceVec4Manager :public Vec4Manager{
      
 	  public:
 
-	       TwoSourceVectorManager(BindState bindState);
+	       TwoSourceVec4Manager(BindState bindState);
 
 	  protected:
 
 	       virtual void clientStateChangeCallback(bool vertexArrayEnabled);
 
-	       void setValue(const Vector& value);
+	       void setValue(const Vec4& value);
 
 	  private:
 
-	       Vector _uniqueValue;
+	       Vec4 _uniqueValue;
      
      };
 	
@@ -47,4 +47,4 @@ namespace my_gl {
 
 
 
-#endif /* end of include guard: TWO_SOURCE_VECTOR_MANAGER_HPP */
+#endif /* end of include guard: TWO_SOURCE_VEC4_MANAGER_HPP */

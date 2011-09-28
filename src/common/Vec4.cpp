@@ -1,9 +1,9 @@
 /*
  * =====================================================================================
  *
- *       Filename:  Vector.cpp
+ *       Filename:  Vec4.cpp
  *
- *    Description:  implementation of Vector
+ *    Description:  implementation of Vec4
  *
  *        Version:  1.0
  *        Created:  2011-9-14 14:00:59
@@ -16,7 +16,7 @@
  * =====================================================================================
  */
 
-#include "Vector.hpp"
+#include "Vec4.hpp"
 
 #include <cassert>
 #include <cmath>
@@ -35,7 +35,7 @@ using std::placeholders::_1;
 
 namespace my_gl {
 
-     Vector::Vector(bool fillZero)noexcept
+     Vec4::Vec4(bool fillZero)
      {
 	  if (fillZero)
 	  {
@@ -45,7 +45,7 @@ namespace my_gl {
 	  _values[LENGTH-1]=1;
      }
 
-     Vector::Vector(float fx,float fy,float fz,float fw)noexcept
+     Vec4::Vec4(float fx,float fy,float fz,float fw)
      {
 	  _values[0]=fx;
 	  _values[1]=fy;
@@ -54,33 +54,33 @@ namespace my_gl {
      }
 
 
-     float& Vector::operator()(size_t idx)noexcept
+     float& Vec4::operator()(size_t idx)
      {
 	  assert(idx<LENGTH);
 	  return _values[idx];
      }
 
-     float& Vector::operator[](size_t idx)noexcept
+     float& Vec4::operator[](size_t idx)
      {return operator()(idx);}
 
-     const float& Vector::operator[](size_t idx)const noexcept
+     const float& Vec4::operator[](size_t idx)const 
      {return operator[](idx);}
 
-     const float& Vector::operator()(size_t idx) const noexcept
+     const float& Vec4::operator()(size_t idx) const 
      {
-	  return const_cast<Vector&>(*this)(idx);
+	  return const_cast<Vec4&>(*this)(idx);
      }
 
-     Vector& Vector::operator=(const Vector& rhs)
+     Vec4& Vec4::operator=(const Vec4& rhs)
      {
 	  copy_n(rhs._values,LENGTH,_values);
 	  return *this;
      }
 
-     const float* Vector::values()const noexcept
+     const float* Vec4::values()const 
      {return _values;}
 
-     float * Vector::values()noexcept
+     float * Vec4::values()
      {return _values;}
 
      inline float sq(float value){return value*value;}

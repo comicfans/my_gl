@@ -1,7 +1,7 @@
 /*
  * =====================================================================================
  *
- *       Filename:  UniqueVectorProvider.cpp
+ *       Filename:  UniqueVec4Provider.cpp
  *
  *    Description:  
  *
@@ -15,25 +15,25 @@
  *
  * =====================================================================================
  */
-#include "UniqueVectorProvider.hpp"
+#include "UniqueVec4Provider.hpp"
 
 namespace my_gl {
 
-     UniqueVectorProvider::UniqueVectorProvider
-	  (const Vector& value)noexcept
+     UniqueVec4Provider::UniqueVec4Provider
+	  (const Vec4& value)
 	  :_value(value){}
 
-     Vector UniqueVectorProvider::value()noexcept
+     Vec4 UniqueVec4Provider::value()
      {
 	  return _value;
      }
 
-     void UniqueVectorProvider::setValue(const Vector& value)noexcept
+     void UniqueVec4Provider::setValue(const Vec4& value)
      {
 	  _value=value;
      }
 
-     void UniqueVectorProvider::next(size_t steps)noexcept
+     void UniqueVec4Provider::next(size_t steps)
      {}
 	
 } /* my_gl */

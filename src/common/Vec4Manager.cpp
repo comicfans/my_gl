@@ -1,9 +1,9 @@
 /*
  * =====================================================================================
  *
- *       Filename:  VectorManager.cpp
+ *       Filename:  Vec4Manager.cpp
  *
- *    Description:  implementation of VectorManager
+ *    Description:  implementation of Vec4Manager
  *
  *        Version:  1.0
  *        Created:  2011-9-19 16:20:43
@@ -16,40 +16,40 @@
  * =====================================================================================
  */
 
-#include "VectorManager.hpp"
+#include "Vec4Manager.hpp"
 
 #include <cassert>
 
-#include "BufferObjectVectorProvider.hpp"
-#include "ClientArrayVectorProvider.hpp"
+#include "BufferObjectVec4Provider.hpp"
+#include "ClientArrayVec4Provider.hpp"
 #include "object/ArrayBufferObject.hpp"
 
 namespace my_gl{
 	
-     VectorManager::VectorManager(BindState bindState)noexcept
+     Vec4Manager::Vec4Manager(BindState bindState)
 	  :_bindedArrayBufferObject(nullptr),
 	  _bindState(bindState),_vertexArrayEnabled(false)
      {}
 
-     VectorManager::~VectorManager()noexcept
+     Vec4Manager::~Vec4Manager()
      {}
 
-     void VectorManager::bindArrayBufferObject
+     void Vec4Manager::bindArrayBufferObject
 	  (const ArrayBufferObject *toBind)
      {
 	  _bindedArrayBufferObject=toBind;
      }
 
-     BindState VectorManager::getBindState() const noexcept
+     BindState Vec4Manager::getBindState() const 
      {
 	  return _bindState;
      }
 
 
-     bool VectorManager::vertexArrayEnabled()const noexcept
+     bool Vec4Manager::vertexArrayEnabled()const 
      {return _vertexArrayEnabled;}
 
-     void VectorManager::enableVertexArray(bool value)noexcept
+     void Vec4Manager::enableVertexArray(bool value)
      {
 	  if(value!=_vertexArrayEnabled)
 	  {
@@ -58,16 +58,16 @@ namespace my_gl{
 	  }
      }
 
-     void VectorManager::clientStateChangeCallback(bool value)
+     void Vec4Manager::clientStateChangeCallback(bool value)
      {
      }
 
-     VectorProvider& VectorManager::getProvider() noexcept
+     Vec4Provider& Vec4Manager::getProvider() 
      {
 	  return *_pImpl;
      }
 
-     void VectorManager::vertexArrayChange(int componentSize,  
+     void Vec4Manager::vertexArrayChange(int componentSize,  
 DataType type,  size_t stride,  const void *pointer)
      {
 
@@ -75,7 +75,7 @@ DataType type,  size_t stride,  const void *pointer)
 	  //pointer is interperate as a offset in buffer object
 	  if(_bindedArrayBufferObject)
 	  {
-	       _pImpl.reset(new BufferObjectVectorProvider
+	       _pImpl.reset(new BufferObjectVec4Provider
 			 (*_bindedArrayBufferObject, reinterpret_cast<intptr_t>(pointer),
 			  3,type,stride));
 	  }
@@ -85,7 +85,7 @@ DataType type,  size_t stride,  const void *pointer)
 	       //OpenGL defined that if 
 	       assert(_vertexArrayEnabled);
 	  
-	       _pImpl.reset(new ClientArrayVectorProvider
+	       _pImpl.reset(new ClientArrayVec4Provider
 			 (pointer,3,type,stride));
 	  }
 

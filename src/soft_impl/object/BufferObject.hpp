@@ -41,11 +41,11 @@ namespace my_gl {
      class BufferObject : noncopyable {
      public:
 
-	  BufferObject(Name name) noexcept;
+	  BufferObject(Name name) ;
 
-	  const void * getBufferPointer()const noexcept;
+	  const void * getBufferPointer()const ;
 
-	  Name name()const noexcept;
+	  Name name()const ;
 
      protected:
 

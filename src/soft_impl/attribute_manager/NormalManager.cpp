@@ -20,13 +20,13 @@
 
 #include <cassert>
 
-#include "common/UniqueVectorProvider.hpp"
+#include "common/UniqueVec4Provider.hpp"
 
 namespace my_gl {
 
      // GL Client Normal Array is Disabled by default
      NormalManager::NormalManager()
-	  :TwoSourceVectorManager(BIND_STATE)
+	  :TwoSourceVec4Manager(BIND_STATE)
      {
      }
 
@@ -39,7 +39,7 @@ namespace my_gl {
 
 	  assert(!vertexArrayEnabled());
 
-	  setValue(Vector(nx,ny,nz));
+	  setValue(Vec4(nx,ny,nz));
 
      }
 

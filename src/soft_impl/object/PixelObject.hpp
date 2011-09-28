@@ -37,13 +37,13 @@ namespace my_gl {
 	void bindImage(size_t width,size_t height,
 		  ImageFormat format,StoreType type,void *p);
 
-	ImageFormat getFormat()const noexcept;
+	ImageFormat getFormat()const ;
 
-	StoreType getType()const noexcept;
+	StoreType getType()const ;
 
 	void subImage(int xOffset,int yOffset,
 		  size_t width,size_t height,
-		  ImageFormat format,StoreType type,void *p)noexcept;
+		  ImageFormat format,StoreType type,void *p);
 
      private:
 	size_t _width;

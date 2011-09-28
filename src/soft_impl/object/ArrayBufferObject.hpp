@@ -27,11 +27,11 @@ namespace my_gl {
      class ArrayBufferObject : public BufferObject{
      public:
 
-	  ArrayBufferObject(Name name) noexcept;
+	  ArrayBufferObject(Name name) ;
 
 	  void bindData(size_t size,const void *data);
 
-	  void subData(ptrdiff_t offset,size_t size,const void *data) noexcept;
+	  void subData(ptrdiff_t offset,size_t size,const void *data) ;
 
 
      };

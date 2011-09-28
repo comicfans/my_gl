@@ -1,9 +1,9 @@
 /*
  * =====================================================================================
  *
- *       Filename:  VectorManager.hpp
+ *       Filename:  Vec4Manager.hpp
  *
- *    Description:  manager object to provide a VectorProvider
+ *    Description:  manager object to provide a Vec4Provider
  *
  *        Version:  1.0
  *        Created:  2011-9-19 15:55:26
@@ -16,9 +16,9 @@
  * =====================================================================================
  */
 
-#ifndef VECTOR_MANAGER_HPP
+#ifndef VEC4_MANAGER_HPP
 
-#define VECTOR_MANAGER_HPP
+#define VEC4_MANAGER_HPP
 
 #include <memory>
 
@@ -29,24 +29,24 @@ namespace my_gl {
 
      using std::unique_ptr;
 
-     class VectorProvider;
+     class Vec4Provider;
      class ArrayBufferObject;
-     class VectorManager {
+     class Vec4Manager {
      public:
 
-	  VectorManager(BindState bindState) noexcept;
+	  Vec4Manager(BindState bindState) ;
 
-	  virtual ~VectorManager()noexcept;
+	  virtual ~Vec4Manager();
 
-	  VectorProvider& getProvider() noexcept;
+	  Vec4Provider& getProvider() ;
 
 	  void bindArrayBufferObject(const ArrayBufferObject* toBind);
 
-	  BindState getBindState()const noexcept;
+	  BindState getBindState()const ;
 
-	  void enableVertexArray(bool value)noexcept;
+	  void enableVertexArray(bool value);
 
-	  bool vertexArrayEnabled()const noexcept;
+	  bool vertexArrayEnabled()const ;
 
      protected:
 
@@ -55,7 +55,7 @@ namespace my_gl {
 	  void vertexArrayChange(int componentSize,
 		    DataType type,size_t stride,const void* pointer);
 
-	  unique_ptr<VectorProvider> _pImpl;
+	  unique_ptr<Vec4Provider> _pImpl;
 
      private:
 
@@ -71,4 +71,4 @@ namespace my_gl {
 
 
 
-#endif /* end of include guard: VECTOR_MANAGER_HPP */
+#endif /* end of include guard: VEC4_MANAGER_HPP */

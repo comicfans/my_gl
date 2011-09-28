@@ -45,13 +45,13 @@ namespace my_gl {
 	       copy_n(temp, _size, _array.get() );
 	  }
 
-     size_t UntypedArray::size()const noexcept
+     size_t UntypedArray::size()const 
      {
 	  return _size;
      }
 
      void UntypedArray::replace
-	  (ptrdiff_t offset,  size_t size, const void *data)noexcept
+	  (ptrdiff_t offset,  size_t size, const void *data)
 	  {
 	       //cow 
 	       assert(offset>0);

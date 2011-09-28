@@ -17,27 +17,27 @@
  */
 
 #include "ColorManager.hpp"
-#include "common/UniqueVectorProvider.hpp"
+#include "common/UniqueVec4Provider.hpp"
 
 namespace my_gl {
 
      ColorManager::ColorManager()
-	  :TwoSourceVectorManager(BIND_STATE)
+	  :TwoSourceVec4Manager(BIND_STATE)
      {
 	  //default current color is 1,1,1,1
 	  //see glColor4f
-	  setValue(Vector(1,1,1,1));
+	  setValue(Vec4(1,1,1,1));
      }
 
      void ColorManager::color4f(float red,float green,
-	       float blue,float alpha)noexcept
+	       float blue,float alpha)
      {
-	  setValue(Vector(red,green,blue,alpha));
+	  setValue(Vec4(red,green,blue,alpha));
      }
 
 
      void ColorManager::color4ub(uint8_t red,uint8_t green,
-	       uint8_t blue,uint8_t alpha)noexcept
+	       uint8_t blue,uint8_t alpha)
      {
 	  const float fullRange=255;
 	  color4f(red/fullRange,red/fullRange,

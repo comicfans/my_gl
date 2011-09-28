@@ -17,12 +17,12 @@
  */
 
 #include "TexCoordManager.hpp"
-#include "common/UniqueVectorProvider.hpp"
+#include "common/UniqueVec4Provider.hpp"
 
 namespace my_gl {
 
      TexCoordManager::TexCoordManager()
-	  :VectorManager(BIND_STATE)
+	  :Vec4Manager(BIND_STATE)
      {}
 
      void TexCoordManager::texCoordPointer(int componentSize,

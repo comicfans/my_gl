@@ -1,9 +1,9 @@
 /*
  * =====================================================================================
  *
- *       Filename:  BufferObjectVectorProvider.cpp
+ *       Filename:  BufferObjectVec4Provider.cpp
  *
- *    Description:  implementation of BufferObjectVectorProvider
+ *    Description:  implementation of BufferObjectVec4Provider
  *
  *        Version:  1.0
  *        Created:  2011-9-19 15:38:38
@@ -16,24 +16,24 @@
  * =====================================================================================
  */
 
-#include "BufferObjectVectorProvider.hpp"
+#include "BufferObjectVec4Provider.hpp"
 #include "object/BufferObject.hpp"
 
 namespace my_gl {
 
-     BufferObjectVectorProvider::BufferObjectVectorProvider 
+     BufferObjectVec4Provider::BufferObjectVec4Provider 
 	  (const BufferObject& bufferObject,
 		  size_t offset,int componentNumber,DataType dataType,
 		  size_t stride,bool normalize)
-	  :ArrayVectorProvider(componentNumber,dataType,stride,normalize),
+	  :ArrayVec4Provider(componentNumber,dataType,stride,normalize),
 	  _bufferObject(bufferObject),_currentOffset(offset)
 	  {}
-     Vector BufferObjectVectorProvider::value()noexcept
+     Vec4 BufferObjectVec4Provider::value()
      {
 	  return castRead(_bufferObject.getBufferPointer());
      }
 
-     void BufferObjectVectorProvider::next(size_t steps)noexcept
+     void BufferObjectVec4Provider::next(size_t steps)
      {
 	  _currentOffset+=_blockSize*steps;
      }

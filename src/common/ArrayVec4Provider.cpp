@@ -1,7 +1,7 @@
 /*
  * =====================================================================================
  *
- *       Filename:  ArrayVectorProvider.cpp
+ *       Filename:  ArrayVec4Provider.cpp
  *
  *    Description:  
  *
@@ -16,7 +16,7 @@
  * =====================================================================================
  */
 
-#include "ArrayVectorProvider.hpp"
+#include "ArrayVec4Provider.hpp"
 
 #include <cassert>
 
@@ -28,7 +28,7 @@ namespace my_gl {
 	  return DATA_TYPE_UNDERLINE_SIZE[int(type)]*componentNumber+stride;
      }
 
-     ArrayVectorProvider::ArrayVectorProvider
+     ArrayVec4Provider::ArrayVec4Provider
 	  (int componentNumber,DataType type,size_t stride,bool normalize)
 	  :_dataType(type),_componentNumber(componentNumber),
 	  _blockSize(calcBlockSize(type,componentNumber,stride)),
@@ -36,13 +36,13 @@ namespace my_gl {
      {}
 
 	  template<DataType dataType>
-	       Vector ArrayVectorProvider::copyToFloats(const void* p)
-	       const noexcept
+	       Vec4 ArrayVec4Provider::copyToFloats(const void* p)
+	       const 
 	       {
 		    typedef typename 
 			 DataTypeTraits<dataType>::underlineType type;
 		    type const *tp=static_cast<type const*>(p);
-		    Vector ret;
+		    Vec4 ret;
 		    copy_n(tp,_componentNumber,ret.values());
 
 		    if (_normalize)
@@ -59,8 +59,8 @@ namespace my_gl {
 
 
 
-     Vector ArrayVectorProvider::castRead
-	  (const void* pointer)const noexcept
+     Vec4 ArrayVec4Provider::castRead
+	  (const void* pointer)const 
 	  {
 	       switch(_dataType)
 	       {

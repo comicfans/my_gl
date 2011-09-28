@@ -1,7 +1,7 @@
 /*
  * =====================================================================================
  *
- *       Filename:  BufferObjectVectorProvider.hpp
+ *       Filename:  BufferObjectVec4Provider.hpp
  *
  *    Description:  read vector from buffer object
  *
@@ -16,25 +16,25 @@
  * =====================================================================================
  */
 
-#ifndef BUFFER_OBJECT_VECTOR_PROVIDER_HPP
+#ifndef BUFFER_OBJECT_VEC4_PROVIDER_HPP
 
-#define BUFFER_OBJECT_VECTOR_PROVIDER_HPP
+#define BUFFER_OBJECT_VEC4_PROVIDER_HPP
 
-#include "common/ArrayVectorProvider.hpp"
+#include "common/ArrayVec4Provider.hpp"
 
 namespace my_gl {
 
      class BufferObject ;
 
-     class BufferObjectVectorProvider :public ArrayVectorProvider{
+     class BufferObjectVec4Provider :public ArrayVec4Provider{
      public:
-     	BufferObjectVectorProvider (const BufferObject& bufferObject,
+     	BufferObjectVec4Provider (const BufferObject& bufferObject,
 		  size_t offset,int componentNumber,DataType dataType,
 		  size_t stride,bool normalize=false);
 
-	virtual Vector value()noexcept;
+	virtual Vec4 value();
 
-	virtual void next(size_t steps=1)noexcept;
+	virtual void next(size_t steps=1);
      
      private:
 	const BufferObject& _bufferObject;
@@ -44,5 +44,5 @@ namespace my_gl {
 } /* my_gl */
 
 
-#endif /* end of include guard: BUFFER_OBJECT_VECTOR_PROVIDER_HPP */
+#endif /* end of include guard: BUFFER_OBJECT_VEC4_PROVIDER_HPP */
 

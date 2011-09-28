@@ -18,6 +18,6 @@
 
 #include "Context.hpp"
 namespace my_gl {
-     Context::~Context()noexcept{}
+     Context::~Context(){}
 	
 } /* my_gl */

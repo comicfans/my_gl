@@ -20,14 +20,14 @@
 
 #define VERTEX_MANAGER_HPP
 
-#include "common/VectorManager.hpp"
+#include "common/Vec4Manager.hpp"
 
 
 namespace my_gl {
 
-     class VertexManager :public VectorManager{
+     class VertexManager :public Vec4Manager{
      public:
-     	VertexManager ()noexcept;
+     	VertexManager ();
 
 	//glVertexPointer
 	void vertexPointer(int componentSize,DataType type,size_t stride,const void* pointer);

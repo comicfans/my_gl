@@ -1,7 +1,7 @@
 /*
  * =====================================================================================
  *
- *       Filename:  UniqueVectorProvider.hpp
+ *       Filename:  UniqueVec4Provider.hpp
  *
  *    Description:  unique value vector provider
  *
@@ -16,29 +16,29 @@
  * =====================================================================================
  */
 
-#ifndef UNIQUE_VECTOR_PROVIDER_HPP
+#ifndef UNIQUE_VEC4_PROVIDER_HPP
 
-#define UNIQUE_VECTOR_PROVIDER_HPP
+#define UNIQUE_VEC4_PROVIDER_HPP
 
-#include "VectorProvider.hpp"
+#include "Vec4Provider.hpp"
 
 namespace my_gl {
 
-     class UniqueVectorProvider :public VectorProvider{
+     class UniqueVec4Provider :public Vec4Provider{
      public:
-     	UniqueVectorProvider (const Vector& value=Vector())noexcept;
+     	UniqueVec4Provider (const Vec4& value=Vec4());
 
-	virtual Vector value()noexcept;
+	virtual Vec4 value();
 
-	virtual void next(size_t steps=1)noexcept;
+	virtual void next(size_t steps=1);
 
-	void setValue(const Vector& value)noexcept;
+	void setValue(const Vec4& value);
      
      private:
-	Vector _value;
+	Vec4 _value;
      };
 	
 } /* my_gl */
 
 
-#endif /* end of include guard: UNIQUE_VECTOR_PROVIDER_HPP */
+#endif /* end of include guard: UNIQUE_VEC4_PROVIDER_HPP */

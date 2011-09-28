@@ -22,19 +22,19 @@
 
 #include <cstdint>
 
-#include "TwoSourceVectorManager.hpp"
+#include "TwoSourceVec4Manager.hpp"
 
 namespace my_gl {
 
-     class ColorManager :public TwoSourceVectorManager{
+     class ColorManager :public TwoSourceVec4Manager{
 
 	  public:
 
 	       ColorManager();
 
-	       void color4f(float red,float green,float blue,float alpha)noexcept;
+	       void color4f(float red,float green,float blue,float alpha);
 
-	       void color4ub(uint8_t red,uint8_t green,uint8_t blue,uint8_t alpha)noexcept;
+	       void color4ub(uint8_t red,uint8_t green,uint8_t blue,uint8_t alpha);
 
 	       void colorPointer(int componentSize,DataType type,
 			 size_t stride,const void* pointer);

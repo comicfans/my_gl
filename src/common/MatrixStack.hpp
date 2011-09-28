@@ -31,9 +31,9 @@ namespace my_gl {
      class MatrixStack:protected stack<Matrix> {
      public:
 
-	  void multiTop(const Matrix& rhs)noexcept;
+	  void multiTop(const Matrix& rhs);
 
-	  void push()noexcept;
+	  void push();
 
 	  using stack<Matrix>::pop;
      

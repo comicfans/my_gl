@@ -1,7 +1,7 @@
 /*
  * =====================================================================================
  *
- *       Filename:  PackedVectorReader.hpp
+ *       Filename:  PackedVec4Reader.hpp
  *
  *    Description:  read vector from a packed value
  *
@@ -15,18 +15,18 @@
  *
  * =====================================================================================
  */
-#ifndef PACKED_VECTOR_READER_HPP
+#ifndef PACKED_VEC4_READER_HPP
 
-#define PACKED_VECTOR_READER_HPP
+#define PACKED_VEC4_READER_HPP
 
-#include "AbstractVectorReader.hpp"
+#include "AbstractVec4Reader.hpp"
 #include "Enum.hpp"
 
 namespace my_gl {
 
-     class PackedVectorReader :public AbstractVectorReader{
+     class PackedVec4Reader :public AbstractVec4Reader{
 	  public:
-	       PackedVectorReader (const UntypedCowArray& array,size_t offset,
+	       PackedVec4Reader (const UntypedCowArray& array,size_t offset,
 			 StoreType storeType,size_t stride);
 	  private:
 	       /* data */
@@ -35,4 +35,4 @@ namespace my_gl {
 
 
 
-#endif /* end of include guard: PACKED_VECTOR_READER_HPP */
+#endif /* end of include guard: PACKED_VEC4_READER_HPP */

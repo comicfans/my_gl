@@ -1,7 +1,7 @@
 /*
  * =====================================================================================
  *
- *       Filename:  ClientArrayVectorProvider.hpp
+ *       Filename:  ClientArrayVec4Provider.hpp
  *
  *    Description:  read vector from client memory
  *
@@ -16,23 +16,23 @@
  * =====================================================================================
  */
 
-#ifndef CLIENT_ARRAY_VECTOR_PROVIDER_HPP
+#ifndef CLIENT_ARRAY_VEC4_PROVIDER_HPP
 
-#define CLIENT_ARRAY_VECTOR_PROVIDER_HPP
+#define CLIENT_ARRAY_VEC4_PROVIDER_HPP
 
-#include "ArrayVectorProvider.hpp"
+#include "ArrayVec4Provider.hpp"
 
 namespace my_gl {
 	
-     class ClientArrayVectorProvider :public ArrayVectorProvider{
+     class ClientArrayVec4Provider :public ArrayVec4Provider{
      public:
-     	ClientArrayVectorProvider (const void* pointer,
+     	ClientArrayVec4Provider (const void* pointer,
 		  int componentNumber,DataType dataType,
-		  size_t stride,bool normalize=false)noexcept;
+		  size_t stride,bool normalize=false);
 
-	virtual Vector value()noexcept;
+	virtual Vec4 value();
 
-	virtual void next(size_t steps=1)noexcept;
+	virtual void next(size_t steps=1);
      
      private:
 	const int8_t *_currentPointer;
@@ -41,4 +41,4 @@ namespace my_gl {
 
 
 
-#endif /* end of include guard: CLIENT_ARRAY_VECTOR_PROVIDER_HPP */
+#endif /* end of include guard: CLIENT_ARRAY_VEC4_PROVIDER_HPP */

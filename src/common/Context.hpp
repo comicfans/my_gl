@@ -36,25 +36,25 @@ namespace my_gl {
 	//glDeleteBuffers
 	virtual void  deleteBuffers(size_t size,Name *names)=0;
 	//glIsBuffer
-	virtual bool isBuffer(Name name) const noexcept=0;
+	virtual bool isBuffer(Name name) const =0;
 
 	//glVertexPointer
 	virtual void  vertexPointer(int componentSize,DataType type, 
 		  size_t stride, const void * pointer)=0;
 
 	//glNormal3f
-	virtual void  normal3f(float nx,float ny,float nz)noexcept=0;
+	virtual void  normal3f(float nx,float ny,float nz)=0;
 
 	//glNormalPointer
 	virtual void  normalPointer(DataType type,
 		  size_t stride,const void  *pointer)=0;
 	//glColor4f
 	virtual void  color4f(float red,float green,
-		  float blue,float alpha) noexcept=0;
+		  float blue,float alpha) =0;
 
 	//glColor4ub
 	virtual void  color4ub(uint8_t red,uint8_t green,
-		  uint8_t blue,uint8_t alpha) noexcept=0;
+		  uint8_t blue,uint8_t alpha) =0;
 
 	//glColorPointer
 	virtual void  colorPointer(int componentSize,DataType type,
@@ -65,29 +65,29 @@ namespace my_gl {
 		  DataType type, size_t stride, const void * pointer)=0;
 
 	//glMatrixMode
-	virtual void matrixMode(MatrixMode matrixMode)noexcept=0;
+	virtual void matrixMode(MatrixMode matrixMode)=0;
 
 	//glPushMatrix
-	virtual void pushMatrix()noexcept=0;
+	virtual void pushMatrix()=0;
 
 	//glPopMatrix
-	virtual void popMatrix()noexcept=0;
+	virtual void popMatrix()=0;
 
 
 	//glTranlatef
-	virtual void translatef(float x,float y,float z)noexcept=0;
+	virtual void translatef(float x,float y,float z)=0;
 
 	//glScalef
-	virtual void scalef(float x,float y,float z)noexcept=0;
+	virtual void scalef(float x,float y,float z)=0;
 
 	//glRotatef
-	virtual void rotatef(float angle,float x,float y,float z)noexcept=0;
+	virtual void rotatef(float angle,float x,float y,float z)=0;
 
 	//glMultMatrixf
-	virtual void multMatrixf(const float* matrix)noexcept=0;
+	virtual void multMatrixf(const float* matrix)=0;
 
 
-	virtual ~Context()noexcept;
+	virtual ~Context();
      };
 	
 } /* my_gl */

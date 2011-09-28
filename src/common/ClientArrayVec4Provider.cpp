@@ -1,9 +1,9 @@
 /*
  * =====================================================================================
  *
- *       Filename:  ClientArrayVectorProvider.cpp
+ *       Filename:  ClientArrayVec4Provider.cpp
  *
- *    Description:  implementation of ClientArrayVectorProvider
+ *    Description:  implementation of ClientArrayVec4Provider
  *
  *        Version:  1.0
  *        Created:  2011-9-19 13:51:10
@@ -15,23 +15,23 @@
  *
  * =====================================================================================
  */
-#include "ClientArrayVectorProvider.hpp"
+#include "ClientArrayVec4Provider.hpp"
 
 namespace my_gl {
-     ClientArrayVectorProvider::ClientArrayVectorProvider 
+     ClientArrayVec4Provider::ClientArrayVec4Provider 
 	  (const void* pointer,int componentNumber,DataType dataType, 
-	   size_t stride,bool normalize)noexcept
-	  :ArrayVectorProvider(componentNumber,dataType,stride,normalize),
+	   size_t stride,bool normalize)
+	  :ArrayVec4Provider(componentNumber,dataType,stride,normalize),
 	   _currentPointer(static_cast<const int8_t*>(pointer))
 	  {
 	  }
 
-     Vector ClientArrayVectorProvider::value()noexcept
+     Vec4 ClientArrayVec4Provider::value()
      {
 	  return castRead(_currentPointer);
      }
 
-     void ClientArrayVectorProvider::next(size_t steps)noexcept
+     void ClientArrayVec4Provider::next(size_t steps)
      {
 	  _currentPointer+=_blockSize*steps;
      }

@@ -23,20 +23,20 @@
 #include "attribute_manager/VertexManager.hpp"
 #include "attribute_manager/TexCoordManager.hpp"
 
-#include "common/UniqueVectorProvider.hpp"
+#include "common/UniqueVec4Provider.hpp"
 #include "object/ArrayBufferObject.hpp"
 #include "common/UntypedArray.hpp"
 namespace my_gl {
 
      SoftContext::SoftContext()
      {
-	  _allVectorManager.replace(int(BindState::NORMAL),new NormalManager());
-	  _allVectorManager.replace(int(BindState::COLOR),new ColorManager());
-	  _allVectorManager.replace(int(BindState::VERTEX),new VertexManager());
-	  _allVectorManager.replace(int(BindState::TEXCOORD),new TexCoordManager());
+	  _allVec4Manager.replace(int(BindState::NORMAL),new NormalManager());
+	  _allVec4Manager.replace(int(BindState::COLOR),new ColorManager());
+	  _allVec4Manager.replace(int(BindState::VERTEX),new VertexManager());
+	  _allVec4Manager.replace(int(BindState::TEXCOORD),new TexCoordManager());
      }
 
-     SoftContext::~SoftContext()noexcept{}
+     SoftContext::~SoftContext(){}
 
      SoftContext& SoftContext::getInstance()
      {
@@ -54,95 +54,95 @@ namespace my_gl {
 	  _arrayBufferObjectManager.deleteBuffers(size,names);
      }
 
-     bool SoftContext::isBuffer(Name name) const noexcept
+     bool SoftContext::isBuffer(Name name) const 
      {
 	  return _arrayBufferObjectManager.isBuffer(name);
      }
 
-     void SoftContext::normal3f(float nx,float ny,float nz)noexcept
+     void SoftContext::normal3f(float nx,float ny,float nz)
      {
-	  getVectorManager<NormalManager>().normal3f(nx,ny,nz);
+	  getVec4Manager<NormalManager>().normal3f(nx,ny,nz);
      }
 
      void SoftContext::normalPointer(DataType type,size_t stride, const void *pointer)
      {
-	  getVectorManager<NormalManager>().normalPointer(type, stride, pointer);
+	  getVec4Manager<NormalManager>().normalPointer(type, stride, pointer);
      }
 
      void SoftContext::color4f(float red,float green,
-		  float blue,float alpha) noexcept
+		  float blue,float alpha) 
      {
-	  getVectorManager<ColorManager>().
+	  getVec4Manager<ColorManager>().
 	       color4f(red, green, blue, alpha);;
      }
 	void SoftContext::color4ub(uint8_t red,uint8_t green,
-		  uint8_t blue,uint8_t alpha) noexcept
+		  uint8_t blue,uint8_t alpha) 
 	{
-	     getVectorManager<ColorManager>().
+	     getVec4Manager<ColorManager>().
 		  color4ub(red, green, blue, alpha);
 	}
 
 	void SoftContext::colorPointer(int componentSize,
 		  DataType type,size_t stride,const void *pointer)
 	{
-	     getVectorManager<ColorManager>().
+	     getVec4Manager<ColorManager>().
 		  colorPointer(componentSize, type, stride, pointer);
 	}
 
 	void SoftContext::vertexPointer(int componentSize, 
 		  DataType type, size_t stride, const void* pointer)
 	{
-	     getVectorManager<VertexManager>().vertexPointer
+	     getVec4Manager<VertexManager>().vertexPointer
 		  (componentSize, type, stride, pointer);
 	}
 
 	void SoftContext::texCoordPointer(int componentSize, 
 		  DataType type, size_t stride, const void* pointer)
 	{
-	     getVectorManager<TexCoordManager>().texCoordPointer
+	     getVec4Manager<TexCoordManager>().texCoordPointer
 		  (componentSize, type, stride, pointer);
 	}
 
-	void SoftContext::matrixMode(MatrixMode matrixMode) noexcept
+	void SoftContext::matrixMode(MatrixMode matrixMode) 
 	{
 	     _matrixMode=matrixMode;
 	}
 
-	MatrixStack& SoftContext::currentMatrixStack()noexcept
+	MatrixStack& SoftContext::currentMatrixStack()
 	{return _matrixStacks[int(_matrixMode)];}
 
-	void SoftContext::pushMatrix()noexcept
+	void SoftContext::pushMatrix()
 	{
 	     currentMatrixStack().push();
 	}
 
-	void SoftContext::popMatrix()noexcept
+	void SoftContext::popMatrix()
 	{
 	     currentMatrixStack().pop();
 	}
 
-	void SoftContext::scalef(float x,float y, float z) noexcept
+	void SoftContext::scalef(float x,float y, float z) 
 	{
 	     multMatrixf(Matrix::scale(x, y, z));
 	}
 
-	void SoftContext::translatef(float x, float y, float z) noexcept
+	void SoftContext::translatef(float x, float y, float z) 
 	{
 	     multMatrixf(Matrix::translate(x, y, z));
 	}
 
-	void SoftContext::rotatef(float angle, float x, float y, float z) noexcept
+	void SoftContext::rotatef(float angle, float x, float y, float z) 
 	{
 	     multMatrixf(Matrix::rotate(angle, x, y, z));
 	}
 
-	void SoftContext::multMatrixf(const Matrix& matrix)noexcept
+	void SoftContext::multMatrixf(const Matrix& matrix)
 	{
 	     currentMatrixStack().multiTop
 		  (matrix);
 	}
 
-	void SoftContext::multMatrixf(const float* matrix) noexcept
+	void SoftContext::multMatrixf(const float* matrix) 
 	{
 	     multMatrixf(Matrix(matrix,false));
 	}
@@ -164,8 +164,8 @@ namespace my_gl {
 	}
 
      template<typename T>
-	  T& SoftContext::getVectorManager()
-	  { return static_cast<T&>(_allVectorManager[int(T::BIND_STATE)]);}
+	  T& SoftContext::getVec4Manager()
+	  { return static_cast<T&>(_allVec4Manager[int(T::BIND_STATE)]);}
 
      ObjectNameManager& SoftContext::getObjectNameManager()
      {

@@ -47,7 +47,7 @@ namespace my_gl {
 
      void PixelObject::subImage(int xOffset,  int yOffset,
 	        size_t width,  size_t height,  ImageFormat format,
-		StoreType type,void *p)noexcept
+		StoreType type,void *p)
      {
 	  assert(xOffset>=0 && xOffset<_width);
 	  assert(yOffset>=0 && yOffset<_height);

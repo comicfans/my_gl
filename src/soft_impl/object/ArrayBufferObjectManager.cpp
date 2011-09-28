@@ -33,13 +33,13 @@ namespace my_gl {
      using std::inserter;
      using std::fill_n;
 
-     ArrayBufferObjectManager::ArrayBufferObjectManager() noexcept
+     ArrayBufferObjectManager::ArrayBufferObjectManager() 
      {
 	  fill_n(_arrayAndElements,2,nullptr);
      }
 
      ArrayBufferObject* ArrayBufferObjectManager::
-	  getArrayBuffer()const noexcept
+	  getArrayBuffer()const 
      {
 	  auto p=_arrayAndElements[int(BufferTarget::ARRAY_BUFFER)];
 	  //0 is bind
@@ -48,7 +48,7 @@ namespace my_gl {
      }
 
      void ArrayBufferObjectManager::bindBuffer
-	  (BufferTarget target,Name name) noexcept
+	  (BufferTarget target,Name name) 
      {
 	  //must be a ArrayBufferObject
 	  assert(isBuffer(name));
@@ -58,7 +58,7 @@ namespace my_gl {
      }
 
      void ArrayBufferObjectManager::deleteBuffers(size_t size,Name *names)
-	  noexcept
+	  
      {
 	  for (int i= 0; i < size; i++) {
 	       Name thisName=*(names+i);
@@ -84,7 +84,7 @@ namespace my_gl {
 	  }
 
      ArrayBufferObject * ArrayBufferObjectManager::
-	  getElementsBuffer() const noexcept
+	  getElementsBuffer() const 
 	  {
 	       auto p=_arrayAndElements
 		    [int(BufferTarget::ELEMENT_ARRAY_BUFFER)];
@@ -105,7 +105,7 @@ namespace my_gl {
 	  }
      }
 
-     bool ArrayBufferObjectManager::isBuffer(Name name) const noexcept
+     bool ArrayBufferObjectManager::isBuffer(Name name) const 
      {
 	  return _objects.find(name)!=_objects.end();
      }

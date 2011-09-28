@@ -33,14 +33,14 @@ namespace my_gl {
      using boost::ptr_array;
 
      class BufferObject;
-     class VectorManager;
+     class Vec4Manager;
 
 
      class SoftContext :public Context{
      public:
      	SoftContext ();
 
-     	virtual ~SoftContext ()noexcept;
+     	virtual ~SoftContext ();
 
 
 	//glGenBuffers
@@ -48,25 +48,25 @@ namespace my_gl {
 	//glDeleteBuffers
 	virtual void deleteBuffers(size_t size,Name *names);
 	//glIsBuffer
-	virtual bool isBuffer(Name name) const noexcept;
+	virtual bool isBuffer(Name name) const ;
 
 	//glVertexPointer
 	virtual void vertexPointer(int componentSize,DataType type, 
 		  size_t stride, const void* pointer);
 
 	//glNormal3f
-	virtual void normal3f(float nx,float ny,float nz)noexcept;
+	virtual void normal3f(float nx,float ny,float nz);
 
 	//glNormalPointer
 	virtual void normalPointer(DataType type,
 		  size_t stride,const void *pointer);
 	//glColor4f
 	virtual void color4f(float red,float green,
-		  float blue,float alpha) noexcept;
+		  float blue,float alpha) ;
 
 	//glColor4ub
 	virtual void color4ub(uint8_t red,uint8_t green,
-		  uint8_t blue,uint8_t alpha) noexcept;
+		  uint8_t blue,uint8_t alpha) ;
 
 	//glColorPointer
 	virtual void colorPointer(int componentSize,DataType type,
@@ -77,25 +77,25 @@ namespace my_gl {
 		  DataType type, size_t stride, const void* pointer);
 
 	//glMatrixMode
-	virtual void matrixMode(MatrixMode matrixMode)noexcept;
+	virtual void matrixMode(MatrixMode matrixMode);
 
 	//glPushMatrix
-	virtual void pushMatrix()noexcept;
+	virtual void pushMatrix();
 
 	//glPopMatrix
-	virtual void popMatrix()noexcept;
+	virtual void popMatrix();
 
 	//glTranlatef
-	virtual void translatef(float x,float y,float z)noexcept;
+	virtual void translatef(float x,float y,float z);
 
 	//glScalef
-	virtual void scalef(float x,float y,float z)noexcept;
+	virtual void scalef(float x,float y,float z);
 
 	//glRotatef
-	virtual void rotatef(float angle,float x,float y,float z)noexcept;
+	virtual void rotatef(float angle,float x,float y,float z);
 
 	//glMultMatrixf
-	virtual void multMatrixf(const float* matrix)noexcept;
+	virtual void multMatrixf(const float* matrix);
 
 	//glDrawArrays TODO
 	virtual void drawArrays(PrimitiveMode primitiveMode,
@@ -115,18 +115,18 @@ namespace my_gl {
 
 	ArrayBufferObjectManager _arrayBufferObjectManager;
 
-	ptr_array<VectorManager,4> _allVectorManager;
+	ptr_array<Vec4Manager,4> _allVec4Manager;
 
 	template<typename T>
-	     T& getVectorManager();
+	     T& getVec4Manager();
 
 	MatrixMode _matrixMode;
 
 	MatrixStack _matrixStacks[3];
 
-	void multMatrixf(const Matrix& matrix)noexcept;
+	void multMatrixf(const Matrix& matrix);
 
-	MatrixStack& currentMatrixStack() noexcept;
+	MatrixStack& currentMatrixStack() ;
 
      };
 	

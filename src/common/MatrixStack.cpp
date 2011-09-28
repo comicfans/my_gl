@@ -23,12 +23,12 @@ template class std::stack<my_gl::Matrix>;
 
 namespace my_gl {
 
-     void MatrixStack::push()noexcept
+     void MatrixStack::push()
      {
 	  stack<Matrix>::push(top());
      }
 
-     void MatrixStack::multiTop(const my_gl::Matrix &rhs)noexcept
+     void MatrixStack::multiTop(const my_gl::Matrix &rhs)
      {
 	  top()*=rhs;
      }

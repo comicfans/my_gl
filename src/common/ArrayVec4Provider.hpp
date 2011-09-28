@@ -1,7 +1,7 @@
 /*
  * =====================================================================================
  *
- *       Filename:  ArrayVectorProvider.hpp
+ *       Filename:  ArrayVec4Provider.hpp
  *
  *    Description:  abstract class to read vector from pointer
  *
@@ -16,28 +16,28 @@
  * =====================================================================================
  */
 
-#ifndef ARRAY_VECTOR_PROVIDER_HPP
+#ifndef ARRAY_VEC4_PROVIDER_HPP
 
-#define ARRAY_VECTOR_PROVIDER_HPP
+#define ARRAY_VEC4_PROVIDER_HPP
 
 #include <algorithm>
 #include <cstddef>
 
-#include "VectorProvider.hpp"
+#include "Vec4Provider.hpp"
 #include "TypeTraits.hpp"
 
 namespace my_gl {
 	
      using std::copy_n;
-     class ArrayVectorProvider :public VectorProvider{
+     class ArrayVec4Provider :public Vec4Provider{
      public:
-	  ArrayVectorProvider(int componentNumber,DataType type,
+	  ArrayVec4Provider(int componentNumber,DataType type,
 		    size_t stride,bool normalize);
 
      protected:
 
-	  Vector castRead(const void* pointer)
-	       const noexcept;
+	  Vec4 castRead(const void* pointer)
+	       const ;
 
 	  const DataType _dataType;
 	  const int _componentNumber;
@@ -45,9 +45,9 @@ namespace my_gl {
 	  const bool _normalize;
      private:
 	  template<DataType dataType>
-	       Vector copyToFloats(const void* p)
-	       const noexcept;
+	       Vec4 copyToFloats(const void* p)
+	       const ;
      };
 } /* my_gl */
 
-#endif /* end of include guard: ARRAY_VECTOR_PROVIDER_HPP */
+#endif /* end of include guard: ARRAY_VEC4_PROVIDER_HPP */

@@ -21,7 +21,7 @@
 
 namespace my_gl {
 
-     ArrayBufferObject::ArrayBufferObject(Name name)noexcept
+     ArrayBufferObject::ArrayBufferObject(Name name)
 	  :BufferObject(name){}
 	
      void ArrayBufferObject::bindData(size_t size,const void *data)
@@ -30,7 +30,7 @@ namespace my_gl {
      }
 
      void ArrayBufferObject::subData(ptrdiff_t offset,  size_t size,const void *data)
-	  noexcept
+	  
      {
 	  auto& _data=*_dataPointer;
 	  assert(offset>=0);

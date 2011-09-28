@@ -22,11 +22,11 @@
 
 #include <memory>
 
-#include "TwoSourceVectorManager.hpp"
+#include "TwoSourceVec4Manager.hpp"
 
 namespace my_gl{
 
-     class NormalManager :public TwoSourceVectorManager{
+     class NormalManager :public TwoSourceVec4Manager{
      public:
 
 	  NormalManager();

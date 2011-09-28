@@ -18,12 +18,12 @@
 
 #include "VertexManager.hpp"
 
-#include "common/BufferObjectVectorProvider.hpp"
+#include "common/BufferObjectVec4Provider.hpp"
 
 namespace my_gl {
 
-     VertexManager::VertexManager()noexcept
-	  :VectorManager(BIND_STATE)
+     VertexManager::VertexManager()
+	  :Vec4Manager(BIND_STATE)
 	  {}
 
      void VertexManager::vertexPointer(int componentSize, 

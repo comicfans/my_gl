@@ -1,12 +1,12 @@
 /*
  * =====================================================================================
  *
- *       Filename:  VectorProvider.cpp
+ *       Filename:  Vec4Test.cpp
  *
- *    Description:  
+ *    Description:  test vector template instantiation
  *
  *        Version:  1.0
- *        Created:  2011-9-21 14:42:06
+ *        Created:  2011-9-17 16:40:39
  *       Revision:  none
  *       Compiler:  gcc
  *
@@ -15,11 +15,8 @@
  *
  * =====================================================================================
  */
-
-#include "VectorProvider.hpp"
-
-namespace my_gl {
-
-     VectorProvider::~VectorProvider()noexcept{}
-	
-} /* my_gl */
+int main(int argc, const char *argv[])
+{
+//TODO	
+	return 0;
+}

@@ -1,7 +1,7 @@
 /*
  * =====================================================================================
  *
- *       Filename:  Vector.hpp
+ *       Filename:  Vec4.hpp
  *
  *    Description:  simple vector float 4 
  *
@@ -16,34 +16,34 @@
  * =====================================================================================
  */
 
-#ifndef VECTOR_HPP
+#ifndef VEC4_HPP
 
 
-#define VECTOR_HPP
+#define VEC4_HPP
 
 #include <cstddef>
 
 namespace my_gl {
-     struct Vector{
+     struct Vec4{
     
 	  public:
 
-	       Vector(bool fillZero=true)noexcept;
+	       Vec4(bool fillZero=true);
 
-	       Vector(float fx,float fy,float fz=0,float fw=1)noexcept;
+	       Vec4(float fx,float fy,float fz=0,float fw=1);
 
-	       Vector& operator=(const Vector& rhs);
+	       Vec4& operator=(const Vec4& rhs);
 
 	       static const int LENGTH=4;
 
-	       float& operator()(size_t idx)noexcept;
-	       const float& operator()(size_t idx)const noexcept;
+	       float& operator()(size_t idx);
+	       const float& operator()(size_t idx)const ;
 
-	       float& operator[](size_t idx)noexcept;
-	       const float& operator[](size_t idx)const noexcept;
+	       float& operator[](size_t idx);
+	       const float& operator[](size_t idx)const ;
 
-	       const float* values()const noexcept;
-	       float * values() noexcept;
+	       const float* values()const ;
+	       float * values() ;
 	  private:
 	       float _values[LENGTH];
      	/* data */
@@ -54,4 +54,4 @@ namespace my_gl {
 } /* my_gl */
 
 
-#endif /* end of include guard: VECTOR_HPP */
+#endif /* end of include guard: VEC4_HPP */

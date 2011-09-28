@@ -20,10 +20,10 @@
 
 #define TEX_COORD_MANAGER_HPP
 
-#include "common/VectorManager.hpp"
+#include "common/Vec4Manager.hpp"
 
 namespace my_gl {
-     class TexCoordManager :public VectorManager{
+     class TexCoordManager :public Vec4Manager{
      public:
      	TexCoordManager ();
 
