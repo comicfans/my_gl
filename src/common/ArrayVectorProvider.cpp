@@ -43,7 +43,7 @@ namespace my_gl {
 			 DataTypeTraits<dataType>::underlineType type;
 		    type const *tp=static_cast<type const*>(p);
 		    Vector ret;
-		    copy_n(tp,_componentNumber,&ret.x);
+		    copy_n(tp,_componentNumber,ret.values());
 
 		    if (_normalize)
 		    {

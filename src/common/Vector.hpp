@@ -34,16 +34,6 @@ namespace my_gl {
 
 	       Vector& operator=(const Vector& rhs);
 
-	       float& x;
-	       float& y;
-	       float& z;
-	       float& w;
-
-	       float& r;
-	       float& g;
-	       float& b;
-	       float& a;
-
 	       static const int LENGTH=4;
 
 	       float& operator()(size_t idx)noexcept;
@@ -53,6 +43,7 @@ namespace my_gl {
 	       const float& operator[](size_t idx)const noexcept;
 
 	       const float* values()const noexcept;
+	       float * values() noexcept;
 	  private:
 	       float _values[LENGTH];
      	/* data */

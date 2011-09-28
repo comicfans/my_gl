@@ -36,24 +36,16 @@ using std::placeholders::_1;
 namespace my_gl {
 
      Vector::Vector(bool fillZero)noexcept
-	  :x(_values[0]),y(_values[1]),
-	  z(_values[2]),w(_values[3]),
-	  r(_values[0]),g(_values[1]),
-	  b(_values[2]),a(_values[3])
      {
 	  if (fillZero)
 	  {
 	       fill_n(_values,LENGTH,0);
 	  }
 	  //always make w component 1
-	  w=1;
+	  _values[LENGTH-1]=1;
      }
 
      Vector::Vector(float fx,float fy,float fz,float fw)noexcept
-	  :x(_values[0]),y(_values[1]),
-	  z(_values[2]),w(_values[3]),
-	  r(_values[0]),g(_values[1]),
-	  b(_values[2]),a(_values[3])
      {
 	  _values[0]=fx;
 	  _values[1]=fy;
@@ -86,6 +78,9 @@ namespace my_gl {
      }
 
      const float* Vector::values()const noexcept
+     {return _values;}
+
+     float * Vector::values()noexcept
      {return _values;}
 
      inline float sq(float value){return value*value;}

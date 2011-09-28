@@ -1,0 +1,1 @@
+ADD_EXECUTABLE(TestVectorSize VectorSizeTest.cpp)

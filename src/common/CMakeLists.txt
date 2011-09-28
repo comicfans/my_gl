@@ -1,5 +1,7 @@
 INCLUDE_DIRECTORIES(../soft_impl)
 
+SUBDIRS(test)
+
 ADD_LIBRARY(Vector Vector.cpp)
 
 ADD_LIBRARY(Matrix Matrix.cpp MatrixStack.cpp)
