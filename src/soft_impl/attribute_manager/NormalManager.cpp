@@ -28,6 +28,8 @@ namespace my_gl {
      NormalManager::NormalManager()
 	  :TwoSourceVec4Manager(BIND_STATE)
      {
+	  //default value of normal ,see reference manual
+	  setValue(Vec4(0,0,1));
      }
 
      void NormalManager::normal3f(float nx,float ny,float nz)
