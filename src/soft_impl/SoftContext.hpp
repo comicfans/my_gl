@@ -20,6 +20,9 @@
 
 #define SOFT_CONTEXT_HPP
 
+#include <memory>
+#include <array>
+
 #include <boost/ptr_container/ptr_array.hpp>
 
 #include "common/Context.hpp"
@@ -27,13 +30,20 @@
 #include "object/ObjectNameManager.hpp"
 #include "object/ArrayBufferObjectManager.hpp"
 
+#include "shader/VertexAttributeBuffer.hpp"
+
 
 namespace my_gl {
+
+     using std::unique_ptr;
+     using std::array;
 
      using boost::ptr_array;
 
      class BufferObject;
      class Vec4Manager;
+     class VertexShader;
+     class Vec4Provider;
 
 
      class SoftContext :public Context{
@@ -127,6 +137,26 @@ namespace my_gl {
 	void multMatrixf(const Matrix& matrix);
 
 	MatrixStack& currentMatrixStack() ;
+
+
+	unique_ptr<VertexShader> _vertexShader;
+
+	/** 
+	 * @brief after vertex transform,store vertex attribute
+	 * here
+	 */
+	VertexAttributeBuffer _vertexAttributeBuffer;
+
+
+	/** 
+	 * @brief using VertexShader to process
+	 * vertex (to _transformedVertexBuffer)
+	 */
+	void transformVertex(const int vertexNumber);
+
+
+	typedef array<Vec4Provider*,4> Vec4ProviderArray;
+	Vec4ProviderArray getVec4Provider();
 
      };
 	

@@ -26,7 +26,12 @@
 #include "common/UniqueVec4Provider.hpp"
 #include "object/ArrayBufferObject.hpp"
 #include "common/UntypedArray.hpp"
+
+#include "shader/VertexShader.hpp"
 namespace my_gl {
+
+
+     using boost::extents;
 
      SoftContext::SoftContext()
      {
@@ -149,7 +154,7 @@ namespace my_gl {
 
 	void SoftContext::drawArrays(PrimitiveMode primitiveMode, int first, size_t count)
 	{
-	     //TODO
+
 	}
 
 	void SoftContext::drawElements(PrimitiveMode primitiveMode, size_t count, 
@@ -163,9 +168,38 @@ namespace my_gl {
 	     }
 	}
 
+	SoftContext::Vec4ProviderArray 
+	     SoftContext::getVec4Provider()
+	{
+	     Vec4ProviderArray result;
+
+	     for (int i=0; i< 4; ++i)
+	     {
+		  result[i]=& _allVec4Manager[i].getProvider();
+	     }
+	     return result;
+	}
+
+	void SoftContext::transformVertex(const int vertexNumber)
+	{
+	     _vertexAttributeBuffer.resize(vertexNumber);
+
+     
+
+	     for (int i=0; i<vertexNumber;++i)
+	     {
+		  //TODO _vertexShader.shade();
+	     }
+	     
+	     //TODO
+
+
+	}
+
      template<typename T>
 	  T& SoftContext::getVec4Manager()
-	  { return static_cast<T&>(_allVec4Manager[int(T::BIND_STATE)]);}
+	  { return static_cast<T&>(_allVec4Manager
+		    [int(T::BIND_STATE)]);}
 
      ObjectNameManager& SoftContext::getObjectNameManager()
      {

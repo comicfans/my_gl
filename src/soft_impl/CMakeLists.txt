@@ -1,4 +1,4 @@
-SUBDIRS(attribute_manager object test)
+SUBDIRS(attribute_manager object test shader)
 
 
 ADD_LIBRARY(SoftImpl 
@@ -9,4 +9,5 @@ TARGET_LINK_LIBRARIES(SoftImpl
      Object 
      AttributeVertexManagers 
      Context
-     Matrix)
+     Matrix
+     Shader)

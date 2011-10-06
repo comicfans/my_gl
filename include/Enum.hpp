@@ -33,7 +33,7 @@ namespace my_gl {
     
      enum class BufferTarget{ARRAY_BUFFER,ELEMENT_ARRAY_BUFFER};
 
-     enum class BindState{VERTEX,NORMAL,COLOR,TEXCOORD,ELEMENTS};
+     enum class BindState{VERTEX,COLOR,NORMAL,TEXCOORD,ELEMENTS};
 
      enum class DataUsage{STATIC_DRAW,DYNAMIC_DRAW};
 
@@ -42,6 +42,10 @@ namespace my_gl {
       */
      enum class MatrixMode{MODEL_VIEW,PROJECTION,TEXTURE};
 
+
+     /** 
+      * @brief glDrawArray/glDrawElements
+      */
      enum class PrimitiveMode{POINTS,LINE_STRIP,LINE_LOOP,LINES,
 	  TRIANGLE_STRIP,TRIANGLE_FAN,TRIANGLES};
 } /* my_gl */
