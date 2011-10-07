@@ -28,6 +28,7 @@
 
 namespace my_gl {
 
+     //TODO var width
      using boost::multi_array;
      class VertexAttributeBuffer :public multi_array<Vec4,2>
      {
