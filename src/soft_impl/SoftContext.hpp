@@ -31,7 +31,7 @@
 #include "object/ArrayBufferObjectManager.hpp"
 
 #include "shader/VertexAttributeBuffer.hpp"
-
+#include "shader/Global.hpp"
 
 namespace my_gl {
 
@@ -43,7 +43,6 @@ namespace my_gl {
      class BufferObject;
      class Vec4Manager;
      class VertexShader;
-     class Vec4Provider;
 
 
      class SoftContext :public Context{
@@ -115,6 +114,16 @@ namespace my_gl {
 	virtual void drawElements(PrimitiveMode primitiveMode,
 		  size_t count,DataType dataType,const void* indices);
 
+	//glFrustumf
+	virtual void frustumf(float left,float right,
+		  float bottom,float top,float near,float far);
+
+	//glOrtho
+	virtual void orthof(float left,float right,
+		  float bottom,float top,
+		  float near,float far);
+
+
 	ObjectNameManager& getObjectNameManager();
 
 	static SoftContext& getInstance();
@@ -138,6 +147,10 @@ namespace my_gl {
 
 	MatrixStack& currentMatrixStack() ;
 
+	/** 
+	 * @brief global uniform values
+	 */
+	Global _global;
 
 	unique_ptr<VertexShader> _vertexShader;
 
@@ -154,9 +167,7 @@ namespace my_gl {
 	 */
 	void transformVertex(const int vertexNumber);
 
-
-	typedef array<Vec4Provider*,4> Vec4ProviderArray;
-	Vec4ProviderArray getVec4Provider();
+	void prepareGlobalUniform();
 
      };
 	

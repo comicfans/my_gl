@@ -19,12 +19,16 @@
 #include "Matrix.hpp"
 
 #include <algorithm>
+#include <cmath>
 #include <utility>
 
 #include "Vec4.hpp"
 
 using std::fill_n;
 using std::copy_n;
+using std::swap;
+using std::cos;
+using std::sin;
 
 namespace my_gl {
 
@@ -50,10 +54,98 @@ namespace my_gl {
 	       {
 		    for (int row=0; row<LENGTH; ++row)
 		    {
-			 _rowFirstArray[row*LENGTH+column]=values[column*LENGTH+row];
+			 _rowFirstArray[row*LENGTH+column]
+			      =values[column*LENGTH+row];
 		    }
 	       }
 	  }
+     }
+
+     static float rowColumnExprValue(const float* rowFirstArray,
+	       const int sideLength)
+     {
+	  float result=0;
+
+	  for (int rowCounter=0; 
+		    rowCounter<sideLength*2;
+		    ++rowCounter)
+	  {
+	       int sign=(rowCounter<sideLength?1:-1);
+
+	       float product=1;
+
+	       for (int columnCounter=0; 
+			 columnCounter<sideLength; 
+			 ++columnCounter)
+	       {
+		    product*=rowFirstArray
+			 [(rowCounter+sign*columnCounter)
+			 %sideLength*sideLength+columnCounter];
+	       }
+	       result+=sign*product;
+	  }
+
+	  return result;
+     }
+
+     static float inverseMod(const Matrix& matrix,
+	       const int row,const int column)
+     {
+
+	  //remove row/column element to make a 3x3 matrix
+	  float tmp[3][3];
+	  for (int rowFrom=0,rowTo=0; 
+		    rowFrom<Matrix::LENGTH; ++rowFrom)
+	  {
+	       if (rowFrom==row)
+	       {
+		    continue;
+	       }
+	       
+	       for (int columnFrom=0,columnTo=0; 
+			 columnFrom<Matrix::LENGTH; ++columnFrom)
+	       {
+		    if (columnFrom==column)
+		    {
+			 continue;
+		    }
+		    tmp[rowTo][columnTo]=
+			 matrix(rowFrom,columnFrom);
+		    ++columnTo;
+	       }
+	       ++rowTo;
+	  }
+
+	  // get the value of this row/column expression
+
+	  float result=rowColumnExprValue(&tmp[0][0],3);
+
+	  if ((row+column)%2)
+	  {
+	       result*=-1;
+	  }
+
+	  return result;
+     }
+
+     Matrix Matrix::inverse() const 
+     {
+	  Matrix ret;
+
+	  float exprValue=rowColumnExprValue
+	       (_rowFirstArray,LENGTH);
+
+	  for (int row=0; row<LENGTH; ++row)
+	  {
+	       for (int column=0; column<LENGTH; ++column)
+	       {
+		    ret(row,column)=
+			 inverseMod(*this,row,column)/exprValue;
+	       }
+	  }
+
+	  return ret;
+
      }
 
      Matrix & Matrix::operator=(const Matrix &rhs)
@@ -177,6 +269,21 @@ namespace my_gl {
 		    result[i]+=lhs(i,j)*vector[j];
 	       }
 	  }
+     }
+
+     Matrix Matrix::transpose()const
+     {
+	  Matrix ret=*this;
+
+	  for (int i=1; i<LENGTH; ++i)
+	  {
+	       for (int j=0; j<i; ++j)
+	       {
+		    ::swap(ret(i,j),ret(j,i));
+	       }
+	  }
+
+	  return ret;
      }
 
      const float* Matrix::values()const 

@@ -61,6 +61,10 @@ namespace my_gl {
 
 	  const static int LENGTH=4;
 
+	  Matrix inverse()const;
+
+	  Matrix transpose()const;
+
 	  const static int ELEMENTS_NUMBER=LENGTH*LENGTH;
 
      private:

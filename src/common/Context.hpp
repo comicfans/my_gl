@@ -86,6 +86,15 @@ namespace my_gl {
 	//glMultMatrixf
 	virtual void multMatrixf(const float* matrix)=0;
 
+	//glFrustumf
+	virtual void frustumf(float left, float right, 
+		  float bottom, float top, 
+		  float near, float far)=0;
+
+	//glOrtho
+	virtual void orthof(float left,float right,
+		  float bottom,float top,
+		  float near,float far)=0;
 
 	virtual ~Context();
      };

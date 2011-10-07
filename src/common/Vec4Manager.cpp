@@ -62,11 +62,6 @@ namespace my_gl{
      {
      }
 
-     Vec4Provider& Vec4Manager::getProvider() 
-     {
-	  return *_pImpl;
-     }
-
      void Vec4Manager::vertexArrayChange(int componentSize,  
 DataType type,  size_t stride,  const void *pointer)
      {
@@ -89,5 +84,17 @@ DataType type,  size_t stride,  const void *pointer)
 			 (pointer,3,type,stride));
 	  }
 
+     }
+
+	 
+     Vec4 Vec4Manager::value()
+     {
+	  return _pImpl->value();
+     }
+	
+	  
+     void Vec4Manager::next(size_t steps)
+     {
+	  _pImpl->next(steps);
      }
 } /* my_gl */

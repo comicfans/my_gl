@@ -32,7 +32,8 @@ namespace my_gl {
 
 	  if (vertexArrayEnabled)
 	  {
-	       _uniqueValue=static_cast<UniqueVec4Provider&>(getProvider()).value();
+	       _uniqueValue=static_cast
+		    <UniqueVec4Provider&>(*_pImpl).value();
 	  }
 	  else
 	  {
@@ -45,7 +46,8 @@ namespace my_gl {
      {
 	  assert(!vertexArrayEnabled());
 	       
-	  static_cast<UniqueVec4Provider&>(getProvider()).setValue(value);
+	  static_cast<UniqueVec4Provider&>
+	       (*_pImpl).setValue(value);
 	 _uniqueValue=value;
      }
 	

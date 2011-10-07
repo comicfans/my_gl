@@ -36,6 +36,8 @@ namespace my_gl {
 	  void push();
 
 	  using stack<Matrix>::pop;
+
+	  using stack<Matrix>::top;
      
      };
 

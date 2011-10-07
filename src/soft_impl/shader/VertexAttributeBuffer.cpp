@@ -34,5 +34,10 @@ namespace my_gl {
 	  multi_array<Vec4,2>::resize(extents
 		    [length][VertexShader::OUT_SIZE]);
      }
+
+     Vec4* VertexAttributeBuffer::data(size_t index)
+     {
+	  return origin()+index*VertexShader::OUT_SIZE;
+     }
 	
 } /* my_gl */

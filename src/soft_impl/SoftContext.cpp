@@ -168,31 +168,90 @@ namespace my_gl {
 	     }
 	}
 
-	SoftContext::Vec4ProviderArray 
-	     SoftContext::getVec4Provider()
-	{
-	     Vec4ProviderArray result;
-
-	     for (int i=0; i< 4; ++i)
-	     {
-		  result[i]=& _allVec4Manager[i].getProvider();
-	     }
-	     return result;
-	}
 
 	void SoftContext::transformVertex(const int vertexNumber)
 	{
 	     _vertexAttributeBuffer.resize(vertexNumber);
 
-     
-
-	     for (int i=0; i<vertexNumber;++i)
+	     for (int vertexCounter=0; vertexCounter<vertexNumber;
+		       ++vertexCounter)
 	     {
-		  //TODO _vertexShader.shade();
+		  Vec4 inStream[4];
+
+		  //construct input attribute
+		  for (int j=0; j<4; ++j)
+		  {
+		       auto& provider=_allVec4Manager[j];
+		       inStream[j]=provider.value();
+		       provider.next();
+		  }
+
+		  _vertexShader->shade(_global,inStream,
+			    _vertexAttributeBuffer.
+			    data(vertexNumber));
 	     }
 	     
 	     //TODO
 
+
+	}
+
+	void SoftContext::frustumf(float left, float right, 
+		  float bottom, float top, 
+		  float near, float far)
+	{
+	     Matrix matrix;
+
+	     float A=(right+left)/(right-left),
+		   B=(top+bottom)/(top-bottom),
+		   C=-(far+near)/(far-near),
+		   D=-2*(far*near)/(far-near);
+
+	     matrix(3,3)=0;
+
+	     matrix(0,0)=2*near/(right-left);
+
+	     matrix(1,1)=2*near/(top-bottom);
+
+	     matrix(0,2)=A;
+	     matrix(1,2)=B;
+	     matrix(2,2)=C;
+	     matrix(3,2)=-1;
+
+	     _matrixStacks[int(MatrixMode::PROJECTION)].
+		  multiTop(matrix);
+
+	}
+
+	//glOrtho
+	void SoftContext::orthof(float left,float right,
+		  float bottom,float top,
+		  float near,float far)
+	{
+	     float tx=-(right+left)/(right-left),
+	     ty=-(top+bottom)/(top-bottom),
+	     tz=-(far+near)/(far-near);
+
+
+	     Matrix matrix;
+	     matrix(0,0)=2/(right-left);
+	     matrix(1,1)=2/(top-bottom);
+	     matrix(2,2)=-2/(far-near);
+
+	     matrix(0,3)=tx;
+	     matrix(1,3)=ty;
+	     matrix(2,3)=tz;
+
+	     _matrixStacks[int(MatrixMode::PROJECTION)]
+		  .multiTop(matrix);
+	}
+
+	void SoftContext::prepareGlobalUniform()
+	{
+	     _global.modelView=_matrixStacks
+		  [int(MatrixMode::MODEL_VIEW)].top();
+
+	     _global.modelViewInverse=_global.modelView;
 
 	}
 

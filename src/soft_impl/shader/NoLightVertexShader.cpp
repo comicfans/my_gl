@@ -41,8 +41,10 @@ namespace my_gl {
 	       Vec4& outTexCoord
 	       )
      {
-	  multiVec4To(global.modelView, inVertex, outPosition);
+	  multiVec4To(global.modelViewProjection, 
+		    inVertex, outPosition);
 	  outFrontColor=inColor;
+	  outBackColor=inColor;
      }
 
 

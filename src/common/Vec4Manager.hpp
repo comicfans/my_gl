@@ -23,6 +23,7 @@
 #include <memory>
 
 #include "Enum.hpp"
+#include "Vec4Provider.hpp"
 
 
 namespace my_gl {
@@ -31,14 +32,12 @@ namespace my_gl {
 
      class Vec4Provider;
      class ArrayBufferObject;
-     class Vec4Manager {
+     class Vec4Manager :public Vec4Provider{
      public:
 
 	  Vec4Manager(BindState bindState) ;
 
 	  virtual ~Vec4Manager();
-
-	  Vec4Provider& getProvider() ;
 
 	  void bindArrayBufferObject(const ArrayBufferObject* toBind);
 
@@ -48,6 +47,9 @@ namespace my_gl {
 
 	  bool vertexArrayEnabled()const ;
 
+	  virtual Vec4 value();
+	
+	  virtual void next(size_t steps=1);
      protected:
 
 	  virtual void clientStateChangeCallback(bool value);
