@@ -1,1 +1,1 @@
-ADD_LIBRARY(Pipeline Interpolator.cpp)
+ADD_LIBRARY(Pipeline Interpolator.cpp Clipper.cpp)

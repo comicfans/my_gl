@@ -154,6 +154,7 @@ namespace my_gl {
 
 	void SoftContext::drawArrays(PrimitiveMode primitiveMode, int first, size_t count)
 	{
+	     //TODO
 
 	}
 
