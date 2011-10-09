@@ -36,7 +36,6 @@ namespace my_gl {
 
 		    Vec4& outPosition,
 		    Vec4& outPointSize,
-		    Vec4& outClipVertex,
 		    Vec4& outFrontColor,
 		    Vec4& outBackColor /*not used*/,
 		    Vec4& outTexCoord

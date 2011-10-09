@@ -34,10 +34,10 @@ namespace my_gl {
 		  const Vec4 *inputAttributes,
 		  Vec4 *outputAttributes);
 
-	enum OutIndex{POSITION,POINT_SIZE,CLIP_VERTEX,
+	enum OutIndex{POSITION,POINT_SIZE,
 	FRONT_COLOR,BACK_COLOR,TEXCOORD};
 
-	const static int OUT_SIZE=6;
+	const static int OUT_SIZE=5;
 	const static int IN_SIZE=4;
 
      protected:
@@ -52,7 +52,6 @@ namespace my_gl {
 
 		  Vec4& outPosition,
 		  Vec4& outPointSize,
-		  Vec4& outClipVertex,
 		  Vec4& outFrontColor,
 		  Vec4& outBackColor,
 		  Vec4& outTexCoord

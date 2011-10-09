@@ -39,7 +39,6 @@ namespace my_gl {
 			 
 			 outputAttributes[int(OutIndex::POSITION)],
 			 outputAttributes[int(OutIndex::POINT_SIZE)],
-			 outputAttributes[int(OutIndex::CLIP_VERTEX)],
 			 outputAttributes[int(OutIndex::FRONT_COLOR)],
 			 outputAttributes[int(OutIndex::BACK_COLOR)],
 			 outputAttributes[int(OutIndex::TEXCOORD)]
