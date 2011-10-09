@@ -1,4 +1,4 @@
-SUBDIRS(attribute_manager object test shader)
+SUBDIRS(attribute_manager object test shader pipeline)
 
 
 ADD_LIBRARY(SoftImpl 

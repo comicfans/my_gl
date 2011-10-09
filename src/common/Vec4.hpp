@@ -34,6 +34,10 @@ namespace my_gl {
 
 	       Vec4& operator=(const Vec4& rhs);
 
+	       void operator*=(float scalar);
+
+	       void operator+=(const Vec4& rhs);
+
 	       static const int LENGTH=4;
 
 	       float& operator()(size_t idx);
@@ -48,6 +52,10 @@ namespace my_gl {
 	       float _values[LENGTH];
      	/* data */
      };
+
+     Vec4 operator*(const Vec4& lhs,float scalar);
+     Vec4 operator*(float scalar,const Vec4& rhs);
+     Vec4 operator+(const Vec4& lhs,const Vec4& rhs);
 
      void normalize(float * values);
 	

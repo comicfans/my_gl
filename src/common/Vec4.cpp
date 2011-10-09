@@ -30,6 +30,8 @@ using std::cos;
 using std::sqrt;
 using std::for_each;
 using std::divides;
+using std::plus;
+using std::transform;
 using std::bind;
 using std::placeholders::_1;
 
@@ -94,5 +96,37 @@ namespace my_gl {
 	  for_each(values,values+3,bind(divides<float>(),_1,length));
      }
 
+     void Vec4::operator*=(float scalar)
+     {
+	  for(float& component:_values)
+	  {
+	       component*=scalar;
+	  }
+     }
 
+     Vec4 operator*(const Vec4& lhs,float scalar)
+     {
+	  Vec4 ret=lhs;
+	  ret*=scalar;
+	  return lhs;
+     }
+
+     Vec4 operator*(float scalar,const Vec4& rhs)
+     {
+	  return rhs*scalar;
+     }
+
+     void Vec4::operator+=(const Vec4& rhs)
+     {
+	  transform(_values,_values+LENGTH,
+		    rhs._values,_values,
+		    plus<float>());
+     }
+
+     Vec4 operator+(const Vec4& lhs,const Vec4& rhs)
+     {
+	  Vec4 ret=lhs;
+	  ret+=rhs;
+	  return ret;
+     }
 } /* my_gl */
