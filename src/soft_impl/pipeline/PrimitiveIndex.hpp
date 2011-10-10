@@ -48,6 +48,8 @@ namespace my_gl {
 
 	const size_t vertexPerPrimitive()const;
 
+	//insert new vertex index
+	void insertNew(size_t newIndex);
 
      private:
 

@@ -42,29 +42,29 @@ namespace my_gl {
 	  :_vertexPerPrimitive(VERTEX_PER_PRIMITIVE[int(primitiveMode)]),
 	  _primitiveMode(primitiveMode),
 	  _indexProvider(indexProvider)
+     {
+
+	  //vertex number less equal than vertex attribute buffer length 
+	  int actualVertex=min
+	       (useVertexNumber,actualVertexNumber);
+
+	  switch(primitiveMode)
 	  {
+	       case PrimitiveMode::POINTS:
+		    {fillPointIndex(actualVertex);break;}
 
-	       //vertex number less equal than vertex attribute buffer length 
-	       int actualVertex=min
-		    (useVertexNumber,actualVertexNumber);
+	       case PrimitiveMode::LINE_LOOP:
+	       case PrimitiveMode::LINE_STRIP:
+	       case PrimitiveMode::LINES:
+		    {fillLineIndex(actualVertex);break;}
 
-	       switch(primitiveMode)
-	       {
-		    case PrimitiveMode::POINTS:
-			 {fillPointIndex(actualVertex);break;}
-
-		    case PrimitiveMode::LINE_LOOP:
-		    case PrimitiveMode::LINE_STRIP:
-		    case PrimitiveMode::LINES:
-			 {fillLineIndex(actualVertex);break;}
-
-		    case PrimitiveMode::TRIANGLES:
-		    case PrimitiveMode::TRIANGLE_STRIP:
-		    case PrimitiveMode::TRIANGLE_FAN:
-			 {fillTriangleIndex(actualVertex);break;}
-	       }
-
+	       case PrimitiveMode::TRIANGLES:
+	       case PrimitiveMode::TRIANGLE_STRIP:
+	       case PrimitiveMode::TRIANGLE_FAN:
+		    {fillTriangleIndex(actualVertex);break;}
 	  }
+
+     }
 
      const size_t PrimitiveIndex
 	  ::vertexNumber()const
@@ -186,4 +186,10 @@ namespace my_gl {
 			 }
 	       }
 	  }
-	  } /* my_gl */
+
+     void PrimitiveIndex::insertNew(size_t newIndex)
+     {
+	  push_back(newIndex);
+	  _elementNumber=size()/_vertexPerPrimitive;
+     }
+} /* my_gl */
