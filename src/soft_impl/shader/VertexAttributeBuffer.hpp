@@ -39,6 +39,8 @@ namespace my_gl {
 	  void resize(size_t length);
 
 	  Vec4* data(size_t index);
+
+	  const Vec4* data(size_t index)const;
      };
 	
 } /* my_gl */

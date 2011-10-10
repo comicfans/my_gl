@@ -21,7 +21,6 @@
 #define SOFT_CONTEXT_HPP
 
 #include <memory>
-#include <array>
 
 #include <boost/ptr_container/ptr_array.hpp>
 
@@ -33,10 +32,11 @@
 #include "shader/VertexAttributeBuffer.hpp"
 #include "shader/Global.hpp"
 
+#include "ElementIndexManager.hpp"
+
 namespace my_gl {
 
      using std::unique_ptr;
-     using std::array;
 
      using boost::ptr_array;
 
@@ -58,6 +58,22 @@ namespace my_gl {
 	virtual void deleteBuffers(size_t size,Name *names);
 	//glIsBuffer
 	virtual bool isBuffer(Name name) const ;
+
+	//glBindBuffer
+	virtual void bindBuffer(BufferTarget target,Name name);
+
+	//glBufferData
+	virtual void bufferData(BufferTarget target,size_t size,
+		    const void* data, DataUsage usage);
+
+	//glBufferSubData
+	virtual void bufferSubData(BufferTarget target,ptrdiff_t offset,
+		    size_t size,const void* data);
+
+	//glEnableClient
+	virtual void enableClientState(BindState bindState);
+	//glDisableClient
+	virtual void disableClientState(BindState bindState);
 
 	//glVertexPointer
 	virtual void vertexPointer(int componentSize,DataType type, 
@@ -135,6 +151,8 @@ namespace my_gl {
 	ArrayBufferObjectManager _arrayBufferObjectManager;
 
 	ptr_array<Vec4Manager,4> _allVec4Manager;
+
+	ElementIndexManager _elementIndexManager;
 
 	template<typename T>
 	     T& getVec4Manager();

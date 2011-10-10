@@ -40,4 +40,9 @@ namespace my_gl {
 	  return origin()+index*VertexShader::OUT_SIZE;
      }
 	
+     const Vec4* VertexAttributeBuffer::data(size_t index)const
+     {
+	  return origin()+index*VertexShader::OUT_SIZE;
+     }
+	
 } /* my_gl */

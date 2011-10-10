@@ -28,6 +28,7 @@
 #include "common/UntypedArray.hpp"
 
 #include "shader/VertexShader.hpp"
+#include "pipeline/PrimitiveIndex.hpp"
 namespace my_gl {
 
 
@@ -63,6 +64,38 @@ namespace my_gl {
      {
 	  return _arrayBufferObjectManager.isBuffer(name);
      }
+ 	
+     void SoftContext::bindBuffer(BufferTarget target,Name name)
+     {
+	  _arrayBufferObjectManager.bindBuffer(target,name);
+     }
+
+     void SoftContext::bufferData(BufferTarget target,size_t size,
+		    const void* data, DataUsage usage)
+     {
+	  _arrayBufferObjectManager.bufferData(target, size, data, usage);
+     }
+
+     void SoftContext::bufferSubData(BufferTarget target,ptrdiff_t offset,
+		    size_t size,const void* data)
+     {
+	  _arrayBufferObjectManager.bufferSubData(target,offset,size,data);
+     }
+
+     void SoftContext::enableClientState(BindState bindState)
+     {
+	  assert(bindState!=BindState::ELEMENTS);
+
+	  _allVec4Manager[int(bindState)].enableVertexArray(true);
+     }
+
+     void SoftContext::disableClientState(BindState bindState)
+     {
+	  assert(bindState!=BindState::ELEMENTS);
+
+	  _allVec4Manager[int(bindState)].enableVertexArray(false);
+     }
+
 
      void SoftContext::normal3f(float nx,float ny,float nz)
      {
@@ -154,7 +187,7 @@ namespace my_gl {
 
 	void SoftContext::drawArrays(PrimitiveMode primitiveMode, int first, size_t count)
 	{
-	     //TODO
+	     //TODO GL spec : if GL_VERTEX_ARRAY is not enabled ,no geom constructed
 
 	}
 
@@ -178,6 +211,7 @@ namespace my_gl {
 		       ++vertexCounter)
 	     {
 		  Vec4 inStream[4];
+		  //TODO jump first off
 
 		  //construct input attribute
 		  for (int j=0; j<4; ++j)
@@ -253,6 +287,7 @@ namespace my_gl {
 		  [int(MatrixMode::MODEL_VIEW)].top();
 
 	     _global.modelViewInverse=_global.modelView;
+	     //TODO
 
 	}
 

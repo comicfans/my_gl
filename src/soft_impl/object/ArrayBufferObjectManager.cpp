@@ -83,6 +83,16 @@ namespace my_gl {
 
 	  }
 
+     void ArrayBufferObjectManager::bufferSubData
+	  (BufferTarget target,ptrdiff_t offset,
+		    size_t size,const void* data)
+     {
+	       ArrayBufferObject *pBuffer=_arrayAndElements[int(target)];
+	       assert(pBuffer);
+	       pBuffer->subData(offset,size,data);
+     }
+
+
      ArrayBufferObject * ArrayBufferObjectManager::
 	  getElementsBuffer() const 
 	  {

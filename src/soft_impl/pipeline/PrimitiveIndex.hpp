@@ -1,0 +1,74 @@
+/*
+ * =====================================================================================
+ *
+ *       Filename:  PrimitiveIndex.hpp
+ *
+ *    Description:  a simple typedef
+ *
+ *        Version:  1.0
+ *        Created:  2011-10-10 14:24:20
+ *       Revision:  none
+ *       Compiler:  gcc
+ *
+ *         Author:  YOUR NAME (), 
+ *        Company:  
+ *
+ * =====================================================================================
+ */
+
+#ifndef PRIMITIVE_INDEX_HPP
+
+#define PRIMITIVE_INDEX_HPP
+
+#include <vector>
+
+#include "Enum.hpp"
+
+
+namespace my_gl {
+
+     using std::vector;
+     using std::size_t;
+
+
+     class IndexProvider;
+     class PrimitiveIndex:protected vector<size_t>{
+     public:
+     	PrimitiveIndex (const PrimitiveMode primitiveMode,
+		  size_t useVertexNumber,
+		  size_t actualVertexNumber,
+		  const IndexProvider& indexProvider);
+
+
+	using vector<size_t>::operator[];
+
+	const size_t vertexNumber()const;
+
+	const size_t elementNumber()const;
+
+	const size_t vertexPerPrimitive()const;
+
+
+     private:
+
+	const size_t _vertexPerPrimitive;
+
+	const PrimitiveMode _primitiveMode;
+
+	const IndexProvider& _indexProvider;
+
+	size_t _elementNumber;
+
+	void fillLineIndex(const size_t atMostVertexNumber);
+	void fillTriangleIndex(const size_t atMostVertexNumber);
+	void fillPointIndex(const size_t atMostVertexNumber);
+     
+
+     };
+
+	
+} /* my_gl */
+
+
+
+#endif /* end of include guard: PRIMITIVE_INDEX_HPP */
