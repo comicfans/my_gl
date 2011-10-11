@@ -40,7 +40,7 @@ namespace my_gl {
 		ClippedPrimitiveGroup& clippedPrimitiveGroup);
 
 
-	bool inClipVolume(const Vec4& projectedCoordinate);
+	static bool inClipVolume(const Vec4& projectedCoordinate);
 
      };
 	

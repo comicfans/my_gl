@@ -52,7 +52,7 @@ namespace my_gl {
 		const size_t *vertexIndex,
 		ClippedPrimitiveGroup& clippedPrimitiveGroup)=0;
 
-	  const Vec4& getVertex(const Vec4**,size_t index);
+	  static const Vec4& getVertex(const Vec4**,size_t index);
 
      private:
 
