@@ -39,6 +39,11 @@ namespace my_gl {
 		  size_t actualVertexNumber,
 		  const IndexProvider& indexProvider);
 
+	using vector<size_t>::begin;
+
+	using vector<size_t>::end;
+
+	using vector<size_t>::size;
 
 	using vector<size_t>::operator[];
 

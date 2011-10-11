@@ -21,6 +21,7 @@
 #include "common/Vec4.hpp"
 
 #include "Global.hpp"
+
 namespace my_gl {
 
      VertexShader::~VertexShader(){}
@@ -28,7 +29,7 @@ namespace my_gl {
 
      void VertexShader::shade
 	  (const Global& global,
-	   const Vec4 *inputAttributes,
+	   const Vec4* inputAttributes,
 	   Vec4 *outputAttributes)
 	  {
 	       shade(	 global,

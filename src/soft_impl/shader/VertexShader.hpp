@@ -26,12 +26,13 @@ namespace my_gl {
 
      struct Vec4;
      struct Global;
+
      class VertexShader {
      public:
      	virtual ~VertexShader ();
 
 	virtual void shade(const Global& global,
-		  const Vec4 *inputAttributes,
+		  const Vec4* inputAttributes,
 		  Vec4 *outputAttributes);
 
 	enum OutIndex{POSITION,POINT_SIZE,

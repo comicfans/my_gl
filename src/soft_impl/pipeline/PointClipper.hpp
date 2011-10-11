@@ -24,17 +24,23 @@
 
 namespace my_gl {
 
-     class PointClipper {
+     struct Vec4;
+     class PointClipper :public Clipper{
      public:
 
      	virtual ~PointClipper ();
 
-	virtual void clip
-	       (const VertexAttributeBuffer& projectedDataBuffer,
-		const PrimitiveIndex& originalPrimitiveIndex,
-		PrimitiveIndex& clippedPrimitiveIndex,
-		ClippedVertexAttributeBuffer& clippedVertexAttributeBuffer);
 
+     protected:
+
+	  virtual void elementClip
+	       (size_t attributeNumber,
+		const Vec4 ** attributeGroups,
+		const size_t *vertexIndex,
+		ClippedPrimitiveGroup& clippedPrimitiveGroup);
+
+
+	bool inClipVolume(const Vec4& projectedCoordinate);
 
      };
 	

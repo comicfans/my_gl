@@ -18,15 +18,48 @@
 
 #include "PointClipper.hpp"
 
+#include <algorithm>
+#include <functional>
+
+#include "common/Vec4.hpp"
+#include "PrimitiveIndex.hpp"
+#include "shader/VertexShader.hpp"
+
+#include "ClippedPrimitiveGroup.hpp"
+
+
+using std::all_of;
+using std::bind;
+using std::less_equal;
+using std::placeholders::_1;
+
 namespace my_gl {
-	void PointClipper::clip
-	       (const VertexAttributeBuffer& projectedDataBuffer,
-		const PrimitiveIndex& originalPrimitiveIndex,
-		PrimitiveIndex& clippedPrimitiveIndex,
-		ClippedVertexAttributeBuffer& clippedVertexAttributeBuffer)
+
+
+     bool PointClipper::inClipVolume
+	  (const my_gl::Vec4 &projectedCoordinate)
+	  {
+
+	       float w=projectedCoordinate(3);
+
+	       auto* values=projectedCoordinate.values();
+
+	       return all_of(values,values+3,bind
+			 (less_equal<float>(),_1,w));
+
+	  }
+
+     void PointClipper::elementClip
+	       (size_t attributeNumber,
+		const Vec4 ** attributeGroups,
+		const size_t *vertexIndex,
+		ClippedPrimitiveGroup& clippedPrimitiveGroup)
 	       {
-
+		    if(inClipVolume(getVertex(attributeGroups,0)))
+		    {
+			 clippedPrimitiveGroup.insertOriginalIndex(vertexIndex[0]);
+		    }
+		    //else clipped
 	       }
-
 
 } /* my_gl */

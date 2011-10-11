@@ -30,19 +30,29 @@ namespace my_gl {
 
      //TODO var width
      using boost::multi_array;
-     class VertexAttributeBuffer :public multi_array<Vec4,2>
+
+	  
+     typedef multi_array<Vec4,2>::reference AttributeGroupRef;
+
+     typedef multi_array<Vec4,2>::const_reference ConstAttributeGroupRef;
+
+
+     class VertexAttributeBuffer :protected multi_array<Vec4,2>
      {
-     public:
 
-	  size_t length()const ;
+	  public:
 
-	  void resize(size_t length);
+	       size_t length()const ;
 
-	  Vec4* data(size_t index);
+	       size_t attributeNumber()const;
 
-	  const Vec4* data(size_t index)const;
+	       void resize(size_t length);
+
+	       using multi_array<Vec4,2>::operator[];
+
      };
-	
+
+
 } /* my_gl */
 
 #endif /* end of include guard: VERTEX_ATTRIBUTE_BUFFER_HPP */

@@ -222,8 +222,7 @@ namespace my_gl {
 		  }
 
 		  _vertexShader->shade(_global,inStream,
-			    _vertexAttributeBuffer.
-			    data(vertexNumber));
+			    _vertexAttributeBuffer[vertexCounter].origin());
 	     }
 	     
 	     //TODO

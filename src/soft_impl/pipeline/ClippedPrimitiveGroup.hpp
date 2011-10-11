@@ -20,9 +20,11 @@
 
 #define CLIPPED_PRIMITIVE_GROUP_HPP
 
-#include "common/VertexAttributeBuffer.hpp"
+#include "shader/VertexAttributeBuffer.hpp"
 
 namespace my_gl {
+
+     struct Vec4;
 
      class ClippedPrimitiveGroup {
      public:
@@ -31,7 +33,9 @@ namespace my_gl {
 
 	void insertOriginalIndex(size_t original);
 
-	void insertClippedAttribute();
+	Vec4 *writeClipGeneratedAttribute();
+
+	const PrimitiveIndex& getPrimitiveIndex()const;
 
      private:
 

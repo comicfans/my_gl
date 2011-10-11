@@ -29,20 +29,17 @@ namespace my_gl {
 	  return shape()[0];
      }
 
+     size_t VertexAttributeBuffer::attributeNumber()const
+     {
+	  return shape()[1];
+     }
+
      void VertexAttributeBuffer::resize(size_t length)
      {
 	  multi_array<Vec4,2>::resize(extents
 		    [length][VertexShader::OUT_SIZE]);
      }
 
-     Vec4* VertexAttributeBuffer::data(size_t index)
-     {
-	  return origin()+index*VertexShader::OUT_SIZE;
-     }
-	
-     const Vec4* VertexAttributeBuffer::data(size_t index)const
-     {
-	  return origin()+index*VertexShader::OUT_SIZE;
-     }
-	
+
+
 } /* my_gl */
