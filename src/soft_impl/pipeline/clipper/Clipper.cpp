@@ -18,7 +18,7 @@
 
 #include "Clipper.hpp"
 
-#include "PrimitiveIndex.hpp"
+#include "pipeline/PrimitiveIndex.hpp"
 
 #include "shader/VertexAttributeBuffer.hpp"
 

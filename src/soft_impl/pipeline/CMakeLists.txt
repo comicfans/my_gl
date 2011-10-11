@@ -1,10 +1,10 @@
 INCLUDE_DIRECTORIES(../)
 
+SUBDIRS(clipper)
+
 ADD_LIBRARY(PrimitiveIndex PrimitiveIndex.cpp 
      NaturalOrderIndexProvider.cpp
      IndirectOrderIndexProvider.cpp)
-
-ADD_LIBRARY(Clipper Clipper.cpp PointClipper.cpp)
 
 ADD_LIBRARY(Pipeline Interpolator.cpp)
 

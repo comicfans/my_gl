@@ -22,10 +22,9 @@
 #include <functional>
 
 #include "common/Vec4.hpp"
-#include "PrimitiveIndex.hpp"
 #include "shader/VertexShader.hpp"
 
-#include "ClippedPrimitiveGroup.hpp"
+#include "pipeline/ClippedPrimitiveGroup.hpp"
 
 
 using std::all_of;
