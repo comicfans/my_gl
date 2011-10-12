@@ -234,6 +234,7 @@ namespace my_gl {
 		  float bottom, float top, 
 		  float near, float far)
 	{
+	     assert(near>0);
 	     Matrix matrix;
 
 	     float A=(right+left)/(right-left),
@@ -250,6 +251,7 @@ namespace my_gl {
 	     matrix(0,2)=A;
 	     matrix(1,2)=B;
 	     matrix(2,2)=C;
+	     matrix(2,3)=D;
 	     matrix(3,2)=-1;
 
 	     _matrixStacks[int(MatrixMode::PROJECTION)].

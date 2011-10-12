@@ -27,7 +27,9 @@ namespace my_gl {
      struct Interpolator {
      public:
 
-	  static Vec4 calculate(const Vec4& source,const Vec4& destination,float persent);
+	  static void calculate(const Vec4& source,
+		    const Vec4& destination,
+		    float persent,Vec4& result);
      
      };
 	

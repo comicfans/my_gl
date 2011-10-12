@@ -21,9 +21,9 @@
 namespace my_gl {
 	
 	  
-     Vec4 Interpolator::calculate(const Vec4& source,
-	       const Vec4& destination,float persent)
+     void Interpolator::calculate(const Vec4& source,
+	       const Vec4& destination,float persent,Vec4& result)
      {
-	  return source*(1-persent)+destination*persent;
+	  result=source*(1-persent)+destination*persent;
      }
 } /* my_gl */

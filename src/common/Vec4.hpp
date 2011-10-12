@@ -48,6 +48,8 @@ namespace my_gl {
 
 	       const float* values()const ;
 	       float * values() ;
+
+	       const float& w()const;
 	  private:
 	       float _values[LENGTH];
      	/* data */

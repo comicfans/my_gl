@@ -85,6 +85,9 @@ namespace my_gl {
      float * Vec4::values()
      {return _values;}
 
+     const float& Vec4::w()const
+     {return _values[3];}
+
      inline float sq(float value){return value*value;}
 
      void normalize(float * values)
@@ -129,4 +132,5 @@ namespace my_gl {
 	  ret+=rhs;
 	  return ret;
      }
+
 } /* my_gl */
