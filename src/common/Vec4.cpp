@@ -119,6 +119,11 @@ namespace my_gl {
 	  return rhs*scalar;
      }
 
+     void Vec4::operator/=(float scalar)
+     {
+	  (*this)*=1/scalar;
+     }
+
      void Vec4::operator+=(const Vec4& rhs)
      {
 	  transform(_values,_values+LENGTH,

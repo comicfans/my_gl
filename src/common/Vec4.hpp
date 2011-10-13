@@ -36,6 +36,8 @@ namespace my_gl {
 
 	       void operator*=(float scalar);
 
+	       void operator/=(float scalar);
+
 	       void operator+=(const Vec4& rhs);
 
 	       static const int LENGTH=4;
