@@ -33,7 +33,7 @@ namespace my_gl {
 
 	void insertOriginalIndex(size_t original);
 
-	Vec4 *writeClipGeneratedAttribute();
+	AttributeGroupRef writeClipGeneratedAttribute();
 
 	const PrimitiveIndex& getPrimitiveIndex()const;
 

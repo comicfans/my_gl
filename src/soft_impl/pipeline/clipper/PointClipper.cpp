@@ -48,15 +48,17 @@ namespace my_gl {
 
 	  }
 
+	  
+
      void PointClipper::elementClip
-	       (size_t attributeNumber,
-		const Vec4 ** attributeGroups,
+	       (const ConstAttributeGroupRef* attributeGroupRefs,
 		const size_t *vertexIndex,
-		ClippedPrimitiveGroup& clippedPrimitiveGroup)
+	       ClippedPrimitiveGroup& clippedPrimitiveGroup)
 	       {
-		    if(inClipVolume(getVertex(attributeGroups,0)))
+		    if(inClipVolume(getVertex(attributeGroupRefs[0])))
 		    {
-			 clippedPrimitiveGroup.insertOriginalIndex(vertexIndex[0]);
+			 clippedPrimitiveGroup.
+			      insertOriginalIndex(vertexIndex[0]);
 		    }
 		    //else clipped
 	       }

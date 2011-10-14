@@ -24,11 +24,14 @@
 
 #include "Clipper.hpp"
 
+
 namespace my_gl {
 
      using std::pair;
 
      typedef std::pair<float,float> ClipPercent;
+
+
 
      class LineClipper :public Clipper{
 
@@ -52,21 +55,31 @@ namespace my_gl {
 	static ClipPercent clipLiangBarsky(const Vec4& point1,
 		  const Vec4& point2);
 
+	/** 
+	 * @brief clip in homogenous coordinates,work 
+	 * in all situation
+	 * 
+	 * @param point1
+	 * @param point2
+	 * 
+	 * @return 
+	 */
+	static ClipPercent clipInHomogenousCoordinates
+	     (const Vec4& point1,const Vec4& point2);
+
 	static bool outOfClipVolume(const ClipPercent& clipResult);
 
      protected:
 
 
 	void interpolateAttributeGroup(
-		  size_t attributeNumber,
-		  const Vec4* attributeGroupsSource,
-		  const Vec4* attributeGroupsDestination,
-		  Vec4* attributeGroupsResult,
-		  float percent);
+		  const ConstAttributeGroupRef& attributeGroupSource,
+		  const ConstAttributeGroupRef& attributeGroupDestination,
+		  float percent, AttributeGroupRef& AttributeGroupResult
+		  );
 
 	  virtual void elementClip
-	       (size_t attributeNumber,
-		const Vec4 ** attributeGroups,
+	       (const ConstAttributeGroupRef* attributeGroupRefs,
 		const size_t *vertexIndex,
 		ClippedPrimitiveGroup& clippedPrimitiveGroup);
 

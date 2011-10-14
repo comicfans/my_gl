@@ -38,11 +38,11 @@ namespace my_gl {
 
      protected:
 
+
 	  virtual void elementClip
-	       (size_t attributeNumber,
-		const Vec4 ** attributeGroups,
+	       (const ConstAttributeGroupRef* attributeGroupRefs,
 		const size_t *vertexIndex,
-		ClippedPrimitiveGroup& clippedPrimitiveGroup);
+	       ClippedPrimitiveGroup& clippedPrimitiveGroup);
 
 
 

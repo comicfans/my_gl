@@ -22,13 +22,22 @@
 
 #include <cstddef>
 
+#include <boost/ptr_container/ptr_array.hpp>
+
+#include "shader/VertexAttributeBuffer.hpp"
+
+
 namespace my_gl {
 
+
+     using boost::ptr_array;
+     
 
      class VertexAttributeBuffer;
      class ClippedPrimitiveGroup;
      class PrimitiveIndex;
      struct Vec4;
+
 
      class Clipper {
      public:
@@ -46,17 +55,19 @@ namespace my_gl {
 
      protected:
 
-	  virtual void elementClip
-	       (size_t attributeNumber,
-		const Vec4 ** attributeGroups,
-		const size_t *vertexIndex,
-		ClippedPrimitiveGroup& clippedPrimitiveGroup)=0;
 
-	  static const Vec4& getVertex(const Vec4**,size_t index);
+	  virtual void elementClip
+	       (const ConstAttributeGroupRef* attributeGroupRefs,
+		const size_t *vertexIndex,
+	       ClippedPrimitiveGroup& clippedPrimitiveGroup)=0;
+
+	  static const Vec4& getVertex(
+		    const ConstAttributeGroupRef& attributeGroup);
 
      private:
 
-	  const Vec4 *_attributeGroups[MAX_VERTEX_PER_ELEMENT];
+	  ptr_array<ConstAttributeGroupRef,MAX_VERTEX_PER_ELEMENT> _attributeGroups;
+
 	  size_t _vertexIndex[MAX_VERTEX_PER_ELEMENT];
      
      };

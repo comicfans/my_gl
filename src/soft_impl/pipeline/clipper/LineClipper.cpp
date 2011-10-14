@@ -23,6 +23,7 @@
 
 #include "pipeline/ClippedPrimitiveGroup.hpp"
 #include "pipeline/Interpolator.hpp"
+#include "PointClipper.hpp"
 
 using std::max;
 using std::min;
@@ -30,41 +31,63 @@ using std::min;
 
 namespace my_gl {
 
+
      LineClipper::~LineClipper(){}
 
      void LineClipper::interpolateAttributeGroup(
-	       size_t attributeNumber, 
-	       const Vec4 *attributeGroupsSource, 
-	       const Vec4 *attributeGroupsDestination, 
-	       Vec4 *attributeGroupsResult, 
-	       float percent)
+	       const ConstAttributeGroupRef& attributeGroupSource, 
+	       const ConstAttributeGroupRef& attributeGroupDestination,
+	       float percent,AttributeGroupRef& attributeGroupResult
+	       )
      {
-	  for (int i=0; i<attributeNumber; ++i)
+	  for (int i=0; i<attributeGroupSource.size(); ++i)
 	  {
 		    
-	       Interpolator::calculate(attributeGroupsSource[i], 
-			 attributeGroupsDestination[i], percent, 
-			 attributeGroupsResult[i]);
+	       Interpolator::calculate(attributeGroupSource[i], 
+			 attributeGroupDestination[i], percent, 
+			 attributeGroupResult[i]);
 	  }
      }
 
+     ClipPercent LineClipper::clipInHomogenousCoordinates
+	  (const Vec4& point1,const Vec4& point2)
+	  {
+
+	  }
+
      void LineClipper::elementClip
-	  (size_t attributeNumber,
-	   const Vec4 ** attributeGroups,
+	  (const ConstAttributeGroupRef* originalAttributeGroups,
 	   const size_t *vertexIndex,
 	   ClippedPrimitiveGroup& clippedPrimitiveGroup)
 	  {
-	       auto &point1=getVertex(attributeGroups, 0);
-	       auto &point2=getVertex(attributeGroups, 1);
+	       auto &point1=getVertex(originalAttributeGroups[0]);
+	       auto &point2=getVertex(originalAttributeGroups[1]);
 
-	       if(isInfinit(point1) || isInfinit(point2))
+	       bool point1Infinit=
+		    PointClipper::isInfinit(point1),
+		    point2Infinit=
+			 PointClipper::isInfinit(point2);
+
+	       if(point1Infinit && point2Infinit)
+	       {
+		    //if two point is infinit,
+		    //two points lies on z plane ,and far>=near>0
+		    //so these two points is out of clip volume
+		    return;
+	       }
+
+	       ClipPercent clipResult;
+
+	       if(point1Infinit || point2Infinit)
 	       {
 		    //use clip in homogeonous coordinates
 	       }
-	       //TODO not complete
+	       else
+	       {
+		    clipResult=
+			 clipLiangBarsky(point1, point2);
+	       }
 
-	       const ClipPercent& clipResult=
-		    clipLiangBarsky(point1, point2);
 
 	       if(outOfClipVolume(clipResult))
 	       {
@@ -78,12 +101,13 @@ namespace my_gl {
 	       }
 	       else
 	       {
-		    Vec4 *newData=clippedPrimitiveGroup.
+		    auto newData=clippedPrimitiveGroup.
 			 writeClipGeneratedAttribute();
 
-		    interpolateAttributeGroup(attributeNumber,
-			      attributeGroups[0],attributeGroups[1],
-			      newData,clipResult.first);
+		    interpolateAttributeGroup(
+			      originalAttributeGroups[0],
+			      originalAttributeGroups[1],
+			      clipResult.first,newData);
 	       }
 
 
@@ -94,30 +118,31 @@ namespace my_gl {
 	       else
 	       {
 
-		    Vec4 *newData=clippedPrimitiveGroup.
+		    auto newData=clippedPrimitiveGroup.
 			 writeClipGeneratedAttribute();
 
-		    interpolateAttributeGroup(attributeNumber,
-			      attributeGroups[0],attributeGroups[1],
-			      newData,clipResult.second);
+		    interpolateAttributeGroup(
+			      originalAttributeGroups[0],
+			      originalAttributeGroups[1],
+			      clipResult.second,newData);
 	       }
 
 	  }
 
-    enum class ClipPlane{X,Y,Z};
+     enum class ClipPlane{X,Y,Z};
 
      bool LineClipper::outOfClipVolume
 	  (const ClipPercent& clipResult)
-     {
-	  return clipResult.first>clipResult.second;
-     }
+	  {
+	       return clipResult.first>clipResult.second;
+	  }
 
-	
 
-    static ClipPercent parallelPlaneClip
-	 (const Vec4& point1,const Vec4& point2,
-	  ClipPlane crossPlane)
-    {
+
+     static ClipPercent parallelPlaneClip
+	  (const Vec4& point1,const Vec4& point2,
+	   ClipPlane crossPlane)
+	  {
 	       const int valueIndex=int(crossPlane);
 
 	       const float value=point1[valueIndex];
