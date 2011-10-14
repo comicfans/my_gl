@@ -50,6 +50,8 @@ namespace my_gl {
 
 	       using multi_array<Vec4,2>::operator[];
 
+	       AttributeGroupRef back();
+
      };
 
 

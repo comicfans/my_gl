@@ -39,6 +39,8 @@ namespace my_gl {
 		  size_t actualVertexNumber,
 		  const IndexProvider& indexProvider);
 
+	PrimitiveIndex(const PrimitiveMode primitiveMode);
+
 	using vector<size_t>::begin;
 
 	using vector<size_t>::end;
@@ -62,13 +64,14 @@ namespace my_gl {
 
 	const PrimitiveMode _primitiveMode;
 
-	const IndexProvider& _indexProvider;
-
 	size_t _elementNumber;
 
-	void fillLineIndex(const size_t atMostVertexNumber);
-	void fillTriangleIndex(const size_t atMostVertexNumber);
-	void fillPointIndex(const size_t atMostVertexNumber);
+	void fillLineIndex(const size_t atMostVertexNumber,
+		  const IndexProvider& indexProvider);
+	void fillTriangleIndex(const size_t atMostVertexNumber,
+		  const IndexProvider& indexProvider);
+	void fillPointIndex(const size_t atMostVertexNumber,
+		  const IndexProvider& indexProvider);
      
 
      };

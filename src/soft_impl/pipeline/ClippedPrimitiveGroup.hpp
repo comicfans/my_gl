@@ -20,6 +20,9 @@
 
 #define CLIPPED_PRIMITIVE_GROUP_HPP
 
+
+#include "PrimitiveIndex.hpp"
+
 #include "shader/VertexAttributeBuffer.hpp"
 
 namespace my_gl {
@@ -29,7 +32,8 @@ namespace my_gl {
      class ClippedPrimitiveGroup {
      public:
      	ClippedPrimitiveGroup 
-	     (const VertexAttributeBuffer& originalVertexAttribute);
+	     (const VertexAttributeBuffer& originalVertexAttribute,
+	      PrimitiveMode primitiveMode); 
 
 	void insertOriginalIndex(size_t original);
 
@@ -37,11 +41,16 @@ namespace my_gl {
 
 	const PrimitiveIndex& getPrimitiveIndex()const;
 
+	ConstAttributeGroupRef operator[](size_t index);
+
      private:
 
 	const VertexAttributeBuffer& _originalVertexAttribute;
 
 	VertexAttributeBuffer _clipGeneratedVertexAttribute;
+
+	PrimitiveIndex _mixedIndex;
+
      };
 	
 } /* my_gl */

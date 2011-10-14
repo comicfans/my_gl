@@ -18,9 +18,10 @@
 
 #include <boost/multi_array.hpp>
 
-using boost::multi_array;
+
 
 int main(int argc, const char *argv[])
 {
 	
 }
+

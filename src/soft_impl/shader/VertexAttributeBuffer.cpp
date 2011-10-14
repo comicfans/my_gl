@@ -40,6 +40,10 @@ namespace my_gl {
 		    [length][VertexShader::OUT_SIZE]);
      }
 
+     AttributeGroupRef VertexAttributeBuffer::back()
+     {
+	  return (*this)[length()-1];
+     }
 
 
 } /* my_gl */

@@ -35,13 +35,23 @@ namespace my_gl {
      static const int VERTEX_PER_PRIMITIVE[]={1,2,2,2,3,3,3};
 
      PrimitiveIndex::PrimitiveIndex
+	  (const PrimitiveMode primitiveMode)
+		:_vertexPerPrimitive(
+			  VERTEX_PER_PRIMITIVE[int(primitiveMode)]),
+		_primitiveMode(primitiveMode)
+	  {
+
+	  }
+
+
+     PrimitiveIndex::PrimitiveIndex
 	  (const PrimitiveMode primitiveMode,
 	   const size_t useVertexNumber,
 	   const size_t actualVertexNumber,
 	   const IndexProvider& indexProvider)
-	  :_vertexPerPrimitive(VERTEX_PER_PRIMITIVE[int(primitiveMode)]),
-	  _primitiveMode(primitiveMode),
-	  _indexProvider(indexProvider)
+	  :_vertexPerPrimitive(
+		    VERTEX_PER_PRIMITIVE[int(primitiveMode)]),
+	  _primitiveMode(primitiveMode)
      {
 
 	  //vertex number less equal than vertex attribute buffer length 
@@ -51,17 +61,20 @@ namespace my_gl {
 	  switch(primitiveMode)
 	  {
 	       case PrimitiveMode::POINTS:
-		    {fillPointIndex(actualVertex);break;}
+		    {fillPointIndex(actualVertex,
+			      indexProvider);break;}
 
 	       case PrimitiveMode::LINE_LOOP:
 	       case PrimitiveMode::LINE_STRIP:
 	       case PrimitiveMode::LINES:
-		    {fillLineIndex(actualVertex);break;}
+		    {fillLineIndex(actualVertex,
+			      indexProvider);break;}
 
 	       case PrimitiveMode::TRIANGLES:
 	       case PrimitiveMode::TRIANGLE_STRIP:
 	       case PrimitiveMode::TRIANGLE_FAN:
-		    {fillTriangleIndex(actualVertex);break;}
+		    {fillTriangleIndex(actualVertex,
+			      indexProvider);break;}
 	  }
 
      }
@@ -72,6 +85,7 @@ namespace my_gl {
 	       return size();
 	  }
 
+	
      const size_t PrimitiveIndex
 	  ::elementNumber()const
 	  {
@@ -79,7 +93,8 @@ namespace my_gl {
 	  }
 
      void PrimitiveIndex::fillPointIndex
-	  (size_t atMostVertexNumber)
+	  (size_t atMostVertexNumber,
+	   const IndexProvider& indexProvider)
 	  {
 
 	       _elementNumber=atMostVertexNumber;
@@ -87,11 +102,12 @@ namespace my_gl {
 	       resize(atMostVertexNumber);
 
 	       for (int i=0; i<atMostVertexNumber; ++i)
-	       {(*this)[i]=_indexProvider.getIndex(i);}
+	       {(*this)[i]=indexProvider.getIndex(i);}
 	  }
 
      void PrimitiveIndex::fillLineIndex
-	  (const size_t atMostVertexNumber)
+	  (const size_t atMostVertexNumber,
+	   const IndexProvider& indexProvider)
 	  {
 
 
@@ -103,7 +119,7 @@ namespace my_gl {
 
 		    for (int i=0; i<size(); ++i)
 		    {
-			 (*this)[i]=_indexProvider.getIndex(i);
+			 (*this)[i]=indexProvider.getIndex(i);
 		    }
 	       }
 
@@ -117,9 +133,9 @@ namespace my_gl {
 
 		    for (int i=0; i<_elementNumber; ++i)
 		    {
-			 (*this)[i*2]=_indexProvider.getIndex(i);
+			 (*this)[i*2]=indexProvider.getIndex(i);
 			 //last point index is overflow
-			 (*this)[i*2+1]=_indexProvider.getIndex(i+1);
+			 (*this)[i*2+1]=indexProvider.getIndex(i+1);
 		    }
 
 		    if (_primitiveMode==PrimitiveMode::LINE_STRIP)
@@ -138,7 +154,8 @@ namespace my_gl {
 	  }    
 
      void PrimitiveIndex::fillTriangleIndex
-	  (const size_t atMostVertexNumber)
+	  (const size_t atMostVertexNumber,
+	   const IndexProvider& indexProvider)
 	  {
 	       switch(_primitiveMode)
 	       {
@@ -149,7 +166,7 @@ namespace my_gl {
 
 			      for (int i=0; i<size(); ++i)
 			      {
-				   (*this)[i]=_indexProvider.getIndex(i);
+				   (*this)[i]=indexProvider.getIndex(i);
 			      }
 			      break;
 
@@ -161,9 +178,9 @@ namespace my_gl {
 			      resize(_elementNumber*3);
 			      for (int i=0; i<size(); ++i)
 			      {
-				   (*this)[i*3]=_indexProvider.getIndex(i);
-				   (*this)[i*3+1]=_indexProvider.getIndex(i+1);
-				   (*this)[i*3+2]=_indexProvider.getIndex(i+2);
+				   (*this)[i*3]=indexProvider.getIndex(i);
+				   (*this)[i*3+1]=indexProvider.getIndex(i+1);
+				   (*this)[i*3+2]=indexProvider.getIndex(i+2);
 			      }
 			      break;
 			 }
@@ -173,9 +190,9 @@ namespace my_gl {
 			      resize(_elementNumber*3);
 			      for (int i=0; i<size(); ++i)
 			      {
-				   (*this)[i*3]=_indexProvider.getIndex(0);
-				   (*this)[i*3+1]=_indexProvider.getIndex(i+1);
-				   (*this)[i*3+2]=_indexProvider.getIndex(i+2);
+				   (*this)[i*3]=indexProvider.getIndex(0);
+				   (*this)[i*3+1]=indexProvider.getIndex(i+1);
+				   (*this)[i*3+2]=indexProvider.getIndex(i+2);
 			      }
 			      break;
 			 }
