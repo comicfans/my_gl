@@ -49,10 +49,63 @@ namespace my_gl {
 	  }
      }
 
+     enum class ClipPlane{X,Y,Z};
+
+     static ClipPercent parallelPlaneClipInHomogenousCoordinates
+	  (const Vec4& point1,const Vec4& point2,ClipPlane clipPlane)
+	  {
+	       //x for example
+	       //(x-x1)/(x2-x1)=(w-w1)/(w2-w1)
+	       //make deltaX = x2-x1
+	       //     deltaW = w2-w1
+	       // clip plane 
+	       // x+w=0 ->x=-1 (normalized) minClipPlane
+	       // x-w=0 ->x=1  (normalized) maxClipPlane
+	       //   |deltaW, -deltaX |     |x| |deltaW*x1-deltaX*w1|
+	       //   |		     |	x  | |=| 		   |
+	       //   |  1   ,  +/- 1  |     |w| |      0            |
+	       
+	       int dIndex=int(clipPlane);
+
+	       float w1=point1.w(),
+		     d1=point1[dIndex];
+
+	       float deltaW= point2.w()-w1,
+		    deltaD= point2[dIndex]-d1;
+
+	       float rowColumnValueMin=deltaW+deltaD,
+		     rowColumnValueMax=-deltaW+deltaD;
+
+	       float dMin=(deltaW*d1-deltaD*w1)/rowColumnValueMin,
+		     dMax=(-deltaW*d1-deltaD*w1)/rowColumnValueMax;
+
+	       float wMin=-dMin,
+		     wMax=dMax;
+
+	       return {(wMin-w1)/deltaW,(wMax-w1)/deltaW};
+	
+	  }
+
      ClipPercent LineClipper::clipInHomogenousCoordinates
 	  (const Vec4& point1,const Vec4& point2)
 	  {
+	       assert(point1.w()!=point2.w());
+	       //should not be the same(0)
 
+	       ClipPercent result={0,1};
+
+	       for (int i=0; i<3; ++i)
+	       {
+		    ClipPercent thisClipResult=
+			 parallelPlaneClipInHomogenousCoordinates(
+			      point1,point2,ClipPlane(i));
+		    result.first=max(result.first,
+			      thisClipResult.first);
+		    result.second=min(result.second,
+			      thisClipResult.second);
+	       }
+
+	       return result;  
 	  }
 
      void LineClipper::elementClip
@@ -81,6 +134,9 @@ namespace my_gl {
 	       if(point1Infinit || point2Infinit)
 	       {
 		    //use clip in homogeonous coordinates
+		    clipResult=
+			 clipInHomogenousCoordinates
+			 (point1,point2);
 	       }
 	       else
 	       {
@@ -129,7 +185,6 @@ namespace my_gl {
 
 	  }
 
-     enum class ClipPlane{X,Y,Z};
 
      bool LineClipper::outOfClipVolume
 	  (const ClipPercent& clipResult)
