@@ -63,17 +63,9 @@ namespace my_gl {
 		    //else clipped
 	       }
 
-     bool PointClipper::isInfinit(const Vec4 &position)
-     {
-	  return position.w()==0;
-     }
+     
 
 
-     void PointClipper::perspectiveDivision(Vec4& position)
-     {
-	  assert(!isInfinit(position));
-
-	  position/=position.w();
-     }
+     
 
 } /* my_gl */

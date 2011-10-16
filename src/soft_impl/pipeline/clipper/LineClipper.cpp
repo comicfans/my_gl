@@ -34,7 +34,8 @@ namespace my_gl {
 
      LineClipper::~LineClipper(){}
 
-     void LineClipper::interpolateAttributeGroup(
+     template<>
+     void LineClipper::interpolateAttributeGroup<false>(
 	       const ConstAttributeGroupRef& attributeGroupSource, 
 	       const ConstAttributeGroupRef& attributeGroupDestination,
 	       float percent,AttributeGroupRef& attributeGroupResult
@@ -48,6 +49,21 @@ namespace my_gl {
 			 attributeGroupResult[i]);
 	  }
      }
+
+     template<>
+	  void LineClipper::interpolateAttributeGroup<true>
+	       (const ConstAttributeGroupRef& attributeGroupSource, 
+	       const ConstAttributeGroupRef& attributeGroupDestination,
+	       float percent,AttributeGroupRef& attributeGroupResult)
+	  {
+	       interpolateAttributeGroup<false>
+		    (attributeGroupSource,
+		     attributeGroupDestination,
+		     percent,attributeGroupResult);
+
+	       perspectiveDivision(getVertex
+			 (attributeGroupResult));
+	  }
 
      enum class ClipPlane{X,Y,Z};
 
@@ -113,8 +129,8 @@ namespace my_gl {
 	   const size_t *vertexIndex,
 	   ClippedPrimitiveGroup& clippedPrimitiveGroup)
 	  {
-	       auto &point1=getVertex(originalAttributeGroups[0]);
-	       auto &point2=getVertex(originalAttributeGroups[1]);
+	       auto point1=getVertex(originalAttributeGroups[0]);
+	       auto point2=getVertex(originalAttributeGroups[1]);
 
 	       bool point1Infinit=
 		    PointClipper::isInfinit(point1),
@@ -137,12 +153,37 @@ namespace my_gl {
 		    clipResult=
 			 clipInHomogenousCoordinates
 			 (point1,point2);
+		    if (outOfClipVolume(clipResult))
+		    {
+			 return;
+		    }
+		    
+		    auto newData1=clippedPrimitiveGroup.
+			 writeClipGeneratedAttribute();
+			      
+		    interpolateAttributeGroup<true>(
+			      originalAttributeGroups[0],
+			      originalAttributeGroups[1],
+			      clipResult.first,newData1);
+
+		    auto newData2=clippedPrimitiveGroup.
+			 writeClipGeneratedAttribute();
+
+		    interpolateAttributeGroup<true>(
+			      originalAttributeGroups[0],
+			      originalAttributeGroups[1],
+			      clipResult.second,newData2);
+		    return;
+
 	       }
-	       else
-	       {
-		    clipResult=
+
+
+		    
+	       //perspectiveDivision first
+	       perspectiveDivision(point1);
+	       perspectiveDivision(point2);
+	       clipResult=
 			 clipLiangBarsky(point1, point2);
-	       }
 
 
 	       if(outOfClipVolume(clipResult))
@@ -160,7 +201,7 @@ namespace my_gl {
 		    auto newData=clippedPrimitiveGroup.
 			 writeClipGeneratedAttribute();
 
-		    interpolateAttributeGroup(
+		    interpolateAttributeGroup<false>(
 			      originalAttributeGroups[0],
 			      originalAttributeGroups[1],
 			      clipResult.first,newData);
@@ -177,7 +218,7 @@ namespace my_gl {
 		    auto newData=clippedPrimitiveGroup.
 			 writeClipGeneratedAttribute();
 
-		    interpolateAttributeGroup(
+		    interpolateAttributeGroup<false>(
 			      originalAttributeGroups[0],
 			      originalAttributeGroups[1],
 			      clipResult.second,newData);

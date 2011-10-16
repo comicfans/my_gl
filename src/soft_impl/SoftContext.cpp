@@ -292,6 +292,13 @@ namespace my_gl {
 
 	}
 
+	void SoftContext::viewport(int x,int y,
+		  size_t width,size_t height)
+	{
+	     _viewportParameter=
+		  {x,y,width,height};
+	}
+
      template<typename T>
 	  T& SoftContext::getVec4Manager()
 	  { return static_cast<T&>(_allVec4Manager

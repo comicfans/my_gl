@@ -32,9 +32,7 @@ namespace my_gl {
 
 	static bool inClipVolume(const Vec4& projectedCoordinate);
 
-	static bool isInfinit(const Vec4& position);
 
-	static void perspectiveDivision(Vec4& position);
 
      protected:
 

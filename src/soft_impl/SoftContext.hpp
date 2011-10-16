@@ -139,6 +139,9 @@ namespace my_gl {
 		  float bottom,float top,
 		  float near,float far);
 
+	//glViewport
+	virtual void viewport(int x,int y,
+		  size_t width,size_t height);
 
 	ObjectNameManager& getObjectNameManager();
 
@@ -185,7 +188,27 @@ namespace my_gl {
 	 */
 	void transformVertex(const int vertexNumber);
 
+	/** 
+	 * @brief assemble vertex data to primitiveGroups
+	 */
+	void primitiveAssemble();
+
+	/** 
+	 * @brief rasterize the clipped primitive
+	 */
+	void rasterizePrimitive();
+
+	/** 
+	 * @brief construct necessary uniform matrix
+	 */
 	void prepareGlobalUniform();
+
+	struct {
+	     int x;
+	     int y;
+	     size_t width;
+	     size_t height;
+	  } _viewportParameter;
 
      };
 	

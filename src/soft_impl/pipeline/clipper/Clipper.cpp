@@ -68,7 +68,26 @@ namespace my_gl {
 	       const ConstAttributeGroupRef& attributeGroup)
      {
 
-	return attributeGroup[int(VertexShader::OutIndex::POSITION)];
+	return attributeGroup[int(
+		  VertexShader::OutIndex::POSITION)];
      }
 
+     Vec4& Clipper::getVertex(AttributeGroupRef&
+	       attributeGroup)
+     {
+	  return attributeGroup[int(
+		    VertexShader::OutIndex::POSITION)];
+     }
+
+     void Clipper::perspectiveDivision(Vec4& position)
+     {
+	  assert(!isInfinit(position));
+
+	  position/=position.w();
+     }
+
+     bool Clipper::isInfinit(const Vec4 &position)
+     {
+	  return position.w()==0;
+     }
 } /* my_gl */

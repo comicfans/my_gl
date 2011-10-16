@@ -71,8 +71,12 @@ namespace my_gl {
 
      protected:
 
+	void lineClipImpl();
 
-	void interpolateAttributeGroup(
+	template<bool NeedPerspectiveDivision>
+	     void interpolateAttributeGroup
+	     
+	     (
 		  const ConstAttributeGroupRef& attributeGroupSource,
 		  const ConstAttributeGroupRef& attributeGroupDestination,
 		  float percent, AttributeGroupRef& AttributeGroupResult

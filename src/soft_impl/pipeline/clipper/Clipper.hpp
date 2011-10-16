@@ -53,6 +53,11 @@ namespace my_gl {
 	  //reserved for quad use, right now only triangle is used
 	  static const size_t MAX_VERTEX_PER_ELEMENT=4;
 
+	
+	  static void perspectiveDivision(Vec4& position);
+	
+	  static bool isInfinit(const Vec4& position);
+
      protected:
 
 
@@ -63,6 +68,8 @@ namespace my_gl {
 
 	  static const Vec4& getVertex(
 		    const ConstAttributeGroupRef& attributeGroup);
+	  static Vec4& getVertex(
+		    AttributeGroupRef& attributeGroup);
 
      private:
 
