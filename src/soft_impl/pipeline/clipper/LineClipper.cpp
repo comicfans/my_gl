@@ -31,6 +31,7 @@ using std::min;
 
 namespace my_gl {
 
+     static const ClipPercent OUT_CLIP_PERCENT={1,0};
 
      LineClipper::~LineClipper(){}
 
@@ -66,6 +67,44 @@ namespace my_gl {
 	  }
 
      enum class ClipPlane{X,Y,Z};
+
+     PackedResult LineClipper::commonClip(
+	       Vec4 point1,Vec4 point2)
+     {
+
+	       bool point1Infinit=isInfinit(point1),
+		    point2Infinit=isInfinit(point2);
+
+	       if(point1Infinit && point2Infinit)
+	       {
+		    return {true,OUT_CLIP_PERCENT};
+	       }
+
+	       ClipPercent clipResult;
+
+	       if(point1Infinit || point2Infinit)
+	       {
+		    //use clip in homogeonous coordinates
+		    clipResult=
+			 clipInHomogenousCoordinates
+			 (point1,point2);
+		    if (outOfClipVolume(clipResult))
+		    {
+			 return {true,OUT_CLIP_PERCENT};
+		    }
+
+	       }
+
+	       //perspectiveDivision first
+	       perspectiveDivision(point1);
+	       perspectiveDivision(point2);
+
+	       clipResult=
+			 clipLiangBarsky(point1, point2);
+
+	       return {false,clipResult};
+
+     }
 
      static ClipPercent parallelPlaneClipInHomogenousCoordinates
 	  (const Vec4& point1,const Vec4& point2,ClipPlane clipPlane)
@@ -129,35 +168,16 @@ namespace my_gl {
 	   const size_t *vertexIndex,
 	   ClippedPrimitiveGroup& clippedPrimitiveGroup)
 	  {
-	       auto point1=getVertex(originalAttributeGroups[0]);
-	       auto point2=getVertex(originalAttributeGroups[1]);
+	       auto &point1=getVertex(originalAttributeGroups[0]);
+	       auto &point2=getVertex(originalAttributeGroups[1]);
 
-	       bool point1Infinit=
-		    PointClipper::isInfinit(point1),
-		    point2Infinit=
-			 PointClipper::isInfinit(point2);
+	       PackedResult packedResult=commonClip(point1,point2);
 
-	       if(point1Infinit && point2Infinit)
+	       bool hasInfinit=packedResult.first;
+	       ClipPercent clippResult=packedResult.second;
+
+	       if(hasInfinit)
 	       {
-		    //if two point is infinit,
-		    //two points lies on z plane ,and far>=near>0
-		    //so these two points is out of clip volume
-		    return;
-	       }
-
-	       ClipPercent clipResult;
-
-	       if(point1Infinit || point2Infinit)
-	       {
-		    //use clip in homogeonous coordinates
-		    clipResult=
-			 clipInHomogenousCoordinates
-			 (point1,point2);
-		    if (outOfClipVolume(clipResult))
-		    {
-			 return;
-		    }
-		    
 		    auto newData1=clippedPrimitiveGroup.
 			 writeClipGeneratedAttribute();
 			      
@@ -174,8 +194,8 @@ namespace my_gl {
 			      originalAttributeGroups[1],
 			      clipResult.second,newData2);
 		    return;
-
 	       }
+
 
 
 		    
@@ -210,7 +230,8 @@ namespace my_gl {
 
 	       if (clipResult.second==1.0)
 	       {
-		    clippedPrimitiveGroup.insertOriginalIndex(vertexIndex[1]);
+		    clippedPrimitiveGroup.
+			 insertOriginalIndex(vertexIndex[1]);
 	       }
 	       else
 	       {

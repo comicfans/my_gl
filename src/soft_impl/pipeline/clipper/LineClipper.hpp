@@ -29,8 +29,16 @@ namespace my_gl {
 
      using std::pair;
 
-     typedef std::pair<float,float> ClipPercent;
+     /** 
+      * @brief first means min clip point
+      * second means max clip point
+      */
+     typedef pair<float,float> ClipPercent;
 
+     /** 
+      * @brief first means if this is infinit point (true= infinit)
+      */
+     typedef pair<bool,ClipPercent> PackedResult;
 
 
      class LineClipper :public Clipper{
@@ -69,9 +77,9 @@ namespace my_gl {
 
 	static bool outOfClipVolume(const ClipPercent& clipResult);
 
-     protected:
+	static PackedResult commonClip(Vec4 point1,Vec4 point2);
 
-	void lineClipImpl();
+     protected:
 
 	template<bool NeedPerspectiveDivision>
 	     void interpolateAttributeGroup
@@ -85,10 +93,7 @@ namespace my_gl {
 	  virtual void elementClip
 	       (const ConstAttributeGroupRef* attributeGroupRefs,
 		const size_t *vertexIndex,
-		ClippedPrimitiveGroup& clippedPrimitiveGroup);
-
-
-
+		VertexAttributeBuffer& clippedPrimitiveGroup);
 
      };
 	
