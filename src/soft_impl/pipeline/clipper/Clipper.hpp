@@ -33,11 +33,8 @@ namespace my_gl {
      using boost::ptr_array;
      
 
-     class VertexAttributeBuffer;
      class ClippedPrimitiveGroup;
      class PrimitiveIndex;
-     struct Vec4;
-
 
      class Clipper {
      public:
@@ -50,9 +47,6 @@ namespace my_gl {
 		ClippedPrimitiveGroup& clippedPrimitiveGroup);
 
 
-	  //reserved for quad use, right now only triangle is used
-	  static const size_t MAX_VERTEX_PER_ELEMENT=4;
-
      protected:
 
 
@@ -63,9 +57,12 @@ namespace my_gl {
 
      private:
 
-	  ptr_array<ConstAttributeGroupRef,MAX_VERTEX_PER_ELEMENT> _attributeGroups;
+	  ptr_array<ConstAttributeGroupRef,
+	       VertexAttributeBuffer::MAX_VERTEX_PER_ELEMENT> 
+		    _attributeGroups;
 
-	  size_t _vertexIndex[MAX_VERTEX_PER_ELEMENT];
+	  size_t _vertexIndex[
+	       VertexAttributeBuffer::MAX_VERTEX_PER_ELEMENT];
      
      };
 	

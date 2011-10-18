@@ -1,12 +1,12 @@
 /*
  * =====================================================================================
  *
- *       Filename:  FragmentShader.hpp
+ *       Filename:  Rasterizer.cpp
  *
- *    Description:  class to process fragment
+ *    Description:  
  *
  *        Version:  1.0
- *        Created:  2011-10-15 22:15:01
+ *        Created:  2011-10-19 1:16:37
  *       Revision:  none
  *       Compiler:  gcc
  *
@@ -16,10 +16,4 @@
  * =====================================================================================
  */
 
-#ifndef FRAGMENT_SHADER_HPP
-
-#define FRAGMENT_SHADER_HPP
-
-
-
-#endif /* end of include guard: FRAGMENT_SHADER_HPP */
+#include "Rasterizer.hpp"

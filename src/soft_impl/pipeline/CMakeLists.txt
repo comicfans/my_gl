@@ -1,7 +1,7 @@
 INCLUDE_DIRECTORIES(../)
 
 
-SUBDIRS(clipper)
+SUBDIRS(clipper rasterizer)
 
 
 ADD_LIBRARY(PrimitiveIndex PrimitiveIndex.cpp 

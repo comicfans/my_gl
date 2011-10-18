@@ -56,6 +56,10 @@ namespace my_gl {
 	       using SuperType::end;
 
 
+	       //reserved for quad use, right now only triangle is used
+	       static const size_t MAX_VERTEX_PER_ELEMENT=4;
+
+
 
 	       AttributeGroupRef back();
 
