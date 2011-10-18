@@ -48,9 +48,23 @@ namespace my_gl {
 
 	       void resize(size_t length);
 
-	       using multi_array<Vec4,2>::operator[];
+	       typedef multi_array<Vec4,2> SuperType;
+
+	       using SuperType::operator[];
+
+	       using SuperType::begin;
+	       using SuperType::end;
+
+
 
 	       AttributeGroupRef back();
+
+	       static const Vec4& getVertex(
+		    const ConstAttributeGroupRef& attributeGroup);
+	  
+	       static Vec4& getVertex(
+		    AttributeGroupRef attributeGroup);
+
 
      };
 

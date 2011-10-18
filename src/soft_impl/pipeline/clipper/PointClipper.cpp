@@ -55,7 +55,9 @@ namespace my_gl {
 		const size_t *vertexIndex,
 	       ClippedPrimitiveGroup& clippedPrimitiveGroup)
 	       {
-		    if(inClipVolume(getVertex(attributeGroupRefs[0])))
+		    if(inClipVolume(VertexAttributeBuffer::
+				   getVertex
+				   (attributeGroupRefs[0])))
 		    {
 			 clippedPrimitiveGroup.
 			      insertOriginalIndex(vertexIndex[0]);

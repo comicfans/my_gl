@@ -20,6 +20,8 @@
 
 #define CLIPPED_PRIMITIVE_GROUP_HPP
 
+#include <vector>
+#include <utility>
 
 #include "PrimitiveIndex.hpp"
 
@@ -29,19 +31,33 @@ namespace my_gl {
 
      struct Vec4;
 
+     using std::vector;
+     using std::pair;
+
      class ClippedPrimitiveGroup {
      public:
      	ClippedPrimitiveGroup 
 	     (const VertexAttributeBuffer& originalVertexAttribute,
 	      PrimitiveMode primitiveMode); 
 
+	ClippedPrimitiveGroup
+	     (const ClippedPrimitiveGroup& rhs);
+
 	void insertOriginalIndex(size_t original);
 
-	AttributeGroupRef writeClipGeneratedAttribute();
+	pair<size_t,AttributeGroupRef> writeClipGeneratedAttribute();
 
 	const PrimitiveIndex& getPrimitiveIndex()const;
 
-	ConstAttributeGroupRef operator[](size_t index);
+	const VertexAttributeBuffer& getRefVertexAttributeBuffer()const;
+
+	ConstAttributeGroupRef operator[](size_t index)const;
+
+	void duplicateVertexAttribute(size_t index);
+
+	bool isOriginal(size_t index)const;
+
+	size_t length()const;
 
      private:
 
@@ -50,6 +66,8 @@ namespace my_gl {
 	VertexAttributeBuffer _clipGeneratedVertexAttribute;
 
 	PrimitiveIndex _mixedIndex;
+
+	ConstAttributeGroupRef getClipGeneratedAttribute(size_t index)const;
 
      };
 	

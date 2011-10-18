@@ -299,6 +299,22 @@ namespace my_gl {
 		  {x,y,width,height};
 	}
 
+	void SoftContext::perspectiveDivision()
+	{
+	     for(int i=0;
+		       i<_vertexAttributeBuffer.length();++i)
+	     {
+
+		  Vec4& position=VertexAttributeBuffer
+		       ::getVertex(_vertexAttributeBuffer[i]);
+		  if (!isInfinit(position))
+		  {
+		       my_gl::perspectiveDivision(position);
+		  }
+	     }
+	}
+
+
      template<typename T>
 	  T& SoftContext::getVec4Manager()
 	  { return static_cast<T&>(_allVec4Manager

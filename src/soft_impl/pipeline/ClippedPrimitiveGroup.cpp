@@ -27,6 +27,13 @@ namespace my_gl {
 	     {
 	     }
 
+	
+     ClippedPrimitiveGroup::ClippedPrimitiveGroup
+	     (const ClippedPrimitiveGroup& rhs)
+	     :_originalVertexAttribute
+	      (rhs._originalVertexAttribute),
+	      _mixedIndex(rhs._mixedIndex)
+	     {}
 
      void ClippedPrimitiveGroup::
 	  insertOriginalIndex(size_t original)
@@ -40,7 +47,7 @@ namespace my_gl {
 	  return _mixedIndex;
      }
 
-	AttributeGroupRef ClippedPrimitiveGroup
+	pair<size_t,AttributeGroupRef> ClippedPrimitiveGroup
 	     ::writeClipGeneratedAttribute()
 	     {
 
@@ -57,26 +64,67 @@ namespace my_gl {
 		  //but with index range more 
 		  //than originalVertexAttribute
 		  //length
-		  _mixedIndex.insertNew(originalIndexRange
-			    +newLength-1);
+		  size_t thisIndex=originalIndexRange
+			    +newLength-1;
+		  _mixedIndex.insertNew(thisIndex);
 
-		  return _clipGeneratedVertexAttribute.
-		       back();
+		  return {thisIndex,_clipGeneratedVertexAttribute.
+		       back()};
 	     }
 
 	ConstAttributeGroupRef ClippedPrimitiveGroup
-	     ::operator[](size_t index)
+	     ::operator[](size_t index)const
 	     {
-		  int originalIndexRange=
-		       _originalVertexAttribute.length();
-		  if (index<originalIndexRange)
+		  if (isOriginal(index))
 		  {
 		       return _originalVertexAttribute[index];
 		  }
 		  else
 		  {
-		       return _clipGeneratedVertexAttribute
-			    [index-originalIndexRange];
+		       return getClipGeneratedAttribute(index);
 		  }
 	     }
+
+	const VertexAttributeBuffer& ClippedPrimitiveGroup::
+	     getRefVertexAttributeBuffer()const
+	     {
+		  return _originalVertexAttribute;
+	     }
+
+	void ClippedPrimitiveGroup::duplicateVertexAttribute
+	     (size_t index)
+	     {
+		  if (isOriginal(index))
+		  {
+		       //still insert original index
+		       insertOriginalIndex(index);
+		  }
+		  else
+		  {
+		       //change PrimitiveIndex only,
+		       //not insert new data
+		       _mixedIndex.insertNew(index);
+		  }
+
+	     }
+
+	bool ClippedPrimitiveGroup::isOriginal(size_t index)const
+	{
+		  int originalIndexRange=
+		       _originalVertexAttribute.length();
+		  return index<originalIndexRange;
+	}
+
+	ConstAttributeGroupRef ClippedPrimitiveGroup::
+	     getClipGeneratedAttribute(size_t index)const
+	     {
+		  return _clipGeneratedVertexAttribute[
+		       index-_originalVertexAttribute.length()];
+	     }
+	size_t ClippedPrimitiveGroup::length()const
+	{
+	     return _originalVertexAttribute.length()+
+		  _clipGeneratedVertexAttribute.length();
+	}
+
 } /* my_gl */

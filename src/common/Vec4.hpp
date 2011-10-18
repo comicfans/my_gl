@@ -52,6 +52,7 @@ namespace my_gl {
 	       float * values() ;
 
 	       const float& w()const;
+	       
 	  private:
 	       float _values[LENGTH];
      	/* data */
@@ -62,6 +63,10 @@ namespace my_gl {
      Vec4 operator+(const Vec4& lhs,const Vec4& rhs);
 
      void normalize(float * values);
+
+     void perspectiveDivision(Vec4& vec4);
+
+     bool isInfinit(const Vec4& vec4);
 	
 } /* my_gl */
 

@@ -138,4 +138,15 @@ namespace my_gl {
 	  return ret;
      }
 
+     void perspectiveDivision(Vec4& vec4)
+     {
+	  assert(!isInfinit(vec4));
+	  vec4/=vec4.w();
+     }
+
+     bool isInfinit(const Vec4& vec4)
+     {
+	  return vec4.w()==0;
+     }
+
 } /* my_gl */

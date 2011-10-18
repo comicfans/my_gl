@@ -33,6 +33,7 @@ namespace my_gl {
 
      class IndexProvider;
      class PrimitiveIndex:protected vector<size_t>{
+	  typedef vector<size_t> SuperType;
      public:
      	PrimitiveIndex (const PrimitiveMode primitiveMode,
 		  size_t useVertexNumber,
@@ -41,22 +42,26 @@ namespace my_gl {
 
 	PrimitiveIndex(const PrimitiveMode primitiveMode);
 
-	using vector<size_t>::begin;
+	PrimitiveIndex(const PrimitiveIndex& rhs);
 
-	using vector<size_t>::end;
+	using SuperType::begin;
 
-	using vector<size_t>::size;
+	using SuperType::end;
 
-	using vector<size_t>::operator[];
+	using SuperType::size;
 
-	const size_t vertexNumber()const;
+	using SuperType::operator[];
 
-	const size_t elementNumber()const;
+	size_t vertexNumber()const;
 
-	const size_t vertexPerPrimitive()const;
+	size_t elementNumber()const;
+
+	size_t vertexPerPrimitive()const;
 
 	//insert new vertex index
 	void insertNew(size_t newIndex);
+
+	PrimitiveMode primitiveMode()const;
 
      private:
 

@@ -79,18 +79,31 @@ namespace my_gl {
 
      }
 
-     const size_t PrimitiveIndex
+     PrimitiveIndex::PrimitiveIndex
+	  (const PrimitiveIndex& rhs)
+	  :SuperType(rhs),
+	  _vertexPerPrimitive(rhs._vertexPerPrimitive),
+	   _primitiveMode(rhs._primitiveMode),
+	   _elementNumber(rhs._elementNumber)
+	{}
+
+     size_t PrimitiveIndex
 	  ::vertexNumber()const
 	  {
 	       return size();
 	  }
 
 	
-     const size_t PrimitiveIndex
+     size_t PrimitiveIndex
 	  ::elementNumber()const
 	  {
 	       return _elementNumber;
 	  }
+
+     size_t PrimitiveIndex::vertexPerPrimitive() const 
+     {
+	  return _vertexPerPrimitive;
+     }
 
      void PrimitiveIndex::fillPointIndex
 	  (size_t atMostVertexNumber,
@@ -209,4 +222,8 @@ namespace my_gl {
 	  push_back(newIndex);
 	  _elementNumber=size()/_vertexPerPrimitive;
      }
+
+	
+     PrimitiveMode PrimitiveIndex::primitiveMode()const
+     {return _primitiveMode;}
 } /* my_gl */

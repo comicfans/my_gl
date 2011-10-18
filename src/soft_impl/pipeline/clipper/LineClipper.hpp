@@ -40,6 +40,7 @@ namespace my_gl {
       */
      typedef pair<bool,ClipPercent> PackedResult;
 
+     class ClippedPrimitiveGroup;
 
      class LineClipper :public Clipper{
 
@@ -47,53 +48,37 @@ namespace my_gl {
 
      	virtual ~LineClipper ();
 
-
-
-	/** 
-	 * @brief Liang-Barsky clip algorithm work only with in 
-	 * normalized device coordinates [-1,1]
-	 * 
-	 * @param first firs point
-	 * @param second second point 
-	 * @param crossPlane which plane to get intersect
-	 * 
-	 * @return a parameterize percent pair, should first<=second
-	 * if first>second ,this line lies totally out of clip volume
-	 */
-	static ClipPercent clipLiangBarsky(const Vec4& point1,
-		  const Vec4& point2);
-
-	/** 
-	 * @brief clip in homogenous coordinates,work 
-	 * in all situation
-	 * 
-	 * @param point1
-	 * @param point2
-	 * 
-	 * @return 
-	 */
-	static ClipPercent clipInHomogenousCoordinates
-	     (const Vec4& point1,const Vec4& point2);
-
 	static bool outOfClipVolume(const ClipPercent& clipResult);
 
-	static PackedResult commonClip(Vec4 point1,Vec4 point2);
+	static bool onlyPoint(const ClipPercent& clipResult);
+     
+	enum class ClipPlane{X,Y,Z};
 
+	static PackedResult commonClip(
+		  const Vec4& point1,const Vec4& point2,
+		  ClipPlane clipPlane);
+     
+	static size_t insertInterpolatedAttributes
+	     (const ConstAttributeGroupRef& point1Attributes,
+	      size_t point1Index,
+	      const ConstAttributeGroupRef& point2Attributes,
+	      size_t point2Index,
+	      float percent,
+	      ClippedPrimitiveGroup& clippedPrimitiveGroup,
+	      bool hasInfinit);
+
+	static void interpolateAttributeGroup(
+	       const ConstAttributeGroupRef& attributeGroupSource, 
+	       const ConstAttributeGroupRef& attributeGroupDestination,
+	       float percent,AttributeGroupRef& attributeGroupResult,
+	       bool hasInfinit=false);
+    
      protected:
 
-	template<bool NeedPerspectiveDivision>
-	     void interpolateAttributeGroup
-	     
-	     (
-		  const ConstAttributeGroupRef& attributeGroupSource,
-		  const ConstAttributeGroupRef& attributeGroupDestination,
-		  float percent, AttributeGroupRef& AttributeGroupResult
-		  );
-
-	  virtual void elementClip
+	virtual void elementClip
 	       (const ConstAttributeGroupRef* attributeGroupRefs,
 		const size_t *vertexIndex,
-		VertexAttributeBuffer& clippedPrimitiveGroup);
+		ClippedPrimitiveGroup& clippedPrimitiveGroup);
 
      };
 	

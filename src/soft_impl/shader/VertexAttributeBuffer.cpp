@@ -45,5 +45,18 @@ namespace my_gl {
 	  return (*this)[length()-1];
      }
 
+     const Vec4& VertexAttributeBuffer::getVertex(
+	       const ConstAttributeGroupRef& attributeGroup)
+     {
+	return attributeGroup[int(
+		  VertexShader::OutIndex::POSITION)];
+     }
+
+     Vec4& VertexAttributeBuffer::getVertex(
+	       AttributeGroupRef attributeGroup)
+     {
+	  return attributeGroup[int(
+		    VertexShader::OutIndex::POSITION)];
+     }
 
 } /* my_gl */

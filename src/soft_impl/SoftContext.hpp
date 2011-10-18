@@ -199,9 +199,16 @@ namespace my_gl {
 	void rasterizePrimitive();
 
 	/** 
+	 * @brief common route of drawArrays/drawElements
+	 */
+	void renderPrimitive();
+
+	/** 
 	 * @brief construct necessary uniform matrix
 	 */
 	void prepareGlobalUniform();
+
+	void perspectiveDivision();
 
 	struct {
 	     int x;
