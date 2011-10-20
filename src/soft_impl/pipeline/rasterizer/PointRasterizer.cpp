@@ -20,6 +20,7 @@
 
 #include "ViewportParameter.hpp"
 #include "shader/VertexAttributeBuffer.hpp"
+#include "shader/FragmentAttributeBuffer.hpp"
 
 namespace my_gl {
 
@@ -28,11 +29,19 @@ namespace my_gl {
 	   (ConstAttributeGroupRef *attributeGroupRefs, 
 	   FragmentAttributeBuffer &fragmentAttributeBuffer)
      {
-	  auto windowCoordinates-viewportCorrect(
+
+	  assert(attributeGroupRefs[0].size()==
+		    fragmentAttributeBuffer.attributeNumber());
+
+	  auto windowCoordinates=viewportCorrect(
 		    getVertex(attributeGroupRefs[0]));
+
 	  //TODO currently point size is not implement
 
-	  fragmentAttributeBuffer(windowCoordinates)
+	       
+	  fragmentAttributeBuffer(windowCoordinates)=
+	       attributeGroupRefs[0];
+
 
      }
 	

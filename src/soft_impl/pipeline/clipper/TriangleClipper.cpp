@@ -31,7 +31,7 @@ namespace my_gl {
 
      static ClippedPrimitiveGroup parallellPlaneClip(
 	       const ClippedPrimitiveGroup& prevResult,
-	       LineClipper::ClipPlane clipPlane)
+	       LineClipper::ClipDim clipDim)
      {
 	  ClippedPrimitiveGroup ret
 	       (prevResult.getRefVertexAttributeBuffer(),
@@ -47,19 +47,16 @@ namespace my_gl {
 	       int beginIndex=primitiveIndex[i],
 		   endIndex=primitiveIndex[(i+1)%prevSize];
 
-	       auto clipResult=LineClipper::commonClip(
-
-			 VertexAttributeBuffer::getVertex
+	       auto clipPercent=LineClipper::
+		    parallelClip(
+			 getVertex
 			 (prevResult[beginIndex]),
 
 			 //next point
-			 VertexAttributeBuffer::getVertex
+			 getVertex
 			 (prevResult[endIndex]),
 
-			 clipPlane);
-
-	       bool hasInfinit=clipResult.first;
-	       auto& clipPercent=clipResult.second;
+			 clipDim);
 
 	       //vertex on clip plane,or clipped out,
 	       //not insert
@@ -72,11 +69,11 @@ namespace my_gl {
 
 	       if (clipPercent.first!=0)
 	       {
-		    auto newData=ret.writeClipGeneratedAttribute();
-		    LineClipper::interpolateAttributeGroup(
-			      prevResult[beginIndex],
-			      prevResult[endIndex],clipPercent.first,
-			      newData.second);
+
+		    LineClipper::insertInterpolatedAttributes(
+			      prevResult[beginIndex],beginIndex,
+			      prevResult[endIndex],endIndex,
+			      clipPercent.first,ret);
 		    //if first vertex is just original,
 		    //leave it as the last back insert 
 	       }
@@ -84,11 +81,10 @@ namespace my_gl {
 	       //because it must be next segment begin vertex
 
 	       LineClipper::insertInterpolatedAttributes(
-			 prevResult[beginIndex], beginIndex, 
-			 prevResult[endIndex], endIndex, 
-			 clipPercent.second, ret, hasInfinit);
+			 prevResult[beginIndex],beginIndex,
+			 prevResult[endIndex],endIndex, 
+			 clipPercent.second,ret);
 	  }
-
 
 	  return ret;
 
@@ -137,7 +133,7 @@ namespace my_gl {
 			 pBuffer.reset(new ClippedPrimitiveGroup
 				   (parallellPlaneClip
 				    (*pBuffer,
-				     LineClipper::ClipPlane(i))));
+				     LineClipper::ClipDim(i))));
 		    }
 
 		    //after clip ,pBuffer contains only internal

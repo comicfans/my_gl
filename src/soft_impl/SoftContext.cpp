@@ -309,8 +309,8 @@ namespace my_gl {
 		  //this makes clip faster,but can not do 
 		  //perspective-corrected interpolate
 
-		  Vec4& position=VertexAttributeBuffer
-		       ::getVertex(_vertexAttributeBuffer[i]);
+		  Vec4& position=
+		       getVertex(_vertexAttributeBuffer[i]);
 		  if (!isInfinit(position))
 		  {
 		       my_gl::perspectiveDivision(position);

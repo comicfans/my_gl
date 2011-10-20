@@ -29,17 +29,6 @@ namespace my_gl {
 
      using std::pair;
 
-     /** 
-      * @brief first means min clip point
-      * second means max clip point
-      */
-     typedef pair<float,float> ClipPercent;
-
-     /** 
-      * @brief first means if this is infinit point (true= infinit)
-      */
-     typedef pair<bool,ClipPercent> PackedResult;
-
      class ClippedPrimitiveGroup;
 
      class LineClipper :public Clipper{
@@ -48,31 +37,41 @@ namespace my_gl {
 
      	virtual ~LineClipper ();
 
+	typedef pair<float,float> ClipPercent;
+
 	static bool outOfClipVolume(const ClipPercent& clipResult);
+
+	static ClipPercent mergePercent
+	     (const ClipPercent& lhs,const ClipPercent& rhs);
 
 	static bool onlyPoint(const ClipPercent& clipResult);
      
-	enum class ClipPlane{X,Y,Z};
+	enum class ClipDim{X,Y,Z};
 
-	static PackedResult commonClip(
-		  const Vec4& point1,const Vec4& point2,
-		  ClipPlane clipPlane);
-     
+	enum class ClipSide{MIN=1,MAX=-1};
+
 	static size_t insertInterpolatedAttributes
 	     (const ConstAttributeGroupRef& point1Attributes,
 	      size_t point1Index,
 	      const ConstAttributeGroupRef& point2Attributes,
 	      size_t point2Index,
 	      float percent,
-	      ClippedPrimitiveGroup& clippedPrimitiveGroup,
-	      bool hasInfinit);
+	      ClippedPrimitiveGroup& clippedPrimitiveGroup);
 
 	static void interpolateAttributeGroup(
 	       const ConstAttributeGroupRef& attributeGroupSource, 
 	       const ConstAttributeGroupRef& attributeGroupDestination,
-	       float percent,AttributeGroupRef& attributeGroupResult,
-	       bool hasInfinit=false);
-    
+	       float percent,AttributeGroupRef& attributeGroupResult);
+
+	static float clipInHomogenousCoordinates
+	     (const Vec4& point1,const Vec4& point2,
+	      ClipDim clipDim,ClipSide clipSide);
+
+
+	static ClipPercent parallelClip
+	     (const Vec4& pont1,const Vec4& point2,ClipDim clipDim);
+
+
      protected:
 
 	virtual void elementClip

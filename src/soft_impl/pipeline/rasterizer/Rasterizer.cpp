@@ -25,7 +25,6 @@ namespace my_gl {
      Rasterizer::~Rasterizer(){}
 
 	  void Rasterizer::rasterize(
-		    const ViewportParameter& viewportParameter,
 		    const ClippedPrimitiveGroup& clippedPrimitiveGroup,
 		    FragmentAttributeBuffer& fragmentAttributeBuffer)
 	  {
@@ -49,7 +48,6 @@ namespace my_gl {
 		    }
 		    //do element rasterize
 		    elementRasterize(
-			      viewportParameter,
 			      &_attributeGroupRefs[0],
 			      fragmentAttributeBuffer);
 	       }
@@ -71,18 +69,18 @@ namespace my_gl {
 			 *(length/2)+begin;
 	       }
 
-	  WindowCoordinates viewportCorrect
+	  WindowCoordinates Rasterizer::viewportCorrect
 	       (const Vec4& normalizedDeviceCoordinates)const
 	       {
 		    WindowCoordinates ret;
 
 		    ret.first=viewportCorrectImpl(
-			      normalizedDeviceCoordinate.x(),
+			      normalizedDeviceCoordinates.x(),
 			      _viewportParameter.x,
 			      _viewportParameter.width);
 
 		    ret.second=viewportCorrectImpl(
-			      normalizedDeviceCoordinate.y(),
+			      normalizedDeviceCoordinates.y(),
 			      _viewportParameter.y,
 			      _viewportParameter.height);
 

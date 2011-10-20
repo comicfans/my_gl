@@ -42,7 +42,9 @@ namespace my_gl {
 	  FragmentAttributeBuffer 
 	     (size_t width,size_t height,size_t attributeNumber);
 
-	  AttributeGroupRef operator()(WindowCoordinate windowCoordinate);
+	  size_t attributeNumber()const;
+
+	  AttributeGroupRef operator()(WindowCoordinates windowCoordinate);
 
      };
 	

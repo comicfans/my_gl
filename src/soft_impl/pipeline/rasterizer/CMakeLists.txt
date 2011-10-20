@@ -1,3 +1,3 @@
 INCLUDE_DIRECTORIES(../../)
 
-ADD_LIBRARY(Rasterizer Rasterizer.cpp)
+ADD_LIBRARY(Rasterizer Rasterizer.cpp PointRasterizer.cpp)

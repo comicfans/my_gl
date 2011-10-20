@@ -20,6 +20,7 @@
 
 #include <limits>
 #include <algorithm>
+#include <cmath>
 
 #include "pipeline/ClippedPrimitiveGroup.hpp"
 #include "pipeline/Interpolator.hpp"
@@ -27,19 +28,19 @@
 
 using std::max;
 using std::min;
+using std::abs;
 
 
 namespace my_gl {
 
-     static const ClipPercent OUT_CLIP_PERCENT={1,0};
+     static const LineClipper::ClipPercent OUT_OF_PERCENT={1,0};
 
      LineClipper::~LineClipper(){}
 
      void LineClipper::interpolateAttributeGroup(
 	       const ConstAttributeGroupRef& attributeGroupSource, 
 	       const ConstAttributeGroupRef& attributeGroupDestination,
-	       float percent,AttributeGroupRef& attributeGroupResult,
-	       bool hasInfinit)
+	       float percent,AttributeGroupRef& attributeGroupResult)
      {
 	  for (int i=0; i<attributeGroupSource.size(); ++i)
 	  {
@@ -49,20 +50,24 @@ namespace my_gl {
 			 attributeGroupResult[i]);
 	  }
 
-	  if (hasInfinit)
-	  {
-	       perspectiveDivision(
-			 VertexAttributeBuffer::
-			 getVertex(attributeGroupResult));
-	  }
-
      }
-     static ClipPercent parallelPlaneClipInHomogenousCoordinates
+
+	/** 
+	 * @brief clip in homogenous coordinates,work 
+	 * in all situation
+	 * 
+	 * @param point1
+	 * @param point2
+	 * 
+	 * @return 
+	 */
+     float LineClipper::clipInHomogenousCoordinates
 	  (const Vec4& point1,const Vec4& point2,
-	   LineClipper::ClipPlane clipPlane)
+	   ClipDim clipDim,ClipSide clipSide)
 	  {
-	       //should not be the same(0)
-	       assert(point1.w()!=point2.w());
+
+	       
+	       int dIndex=int(clipDim);
 
 	       //x for example
 	       //(x-x1)/(x2-x1)=(w-w1)/(w2-w1)
@@ -75,202 +80,41 @@ namespace my_gl {
 	       //   |		     |	x  | |=| 		   |
 	       //   |  1   ,  +/- 1  |     |w| |      0            |
 	       
-	       int dIndex=int(clipPlane);
+	       float d1=point1[dIndex],
+		     d2=point2[dIndex];
 
-	       float w1=point1.w(),
-		     d1=point1[dIndex];
+	       float deltaD=d2-d1;
 
-	       float deltaW= point2.w()-w1,
-		    deltaD= point2[dIndex]-d1;
+	       float w1=point1.w();
 
-	       float rowColumnValueMin=deltaW+deltaD,
-		     rowColumnValueMax=-deltaW+deltaD;
+	       float deltaW= point2.w()-w1;
 
-	       float dMin=(deltaW*d1-deltaD*w1)/rowColumnValueMin,
-		     dMax=(-deltaW*d1-deltaD*w1)/rowColumnValueMax;
+	       float rowColumnValue=int(clipSide)*deltaW+deltaD;
 
-	       float wMin=-dMin,
-		     wMax=dMax;
-
-	       return {(wMin-w1)/deltaW,(wMax-w1)/deltaW};
-	
-	  }
-
-
-	/** 
-	 * @brief clip in homogenous coordinates,work 
-	 * in all situation
-	 * 
-	 * @param point1
-	 * @param point2
-	 * 
-	 * @return 
-	 */
-     static ClipPercent clipInHomogenousCoordinates
-	  (const Vec4& point1,const Vec4& point2)
-	  {
-
-	       ClipPercent result={0,1};
-
-	       for (int i=0; i<3; ++i)
+	       if (rowColumnValue==0)
 	       {
-		    ClipPercent thisClipResult=
-			 parallelPlaneClipInHomogenousCoordinates(
-			      point1,point2,
-			      LineClipper::ClipPlane(i));
-		    result.first=max(result.first,
-			      thisClipResult.first);
-		    result.second=min(result.second,
-			      thisClipResult.second);
-	       }
+		    //parall in this direction
 
-	       return result;  
-	  }
-
-     ClipPercent parallelPlaneClip
-	  (const Vec4& point1,const Vec4& point2,
-	   LineClipper::ClipPlane crossPlane)
-	  {
-	       const int valueIndex=int(crossPlane);
-
-	       const float value=point1[valueIndex];
-
-	       ClipPercent result;
-
-	       // deltaX deltaY or deltaZ
-	       const float deltaPosition
-		    =point1[valueIndex];
-
-	       const float 
-		    qMinSide=value-(-1.0),
-		    qMaxSide=1.0-value;
-
-	       if (deltaPosition==0)
-	       {
-		    //parallel to clip plane
-		    if (qMinSide>=0 && qMaxSide>=0)
+		    if (clipSide==ClipSide::MIN)
 		    {
-			 //just between min and max clip plane
-			 return {0,1};
+			 //if one in,another is in
+			 //or two points is out
+			 return abs(d1)<abs(w1)?0:2;
 		    }
 		    else
 		    {
-			 //out of this plane 
-			 //(less than min or more than max)
-			 return {1,0};
+			 return abs(d1)<abs(w1)?1:-1;
 		    }
+
 	       }
-	       else{
-		    return 
-		    {qMinSide/deltaPosition,
-			 qMaxSide/deltaPosition};
-	       }
-    }
 
 
+	       float wValue=-int(clipSide)*
+		    (deltaW*d1-deltaD*w1)/rowColumnValue;
 
-     PackedResult LineClipper::commonClip
-	  (const Vec4& point1,const Vec4& point2,ClipPlane clipPlane)
-	  {
+	       return (wValue-point1.w())/deltaW;
 	
-	       bool point1Infinit=isInfinit(point1),
-		    point2Infinit=isInfinit(point2);
-
-	       if(point1Infinit && point2Infinit)
-	       {
-		    return {true,OUT_CLIP_PERCENT};
-	       }
-
-	       if(point1Infinit || point2Infinit)
-	       {
-		    //use clip in homogeonous coordinates
-		    auto clipResult=
-			parallelPlaneClipInHomogenousCoordinates 
-			 (point1,point2,clipPlane);
-		    return {true,clipResult};
-	       }
-	       else
-	       {
-	        auto clipResult=
-			 parallelPlaneClip(point1, point2,clipPlane);
-
-	       return {false,clipResult};
-	       }
-
 	  }
-
-	/** 
-	 * @brief Liang-Barsky clip algorithm work only with in 
-	 * normalized device coordinates [-1,1]
-	 * 
-	 * @param first firs point
-	 * @param second second point 
-	 * @param crossPlane which plane to get intersect
-	 * 
-	 * @return a parameterize percent pair, should first<=second
-	 * if first>second ,this line lies totally out of clip volume
-	 */
-     static ClipPercent clipLiangBarsky
-	  (const Vec4 &point1, 
-	       const Vec4 &point2)
-	  {
-
-	       ClipPercent currentResult={0,1};
-
-	       for(int i=0;i<3;++i)
-	       {
-
-		    ClipPercent thisClipResult=parallelPlaneClip
-			 (point1, point2, LineClipper::ClipPlane(i));
-
-		    if(thisClipResult.first>thisClipResult.second)
-		    {
-			 return {1,0};
-		    }
-
-		    //apply other plane clip result
-		    currentResult.first=max(currentResult.first,
-			      max(0.0f,thisClipResult.first));
-
-		    currentResult.second=min(currentResult.second,
-			      min(1.0f,thisClipResult.second));
-	       }
-
-	       return currentResult;
-
-	  }
-
-
-     static PackedResult commonClip(
-	       const Vec4& point1,const Vec4& point2)
-     {
-
-	       bool point1Infinit=isInfinit(point1),
-		    point2Infinit=isInfinit(point2);
-
-	       if(point1Infinit && point2Infinit)
-	       {
-		    return {true,OUT_CLIP_PERCENT};
-	       }
-
-
-	       if(point1Infinit || point2Infinit)
-	       {
-		    //use clip in homogeonous coordinates
-		    auto clipResult=
-			 clipInHomogenousCoordinates
-			 (point1,point2);
-		    return {true,clipResult};
-	       }
-	       else
-	       {
-	        auto clipResult=
-			 clipLiangBarsky(point1, point2);
-
-	       return {false,clipResult};
-	       }
-
-     }
 
      bool LineClipper::onlyPoint(const ClipPercent& clipResult)
      {
@@ -283,8 +127,7 @@ namespace my_gl {
 	      const ConstAttributeGroupRef& point2Attributes,
 	      size_t point2Index,
 	      float percent,
-	      ClippedPrimitiveGroup& clippedPrimitiveGroup,
-	      bool hasInfinit)
+	      ClippedPrimitiveGroup& clippedPrimitiveGroup)
 	     {
 		  if (percent==0)
 		  {
@@ -305,36 +148,75 @@ namespace my_gl {
 
 		       interpolateAttributeGroup
 			    (point1Attributes, point2Attributes, 
-			     percent, newData.second,hasInfinit);
+			     percent, newData.second);
 
 		       return newData.first;
 		  }
 	     }
 
+     LineClipper::ClipPercent LineClipper::parallelClip
+	  (const Vec4& point1,const Vec4& point2,ClipDim clipDim)
+	  {
+		    float minClip=
+			 clipInHomogenousCoordinates
+			 (point1, point2,clipDim,ClipSide::MIN);
+
+		    if (minClip>1)
+		    {
+			 //discade this line
+			 return OUT_OF_PERCENT;
+		    }
+		    
+		    float maxClip=
+			 clipInHomogenousCoordinates
+			 (point1,point2,clipDim,ClipSide::MAX);
+
+		    if (maxClip<0)
+		    {
+			 //discade this line
+			 return OUT_OF_PERCENT;
+		    }
+
+		    return {minClip,maxClip};
+	  }
+
+	
+     bool LineClipper::outOfClipVolume(const ClipPercent& clipResult)
+     {
+	  return clipResult.first>clipResult.second;
+     }
+
+
+     LineClipper::ClipPercent LineClipper::mergePercent
+	     (const ClipPercent& lhs,const ClipPercent& rhs)
+	     {
+		  return {max(lhs.first,rhs.first),
+		       min(lhs.second,rhs.second)};
+
+	     }
 
      void LineClipper::elementClip
 	  (const ConstAttributeGroupRef* originalAttributeGroups,
 	   const size_t *vertexIndex,
 	   ClippedPrimitiveGroup& clippedPrimitiveGroup)
 	  {
-	       auto &point1=VertexAttributeBuffer
-		    ::getVertex(originalAttributeGroups[0]);
+	       auto &point1=getVertex(originalAttributeGroups[0]);
 
-	       auto &point2=VertexAttributeBuffer
-		    ::getVertex(originalAttributeGroups[1]);
+	       auto &point2=getVertex(originalAttributeGroups[1]);
 
-	       PackedResult packedResult=
-		    my_gl::commonClip(point1,point2);
 
-	       if(outOfClipVolume(packedResult.second))
+	       ClipPercent result={0,1};
+
+	       for (int i=0; i<3 ; ++i)
 	       {
-		    //discard this line
-		    return;
+		    ClipPercent thisResult=
+			 parallelClip(point1,point2,ClipDim(i));
+		    if (outOfClipVolume(thisResult))
+		    {
+			 return;
+		    }
+		    result=mergePercent(thisResult,result);
 	       }
-
-
-	       bool hasInfinit=packedResult.first;
-	       ClipPercent clipResult=packedResult.second;
 
 	       size_t point1Index=vertexIndex[0];
 	       size_t point2Index=vertexIndex[1];
@@ -343,27 +225,16 @@ namespace my_gl {
 			 originalAttributeGroups[point1Index],
 			 point1Index,
 			 originalAttributeGroups[point2Index],
-			 point2Index,clipResult.first,
-			 clippedPrimitiveGroup,hasInfinit);
+			 point2Index,
+			 result.first,clippedPrimitiveGroup);
 
 	       insertInterpolatedAttributes(
 			 originalAttributeGroups[point1Index],
 			 point1Index,
 			 originalAttributeGroups[point2Index],
-			 point2Index,clipResult.second,
-			 clippedPrimitiveGroup,hasInfinit);
-
-
-
+			 point2Index,
+			 result.second,clippedPrimitiveGroup);
 	  }
-
-
-     bool LineClipper::outOfClipVolume
-	  (const ClipPercent& clipResult)
-	  {
-	       return clipResult.first>clipResult.second;
-	  }
-
 
 
      

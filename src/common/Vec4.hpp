@@ -51,6 +51,9 @@ namespace my_gl {
 	       const float* values()const ;
 	       float * values() ;
 
+	       const float& x()const;
+	       const float& y()const;
+	       const float& z()const;
 	       const float& w()const;
 	       
 	  private:

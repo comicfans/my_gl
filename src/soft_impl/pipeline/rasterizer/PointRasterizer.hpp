@@ -24,7 +24,7 @@
 
 namespace my_gl {
 
-     class PointRasterizer {
+     class PointRasterizer :public Rasterizer{
      public:
      	virtual ~PointRasterizer ();
 

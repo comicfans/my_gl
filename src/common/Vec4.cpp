@@ -88,6 +88,15 @@ namespace my_gl {
      const float& Vec4::w()const
      {return _values[3];}
 
+     const float& Vec4::x()const
+     {return _values[0];}
+
+     const float& Vec4::y()const
+     {return _values[1];}
+
+     const float& Vec4::z()const
+     {return _values[2];}
+
      inline float sq(float value){return value*value;}
 
      void normalize(float * values)

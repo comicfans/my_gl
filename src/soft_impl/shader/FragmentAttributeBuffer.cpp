@@ -21,11 +21,16 @@
 namespace my_gl {
 	
 	  AttributeGroupRef FragmentAttributeBuffer::operator()
-	       (WindowCoordinate windowCoordinate)
+	       (WindowCoordinates windowCoordinate)
 	       {
 		    return (*this)
 			 [windowCoordinate.first]
 			 [windowCoordinate.second];
 
+	       }
+	  size_t FragmentAttributeBuffer::
+	       attributeNumber()const
+	       {
+		    return shape()[2];
 	       }
 } /* my_gl */
