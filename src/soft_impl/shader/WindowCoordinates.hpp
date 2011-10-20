@@ -1,12 +1,12 @@
 /*
  * =====================================================================================
  *
- *       Filename:  Typedef.hpp
+ *       Filename:  WindowCoordinate.hpp
  *
- *    Description:  typedef header
+ *    Description:  a simple typedef
  *
  *        Version:  1.0
- *        Created:  2011-9-14 17:45:17
+ *        Created:  2011-10-20 11:56:24
  *       Revision:  none
  *       Compiler:  gcc
  *
@@ -16,16 +16,17 @@
  * =====================================================================================
  */
 
-#ifndef TYPEDEF_HPP
+#ifndef WINDOW_COORDINATES_HPP
 
-#define TYPEDEF_HPP
+#define WINDOW_COORDINATES_HPP
+
+#include <utility>
+
 
 namespace my_gl {
-	
-     typedef unsigned Name;
 
-    const Name RESERVED=0;
+     typedef std::pair<int,int> WindowCoordinates;
+	
 } /* my_gl */
 
-
-#endif /* end of include guard: TYPEDEF_HPP */
+#endif /* end of include guard: WINDOW_COORDINATES_HPP */

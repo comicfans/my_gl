@@ -63,14 +63,14 @@ namespace my_gl {
 
 	       AttributeGroupRef back();
 
-	       static const Vec4& getVertex(
+	       	       
+     };
+
+     const Vec4& getVertex(
 		    const ConstAttributeGroupRef& attributeGroup);
 	  
-	       static Vec4& getVertex(
+     Vec4& getVertex(
 		    AttributeGroupRef attributeGroup);
-
-
-     };
 
 
 } /* my_gl */

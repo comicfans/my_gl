@@ -33,6 +33,7 @@
 #include "shader/Global.hpp"
 
 #include "ElementIndexManager.hpp"
+#include "ViewportParameter.hpp"
 
 namespace my_gl {
 
@@ -181,6 +182,7 @@ namespace my_gl {
 	 */
 	VertexAttributeBuffer _vertexAttributeBuffer;
 
+	ViewportParameter _viewportParameter;
 
 	/** 
 	 * @brief using VertexShader to process
@@ -209,13 +211,6 @@ namespace my_gl {
 	void prepareGlobalUniform();
 
 	void perspectiveDivision();
-
-	struct {
-	     int x;
-	     int y;
-	     size_t width;
-	     size_t height;
-	  } _viewportParameter;
 
      };
 	

@@ -21,31 +21,70 @@
 
 #define RASTERIZER_HPP
 
+
 #include <boost/ptr_container/ptr_array.hpp>
 
 #include "shader/VertexAttributeBuffer.hpp"
+
+#include "ViewportParameter.hpp"
+#include "shader/WindowCoordinates.hpp"
 
 namespace my_gl {
 
      using boost::ptr_array;
 
      class ClippedPrimitiveGroup;
+     class FragmentAttributeBuffer;
 
      class Rasterizer {
      public:
 
-	  void rasterize(const ClippedPrimitiveGroup& 
-		    clippedPrimitiveGroup);
+	  void rasterize(
+		    const ClippedPrimitiveGroup& clippedPrimitiveGroup,
+		    FragmentAttributeBuffer& fragmentAttributeBuffer);
+
+	  /** 
+	   * @brief use this function to change viewport parameter
+	   * make it as a super class function for that sub-class
+	   * only need to calculate the WindowCoordinates but not 
+	   * need the viewport parameter
+	   * 
+	   * @param setValue
+	   */
+	  void setViewportParameter(const ViewportParameter& setValue);
+
+	  virtual ~Rasterizer();
 
      protected:
 
-	  virtual void elementRasterize();
+	  /** 
+	   * @brief per-element rasterize,such as 
+	   * point/line segment/triangle
+	   * super class function rasterize use the 
+	   * primitive information of PrimitiveIndex
+	   * to determine how many vertex should be 
+	   * grouped as a element
+	   * 
+	   * @param attributeGroupRefs attributeGroup of element vertex
+	   * @param fragmentAttributeBuffer buffer to write fragment input
+	   * 
+	   * @return 
+	   */
+	  virtual void elementRasterize
+	       (
+		ConstAttributeGroupRef* attributeGroupRefs,
+		FragmentAttributeBuffer& fragmentAttributeBuffer)=0;
+
+	  WindowCoordinates viewportCorrect
+	       (const Vec4& normalizedDeviceCoordinates)const;
 
      private:
 
 	  ptr_array<ConstAttributeGroupRef,
 	       VertexAttributeBuffer::MAX_VERTEX_PER_ELEMENT>
-		    _attributeGroups;
+		    _attributeGroupRefs;
+
+	  ViewportParameter _viewportParameter;
      
      };
 	

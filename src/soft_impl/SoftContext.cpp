@@ -304,6 +304,10 @@ namespace my_gl {
 	     for(int i=0;
 		       i<_vertexAttributeBuffer.length();++i)
 	     {
+		  //to use Liang-Barsky clipp algorithm
+		  //coordinates should be 3-D
+		  //this makes clip faster,but can not do 
+		  //perspective-corrected interpolate
 
 		  Vec4& position=VertexAttributeBuffer
 		       ::getVertex(_vertexAttributeBuffer[i]);

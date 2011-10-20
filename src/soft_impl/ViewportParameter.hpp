@@ -1,12 +1,12 @@
 /*
  * =====================================================================================
  *
- *       Filename:  Typedef.hpp
+ *       Filename:  ViewportParameter.hpp
  *
- *    Description:  typedef header
+ *    Description:  
  *
  *        Version:  1.0
- *        Created:  2011-9-14 17:45:17
+ *        Created:  2011-10-20 11:25:24
  *       Revision:  none
  *       Compiler:  gcc
  *
@@ -16,16 +16,20 @@
  * =====================================================================================
  */
 
-#ifndef TYPEDEF_HPP
+#ifndef VIEWPORT_PARAMETER_HPP
 
-#define TYPEDEF_HPP
+#define VIEWPORT_PARAMETER_HPP
 
 namespace my_gl {
-	
-     typedef unsigned Name;
 
-    const Name RESERVED=0;
+     struct ViewportParameter {
+	  int x;
+	  int y;
+	  size_t width;
+	  size_t height;
+     } /* optional variable list */;
+	
 } /* my_gl */
 
 
-#endif /* end of include guard: TYPEDEF_HPP */
+#endif /* end of include guard: VIEWPORT_PARAMETER_HPP */

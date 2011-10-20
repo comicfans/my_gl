@@ -1,12 +1,12 @@
 /*
  * =====================================================================================
  *
- *       Filename:  Typedef.hpp
+ *       Filename:  FragmentAttributeBuffer.cpp
  *
- *    Description:  typedef header
+ *    Description:  
  *
  *        Version:  1.0
- *        Created:  2011-9-14 17:45:17
+ *        Created:  2011-10-19 10:28:23
  *       Revision:  none
  *       Compiler:  gcc
  *
@@ -16,16 +16,16 @@
  * =====================================================================================
  */
 
-#ifndef TYPEDEF_HPP
-
-#define TYPEDEF_HPP
+#include "FragmentAttributeBuffer.hpp"
 
 namespace my_gl {
 	
-     typedef unsigned Name;
+	  AttributeGroupRef FragmentAttributeBuffer::operator()
+	       (WindowCoordinate windowCoordinate)
+	       {
+		    return (*this)
+			 [windowCoordinate.first]
+			 [windowCoordinate.second];
 
-    const Name RESERVED=0;
+	       }
 } /* my_gl */
-
-
-#endif /* end of include guard: TYPEDEF_HPP */
