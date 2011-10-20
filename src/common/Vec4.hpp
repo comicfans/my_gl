@@ -55,6 +55,8 @@ namespace my_gl {
 	       const float& y()const;
 	       const float& z()const;
 	       const float& w()const;
+
+	       bool operator==(const Vec4& rhs)const;
 	       
 	  private:
 	       float _values[LENGTH];

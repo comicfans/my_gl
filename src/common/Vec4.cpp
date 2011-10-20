@@ -29,6 +29,7 @@ using std::sin;
 using std::cos;
 using std::sqrt;
 using std::for_each;
+using std::mismatch;
 using std::divides;
 using std::plus;
 using std::transform;
@@ -167,4 +168,9 @@ namespace my_gl {
 	  return vec4.w()==0;
      }
 
+     bool Vec4::operator==(const Vec4& rhs)const
+     {
+	  return mismatch(_values,_values+LENGTH,rhs._values).
+	       first==_values+LENGTH;
+     }
 } /* my_gl */

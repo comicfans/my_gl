@@ -23,7 +23,7 @@
 #include <cmath>
 
 #include "pipeline/ClippedPrimitiveGroup.hpp"
-#include "pipeline/Interpolator.hpp"
+#include "pipeline/interpolator/Interpolator.hpp"
 #include "PointClipper.hpp"
 
 using std::max;
@@ -37,20 +37,7 @@ namespace my_gl {
 
      LineClipper::~LineClipper(){}
 
-     void LineClipper::interpolateAttributeGroup(
-	       const ConstAttributeGroupRef& attributeGroupSource, 
-	       const ConstAttributeGroupRef& attributeGroupDestination,
-	       float percent,AttributeGroupRef& attributeGroupResult)
-     {
-	  for (int i=0; i<attributeGroupSource.size(); ++i)
-	  {
-		    
-	       Interpolator::calculate(attributeGroupSource[i], 
-			 attributeGroupDestination[i], percent, 
-			 attributeGroupResult[i]);
-	  }
-
-     }
+     
 
 	/** 
 	 * @brief clip in homogenous coordinates,work 
@@ -146,7 +133,7 @@ namespace my_gl {
 		       auto newData=clippedPrimitiveGroup.
 			    writeClipGeneratedAttribute();
 
-		       interpolateAttributeGroup
+		       Interpolator::interpolateAttributeGroup
 			    (point1Attributes, point2Attributes, 
 			     percent, newData.second);
 

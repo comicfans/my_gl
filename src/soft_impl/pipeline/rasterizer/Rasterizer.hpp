@@ -35,13 +35,15 @@ namespace my_gl {
 
      class ClippedPrimitiveGroup;
      class FragmentAttributeBuffer;
+     class Interpolator;
 
      class Rasterizer {
      public:
 
 	  void rasterize(
 		    const ClippedPrimitiveGroup& clippedPrimitiveGroup,
-		    FragmentAttributeBuffer& fragmentAttributeBuffer);
+		    FragmentAttributeBuffer& fragmentAttributeBuffer,
+		    const Interpolator& interpolator);
 
 	  /** 
 	   * @brief use this function to change viewport parameter
@@ -73,10 +75,14 @@ namespace my_gl {
 	  virtual void elementRasterize
 	       (
 		ConstAttributeGroupRef* attributeGroupRefs,
-		FragmentAttributeBuffer& fragmentAttributeBuffer)=0;
+		FragmentAttributeBuffer& fragmentAttributeBuffer,
+		const Interpolator& interpolator)=0;
 
-	  WindowCoordinates viewportCorrect
+	  WindowCoordinates toWindowCoordinates
 	       (const Vec4& normalizedDeviceCoordinates)const;
+
+	  static void viewportCorrect(Vec4& toCorrect,
+		    const WindowCoordinates& windowCoordinates);
 
      private:
 
@@ -85,7 +91,7 @@ namespace my_gl {
 		    _attributeGroupRefs;
 
 	  ViewportParameter _viewportParameter;
-     
+
      };
 	
 } /* my_gl */

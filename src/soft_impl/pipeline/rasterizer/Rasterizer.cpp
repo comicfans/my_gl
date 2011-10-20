@@ -28,7 +28,8 @@ namespace my_gl {
 
 	  void Rasterizer::rasterize(
 		    const ClippedPrimitiveGroup& clippedPrimitiveGroup,
-		    FragmentAttributeBuffer& fragmentAttributeBuffer)
+		    FragmentAttributeBuffer& fragmentAttributeBuffer,
+		    const Interpolator& interpolator)
 	  {
 	  
 	       assert(clippedPrimitiveGroup.elementNumber()==
@@ -55,7 +56,8 @@ namespace my_gl {
 		    //do element rasterize
 		    elementRasterize(
 			      &_attributeGroupRefs[0],
-			      fragmentAttributeBuffer);
+			      fragmentAttributeBuffer,
+			      interpolator);
 	       }
 
 	  }
@@ -79,7 +81,7 @@ namespace my_gl {
 		    return value+0.5;
 	       }
 
-	  WindowCoordinates Rasterizer::viewportCorrect
+	  WindowCoordinates Rasterizer::toWindowCoordinates
 	       (const Vec4& normalizedDeviceCoordinates)const
 	       {
 		    WindowCoordinates ret;
@@ -96,5 +98,14 @@ namespace my_gl {
 
 		    return ret;
 	       }
+
+	  void Rasterizer::viewportCorrect(Vec4& toCorrect,
+		    const WindowCoordinates& windowCoordinates)
+	  {
+	       toCorrect[0]=windowCoordinates[0];
+	       toCorrect[1]=windowCoordinates[1];
+	  }
+
+
 
 } /* my_gl */

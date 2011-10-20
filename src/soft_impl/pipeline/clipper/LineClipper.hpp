@@ -58,11 +58,6 @@ namespace my_gl {
 	      float percent,
 	      ClippedPrimitiveGroup& clippedPrimitiveGroup);
 
-	static void interpolateAttributeGroup(
-	       const ConstAttributeGroupRef& attributeGroupSource, 
-	       const ConstAttributeGroupRef& attributeGroupDestination,
-	       float percent,AttributeGroupRef& attributeGroupResult);
-
 	static float clipInHomogenousCoordinates
 	     (const Vec4& point1,const Vec4& point2,
 	      ClipDim clipDim,ClipSide clipSide);

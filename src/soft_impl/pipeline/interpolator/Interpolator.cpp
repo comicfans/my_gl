@@ -18,12 +18,32 @@
 
 #include "Interpolator.hpp"
 
+#include "shader/WindowCoordinates.hpp"
+
+
 namespace my_gl {
 	
+     Interpolator::~Interpolator(){}
 	  
      void Interpolator::calculate(const Vec4& source,
 	       const Vec4& destination,float persent,Vec4& result)
      {
 	  result=source*(1-persent)+destination*persent;
+     }
+
+     void Interpolator::interpolateAttributeGroup(
+	       const ConstAttributeGroupRef& attributeGroupSource, 
+	       const ConstAttributeGroupRef& attributeGroupDestination,
+	       float percent,AttributeGroupRef& attributeGroupResult,
+	       size_t offset)
+     {
+	  for (int i=offset; i<attributeGroupSource.size(); ++i)
+	  {
+		    
+	       Interpolator::calculate(attributeGroupSource[i], 
+			 attributeGroupDestination[i], percent, 
+			 attributeGroupResult[i]);
+	  }
+
      }
 } /* my_gl */

@@ -31,7 +31,8 @@ namespace my_gl {
      protected:
 	  virtual void elementRasterize
 		(ConstAttributeGroupRef* attributeGroupRefs,
-		FragmentAttributeBuffer& fragmentAttributeBuffer)=0;
+		FragmentAttributeBuffer& fragmentAttributeBuffer,
+		const Interpolator& interpolator)=0;
      };
 	
 } /* my_gl */

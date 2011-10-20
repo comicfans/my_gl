@@ -27,19 +27,27 @@ namespace my_gl {
      public:
      	virtual ~LineRasterizer ();
 
+	static void groupAction
+	       (const ConstAttributeGroupRef& attributeGroup1,
+		const ConstAttributeGroupRef& attributeGroup2,
+		const WindowCoordinates& winCoord,
+		float percent,
+		FragmentAttributeBuffer& fragmentAttributeBuffer);
+
      protected:
 
 	virtual void elementRasterize
 	       (ConstAttributeGroupRef* attributeGroupRefs,
-		FragmentAttributeBuffer& fragmentAttributeBuffer);
+		FragmentAttributeBuffer& fragmentAttributeBuffer,
+		const Interpolator& interpolator);
 
 	virtual void rasterize
 	     (ConstAttributeGroupRef& vertexAttribute1,
 	      ConstAttributeGroupRef& vertexAttribute2,
 	      WindowCoordinates windowPos1,
 	      WindowCoordinates windowPos2,
-	      FragmentAttributeBuffer& fragmentAttributeBuffer)=0;
-
+	      FragmentAttributeBuffer& fragmentAttributeBuffer,
+	      const Interpolator& interpolator)=0;
 
      };
 	

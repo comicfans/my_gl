@@ -25,7 +25,13 @@
 
 namespace my_gl {
 
-     typedef std::pair<int,int> WindowCoordinates;
+     
+
+     struct WindowCoordinates :public std::pair<int,int>{
+
+	  int& operator[](int index);
+	  const int& operator[](int index)const;
+     } /* optional variable list */;
 	
 } /* my_gl */
 

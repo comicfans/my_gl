@@ -1,7 +1,7 @@
 INCLUDE_DIRECTORIES(../)
 
 
-SUBDIRS(clipper rasterizer)
+SUBDIRS(clipper rasterizer interpolator)
 
 
 ADD_LIBRARY(PrimitiveIndex PrimitiveIndex.cpp 
@@ -10,8 +10,8 @@ ADD_LIBRARY(PrimitiveIndex PrimitiveIndex.cpp
 
 ADD_LIBRARY(ClippedPrimitiveGroup ClippedPrimitiveGroup.cpp)
 
-TARGET_LINK_LIBRARIES(ClippedPrimitiveGroup PrimitiveIndex)
+ADD_LIBRARY(Pipeline)
 
-ADD_LIBRARY(Pipeline Interpolator.cpp)
+TARGET_LINK_LIBRARIES(ClippedPrimitiveGroup PrimitiveIndex)
 
 TARGET_LINK_LIBRARIES(Pipeline Clipper ClippedPrimitiveGroup)
