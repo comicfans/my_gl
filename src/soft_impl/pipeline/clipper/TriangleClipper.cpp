@@ -140,7 +140,7 @@ namespace my_gl {
 		    //vertex of triangle,then use triangle fan 
 		    //to add these triangles
 
-		    if (pBuffer->length()==0)
+		    if (pBuffer->elementNumber()==0)
 		    {
 			 //no vertex retained,all clipped
 			 return;
@@ -152,7 +152,7 @@ namespace my_gl {
 		    merge(*pBuffer,clippedPrimitiveGroup,
 			      primitiveIndex[0]);
 
-		    for(int i=2;i<pBuffer->length();++i)
+		    for(int i=2;i<pBuffer->elementNumber();++i)
 		    {
 
 			 merge(*pBuffer,clippedPrimitiveGroup,

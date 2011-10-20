@@ -17,7 +17,9 @@
  */
 
 #include "Rasterizer.hpp"
+
 #include "pipeline/ClippedPrimitiveGroup.hpp"
+#include "shader/FragmentAttributeBuffer.hpp"
 
 namespace my_gl {
 
@@ -28,6 +30,10 @@ namespace my_gl {
 		    const ClippedPrimitiveGroup& clippedPrimitiveGroup,
 		    FragmentAttributeBuffer& fragmentAttributeBuffer)
 	  {
+	  
+	       assert(clippedPrimitiveGroup.elementNumber()==
+		    fragmentAttributeBuffer.attributeNumber());
+
 	       auto& primitiveIndex=
 		    clippedPrimitiveGroup.getPrimitiveIndex();
 
@@ -65,8 +71,12 @@ namespace my_gl {
 	       (float normalizedDeviceCoordinate,
 		    int begin,int length)
 	       {
-		    return (normalizedDeviceCoordinate+1)
+		    float value=(normalizedDeviceCoordinate+1)
 			 *(length/2)+begin;
+		    //0.5 up down/splite
+		    //see gl spec Basic Line Segment Rasterization
+		    //"diamond - exit" rule
+		    return value+0.5;
 	       }
 
 	  WindowCoordinates Rasterizer::viewportCorrect

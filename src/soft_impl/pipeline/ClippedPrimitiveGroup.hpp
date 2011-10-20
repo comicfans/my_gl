@@ -57,7 +57,9 @@ namespace my_gl {
 
 	bool isOriginal(size_t index)const;
 
-	size_t length()const;
+	size_t elementNumber()const;
+
+	size_t attributeNumber()const;
 
      private:
 

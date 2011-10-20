@@ -222,7 +222,7 @@ namespace my_gl {
 		  }
 
 		  _vertexShader->shade(_global,inStream,
-			    _vertexAttributeBuffer[vertexCounter].origin());
+			    _vertexAttributeBuffer[vertexCounter]);
 	     }
 	     
 	     //TODO
@@ -299,24 +299,6 @@ namespace my_gl {
 		  {x,y,width,height};
 	}
 
-	void SoftContext::perspectiveDivision()
-	{
-	     for(int i=0;
-		       i<_vertexAttributeBuffer.length();++i)
-	     {
-		  //to use Liang-Barsky clipp algorithm
-		  //coordinates should be 3-D
-		  //this makes clip faster,but can not do 
-		  //perspective-corrected interpolate
-
-		  Vec4& position=
-		       getVertex(_vertexAttributeBuffer[i]);
-		  if (!isInfinit(position))
-		  {
-		       my_gl::perspectiveDivision(position);
-		  }
-	     }
-	}
 
 
      template<typename T>

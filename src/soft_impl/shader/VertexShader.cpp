@@ -30,7 +30,7 @@ namespace my_gl {
      void VertexShader::shade
 	  (const Global& global,
 	   const Vec4* inputAttributes,
-	   Vec4 *outputAttributes)
+	   AttributeGroupRef outputAttributes)
 	  {
 	       shade(	 global,
 			 inputAttributes[int(BindState::VERTEX)],
@@ -38,11 +38,16 @@ namespace my_gl {
 			 inputAttributes[int(BindState::NORMAL)],
 			 inputAttributes[int(BindState::TEXCOORD)],
 			 
-			 outputAttributes[int(OutIndex::POSITION)],
-			 outputAttributes[int(OutIndex::POINT_SIZE)],
-			 outputAttributes[int(OutIndex::FRONT_COLOR)],
-			 outputAttributes[int(OutIndex::BACK_COLOR)],
-			 outputAttributes[int(OutIndex::TEXCOORD)]
+			 outputAttributes[int(
+			      VertexAttributeBuffer::OutIndex::POSITION)],
+			 outputAttributes[int(
+			      VertexAttributeBuffer::OutIndex::POINT_SIZE)],
+			 outputAttributes[int(
+			      VertexAttributeBuffer::OutIndex::FRONT_COLOR)],
+			 outputAttributes[int(
+			      VertexAttributeBuffer::OutIndex::BACK_COLOR)],
+			 outputAttributes[int(
+			      VertexAttributeBuffer::OutIndex::TEXCOORD)]
 			 );
 	  }
 

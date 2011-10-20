@@ -18,13 +18,11 @@
 
 #include "VertexAttributeBuffer.hpp"
 
-#include "VertexShader.hpp"
-
 namespace my_gl {
 
      using boost::extents;
 
-     size_t VertexAttributeBuffer::length()const
+     size_t VertexAttributeBuffer::elementNumber()const
      {
 	  return shape()[0];
      }
@@ -37,26 +35,26 @@ namespace my_gl {
      void VertexAttributeBuffer::resize(size_t length)
      {
 	  multi_array<Vec4,2>::resize(extents
-		    [length][VertexShader::OUT_SIZE]);
+		    [length][attributeNumber()]);
      }
 
      AttributeGroupRef VertexAttributeBuffer::back()
      {
-	  return (*this)[length()-1];
+	  return (*this)[elementNumber()-1];
      }
 
      const Vec4& getVertex(
 	       const ConstAttributeGroupRef& attributeGroup)
      {
 	return attributeGroup[int(
-		  VertexShader::OutIndex::POSITION)];
+		  VertexAttributeBuffer::OutIndex::POSITION)];
      }
 
      Vec4& getVertex(
 	       AttributeGroupRef attributeGroup)
      {
 	  return attributeGroup[int(
-		    VertexShader::OutIndex::POSITION)];
+		    VertexAttributeBuffer::OutIndex::POSITION)];
      }
 
 } /* my_gl */

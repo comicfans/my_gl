@@ -42,7 +42,7 @@ namespace my_gl {
 
 	  public:
 
-	       size_t length()const ;
+	       size_t elementNumber()const ;
 
 	       size_t attributeNumber()const;
 
@@ -59,7 +59,8 @@ namespace my_gl {
 	       //reserved for quad use, right now only triangle is used
 	       static const size_t MAX_VERTEX_PER_ELEMENT=4;
 
-
+	       enum OutIndex{POSITION,POINT_SIZE,
+		    FRONT_COLOR,BACK_COLOR,TEXCOORD};
 
 	       AttributeGroupRef back();
 

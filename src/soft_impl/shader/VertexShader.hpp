@@ -22,6 +22,8 @@
 
 #include "Enum.hpp"
 
+#include "VertexAttributeBuffer.hpp"
+
 namespace my_gl {
 
      struct Vec4;
@@ -33,15 +35,9 @@ namespace my_gl {
 
 	virtual void shade(const Global& global,
 		  const Vec4* inputAttributes,
-		  Vec4 *outputAttributes);
+		  AttributeGroupRef outputAttributes);
 
-	enum OutIndex{POSITION,POINT_SIZE,
-	FRONT_COLOR,BACK_COLOR,TEXCOORD};
-
-	const static int OUT_SIZE=5;
-	const static int IN_SIZE=4;
-
-     protected:
+	     protected:
 
 	virtual void shade(
 		  const Global& global,

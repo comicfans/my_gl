@@ -210,8 +210,6 @@ namespace my_gl {
 	 */
 	void prepareGlobalUniform();
 
-	void perspectiveDivision();
-
      };
 	
 } /* my_gl */

@@ -123,6 +123,15 @@ namespace my_gl {
 	  return lhs;
      }
 
+     Vec4 operator/(const Vec4& lhs,float scalar)
+     {
+	  assert(scalar!=0);
+	  Vec4 ret=lhs;
+	  ret/=scalar;
+	  return lhs;
+     }
+
+
      Vec4 operator*(float scalar,const Vec4& rhs)
      {
 	  return rhs*scalar;

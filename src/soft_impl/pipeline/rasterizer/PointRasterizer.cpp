@@ -30,19 +30,24 @@ namespace my_gl {
 	   FragmentAttributeBuffer &fragmentAttributeBuffer)
      {
 
-	  assert(attributeGroupRefs[0].size()==
-		    fragmentAttributeBuffer.attributeNumber());
+	  auto coordinates=
+	       getVertex(attributeGroupRefs[0]);
+
+	  //do perspective division first
+	  coordinates/=coordinates.w();
 
 	  auto windowCoordinates=viewportCorrect(
-		    getVertex(attributeGroupRefs[0]));
+		    coordinates);
 
 	  //TODO currently point size is not implement
 
+	  auto toWrite=fragmentAttributeBuffer
+	       (windowCoordinates);
 	       
-	  fragmentAttributeBuffer(windowCoordinates)=
-	       attributeGroupRefs[0];
+	  toWrite=attributeGroupRefs[0];
 
-
+	  toWrite[VertexAttributeBuffer::OutIndex::POSITION]
+	       =coordinates;
      }
 	
 } /* my_gl */

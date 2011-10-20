@@ -52,10 +52,10 @@ namespace my_gl {
 	     {
 
 		  int newLength=
-		       _clipGeneratedVertexAttribute.length()+1;
+		       _clipGeneratedVertexAttribute.elementNumber()+1;
 
 		  int originalIndexRange=
-		       _originalVertexAttribute.length();
+		       _originalVertexAttribute.elementNumber();
 
 		  _clipGeneratedVertexAttribute.resize
 		       (newLength);
@@ -111,7 +111,7 @@ namespace my_gl {
 	bool ClippedPrimitiveGroup::isOriginal(size_t index)const
 	{
 		  int originalIndexRange=
-		       _originalVertexAttribute.length();
+		       _originalVertexAttribute.elementNumber();
 		  return index<originalIndexRange;
 	}
 
@@ -119,12 +119,16 @@ namespace my_gl {
 	     getClipGeneratedAttribute(size_t index)const
 	     {
 		  return _clipGeneratedVertexAttribute[
-		       index-_originalVertexAttribute.length()];
+		       index-_originalVertexAttribute.elementNumber()];
 	     }
-	size_t ClippedPrimitiveGroup::length()const
+	size_t ClippedPrimitiveGroup::elementNumber()const
 	{
-	     return _originalVertexAttribute.length()+
-		  _clipGeneratedVertexAttribute.length();
+	     return _originalVertexAttribute.elementNumber()+
+		  _clipGeneratedVertexAttribute.elementNumber();
 	}
 
+	size_t ClippedPrimitiveGroup::attributeNumber()const
+	{
+	     return _originalVertexAttribute.attributeNumber();
+	}
 } /* my_gl */
