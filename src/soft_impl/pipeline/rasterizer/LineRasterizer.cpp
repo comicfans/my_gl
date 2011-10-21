@@ -18,8 +18,17 @@
 
 #include "LineRasterizer.hpp"
 
+#include <cmath>
+
+#include "PointRasterizer.hpp"
+
 #include "pipeline/interpolator/Interpolator.hpp"
+#include "pipeline/interpolator/CoordInfo.hpp"
 #include "shader/FragmentAttributeBuffer.hpp"
+
+
+using std::max;
+using std::abs;
 
 namespace my_gl {
 	void LineRasterizer::groupAction
@@ -44,6 +53,40 @@ namespace my_gl {
 		    viewportCorrect(fragCoord,winCoord);
 	       }
 
+	/** 
+	 * @brief rasterize horizontal or vertical line
+	 */
+	static void rasterizeSpecial(
+		  ConstAttributeGroupRef& attributeGroup1,
+		  ConstAttributeGroupRef& attributeGroup2,
+		  const CoordInfo& coord1,const CoordInfo& coord2,
+		  int majorDelta,int majorIndex,int anotherIndex,
+		  FragmentAttributeBuffer& fragmentAttributeBuffer,
+		  const Interpolator& interpolator)
+	{
+			
+		    const int fixedValue=coord1.windowCoord[anotherIndex];
+
+		    //draw special line
+			 
+		    WindowCoordinates thisCoord;
+		    thisCoord[anotherIndex]=fixedValue;
+
+		    for(int majorValue=coord1.windowCoord[majorIndex];
+			      majorValue<coord2.windowCoord[majorIndex];
+			      ++majorValue)
+		    {
+			 thisCoord[majorIndex]=majorValue;
+
+			 float percent=interpolator.getPercent
+			      (coord1,coord2,
+			       thisCoord,majorDelta,
+			       Interpolator::MajorDim(majorIndex));
+
+			 LineRasterizer::groupAction(attributeGroup1, attributeGroup2, 
+				   thisCoord, percent, fragmentAttributeBuffer);
+		    }
+	}
 
      void LineRasterizer::elementRasterize
 	  (ConstAttributeGroupRef* attributeGroupRefs,
@@ -55,86 +98,58 @@ namespace my_gl {
 		    attributeGroup1=attributeGroupRefs[0],
 	       attributeGroup2=attributeGroupRefs[1];
 
-	       auto 
-		    &point1=getVertex(attributeGroup1),
-	       &point2=getVertex(attributeGroup2);
 
-	       auto normalizedCoord1=point1/point1.w(),
-		    normalizedCoord2=point2/point2.w();
-		    
-	       auto winCoord1=toWindowCoordinates
-		         (normalizedCoord1),
-		    winCoord2=toWindowCoordinates
-			 (normalizedCoord2);
+	       CoordInfo coord1(getVertex(attributeGroup1)),
+			 coord2(getVertex(attributeGroup2));
 
-	       if (point1==point2)
+	       coord1.windowCoord=toWindowCoordinates
+		    (coord1.normalizedCoord);
+	       coord2.windowCoord=toWindowCoordinates
+		    (coord2.normalizedCoord);
+
+
+	       //begin point need no interpolate;
+	       PointRasterizer::rasterizePoint
+			 (attributeGroup1,fragmentAttributeBuffer,coord1.windowCoord);
+	
+	       int deltaXY[]={
+		    coord2.windowCoord.first-coord1.windowCoord.first,
+		    coord2.windowCoord.second-coord1.windowCoord.second};
+
+
+	       if (max(abs(deltaXY[0]),abs(deltaXY[1]))<=1)
 	       {
-		    //just point,gl spec said that 
+			    
+		    //too small
+		    //just point, or a segment length less_equal than 1 
+		    //gl spec said that 
 		    //line segment use half-open draw 
 		    //approach,draw beginPoint only
-		    auto toWrite=
-		    fragmentAttributeBuffer(winCoord1);
-
-		    toWrite=attributeGroup1;
-		    viewportCorrect(
-			      toWrite[VertexAttributeBuffer::OutIndex::POSITION],
-			      winCoord1);
-		    return;
-	       }
-
-	       bool special=false;
-	       Interpolator::MajorDim majorDim;
-
-	       if (winCoord1.first==winCoord2.first)
-	       {
-		    //horizontal line
-		    special=true;
-		    majorDim=Interpolator::MajorDim::Y;
-	       }
-	       else if (winCoord1.second==winCoord2.second)
-	       {
-		    //vertical
-		    special=true;
-		    majorDim=Interpolator::MajorDim::X;
-	       }
-
-	       if (special)
-	       {
-		    int majorIndex=int(majorDim),
-			anotherIndex=1-majorIndex;
-
-		    const int majorDelta=
-			 point2[majorIndex]-point1[majorIndex];
-		    const int fixedValue=point1[anotherIndex];
-
-		    //draw special line
-			 
-		    WindowCoordinates winCoord;
-		    winCoord[anotherIndex]=fixedValue;
-
-		    for(int majorValue=winCoord1[majorIndex];
-			      majorValue<winCoord2[majorIndex];
-			      ++majorValue)
-		    {
-			 winCoord[majorIndex]=majorValue;
-
-			 float percent=interpolator.getPercent
-			      (point1,point2,
-			       normalizedCoord1,normalizedCoord2,
-			       winCoord1,majorDelta,winCoord,majorDim);
-
-			 groupAction(attributeGroup1, attributeGroup2, 
-				   winCoord, percent, fragmentAttributeBuffer);
-		    }
-
-		    return;
+		    //
+	           return;
 	       }
 	       
-		    
+
+	       int majorIndex=deltaXY[0]>deltaXY[1]?0:1;
+	       int anotherIndex=1-majorIndex;
+
+	       if (deltaXY[0]==0 || deltaXY[1]==0)
+	       {
+		    //horizontal or vertical
+		    rasterizeSpecial
+			 (attributeGroup1,attributeGroup2,
+			      coord1,coord2,
+			      deltaXY[majorIndex],majorIndex,anotherIndex,
+			      fragmentAttributeBuffer,interpolator);
+		    return;
+	       }
+
 
 	       rasterize
 		    (attributeGroup1,attributeGroup2,
-		     winCoord1,winCoord2,
+		     coord1,coord2,
+		     deltaXY[majorIndex],majorIndex,
+		     deltaXY[anotherIndex],anotherIndex,
 		     fragmentAttributeBuffer,interpolator);
 	  }
 

@@ -27,7 +27,7 @@
 #include "shader/VertexAttributeBuffer.hpp"
 
 #include "ViewportParameter.hpp"
-#include "shader/WindowCoordinates.hpp"
+#include "WindowCoordinates.hpp"
 
 namespace my_gl {
 
@@ -57,6 +57,12 @@ namespace my_gl {
 
 	  virtual ~Rasterizer();
 
+	  static int roundNearest(float value);
+
+	  static void viewportCorrect(Vec4& toCorrect,
+		    const WindowCoordinates& windowCoordinates);
+
+
      protected:
 
 	  /** 
@@ -80,9 +86,6 @@ namespace my_gl {
 
 	  WindowCoordinates toWindowCoordinates
 	       (const Vec4& normalizedDeviceCoordinates)const;
-
-	  static void viewportCorrect(Vec4& toCorrect,
-		    const WindowCoordinates& windowCoordinates);
 
      private:
 

@@ -1,6 +1,7 @@
+INCLUDE_DIRECTORIES(../)
+
 ADD_LIBRARY(Shader 
      VertexShader.cpp
      NoLightVertexShader.cpp
      VertexAttributeBuffer.cpp
-     FragmentAttributeBuffer.cpp
-     WindowCoordinates.cpp)
+     FragmentAttributeBuffer.cpp)

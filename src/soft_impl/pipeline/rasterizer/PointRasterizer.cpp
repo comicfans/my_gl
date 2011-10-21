@@ -24,6 +24,24 @@
 
 namespace my_gl {
 
+	void PointRasterizer::rasterizePoint(
+		  ConstAttributeGroupRef& attributeGroup,
+		  FragmentAttributeBuffer& fragmentAttributeBuffer,
+		  WindowCoordinates winCoord)
+	{
+	  //TODO currently point size is not implement
+
+	  auto toWrite=fragmentAttributeBuffer
+	       (winCoord);
+	       
+	  toWrite=attributeGroup;
+
+	  viewportCorrect(toWrite
+		    [VertexAttributeBuffer::OutIndex::POSITION],
+		    winCoord);
+	}
+
+
 
      void PointRasterizer::elementRasterize
 	   (ConstAttributeGroupRef *attributeGroupRefs, 
@@ -37,19 +55,11 @@ namespace my_gl {
 	  //do perspective division first
 	  coordinates/=coordinates.w();
 
-	  auto windowCoordinates=toWindowCoordinates(
-		    coordinates);
+	  auto winCoord=toWindowCoordinates(coordinates);
 
-	  //TODO currently point size is not implement
+	  rasterizePoint(attributeGroupRefs[0],
+		    fragmentAttributeBuffer,winCoord);
 
-	  auto toWrite=fragmentAttributeBuffer
-	       (windowCoordinates);
-	       
-	  toWrite=attributeGroupRefs[0];
-
-	  viewportCorrect(toWrite
-		    [VertexAttributeBuffer::OutIndex::POSITION],
-		    windowCoordinates);
-     }
+    }
 	
 } /* my_gl */

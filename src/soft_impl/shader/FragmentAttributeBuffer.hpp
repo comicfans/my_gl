@@ -25,7 +25,7 @@
 #include <boost/multi_array.hpp>
 
 #include "common/Vec4.hpp"
-#include "WindowCoordinates.hpp"
+#include "pipeline/rasterizer/WindowCoordinates.hpp"
 
 
 namespace my_gl {

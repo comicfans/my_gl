@@ -31,8 +31,10 @@ namespace my_gl {
      	virtual void rasterize
 	     (ConstAttributeGroupRef& vertexAttribute1,
 	      ConstAttributeGroupRef& vertexAttribute2,
-	      WindowCoordinates windowPos1,
-	      WindowCoordinates windowPos2,
+	      const CoordInfo& coord1,
+	      const CoordInfo& coord2,
+	      int majorDelta,int majorIndex,
+	      int anotherDelta,int anotherIndex,
 	      FragmentAttributeBuffer& fragmentAttributeBuffer,
 	      const Interpolator& interpolator);
 

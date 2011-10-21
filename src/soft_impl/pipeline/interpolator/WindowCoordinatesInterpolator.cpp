@@ -19,16 +19,18 @@
 #include "WindowCoordinatesInterpolator.hpp"
 
 namespace my_gl {
+
 	  float WindowCoordinatesInterpolator::getPercent
-	       (const Vec4& homogenousCoord1,const Vec4& homogenousCoord2,
-		const Vec4& normalizedCoord1,const Vec4& normalizedCoord2,
-		const WindowCoordinates& winCoord1,
+	       (const CoordInfo& coord1,
+		const CoordInfo& coord2,
+		const WindowCoordinates& toInterpolate,
 		int majorDelta,
-		const WindowCoordinates& toInterpolate,MajorDim majorDim)const
+		MajorDim majorDim)const
 	       {
 		    int index=int(majorDim);
 
-		    return float(toInterpolate[index]-winCoord1[index])
+		    return float(toInterpolate[index]-
+			      coord1.windowCoord[index])
 			 /majorDelta;
 	       }
      

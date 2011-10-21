@@ -18,7 +18,7 @@
 
 #include "Interpolator.hpp"
 
-#include "shader/WindowCoordinates.hpp"
+#include "pipeline/rasterizer/WindowCoordinates.hpp"
 
 
 namespace my_gl {

@@ -28,6 +28,11 @@ namespace my_gl {
      public:
      	virtual ~PointRasterizer ();
 
+	static void rasterizePoint(
+		  ConstAttributeGroupRef& attributeGroup,
+		  FragmentAttributeBuffer& fragmentAttributeBuffer,
+		  WindowCoordinates winCoord);
+
      protected:
 	  virtual void elementRasterize
 		(ConstAttributeGroupRef* attributeGroupRefs,

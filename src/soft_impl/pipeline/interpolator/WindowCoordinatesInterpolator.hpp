@@ -25,12 +25,12 @@ namespace my_gl {
      	virtual ~WindowCoordinatesInterpolator ();
      
      protected:
-
-	  virtual float getPercent(const Vec4& homogenousCoord1,const Vec4& homogenousCoord2,
-		const Vec4& normalizedCoord1,const Vec4& normalizedCoord2,
-		const WindowCoordinates& winCoord1,
-		int majorDelta,
-		const WindowCoordinates& toInterpolate,MajorDim majorDim)const
+	  virtual float getPercent(
+		    const CoordInfo& coord1,const CoordInfo& coord2,
+		    const WindowCoordinates& toInterpolate,
+		    int majorDelta,
+		    MajorDim majorDim)const;
+	
      };
 	
 } /* my_gl */

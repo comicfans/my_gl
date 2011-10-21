@@ -69,16 +69,22 @@ namespace my_gl {
 
 	  }
 
+	  int Rasterizer::roundNearest(float value)
+	  {
+			    //0.5 up down/splite
+	       return int(value+0.5);
+	  }
+
 	  static inline int viewportCorrectImpl
 	       (float normalizedDeviceCoordinate,
 		    int begin,int length)
 	       {
 		    float value=(normalizedDeviceCoordinate+1)
 			 *(length/2)+begin;
-		    //0.5 up down/splite
+
 		    //see gl spec Basic Line Segment Rasterization
 		    //"diamond - exit" rule
-		    return value+0.5;
+		    return Rasterizer::roundNearest(value);
 	       }
 
 	  WindowCoordinates Rasterizer::toWindowCoordinates
