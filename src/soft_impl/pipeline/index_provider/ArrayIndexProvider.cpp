@@ -1,7 +1,7 @@
 /*
  * =====================================================================================
  *
- *       Filename:  IndirectOrderIndexProvider.cpp
+ *       Filename:  ArrayIndexProvider.cpp
  *
  *    Description:  
  *
@@ -16,44 +16,43 @@
  * =====================================================================================
  */
 
-#include "IndirectOrderIndexProvider.hpp"
+#include "ArrayIndexProvider.hpp"
 
 #include "common/TypeTraits.hpp"
+#include "common/PointerFunction.hpp"
 
 #include <cassert>
 
 namespace my_gl {
 	
-     IndirectOrderIndexProvider::IndirectOrderIndexProvider
-	  (DataType dataType,const void *indices)
-	  :_dataType(dataType),
-	  _indices(indices)
+     ArrayIndexProvider::~ArrayIndexProvider (){}
+
+     ArrayIndexProvider::ArrayIndexProvider
+	  (DataType dataType)
+	  :_dataType(dataType)
 	  {
 	       assert(dataType==DataType::UNSIGNED_BYTE || 
 			 dataType==DataType::UNSIGNED_SHORT);
 	  }
 
-	size_t IndirectOrderIndexProvider::getIndex(size_t index)const
+	size_t ArrayIndexProvider::getIndex(const void* pointer,size_t index)const
 	{
 	     if (_dataType==DataType::UNSIGNED_BYTE)
 	     {
-		  return castRead<DataType::UNSIGNED_BYTE>(index);
+		  return castRead<DataType::UNSIGNED_BYTE>(pointer,index);
 	     }
 	     else
 	     {
-		  return castRead<DataType::UNSIGNED_SHORT>(index);
+		  return castRead<DataType::UNSIGNED_SHORT>(pointer,index);
 	     }
 	}
 
 	template<DataType dataType>
-	     size_t IndirectOrderIndexProvider::castRead(size_t index) const
+	     size_t ArrayIndexProvider::castRead(const void* indices,size_t index)
 	     {
-		  const uint8_t * pointer=
-		       static_cast<const uint8_t*>(_indices);
 
-		  auto *thisValuePointer=pointer+
-		       DataTypeTraits<dataType>::size*index;
-
+		  auto *thisValuePointer=
+		       add(indices,DataTypeTraits<dataType>::size*index);
 		       
 		  typedef typename DataTypeTraits<dataType>::underlineType
 		       underlineType;

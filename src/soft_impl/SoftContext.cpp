@@ -18,6 +18,8 @@
 
 #include "SoftContext.hpp"
 
+#include <climits>
+
 #include "attribute_manager/NormalManager.hpp"
 #include "attribute_manager/ColorManager.hpp"
 #include "attribute_manager/VertexManager.hpp"
@@ -27,7 +29,10 @@
 #include "object/ArrayBufferObject.hpp"
 #include "common/UntypedArray.hpp"
 
+#include "pipeline/index_provider/NaturalOrderIndexProvider.hpp"
+
 #include "shader/VertexShader.hpp"
+#include "shader/FragmentShader.hpp"
 #include "pipeline/PrimitiveIndex.hpp"
 namespace my_gl {
 
@@ -188,6 +193,21 @@ namespace my_gl {
 	void SoftContext::drawArrays(PrimitiveMode primitiveMode, int first, size_t count)
 	{
 	     //TODO GL spec : if GL_VERTEX_ARRAY is not enabled ,no geom constructed
+	     //use natual array index provider
+	     _primitiveIndexPtr.reset(
+		       new PrimitiveIndex
+		       (primitiveMode, count, 
+			/* currently not check array number
+			 * (depends on data type,component size,
+			 * which is not directly to decide) 
+			 * */
+			INT_MAX, 
+			//drawArrays use NaturalOrderIndexProvider
+			NaturalOrderIndexProvider()));
+
+	     transformVertex(count,first);
+
+	     postVertexShaderProcess();
 
 	}
 
@@ -197,23 +217,34 @@ namespace my_gl {
 	     //TODO
 	     assert(dataType==DataType::UNSIGNED_BYTE || 
 		       dataType==DataType::UNSIGNED_SHORT);
-	     {
 
-	     }
+
+	}
+
+	void SoftContext::postVertexShaderProcess()
+	{
+
 	}
 
 
-	void SoftContext::transformVertex(const int vertexNumber)
+	void SoftContext::transformVertex(size_t vertexNumber,int offset)
 	{
 	     _vertexAttributeBuffer.resize(vertexNumber);
+
+		  
+	     Vec4 inStream[4];
+	     //construct input attribute
+		  for (int j=0; j<4; ++j)
+		  {
+		       auto& provider=_allVec4Manager[j];
+		       inStream[j]=provider.value();
+		       provider.next(offset);
+		  }
+
 
 	     for (int vertexCounter=0; vertexCounter<vertexNumber;
 		       ++vertexCounter)
 	     {
-		  Vec4 inStream[4];
-		  //TODO jump first off
-
-		  //construct input attribute
 		  for (int j=0; j<4; ++j)
 		  {
 		       auto& provider=_allVec4Manager[j];
@@ -221,7 +252,7 @@ namespace my_gl {
 		       provider.next();
 		  }
 
-		  _vertexShader->shade(_global,inStream,
+		  _vertexShaderPtr->shade(_global,inStream,
 			    _vertexAttributeBuffer[vertexCounter]);
 	     }
 	     

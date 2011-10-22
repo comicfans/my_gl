@@ -1,7 +1,7 @@
 /*
  * =====================================================================================
  *
- *       Filename:  IndirectOrderIndexProvider.hpp
+ *       Filename:  ArrayIndexProvider.hpp
  *
  *    Description:  read index value from a predefined index
  *
@@ -16,34 +16,31 @@
  * =====================================================================================
  */
 
-#ifndef INDIRECT_ORDER_INDEX_PROVIDER_HPP
+#ifndef ARRAY_INDEX_PROVIDER_HPP
 
-#define INDIRECT_ORDER_INDEX_PROVIDER_HPP
+#define ARRAY_INDEX_PROVIDER_HPP
 
 #include "IndexProvider.hpp"
 namespace my_gl {
 
-     class IndirectOrderIndexProvider :public IndexProvider{
+     class ArrayIndexProvider :public IndexProvider{
      public:
 
+	  ArrayIndexProvider(DataType dataType);
 
-	  IndirectOrderIndexProvider(DataType dataType,const void *indices);
+	  virtual ~ArrayIndexProvider ();
 
-     	virtual ~IndirectOrderIndexProvider ();
-     
-	  
-	virtual size_t getIndex(size_t index)const;
-     private:
+     protected:
+
+	size_t getIndex(const void *pointer,size_t index)const;
 
 	const DataType _dataType;
 
-	const void * _indices;
-
 	template<DataType dataType>
-	     size_t castRead(size_t index)const;
+	     static size_t castRead(const void *pointer,size_t index);
      };
 	
 } /* my_gl */
 
 
-#endif /* end of include guard: INDIRECT_ORDER_INDEX_PROVIDER_HPP */
+#endif /* end of include guard: ARRAY_INDEX_PROVIDER_HPP */

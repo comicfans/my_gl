@@ -23,6 +23,7 @@
 #include "BufferObjectVec4Provider.hpp"
 #include "ClientArrayVec4Provider.hpp"
 #include "object/ArrayBufferObject.hpp"
+#include "common/PointerFunction.hpp"
 
 namespace my_gl{
 	
@@ -71,7 +72,7 @@ DataType type,  size_t stride,  const void *pointer)
 	  if(_bindedArrayBufferObject)
 	  {
 	       _pImpl.reset(new BufferObjectVec4Provider
-			 (*_bindedArrayBufferObject, reinterpret_cast<intptr_t>(pointer),
+			 (*_bindedArrayBufferObject, toInt(pointer),
 			  3,type,stride));
 	  }
 	  else

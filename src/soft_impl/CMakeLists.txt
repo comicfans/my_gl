@@ -11,4 +11,5 @@ TARGET_LINK_LIBRARIES(SoftImpl
      AttributeVertexManagers 
      Context
      Matrix
-     Shader)
+     Shader
+     Pipeline)

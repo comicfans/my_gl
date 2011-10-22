@@ -21,6 +21,7 @@
 #define ELEMENT_INDEX_MANAGER_HPP
 
 #include <memory>
+#include <climits>
 
 #include "Enum.hpp"
 
@@ -39,11 +40,12 @@ namespace my_gl{
 
 	  //partial glDrawElements
 	  const PrimitiveIndex& elements(PrimitiveMode primitiveMode,
-		    size_t count,DataType dataType,const void * indices);
+		    size_t count,DataType dataType,const void * indices,
+		    size_t actualVertexNumber=INT_MAX);
 
      private:
 
-	  unique_ptr<PrimitiveIndex> _primitiveIndexPointer;
+	  unique_ptr<PrimitiveIndex> _primitiveIndexPtr;
 
 	  const ArrayBufferObject *_bindedArrayBufferObject;
 

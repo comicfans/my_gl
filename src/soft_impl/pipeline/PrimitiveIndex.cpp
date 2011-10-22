@@ -21,7 +21,7 @@
 #include <cmath>
 #include <cassert>
 
-#include "IndexProvider.hpp"
+#include "index_provider/IndexProvider.hpp"
 
 using std::min;
 using std::max;

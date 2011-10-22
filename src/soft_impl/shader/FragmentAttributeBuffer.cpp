@@ -17,11 +17,12 @@
  */
 
 #include "FragmentAttributeBuffer.hpp"
+#include "pipeline/rasterizer/WindowCoordinates.hpp"
 
 namespace my_gl {
 	
 	  AttributeGroupRef FragmentAttributeBuffer::operator()
-	       (WindowCoordinates windowCoordinate)
+	       (const WindowCoordinates& windowCoordinate)
 	       {
 		    return (*this)
 			 [windowCoordinate.first]

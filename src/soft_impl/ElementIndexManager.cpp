@@ -22,6 +22,9 @@
 
 #include "pipeline/PrimitiveIndex.hpp"
 #include "object/ArrayBufferObject.hpp"
+#include "pipeline/index_provider/BufferObjectIndexProvider.hpp"
+#include "pipeline/index_provider/ClientArrayIndexProvider.hpp"
+#include "common/PointerFunction.hpp"
 
 namespace my_gl {
 
@@ -34,23 +37,26 @@ namespace my_gl {
 
      const PrimitiveIndex& ElementIndexManager::elements
 	  (PrimitiveMode primitiveMode,size_t count,
-	   DataType dataType,const void * indices)
+	   DataType dataType,const void * indices,
+	   size_t actualVertexNumber)
      {
 	  if (_bindedArrayBufferObject)
 	  {
-	       const uint8_t *firstMemory= 
-		    static_cast<const uint8_t*>(indices)+
-		    reinterpret_cast<intptr_t>(indices);
-		    
-	       //TODO
+	       _primitiveIndexPtr.reset
+		    (new PrimitiveIndex
+		    (primitiveMode,count,actualVertexNumber,
+		     BufferObjectIndexProvider
+		     (dataType,*_bindedArrayBufferObject,toInt(indices))));
 
 	  }
 	  else
 	  {
+	       _primitiveIndexPtr.reset(new PrimitiveIndex
+		    (primitiveMode,count,actualVertexNumber,
+		     ClientArrayIndexProvider(dataType,indices)));
 
 	  }
-
+	  return *_primitiveIndexPtr;
      }
-
 
 } /* my_gl */

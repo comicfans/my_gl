@@ -18,6 +18,7 @@
 
 #include "BufferObjectVec4Provider.hpp"
 #include "object/BufferObject.hpp"
+#include "PointerFunction.hpp"
 
 namespace my_gl {
 
@@ -30,7 +31,9 @@ namespace my_gl {
 	  {}
      Vec4 BufferObjectVec4Provider::value()
      {
-	  return castRead(_bufferObject.getBufferPointer());
+	  return castRead(add(
+			 _bufferObject.getBufferPointer(),
+			 _currentOffset));
      }
 
      void BufferObjectVec4Provider::next(size_t steps)

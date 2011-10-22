@@ -45,6 +45,9 @@ namespace my_gl {
      class Vec4Manager;
      class VertexShader;
 
+     class FragmentShader;
+
+     class PrimitiveIndex;
 
      class SoftContext :public Context{
      public:
@@ -174,7 +177,9 @@ namespace my_gl {
 	 */
 	Global _global;
 
-	unique_ptr<VertexShader> _vertexShader;
+	unique_ptr<VertexShader> _vertexShaderPtr;
+
+	unique_ptr<FragmentShader> _fragmentShaderPtr;
 
 	/** 
 	 * @brief after vertex transform,store vertex attribute
@@ -184,26 +189,29 @@ namespace my_gl {
 
 	ViewportParameter _viewportParameter;
 
+	unique_ptr<PrimitiveIndex> _primitiveIndexPtr;
+
 	/** 
 	 * @brief using VertexShader to process
 	 * vertex (to _transformedVertexBuffer)
+	 * 
+	 * @param vertexNumber how many vertex shuld be processed
+	 * @param offset jump some ahead vertex data(draw parts of data)
 	 */
-	void transformVertex(const int vertexNumber);
+	void transformVertex(size_t vertexNumber,int offset=0);
 
-	/** 
-	 * @brief assemble vertex data to primitiveGroups
-	 */
-	void primitiveAssemble();
 
 	/** 
 	 * @brief rasterize the clipped primitive
 	 */
 	void rasterizePrimitive();
 
+
 	/** 
 	 * @brief common route of drawArrays/drawElements
+	 * only do post vertex shader stages
 	 */
-	void renderPrimitive();
+	void postVertexShaderProcess();
 
 	/** 
 	 * @brief construct necessary uniform matrix

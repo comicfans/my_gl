@@ -25,7 +25,6 @@
 #include <boost/multi_array.hpp>
 
 #include "common/Vec4.hpp"
-#include "pipeline/rasterizer/WindowCoordinates.hpp"
 
 
 namespace my_gl {
@@ -33,6 +32,8 @@ namespace my_gl {
      using boost::multi_array;
 
      typedef multi_array<Vec4,3>::reference::reference AttributeGroupRef;
+
+     struct WindowCoordinates;
 
      class FragmentAttributeBuffer :protected multi_array<Vec4,3>{
      public:
@@ -44,7 +45,7 @@ namespace my_gl {
 
 	  size_t attributeNumber()const;
 
-	  AttributeGroupRef operator()(WindowCoordinates windowCoordinate);
+	  AttributeGroupRef operator()(const WindowCoordinates& windowCoordinate);
 
      };
 	
