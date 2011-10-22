@@ -40,10 +40,13 @@ namespace my_gl {
      class Rasterizer {
      public:
 
+	  Rasterizer
+	       (ViewportParameter& viewportParameter,
+		Interpolator& interpolator,
+		FragmentAttributeBuffer& fragmentAttributeBuffer);
+
 	  void rasterize(
-		    const ClippedPrimitiveGroup& clippedPrimitiveGroup,
-		    FragmentAttributeBuffer& fragmentAttributeBuffer,
-		    const Interpolator& interpolator);
+		    const ClippedPrimitiveGroup& clippedPrimitiveGroup);
 
 	  /** 
 	   * @brief use this function to change viewport parameter
@@ -53,7 +56,12 @@ namespace my_gl {
 	   * 
 	   * @param setValue
 	   */
-	  void setViewportParameter(const ViewportParameter& setValue);
+	  void setViewportParameter(ViewportParameter& setValue);
+
+	  void setInterpolator(Interpolator& interpolator);
+
+	  void setFragmentAttributeBuffer
+	       (FragmentAttributeBuffer& fragmentAttributeBuffer);
 
 	  virtual ~Rasterizer();
 
@@ -79,13 +87,15 @@ namespace my_gl {
 	   * @return 
 	   */
 	  virtual void elementRasterize
-	       (
-		ConstAttributeGroupRef* attributeGroupRefs,
-		FragmentAttributeBuffer& fragmentAttributeBuffer,
-		const Interpolator& interpolator)=0;
+	       (ConstAttributeGroupRef* attributeGroupRefs)=0;
 
 	  WindowCoordinates toWindowCoordinates
 	       (const Vec4& normalizedDeviceCoordinates)const;
+
+
+	  FragmentAttributeBuffer& _fragmentAttributeBuffer;
+
+	  Interpolator& _interpolator;
 
      private:
 
@@ -93,7 +103,7 @@ namespace my_gl {
 	       VertexAttributeBuffer::MAX_VERTEX_PER_ELEMENT>
 		    _attributeGroupRefs;
 
-	  ViewportParameter _viewportParameter;
+	  ViewportParameter& _viewportParameter;
 
      };
 	

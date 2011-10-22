@@ -27,8 +27,8 @@ namespace my_gl {
 
      
 
+     //first is y ,second is x
      struct WindowCoordinates :public std::pair<int,int>{
-
 	  int& operator[](int index);
 	  const int& operator[](int index)const;
      } /* optional variable list */;

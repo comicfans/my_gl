@@ -28,6 +28,7 @@ namespace my_gl {
      struct WindowCoordinates;
 
      struct CoordInfo;
+     struct LineInfo;
 
      class Interpolator {
      public:
@@ -56,9 +57,8 @@ namespace my_gl {
 
 	  virtual float getPercent(
 		    const CoordInfo& coord1,const CoordInfo& coord2,
-		    const WindowCoordinates& toInterpolate,
-		    int majorDelta,
-		    MajorDim majorDim)const=0;
+		    const LineInfo& lineInfo,
+		    const WindowCoordinates& toInterpolate)const=0;
 	
      };
 	

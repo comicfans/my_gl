@@ -20,37 +20,81 @@
 
 #define LINE_RASTERIZER_HPP
 
+#include <functional>
+
 #include "Rasterizer.hpp"
 
 namespace my_gl {
 
+     using std::function;
+
      struct CoordInfo;
+
+     struct LineInfo;
+
      class LineRasterizer :public Rasterizer{
      public:
-     	virtual ~LineRasterizer ();
 
-	static void groupAction
-	       (const ConstAttributeGroupRef& attributeGroup1,
-		const ConstAttributeGroupRef& attributeGroup2,
-		const WindowCoordinates& winCoord,
-		float percent,
+	  LineRasterizer
+	       (ViewportParameter& viewportParameter,
+		Interpolator& interpolator,
 		FragmentAttributeBuffer& fragmentAttributeBuffer);
+
+
+	
+	  void rasterizeSpecial(
+		  ConstAttributeGroupRef* attributeGroupRefs,
+		  const WindowCoordinates& winCoord1,
+		  const WindowCoordinates& winCoord2,
+		  const LineInfo& lineInfo);
+	
+	  /** 
+	   * @brief call this function to tell callee
+	   * a new window pixel is generated
+	   */
+	  typedef function<void(const WindowCoordinates&)> StepCallback;
+
+	 
+	  virtual ~LineRasterizer ();
+
+	  void rasterizeWithCallback(
+		    ConstAttributeGroupRef* attributeGroupRefs,
+		    StepCallback stepCallback);
 
      protected:
 
+
+
 	virtual void elementRasterize
-	       (ConstAttributeGroupRef* attributeGroupRefs,
-		FragmentAttributeBuffer& fragmentAttributeBuffer,
-		const Interpolator& interpolator);
+	       (ConstAttributeGroupRef* attributeGroupRefs);
+
+	template<bool hasCallback=false>
+	     void rasterizeImpl
+	     (ConstAttributeGroupRef* attributeGroupRefs,
+	      StepCallback stepCallback=StepCallback());
 
 	virtual void rasterize
-	     (ConstAttributeGroupRef& vertexAttribute1,
-	      ConstAttributeGroupRef& vertexAttribute2,
-	      const CoordInfo& coord1,const CoordInfo& coord2,
-	      int majorDelta,int majorIndex,
-	      int anotherDelta,int anotherIndex,
-	      FragmentAttributeBuffer& fragmentAttributeBuffer,
-	      const Interpolator& interpolator)=0;
+	     (const WindowCoordinates& winCoord1,
+	      const WindowCoordinates& winCoord2,
+	      const LineInfo& lineInfo,
+	      StepCallback stepCallback)=0;
+
+
+	virtual void elementRasterize
+	       (ConstAttributeGroupRef* attributeGroupRefs,
+		const Interpolator& interpolator);
+
+
+     private:
+
+	template<bool hasCallback=false>
+	void groupAction
+	       (ConstAttributeGroupRef* attributeGroupRefs,
+		const CoordInfo& coordInfo1,const CoordInfo& coordInfo2,
+		const LineInfo& lineInfo,
+		const WindowCoordinates& winCoord,
+		StepCallback stepCallback=StepCallback());
+
 
      };
 	

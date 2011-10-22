@@ -18,20 +18,23 @@
 
 #include "WindowCoordinatesInterpolator.hpp"
 
+#include "CoordInfo.hpp"
+
+#include "pipeline/rasterizer/LineInfo.hpp"
+#include "pipeline/rasterizer/WindowCoordinates.hpp"
+
 namespace my_gl {
 
-	  float WindowCoordinatesInterpolator::getPercent
-	       (const CoordInfo& coord1,
-		const CoordInfo& coord2,
-		const WindowCoordinates& toInterpolate,
-		int majorDelta,
-		MajorDim majorDim)const
+	  float WindowCoordinatesInterpolator::getPercent(
+		    const CoordInfo& coord1,const CoordInfo& coord2,
+		    const LineInfo& lineInfo,
+		    const WindowCoordinates& toInterpolate)const
 	       {
-		    int index=int(majorDim);
+		    int index=int(lineInfo.majorDim);
 
 		    return float(toInterpolate[index]-
 			      coord1.windowCoord[index])
-			 /majorDelta;
+			 /lineInfo.getMajorDelta();
 	       }
      
 } /* my_gl */

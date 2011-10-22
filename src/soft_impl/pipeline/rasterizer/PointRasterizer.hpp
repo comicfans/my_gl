@@ -27,6 +27,11 @@ namespace my_gl {
      class PointRasterizer :public Rasterizer{
      public:
      	virtual ~PointRasterizer ();
+	  PointRasterizer
+	       (ViewportParameter& viewportParameter,
+		Interpolator& interpolator,
+		FragmentAttributeBuffer& fragmentAttributeBuffer);
+
 
 	static void rasterizePoint(
 		  ConstAttributeGroupRef& attributeGroup,
@@ -35,9 +40,7 @@ namespace my_gl {
 
      protected:
 	  virtual void elementRasterize
-		(ConstAttributeGroupRef* attributeGroupRefs,
-		FragmentAttributeBuffer& fragmentAttributeBuffer,
-		const Interpolator& interpolator)=0;
+		(ConstAttributeGroupRef* attributeGroupRefs);
      };
 	
 } /* my_gl */

@@ -20,97 +20,113 @@
 
 #include "pipeline/ClippedPrimitiveGroup.hpp"
 #include "shader/FragmentAttributeBuffer.hpp"
+#include "pipeline/interpolator/Interpolator.hpp"
 
 namespace my_gl {
 
-	
+     Rasterizer::Rasterizer
+	       (ViewportParameter& viewportParameter,
+		Interpolator& interpolator,
+		FragmentAttributeBuffer& fragmentAttributeBuffer)
+	  :_viewportParameter(viewportParameter),
+	  _interpolator(interpolator),
+	  _fragmentAttributeBuffer(fragmentAttributeBuffer)
+     { }
+
+
+     void Rasterizer::setInterpolator(Interpolator& interpolator)
+     {
+	  _interpolator=interpolator;
+     }
+
+     void Rasterizer::setFragmentAttributeBuffer
+	  (FragmentAttributeBuffer& fragmentAttributeBuffer)
+	  {_fragmentAttributeBuffer=fragmentAttributeBuffer;}
+
+
      Rasterizer::~Rasterizer(){}
 
-	  void Rasterizer::rasterize(
-		    const ClippedPrimitiveGroup& clippedPrimitiveGroup,
-		    FragmentAttributeBuffer& fragmentAttributeBuffer,
-		    const Interpolator& interpolator)
+     void Rasterizer::rasterize(
+	       const ClippedPrimitiveGroup& clippedPrimitiveGroup)
+     {
+
+	  assert(clippedPrimitiveGroup.elementNumber()==
+		    _fragmentAttributeBuffer.attributeNumber());
+
+	  auto& primitiveIndex=
+	       clippedPrimitiveGroup.getPrimitiveIndex();
+
+
+	  int globalIndex=0;
+	  for (int elementCounter=0; 
+		    elementCounter<primitiveIndex.elementNumber(); 
+		    ++elementCounter)
 	  {
-	  
-	       assert(clippedPrimitiveGroup.elementNumber()==
-		    fragmentAttributeBuffer.attributeNumber());
 
-	       auto& primitiveIndex=
-		    clippedPrimitiveGroup.getPrimitiveIndex();
-
-
-	       int globalIndex=0;
-	       for (int elementCounter=0; 
-			 elementCounter<primitiveIndex.elementNumber(); 
-			 ++elementCounter)
+	       for(int vertexCounter=0;
+			 vertexCounter<primitiveIndex.vertexPerPrimitive();
+			 ++vertexCounter,++globalIndex)
 	       {
-
-		    for(int vertexCounter=0;
-			      vertexCounter<primitiveIndex.vertexPerPrimitive();
-			      ++vertexCounter,++globalIndex)
-		    {
-			 _attributeGroupRefs.replace(vertexCounter,new 
-				   ConstAttributeGroupRef(
-					clippedPrimitiveGroup[globalIndex]));
-		    }
-		    //do element rasterize
-		    elementRasterize(
-			      &_attributeGroupRefs[0],
-			      fragmentAttributeBuffer,
-			      interpolator);
+		    _attributeGroupRefs.replace(vertexCounter,new 
+			      ConstAttributeGroupRef(
+				   clippedPrimitiveGroup[globalIndex]));
 	       }
-
+	       //do element rasterize
+	       elementRasterize(
+			 &_attributeGroupRefs[0]);
 	  }
 
-	  void Rasterizer::setViewportParameter
-	       (const ViewportParameter& setValue)
+     }
+
+     void Rasterizer::setViewportParameter
+	  (ViewportParameter& setValue)
 	  {
 	       _viewportParameter=setValue;
 
 	  }
 
-	  int Rasterizer::roundNearest(float value)
+     int Rasterizer::roundNearest(float value)
+     {
+	  //0.5 up down/splite
+	  return int(value+0.5);
+     }
+
+     static inline int viewportCorrectImpl
+	  (float normalizedDeviceCoordinate,
+	   int begin,int length)
 	  {
-			    //0.5 up down/splite
-	       return int(value+0.5);
+	       float value=(normalizedDeviceCoordinate+1)
+		    *(length/2)+begin;
+
+	       //see gl spec Basic Line Segment Rasterization
+	       //"diamond - exit" rule
+	       return Rasterizer::roundNearest(value);
 	  }
 
-	  static inline int viewportCorrectImpl
-	       (float normalizedDeviceCoordinate,
-		    int begin,int length)
-	       {
-		    float value=(normalizedDeviceCoordinate+1)
-			 *(length/2)+begin;
-
-		    //see gl spec Basic Line Segment Rasterization
-		    //"diamond - exit" rule
-		    return Rasterizer::roundNearest(value);
-	       }
-
-	  WindowCoordinates Rasterizer::toWindowCoordinates
-	       (const Vec4& normalizedDeviceCoordinates)const
-	       {
-		    WindowCoordinates ret;
-
-		    ret.first=viewportCorrectImpl(
-			      normalizedDeviceCoordinates.x(),
-			      _viewportParameter.x,
-			      _viewportParameter.width);
-
-		    ret.second=viewportCorrectImpl(
-			      normalizedDeviceCoordinates.y(),
-			      _viewportParameter.y,
-			      _viewportParameter.height);
-
-		    return ret;
-	       }
-
-	  void Rasterizer::viewportCorrect(Vec4& toCorrect,
-		    const WindowCoordinates& windowCoordinates)
+     WindowCoordinates Rasterizer::toWindowCoordinates
+	  (const Vec4& normalizedDeviceCoordinates)const
 	  {
-	       toCorrect[0]=windowCoordinates[0];
-	       toCorrect[1]=windowCoordinates[1];
+	       WindowCoordinates ret;
+
+	       ret.first=viewportCorrectImpl(
+			 normalizedDeviceCoordinates.x(),
+			 _viewportParameter.x,
+			 _viewportParameter.width);
+
+	       ret.second=viewportCorrectImpl(
+			 normalizedDeviceCoordinates.y(),
+			 _viewportParameter.y,
+			 _viewportParameter.height);
+
+	       return ret;
 	  }
+
+     void Rasterizer::viewportCorrect(Vec4& toCorrect,
+	       const WindowCoordinates& windowCoordinates)
+     {
+	  toCorrect[0]=windowCoordinates[0];
+	  toCorrect[1]=windowCoordinates[1];
+     }
 
 
 

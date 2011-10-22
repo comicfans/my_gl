@@ -16,7 +16,7 @@
  * =====================================================================================
  */
 
-#include "Interpolate.hpp"
+#include "Interpolator.hpp"
 
 namespace my_gl {
 
@@ -27,10 +27,8 @@ namespace my_gl {
      protected:
 	  virtual float getPercent(
 		    const CoordInfo& coord1,const CoordInfo& coord2,
-		    const WindowCoordinates& toInterpolate,
-		    int majorDelta,
-		    MajorDim majorDim)const;
-	
+		    const LineInfo& lineInfo,
+		    const WindowCoordinates& toInterpolate)const;
      };
 	
 } /* my_gl */

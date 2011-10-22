@@ -23,6 +23,13 @@
 #include "shader/FragmentAttributeBuffer.hpp"
 
 namespace my_gl {
+     PointRasterizer::PointRasterizer
+	       (ViewportParameter& viewportParameter,
+		Interpolator& interpolator,
+		FragmentAttributeBuffer& fragmentAttributeBuffer)
+	       :Rasterizer
+		(viewportParameter,interpolator,fragmentAttributeBuffer){}
+
 
 	void PointRasterizer::rasterizePoint(
 		  ConstAttributeGroupRef& attributeGroup,
@@ -44,9 +51,7 @@ namespace my_gl {
 
 
      void PointRasterizer::elementRasterize
-	   (ConstAttributeGroupRef *attributeGroupRefs, 
-	    FragmentAttributeBuffer& fragmentAttributeBuffer,
-	    const Interpolator& interpolator)
+	   (ConstAttributeGroupRef *attributeGroupRefs)
      {
 
 	  auto coordinates=
@@ -58,8 +63,7 @@ namespace my_gl {
 	  auto winCoord=toWindowCoordinates(coordinates);
 
 	  rasterizePoint(attributeGroupRefs[0],
-		    fragmentAttributeBuffer,winCoord);
-
+		    _fragmentAttributeBuffer,winCoord);
     }
 	
 } /* my_gl */

@@ -25,18 +25,22 @@
 namespace my_gl {
      class SimpleLineRasterizer :public LineRasterizer{
      public:
+
+	  SimpleLineRasterizer
+	       (ViewportParameter& viewportParameter,
+		Interpolator& interpolator,
+		FragmentAttributeBuffer& fragmentAttributeBuffer);
+
 	  ~SimpleLineRasterizer();
 
      protected:
-     	virtual void rasterize
-	     (ConstAttributeGroupRef& vertexAttribute1,
-	      ConstAttributeGroupRef& vertexAttribute2,
-	      const CoordInfo& coord1,
-	      const CoordInfo& coord2,
-	      int majorDelta,int majorIndex,
-	      int anotherDelta,int anotherIndex,
-	      FragmentAttributeBuffer& fragmentAttributeBuffer,
-	      const Interpolator& interpolator);
+
+	virtual void rasterize
+	     (const WindowCoordinates& coord1,
+	      const WindowCoordinates& coord2,
+	      const LineInfo& lineInfo,
+	      StepCallback stepCallback);
+
 
 
      };
