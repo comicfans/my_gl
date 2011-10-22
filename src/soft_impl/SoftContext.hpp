@@ -189,8 +189,6 @@ namespace my_gl {
 
 	ViewportParameter _viewportParameter;
 
-	unique_ptr<PrimitiveIndex> _primitiveIndexPtr;
-
 	/** 
 	 * @brief using VertexShader to process
 	 * vertex (to _transformedVertexBuffer)
@@ -211,7 +209,7 @@ namespace my_gl {
 	 * @brief common route of drawArrays/drawElements
 	 * only do post vertex shader stages
 	 */
-	void postVertexShaderProcess();
+	void postVertexShaderProcess(const PrimitiveIndex& primitiveIndex);
 
 	/** 
 	 * @brief construct necessary uniform matrix

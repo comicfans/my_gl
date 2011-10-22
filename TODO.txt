@@ -16,51 +16,64 @@ OpenCL实现：使用OpenCL完成
 
 
 根据OpenGL ES 1.1 man手册，具体实现功能如下：
-glBindBuffer
-glBindTexture
-glBufferData
-glBufferSubData
-glClear
-glClearColor
-glClearDepth
-glClipPlane ?
-glColor
-glColorPointer
-glCopyTexImage2D
-glCopyTexSubImage2D
-glCullFace
-glDeleteBuffers
-glDeleteTextures
-glDrawArrays
-glDrawElements
-glFinish
-glFlush
-glFrontFace ?
-glFrustum
-glGenBuffers       OK
-glGenTextures
-glIsBuffer	OK
-glIsTexture
-glLight
-glLightModel
-glLineWidth ?
-glLoadIdentity
-glLoadMatrix
-glMaterial 
-glMatrixMode
-glMultMatrix
-glNormal
-glNormalPointer
-glOrtho
-glPointSize ?
-glPopMatrix
-glPushMatrix
-glRotate
-glScale
-glShadeModel
-glTexCoordPointer
-glTexImage2D
-glTexParameter
-glTexSubImage2D
-glTranslate
-glViewPort
+glBindBuffer		OK
+glBindTexture		NO/as bindBuffer
+glBufferData         	OK
+glBufferSubData         OK
+glClear			NO/simple
+glClearColor		NO/simple
+glClearDepth		NO/simple
+glClipPlane ?		NO/complex
+glColor         	OK
+glColorPointer       	OK
+glCopyTexImage2D	?
+glCopyTexSubImage2D	?
+glCullFace		NO/midd
+glDeleteBuffers         OK
+glDeleteTextures	NO/simple
+glDrawArrays 		PART
+glDrawElements 		WRONG
+glFinish		NO/simple
+glFlush			NO/simple
+glFrontFace 		?
+glFrustum         	OK
+glGenBuffers          	OK
+glGenTextures		NO/simple
+glIsBuffer	        OK
+glIsTexture		NO/simple
+glLight			NO/complex
+glLightModel		NO/complex
+glLineWidth 		?
+glLoadIdentity		NO/simple
+glLoadMatrix		NO/simple
+glMaterial 		NO/complex
+glMatrixMode		OK
+glMultMatrix		NO/simple
+glNormal         	OK
+glNormalPointer         OK
+glOrtho         	OK
+glPointSize 		NO/complex
+glPopMatrix         	OK
+glPushMatrix         	OK
+glRotate         	OK
+glScale         	OK
+glShadeModel		?
+glTexCoordPointer	OK
+glTexImage2D		?
+glTexParameter		?
+glTexSubImage2D		?
+glTranslate         	OK
+glViewPort         	OK
+
+total	:48
+
+OK 	:20	40%
+simple	:11
+?	:10
+complex	:5
+WRONG	:1
+PART	:1
+MIDD	:1
+
+正确实现顶点变换：现有实现错误 PrimitiveIndex 假定绑定数据全部变换，实际上仅有PrimitiveIndex指定的顶点经过变换
+列主序的矩阵实现：现有实现为行主序，与OpenGL不一致，不便使用
