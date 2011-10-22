@@ -1,12 +1,12 @@
 /*
  * =====================================================================================
  *
- *       Filename:  FragmentShader.hpp
+ *       Filename:  SimpleFragmentShader.cpp
  *
- *    Description:  class to process fragment
+ *    Description:  
  *
  *        Version:  1.0
- *        Created:  2011-10-15 22:15:01
+ *        Created:  2011-10-22 17:08:54
  *       Revision:  none
  *       Compiler:  gcc
  *
@@ -16,24 +16,18 @@
  * =====================================================================================
  */
 
-#ifndef FRAGMENT_SHADER_HPP
+#include "SimpleFragmentShader.hpp"
 
-#define FRAGMENT_SHADER_HPP
-
-#include "FragmentAttributeBuffer.hpp"
+#include "VertexAttributeBuffer.hpp"
 
 namespace my_gl {
 
-     class FragmentShader {
-     public:
-
-	  virtual void shade
+     void SimpleFragmentShader::shade
 	       (ConstAttributeGroupRef attributeGroupRef,
-		 Vec4& fragColor)=0;
-     
-     };
-	
+		 Vec4& fragColor)
+	       {
+		    fragColor=attributeGroupRef
+			 [VertexAttributeBuffer::OutIndex::FRONT_COLOR];
+	       }
+ 
 } /* my_gl */
-
-
-#endif /* end of include guard: FRAGMENT_SHADER_HPP */

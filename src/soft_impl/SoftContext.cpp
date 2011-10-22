@@ -286,9 +286,32 @@ namespace my_gl {
 	{
 	     _global.modelView=_matrixStacks
 		  [int(MatrixMode::MODEL_VIEW)].top();
+	     _global.modelViewInverse=
+		  _global.modelView.inverse();
+	     _global.modelViewInverseTranspose=
+		  _global.modelViewInverse.transpose();
 
-	     _global.modelViewInverse=_global.modelView;
-	     //TODO
+	     _global.projection=
+		  _matrixStacks[int(MatrixMode::PROJECTION)].top();
+	     _global.projectionInverse=
+		  _global.projection.inverse();
+	     _global.projectionInverseTranspose=
+		  _global.projectionInverse.transpose();
+
+	     _global.modelViewProjection=
+		  _global.projection;
+	     _global.modelViewProjection*=_global.modelView;
+	     _global.modelViewProjectionInverse=
+		  _global.modelViewProjection.inverse();
+	     _global.modelViewProjectionInverseTranspose=
+		  _global.modelViewProjectionInverse.transpose();
+
+	     _global.texture=_matrixStacks
+		  [int(MatrixMode::TEXTURE)].top();
+	     _global.textureInverse=
+		  _global.texture.inverse();
+	     _global.textureInverseTranspose=
+		  _global.textureInverse.transpose();
 
 	}
 

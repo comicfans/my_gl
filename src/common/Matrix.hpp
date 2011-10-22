@@ -72,6 +72,8 @@ namespace my_gl {
 
      };
 
+     Matrix operator*(const Matrix& lhs,const Matrix& rhs);
+
      void inplaceMultiVec4(const Matrix& lhs,float *pointer) ;
 
      struct Vec4;
