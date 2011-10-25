@@ -22,18 +22,14 @@ namespace my_gl {
 	  (const void* pointer,int componentNumber,DataType dataType, 
 	   size_t stride,bool normalize)
 	  :ArrayVec4Provider(componentNumber,dataType,stride,normalize),
-	   _currentPointer(static_cast<const int8_t*>(pointer))
+	   _pointer(pointer)
 	  {
 	  }
 
-     Vec4 ClientArrayVec4Provider::value()
+     Vec4 ClientArrayVec4Provider::getValue(size_t index)
      {
-	  return castRead(_currentPointer);
+	  return castRead(_pointer,index);
      }
 
-     void ClientArrayVec4Provider::next(size_t steps)
-     {
-	  _currentPointer+=_blockSize*steps;
-     }
 
 } /* my_gl */

@@ -28,9 +28,7 @@ namespace my_gl {
      public:
      	UniqueVec4Provider (const Vec4& value=Vec4());
 
-	virtual Vec4 value();
-
-	virtual void next(size_t steps=1);
+	virtual Vec4 getValue(size_t index);
 
 	void setValue(const Vec4& value);
      

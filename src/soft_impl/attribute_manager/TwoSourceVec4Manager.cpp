@@ -33,7 +33,7 @@ namespace my_gl {
 	  if (vertexArrayEnabled)
 	  {
 	       _uniqueValue=static_cast
-		    <UniqueVec4Provider&>(*_pImpl).value();
+		    <UniqueVec4Provider&>(*_pImpl).getValue(0);
 	  }
 	  else
 	  {

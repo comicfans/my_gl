@@ -23,7 +23,8 @@ namespace my_gl {
 	  (const Vec4& value)
 	  :_value(value){}
 
-     Vec4 UniqueVec4Provider::value()
+	
+     Vec4 UniqueVec4Provider::getValue(size_t index)
      {
 	  return _value;
      }
@@ -33,8 +34,5 @@ namespace my_gl {
 	  _value=value;
      }
 
-     void UniqueVec4Provider::next(size_t steps)
-     {}
-	
 } /* my_gl */
 

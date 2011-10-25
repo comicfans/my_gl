@@ -30,6 +30,7 @@
 #include "common/UntypedArray.hpp"
 
 #include "pipeline/index_provider/NaturalOrderIndexProvider.hpp"
+#include "pipeline/index_provider/ArrayIndexProvider.hpp"
 
 #include "shader/VertexShader.hpp"
 #include "shader/FragmentShader.hpp"
@@ -193,21 +194,11 @@ namespace my_gl {
 	void SoftContext::drawArrays(PrimitiveMode primitiveMode, int first, size_t count)
 	{
 	     //TODO GL spec : if GL_VERTEX_ARRAY is not enabled ,no geom constructed
-	     //use natual array index provider
-	     _primitiveIndexPtr.reset(
-		       new PrimitiveIndex
-		       (primitiveMode, count, 
-			/* currently not check array number
-			 * (depends on data type,component size,
-			 * which is not directly to decide) 
-			 * */
-			INT_MAX, 
-			//drawArrays use NaturalOrderIndexProvider
-			NaturalOrderIndexProvider()));
 
-	     transformVertex(count,first);
+	     transformVertex(count,NaturalOrderIndexProvider(first));
 
-	     postVertexShaderProcess();
+	     postVertexShaderProcess(PrimitiveIndex
+		       (primitiveMode,count,NaturalOrderIndexProvider()));
 
 	}
 
@@ -218,38 +209,39 @@ namespace my_gl {
 	     assert(dataType==DataType::UNSIGNED_BYTE || 
 		       dataType==DataType::UNSIGNED_SHORT);
 
+	     transformVertex(count,
+		       _elementIndexManager.elements(
+			    primitiveMode,count,dataType,indices));
+
 
 	}
 
-	void SoftContext::postVertexShaderProcess()
+	void SoftContext::postVertexShaderProcess
+	     (const PrimitiveIndex& primitiveIndex)
 	{
 
 	}
 
 
-	void SoftContext::transformVertex(size_t vertexNumber,int offset)
+	void SoftContext::transformVertex(size_t vertexNumber,
+		  const IndexProvider& indexProvider)
 	{
+
 	     _vertexAttributeBuffer.resize(vertexNumber);
 
-		  
 	     Vec4 inStream[4];
-	     //construct input attribute
-		  for (int j=0; j<4; ++j)
-		  {
-		       auto& provider=_allVec4Manager[j];
-		       inStream[j]=provider.value();
-		       provider.next(offset);
-		  }
 
 
 	     for (int vertexCounter=0; vertexCounter<vertexNumber;
 		       ++vertexCounter)
 	     {
+		  int thisVertexIndex=
+		       indexProvider.getIndex(vertexCounter);
+
 		  for (int j=0; j<4; ++j)
 		  {
 		       auto& provider=_allVec4Manager[j];
-		       inStream[j]=provider.value();
-		       provider.next();
+		       inStream[j]=provider.getValue(thisVertexIndex);
 		  }
 
 		  _vertexShaderPtr->shade(_global,inStream,

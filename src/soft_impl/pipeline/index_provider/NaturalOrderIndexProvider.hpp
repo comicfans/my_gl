@@ -25,8 +25,13 @@
 namespace my_gl {
      class NaturalOrderIndexProvider :public IndexProvider{
      public:
+
+	  NaturalOrderIndexProvider(size_t jump=0);
+
      	virtual ~NaturalOrderIndexProvider ();
 	virtual size_t getIndex(size_t index)const;
+     private:
+	const size_t _jump;
      };
 	
 } /* my_gl */

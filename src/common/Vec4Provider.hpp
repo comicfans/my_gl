@@ -7,8 +7,7 @@
 namespace my_gl {
      class Vec4Provider {
      public:
-     	virtual Vec4 value()=0;
-	virtual void next(size_t steps=1)=0;
+     	virtual Vec4 getValue(size_t index)=0;
 	virtual ~Vec4Provider();
      };
 	

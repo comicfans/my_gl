@@ -20,43 +20,40 @@
 
 #include <cstdint>
 
-#include "pipeline/PrimitiveIndex.hpp"
+#include "pipeline/index_provider/ArrayIndexProvider.hpp"
 #include "object/ArrayBufferObject.hpp"
-#include "pipeline/index_provider/BufferObjectIndexProvider.hpp"
-#include "pipeline/index_provider/ClientArrayIndexProvider.hpp"
 #include "common/PointerFunction.hpp"
 
 namespace my_gl {
 
 	
      void ElementIndexManager::bindArrayBufferObject
-	  (const my_gl::ArrayBufferObject *toBind)
+	  (const ArrayBufferObject& toBind)
      {
-	  _bindedArrayBufferObject=toBind;
+	  _bindedArrayBufferObjectPtr=&toBind;
      }
-
-     const PrimitiveIndex& ElementIndexManager::elements
-	  (PrimitiveMode primitiveMode,size_t count,
-	   DataType dataType,const void * indices,
-	   size_t actualVertexNumber)
+	  const ArrayIndexProvider& ElementIndexManager::
+	       elements(PrimitiveMode primitiveMode,
+		    size_t count,DataType dataType,const void * indices,
+		    size_t actualVertexNumber)
      {
-	  if (_bindedArrayBufferObject)
-	  {
-	       _primitiveIndexPtr.reset
-		    (new PrimitiveIndex
-		    (primitiveMode,count,actualVertexNumber,
-		     BufferObjectIndexProvider
-		     (dataType,*_bindedArrayBufferObject,toInt(indices))));
 
-	  }
-	  else
+	  const void *actualIndices=indices;
+	  if (_bindedArrayBufferObjectPtr)
 	  {
-	       _primitiveIndexPtr.reset(new PrimitiveIndex
-		    (primitiveMode,count,actualVertexNumber,
-		     ClientArrayIndexProvider(dataType,indices)));
-
+	       //if none zero array buffer object is binded to
+	       //ELEMENT_ARRAY_BUFFER, indices is treated as 
+	       //offset of buffer object in machine units
+	       actualIndices=add(
+			 _bindedArrayBufferObjectPtr->getBufferPointer(),
+			 toInt(indices));
 	  }
-	  return *_primitiveIndexPtr;
+
+	  _indexProviderPtr.reset(new 
+		    ArrayIndexProvider( 
+			 dataType,actualIndices));
+
+	  return *_indexProviderPtr;
      }
 
 } /* my_gl */

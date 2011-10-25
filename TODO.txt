@@ -75,5 +75,19 @@ WRONG	:1
 PART	:1
 MIDD	:1
 
+
+data bind		:OK
+vertex prepare		:WRONG(unneeded vertex)
+vertex shader		:PART (no light support)
+primitive assemble:	:PART (wrong PrimitiveIndex)
+rasterize		:OK
+coord process		:PART (z,1/w process)
+interpolate		:PART (no normalizedDevice/projective correct interpolate)
+fragment shader		:PART (no texture support)
+framebuffer		:PART (no z-buffer support)
+
+
+
 正确实现顶点变换：现有实现错误 PrimitiveIndex 假定绑定数据全部变换，实际上仅有PrimitiveIndex指定的顶点经过变换
 列主序的矩阵实现：现有实现为行主序，与OpenGL不一致，不便使用
+合并 useVertexNumber 到 IndexProvider ?

@@ -20,10 +20,14 @@
 
 namespace my_gl {
 
+     NaturalOrderIndexProvider::
+	  NaturalOrderIndexProvider(size_t jump)
+	  :_jump(jump){}
+
      NaturalOrderIndexProvider::~NaturalOrderIndexProvider(){}
 
      size_t NaturalOrderIndexProvider::getIndex(size_t index)const
-     {return index;}
+     {return _jump+index;}
 
 	
 } /* my_gl */

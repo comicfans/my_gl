@@ -31,25 +31,23 @@ namespace my_gl{
      using std::unique_ptr;
 	
      class ArrayBufferObject;
-     class PrimitiveIndex;
+     class ArrayIndexProvider;
 
      class ElementIndexManager{
      public:
 
-	  void bindArrayBufferObject(const ArrayBufferObject* toBind);
+	  void bindArrayBufferObject(const ArrayBufferObject& toBind);
 
 	  //partial glDrawElements
-	  const PrimitiveIndex& elements(PrimitiveMode primitiveMode,
+	  const ArrayIndexProvider& elements(PrimitiveMode primitiveMode,
 		    size_t count,DataType dataType,const void * indices,
 		    size_t actualVertexNumber=INT_MAX);
 
      private:
 
-	  unique_ptr<PrimitiveIndex> _primitiveIndexPtr;
+	  const ArrayBufferObject *_bindedArrayBufferObjectPtr;
 
-	  const ArrayBufferObject *_bindedArrayBufferObject;
-
-	  const void *_clientIndex;
+	  unique_ptr<ArrayIndexProvider> _indexProviderPtr;
 
      };
 } /* my_gl */

@@ -3,10 +3,10 @@
  *
  *       Filename:  ArrayIndexProvider.hpp
  *
- *    Description:  read index value from a predefined index
+ *    Description:  provide index from client array
  *
  *        Version:  1.0
- *        Created:  2011-10-10 16:47:31
+ *        Created:  2011-10-22 20:57:37
  *       Revision:  none
  *       Compiler:  gcc
  *
@@ -21,23 +21,29 @@
 #define ARRAY_INDEX_PROVIDER_HPP
 
 #include "IndexProvider.hpp"
+
+
 namespace my_gl {
 
      class ArrayIndexProvider :public IndexProvider{
      public:
 
-	  ArrayIndexProvider(DataType dataType);
+	  ArrayIndexProvider
+	       (DataType dataType,const void* indices);
 
 	  virtual ~ArrayIndexProvider ();
 
-     protected:
+	  virtual size_t getIndex(size_t index)const;
+     private:
 
-	size_t getIndex(const void *pointer,size_t index)const;
+	  template<DataType dataType>
+	       size_t castRead(size_t index)const;
+	
+	  const DataType _dataType;
 
-	const DataType _dataType;
+	  const void *_indices;
 
-	template<DataType dataType>
-	     static size_t castRead(const void *pointer,size_t index);
+
      };
 	
 } /* my_gl */

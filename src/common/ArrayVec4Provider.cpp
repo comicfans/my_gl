@@ -20,6 +20,8 @@
 
 #include <cassert>
 
+#include "PointerFunction.hpp"
+
 namespace my_gl {
 
      static size_t calcBlockSize(DataType type,int componentNumber,
@@ -60,29 +62,33 @@ namespace my_gl {
 
 
      Vec4 ArrayVec4Provider::castRead
-	  (const void* pointer)const 
+	  (const void* pointer,size_t index)const 
 	  {
+	       const void* actualPointer=
+		    add(pointer,index*_blockSize);
+
 	       switch(_dataType)
 	       {
 		    case DataType::BYTE:
 			 {return this->copyToFloats<DataType::BYTE>
-			      (pointer);}
+			      (actualPointer);}
 		    case DataType::UNSIGNED_BYTE:
 			      {return copyToFloats<DataType::UNSIGNED_BYTE>
-			      (pointer);}
+			      (actualPointer);}
 		    case DataType::SHORT:
 			 {return copyToFloats<DataType::SHORT>
-			      (pointer);}
+			      (actualPointer);}
 		    case DataType::UNSIGNED_SHORT:
 			 {return copyToFloats<DataType::UNSIGNED_SHORT>
-			      (pointer);}
+			      (actualPointer);}
 		    case DataType::FIXED:
 			 {return copyToFloats<DataType::FIXED>
-			      (pointer);}
+			      (actualPointer);}
 		    case DataType::FLOAT:
 			      {return copyToFloats<DataType::FLOAT>
-				   (pointer);}
+				   (actualPointer);}
 		    default:
+				   //SHOULD NOT here
 				   {assert(false);}
 
 	       }

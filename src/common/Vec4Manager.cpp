@@ -87,15 +87,11 @@ DataType type,  size_t stride,  const void *pointer)
 
      }
 
-	 
-     Vec4 Vec4Manager::value()
+
+     Vec4 Vec4Manager::getValue(size_t index)
      {
-	  return _pImpl->value();
+	  return _pImpl->getValue(index);
      }
 	
 	  
-     void Vec4Manager::next(size_t steps)
-     {
-	  _pImpl->next(steps);
-     }
 } /* my_gl */

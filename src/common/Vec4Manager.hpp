@@ -47,9 +47,8 @@ namespace my_gl {
 
 	  bool vertexArrayEnabled()const ;
 
-	  virtual Vec4 value();
+	  virtual Vec4 getValue(size_t index);
 	
-	  virtual void next(size_t steps=1);
      protected:
 
 	  virtual void clientStateChangeCallback(bool value);

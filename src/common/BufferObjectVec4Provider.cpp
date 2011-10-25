@@ -27,18 +27,14 @@ namespace my_gl {
 		  size_t offset,int componentNumber,DataType dataType,
 		  size_t stride,bool normalize)
 	  :ArrayVec4Provider(componentNumber,dataType,stride,normalize),
-	  _bufferObject(bufferObject),_currentOffset(offset)
+	  _bufferObject(bufferObject),_offset(offset)
 	  {}
-     Vec4 BufferObjectVec4Provider::value()
+
+     Vec4 BufferObjectVec4Provider::getValue(size_t index)
      {
 	  return castRead(add(
-			 _bufferObject.getBufferPointer(),
-			 _currentOffset));
-     }
-
-     void BufferObjectVec4Provider::next(size_t steps)
-     {
-	  _currentOffset+=_blockSize*steps;
+			 _bufferObject.getBufferPointer(),_offset),
+			 index);
      }
 
 } /* my_gl */

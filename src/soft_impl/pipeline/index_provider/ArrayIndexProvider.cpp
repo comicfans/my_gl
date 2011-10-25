@@ -6,7 +6,7 @@
  *    Description:  
  *
  *        Version:  1.0
- *        Created:  2011-10-10 16:54:17
+ *        Created:  2011-10-22 21:04:47
  *       Revision:  none
  *       Compiler:  gcc
  *
@@ -18,48 +18,51 @@
 
 #include "ArrayIndexProvider.hpp"
 
+#include <cassert>
+
 #include "common/TypeTraits.hpp"
 #include "common/PointerFunction.hpp"
 
-#include <cassert>
-
 namespace my_gl {
-	
-     ArrayIndexProvider::~ArrayIndexProvider (){}
 
      ArrayIndexProvider::ArrayIndexProvider
-	  (DataType dataType)
-	  :_dataType(dataType)
+	  (DataType dataType,const void* indices)
+	  :_dataType(dataType),_indices(indices)
+	  {}
+
+     ArrayIndexProvider::~ArrayIndexProvider()
+     {}
+
+     template<DataType dataType>
+	  size_t ArrayIndexProvider::castRead
+	  (size_t index)const
 	  {
-	       assert(dataType==DataType::UNSIGNED_BYTE || 
-			 dataType==DataType::UNSIGNED_SHORT);
+
+	       auto *thisValuePointer=
+		    add(_indices,DataTypeTraits<dataType>::size*index);
+
+	       typedef typename DataTypeTraits<dataType>::underlineType
+		    underlineType;
+
+	       const underlineType *p=static_cast<const underlineType*>
+		    ((const void*)thisValuePointer);
+
+	       return *p;
 	  }
 
-	size_t ArrayIndexProvider::getIndex(const void* pointer,size_t index)const
-	{
-	     if (_dataType==DataType::UNSIGNED_BYTE)
-	     {
-		  return castRead<DataType::UNSIGNED_BYTE>(pointer,index);
-	     }
-	     else
-	     {
-		  return castRead<DataType::UNSIGNED_SHORT>(pointer,index);
-	     }
-	}
-
-	template<DataType dataType>
-	     size_t ArrayIndexProvider::castRead(const void* indices,size_t index)
-	     {
-
-		  auto *thisValuePointer=
-		       add(indices,DataTypeTraits<dataType>::size*index);
-		       
-		  typedef typename DataTypeTraits<dataType>::underlineType
-		       underlineType;
-
-		  const underlineType *p=static_cast<const underlineType*>(
-			    (const void*)thisValuePointer);
-
-		  return *p;
-	     }
+     size_t ArrayIndexProvider::getIndex(size_t index)const
+     {
+	  //gles only support UNSIGNED_BYTE and UNSIGNED_SHORT
+	  if (_dataType==DataType::UNSIGNED_BYTE)
+	  {
+	       return castRead<DataType::UNSIGNED_BYTE>
+		    (index);
+	  }
+	  else if(_dataType==DataType::UNSIGNED_SHORT)
+	  {
+	       return castRead<DataType::UNSIGNED_SHORT>
+		    (index);
+	  }
+	  assert(false);
+     }
 } /* my_gl */

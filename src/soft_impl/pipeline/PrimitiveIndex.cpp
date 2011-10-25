@@ -47,8 +47,8 @@ namespace my_gl {
      PrimitiveIndex::PrimitiveIndex
 	  (const PrimitiveMode primitiveMode,
 	   const size_t useVertexNumber,
-	   const size_t actualVertexNumber,
-	   const IndexProvider& indexProvider)
+	   const IndexProvider& indexProvider,
+	   const size_t actualVertexNumber)
 	  :_vertexPerPrimitive(
 		    VERTEX_PER_PRIMITIVE[int(primitiveMode)]),
 	  _primitiveMode(primitiveMode)

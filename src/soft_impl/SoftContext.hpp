@@ -49,6 +49,8 @@ namespace my_gl {
 
      class PrimitiveIndex;
 
+     class IndexProvider;
+
      class SoftContext :public Context{
      public:
      	SoftContext ();
@@ -192,11 +194,20 @@ namespace my_gl {
 	/** 
 	 * @brief using VertexShader to process
 	 * vertex (to _transformedVertexBuffer)
+	 *
+	 * offset of *indices as offset in buffer object 
+	 * is wrapped already in IndexProvider,
+	 * because :
+	 * the offset of drawArrays means how many vertex to skip
+	 *
+	 * but indices as offset in BufferObject of drawElements means
+	 * how many machine units to skip in index array
 	 * 
-	 * @param vertexNumber how many vertex shuld be processed
-	 * @param offset jump some ahead vertex data(draw parts of data)
+	 * 
+	 * @param primitiveIndex which vertex is used to draw
 	 */
-	void transformVertex(size_t vertexNumber,int offset=0);
+	void transformVertex(size_t vertexNumber,
+		  const IndexProvider& indexProvider);
 
 
 	/** 
@@ -209,7 +220,8 @@ namespace my_gl {
 	 * @brief common route of drawArrays/drawElements
 	 * only do post vertex shader stages
 	 */
-	void postVertexShaderProcess(const PrimitiveIndex& primitiveIndex);
+	void postVertexShaderProcess
+	     (const PrimitiveIndex& primitiveIndex);
 
 	/** 
 	 * @brief construct necessary uniform matrix

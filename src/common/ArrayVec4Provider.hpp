@@ -36,7 +36,7 @@ namespace my_gl {
 
      protected:
 
-	  Vec4 castRead(const void* pointer)
+	  Vec4 castRead(const void* pointer,size_t index)
 	       const ;
 
 	  const DataType _dataType;

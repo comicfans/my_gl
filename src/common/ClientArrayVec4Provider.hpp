@@ -30,12 +30,10 @@ namespace my_gl {
 		  int componentNumber,DataType dataType,
 		  size_t stride,bool normalize=false);
 
-	virtual Vec4 value();
+	virtual Vec4 getValue(size_t index);
 
-	virtual void next(size_t steps=1);
-     
      private:
-	const int8_t *_currentPointer;
+	const void *_pointer;
      };
 } /* my_gl */
 

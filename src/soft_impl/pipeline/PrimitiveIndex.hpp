@@ -21,6 +21,7 @@
 #define PRIMITIVE_INDEX_HPP
 
 #include <vector>
+#include <limits>
 
 #include "Enum.hpp"
 
@@ -29,6 +30,7 @@ namespace my_gl {
 
      using std::vector;
      using std::size_t;
+     using std::numeric_limits;
 
 
      class IndexProvider;
@@ -37,8 +39,9 @@ namespace my_gl {
      public:
      	PrimitiveIndex (const PrimitiveMode primitiveMode,
 		  size_t useVertexNumber,
-		  size_t actualVertexNumber,
-		  const IndexProvider& indexProvider);
+		  const IndexProvider& indexProvider,
+		  size_t actualVertexNumber=
+		  numeric_limits<size_t>::max());
 
 	PrimitiveIndex(const PrimitiveMode primitiveMode);
 
