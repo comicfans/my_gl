@@ -23,6 +23,8 @@
 #include "shader/FragmentAttributeBuffer.hpp"
 
 namespace my_gl {
+
+     PointRasterizer::~PointRasterizer(){}
      PointRasterizer::PointRasterizer
 	       (ViewportParameter& viewportParameter,
 		Interpolator& interpolator,

@@ -34,4 +34,13 @@ namespace my_gl {
 	       {
 		    return shape()[2];
 	       }
+
+	  size_t FragmentAttributeBuffer::width()const
+	  {
+	       return shape()[1];
+	  }
+	  size_t FragmentAttributeBuffer::height()const
+	  {
+	       return shape()[0];
+	  }
 } /* my_gl */

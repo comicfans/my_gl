@@ -20,7 +20,7 @@
 
 namespace my_gl {
 
-     class WindowCoordinatesInterpolator {
+     class WindowCoordinatesInterpolator :public Interpolator{
      public:
      	virtual ~WindowCoordinatesInterpolator ();
      

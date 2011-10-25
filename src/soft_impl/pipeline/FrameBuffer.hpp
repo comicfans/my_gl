@@ -42,6 +42,10 @@ namespace my_gl {
 
 	  const Vec4& operator()(const WindowCoordinates& winCoord)const;
 
+	  size_t width()const;
+
+	  size_t height()const;
+
      };
 	
 } /* my_gl */

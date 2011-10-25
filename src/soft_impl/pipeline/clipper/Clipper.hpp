@@ -26,6 +26,7 @@
 
 #include "shader/VertexAttributeBuffer.hpp"
 
+#include "Enum.hpp"
 
 namespace my_gl {
 
@@ -45,7 +46,6 @@ namespace my_gl {
 	       (const VertexAttributeBuffer& projectedDataBuffer,
 		const PrimitiveIndex& originalPrimitiveIndex,
 		ClippedPrimitiveGroup& clippedPrimitiveGroup);
-
 
      protected:
 

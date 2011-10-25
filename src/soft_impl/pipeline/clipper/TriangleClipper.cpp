@@ -29,6 +29,7 @@ namespace my_gl {
 
      using std::unique_ptr;
 
+     TriangleClipper::~TriangleClipper (){}
      static ClippedPrimitiveGroup parallellPlaneClip(
 	       const ClippedPrimitiveGroup& prevResult,
 	       LineClipper::ClipDim clipDim)

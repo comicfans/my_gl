@@ -46,8 +46,8 @@ namespace my_gl {
      /** 
       * @brief glDrawArray/glDrawElements
       */
-     enum class PrimitiveMode{POINTS,LINE_STRIP,LINE_LOOP,LINES,
-	  TRIANGLE_STRIP,TRIANGLE_FAN,TRIANGLES};
+     enum class PrimitiveMode{POINTS,LINES,TRIANGLES,LINE_STRIP,LINE_LOOP,
+	  TRIANGLE_STRIP,TRIANGLE_FAN};
 } /* my_gl */
 
 

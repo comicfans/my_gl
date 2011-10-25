@@ -36,6 +36,7 @@ namespace my_gl {
      using std::bind;
      using std::placeholders::_1;
 
+
      LineRasterizer::LineRasterizer
 	       (ViewportParameter& viewportParameter,
 		Interpolator& interpolator,

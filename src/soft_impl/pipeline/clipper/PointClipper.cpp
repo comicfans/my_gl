@@ -48,6 +48,7 @@ namespace my_gl {
 
 	  }
 
+     PointClipper::~PointClipper(){}
 	  
 
      void PointClipper::elementClip

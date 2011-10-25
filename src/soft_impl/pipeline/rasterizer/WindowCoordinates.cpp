@@ -20,6 +20,11 @@
 
 namespace my_gl {
 	
+     WindowCoordinates::WindowCoordinates(int y,int x)
+	  :pair<int,int>(y,x)
+	  {
+
+	  }
 	  int& WindowCoordinates::operator[](int index)
 	  {
 	       return index==0?first:second;

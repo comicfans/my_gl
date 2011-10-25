@@ -25,6 +25,7 @@
 
 namespace my_gl {
 
+     WindowCoordinatesInterpolator::~WindowCoordinatesInterpolator(){}
 	  float WindowCoordinatesInterpolator::getPercent(
 		    const CoordInfo& coord1,const CoordInfo& coord2,
 		    const LineInfo& lineInfo,

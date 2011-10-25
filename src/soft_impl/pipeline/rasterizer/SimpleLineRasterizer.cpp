@@ -32,6 +32,7 @@ namespace my_gl {
 	       :LineRasterizer
 		(viewportParameter,interpolator,fragmentAttributeBuffer){}
 
+     SimpleLineRasterizer::~SimpleLineRasterizer(){}
 
 	void SimpleLineRasterizer::rasterize
 	     (const WindowCoordinates& coord1,

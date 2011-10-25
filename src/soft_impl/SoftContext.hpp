@@ -48,8 +48,14 @@ namespace my_gl {
      class FragmentShader;
 
      class PrimitiveIndex;
+     class ClippedPrimitiveGroup;
+     class Interpolator;
 
      class IndexProvider;
+     class Clipper;
+     class Rasterizer;
+     class FragmentAttributeBuffer;
+     class FrameBuffer;
 
      class SoftContext :public Context{
      public:
@@ -181,8 +187,19 @@ namespace my_gl {
 
 	unique_ptr<VertexShader> _vertexShaderPtr;
 
+	unique_ptr<ClippedPrimitiveGroup> _clippedPrimitiveGroupPtr;
+
 	unique_ptr<FragmentShader> _fragmentShaderPtr;
 
+	unique_ptr<FragmentAttributeBuffer> _fragmentAttributeBufferPtr;
+
+	unique_ptr<Interpolator> _interpolatorPtr;
+
+	unique_ptr<FrameBuffer> _frameBufferPtr;
+
+	ptr_array<Clipper,3> _clippers;
+
+	ptr_array<Rasterizer,3> _rasterizers;
 	/** 
 	 * @brief after vertex transform,store vertex attribute
 	 * here
@@ -206,22 +223,27 @@ namespace my_gl {
 	 * 
 	 * @param primitiveIndex which vertex is used to draw
 	 */
-	void transformVertex(size_t vertexNumber,
+	void vertexShaderStage(size_t vertexNumber,
 		  const IndexProvider& indexProvider);
 
+	void fragmentShaderStage();
+
+	void clipPrimitive
+	     (const PrimitiveIndex& primitiveIndex,
+		  PrimitiveMode catalog);
 
 	/** 
 	 * @brief rasterize the clipped primitive
 	 */
-	void rasterizePrimitive();
+	void rasterizePrimitive(PrimitiveMode catalog);
 
 
 	/** 
 	 * @brief common route of drawArrays/drawElements
-	 * only do post vertex shader stages
 	 */
-	void postVertexShaderProcess
-	     (const PrimitiveIndex& primitiveIndex);
+	void enterPipeline(PrimitiveMode primitiveMode,
+		  size_t vertexNumber,
+		  const IndexProvider& indexProvider);
 
 	/** 
 	 * @brief construct necessary uniform matrix
@@ -229,7 +251,8 @@ namespace my_gl {
 	void prepareGlobalUniform();
 
      };
-	
+
+
 } /* my_gl */
 
 

@@ -45,7 +45,16 @@ namespace my_gl {
 
 	  size_t attributeNumber()const;
 
-	  AttributeGroupRef operator()(const WindowCoordinates& windowCoordinate);
+	  using SuperType::begin;
+	  using SuperType::end;
+
+	  AttributeGroupRef operator()
+	       (const WindowCoordinates& windowCoordinate);
+
+	  size_t width()const;
+	       
+	  size_t height()const;
+
 
      };
 	

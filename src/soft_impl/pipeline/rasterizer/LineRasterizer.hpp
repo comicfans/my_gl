@@ -80,10 +80,6 @@ namespace my_gl {
 	      StepCallback stepCallback)=0;
 
 
-	virtual void elementRasterize
-	       (ConstAttributeGroupRef* attributeGroupRefs,
-		const Interpolator& interpolator);
-
 
      private:
 

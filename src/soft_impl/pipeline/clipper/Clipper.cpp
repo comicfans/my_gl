@@ -18,6 +18,8 @@
 
 #include "Clipper.hpp"
 
+#include <cassert>
+
 #include "pipeline/PrimitiveIndex.hpp"
 
 #include "shader/VertexAttributeBuffer.hpp"
@@ -62,6 +64,7 @@ namespace my_gl {
 
 
 	  }
+
 
 
 } /* my_gl */

@@ -35,6 +35,19 @@
 #include "shader/VertexShader.hpp"
 #include "shader/FragmentShader.hpp"
 #include "pipeline/PrimitiveIndex.hpp"
+#include "pipeline/FrameBuffer.hpp"
+
+#include "pipeline/interpolator/WindowCoordinatesInterpolator.hpp"
+#include "pipeline/rasterizer/PointRasterizer.hpp"
+#include "pipeline/rasterizer/SimpleLineRasterizer.hpp"
+#include "pipeline/rasterizer/TriangleRasterizer.hpp"
+
+#include "pipeline/clipper/PointClipper.hpp"
+#include "pipeline/clipper/LineClipper.hpp"
+#include "pipeline/clipper/TriangleClipper.hpp"
+
+#include "pipeline/ClippedPrimitiveGroup.hpp"
+
 namespace my_gl {
 
 
@@ -42,10 +55,47 @@ namespace my_gl {
 
      SoftContext::SoftContext()
      {
+	  //init vec4 manager;
 	  _allVec4Manager.replace(int(BindState::NORMAL),new NormalManager());
 	  _allVec4Manager.replace(int(BindState::COLOR),new ColorManager());
 	  _allVec4Manager.replace(int(BindState::VERTEX),new VertexManager());
 	  _allVec4Manager.replace(int(BindState::TEXCOORD),new TexCoordManager());
+
+
+	  //init clippers;
+
+	  _clippers.replace(int(PrimitiveMode::POINTS),
+		    new PointClipper());
+	  _clippers.replace(int(PrimitiveMode::LINES),
+		    new LineClipper());
+	  _clippers.replace(int(PrimitiveMode::TRIANGLES),
+		    new TriangleClipper());
+
+	  //TODO init FragmentAttributeBuffer first
+	  //then rasterizers
+
+	  _interpolatorPtr.reset(new WindowCoordinatesInterpolator());
+	  //init rasterizers
+
+	  _rasterizers.replace(int(PrimitiveMode::POINTS),
+		    new PointRasterizer(_viewportParameter,
+			 *_interpolatorPtr,*_fragmentAttributeBufferPtr));
+
+	  _rasterizers.replace(int(PrimitiveMode::LINES),
+		    new SimpleLineRasterizer
+		    (_viewportParameter,
+			 *_interpolatorPtr,*_fragmentAttributeBufferPtr));
+
+	  Rasterizer *pLineRasterizer=&_rasterizers[1];
+
+	  //what triangle rasterizer do is depends on 
+	  //its internal LineRasterizer
+	  _rasterizers.replace(int(PrimitiveMode::TRIANGLES),
+		    new TriangleRasterizer
+		    (_viewportParameter,
+			 *_interpolatorPtr,
+			 *_fragmentAttributeBufferPtr,
+			 static_cast<LineRasterizer*>(pLineRasterizer)));
      }
 
      SoftContext::~SoftContext(){}
@@ -195,35 +245,117 @@ namespace my_gl {
 	{
 	     //TODO GL spec : if GL_VERTEX_ARRAY is not enabled ,no geom constructed
 
-	     transformVertex(count,NaturalOrderIndexProvider(first));
-
-	     postVertexShaderProcess(PrimitiveIndex
-		       (primitiveMode,count,NaturalOrderIndexProvider()));
+	     enterPipeline(primitiveMode,count,
+		       NaturalOrderIndexProvider(first));
 
 	}
 
-	void SoftContext::drawElements(PrimitiveMode primitiveMode, size_t count, 
+	void SoftContext::drawElements
+	     (PrimitiveMode primitiveMode, size_t count, 
 		  DataType dataType, const void* indices)
 	{
 	     //TODO
 	     assert(dataType==DataType::UNSIGNED_BYTE || 
 		       dataType==DataType::UNSIGNED_SHORT);
 
-	     transformVertex(count,
+	     enterPipeline(primitiveMode,count,
 		       _elementIndexManager.elements(
 			    primitiveMode,count,dataType,indices));
 
-
 	}
 
-	void SoftContext::postVertexShaderProcess
-	     (const PrimitiveIndex& primitiveIndex)
+	void SoftContext::enterPipeline
+	     (PrimitiveMode primitiveMode,size_t count,
+	      const IndexProvider& indexProvider)
 	{
 
+	     vertexShaderStage(count,indexProvider);
+
+	     //primitive assemble
+	     //use index ref approach
+	     PrimitiveIndex primitiveIndex(
+		       primitiveMode,count,
+		       NaturalOrderIndexProvider());
+
+	     PrimitiveMode catalog=PrimitiveMode::POINTS;
+
+	     switch (primitiveMode)
+	     {
+		  case PrimitiveMode::LINES:
+		  case PrimitiveMode::LINE_LOOP:
+		  case PrimitiveMode::LINE_STRIP:
+		       {catalog=PrimitiveMode::LINES;
+			   break;}
+		  case PrimitiveMode::TRIANGLE_FAN:
+		  case PrimitiveMode::TRIANGLE_STRIP:
+		  case PrimitiveMode::TRIANGLES:
+			   {
+				catalog=PrimitiveMode::TRIANGLES;
+				break;
+			   }
+			 default:
+			   {
+				//impossble
+				assert(false);
+			   }
+	     }
+
+	     clipPrimitive(primitiveIndex,catalog);
+
+	     rasterizePrimitive(catalog);
+
+	     fragmentShaderStage();
+
 	}
 
+	     void SoftContext::fragmentShaderStage()
+	     {
+		  for(int y=0;y<_fragmentAttributeBufferPtr->height();++y)
+		  {
+		       for(int x=0;x<_fragmentAttributeBufferPtr->width();++x)
+		       {
+			    _fragmentShaderPtr->shade(
+				      (*_fragmentAttributeBufferPtr)(
+					   WindowCoordinates(y,x)), 
+				      (*_frameBufferPtr)(
+					   WindowCoordinates(y,x)));
+		       }
+		  }
 
-	void SoftContext::transformVertex(size_t vertexNumber,
+	     }
+
+	void SoftContext::rasterizePrimitive(PrimitiveMode catalog)
+	{
+	     //choose rasterizer
+
+	     Rasterizer& rasterizer=_rasterizers[int(catalog)];
+
+	     //write FragmentAttributeBuffer 
+	     rasterizer.rasterize(*_clippedPrimitiveGroupPtr);
+
+	}
+
+	void SoftContext::clipPrimitive
+	     (const PrimitiveIndex& primitiveIndex,PrimitiveMode catalog)
+	     {
+		  PrimitiveMode mode=primitiveIndex.primitiveMode();
+		  //choose right clipper
+		  Clipper& clipper=_clippers[int(catalog)];
+		  
+		  //reset ClippedPrimitiveGroup
+
+		  _clippedPrimitiveGroupPtr.reset(
+			    new ClippedPrimitiveGroup
+			    (_vertexAttributeBuffer,
+			     primitiveIndex.primitiveMode()));
+
+		  clipper.clip(_vertexAttributeBuffer,
+			    primitiveIndex,*_clippedPrimitiveGroupPtr);
+
+	     }
+
+
+	void SoftContext::vertexShaderStage(size_t vertexNumber,
 		  const IndexProvider& indexProvider)
 	{
 

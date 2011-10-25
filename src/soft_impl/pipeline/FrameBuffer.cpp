@@ -40,4 +40,11 @@ namespace my_gl {
 	       return (*this)[winCoord.first][winCoord.second];
 	  }
 
+	  size_t FrameBuffer::width()const
+	  {return shape()[1];}
+
+	  size_t FrameBuffer::height()const
+	  {
+	       return shape()[0];
+	  }
 } /* my_gl */
