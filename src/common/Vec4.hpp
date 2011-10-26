@@ -57,6 +57,8 @@ namespace my_gl {
 	       const float& w()const;
 
 	       bool operator==(const Vec4& rhs)const;
+
+	       Vec4 operator-()const;
 	       
 	  private:
 	       float _values[LENGTH];
@@ -67,6 +69,7 @@ namespace my_gl {
      Vec4 operator*(float scalar,const Vec4& rhs);
      Vec4 operator/(const Vec4& lhs,float scalar);
      Vec4 operator+(const Vec4& lhs,const Vec4& rhs);
+     Vec4 operator-(const Vec4& lhs,const Vec4& rhs);
 
      void normalize(float * values);
 

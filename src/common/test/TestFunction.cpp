@@ -28,7 +28,7 @@ namespace my_gl {
 	     
      bool equal(float lhs,float rhs)
      {
-	  return abs(lhs-rhs)<abs(lhs)/10000;
+	  return abs(lhs-rhs)<=abs(lhs)/10000;
      }
 
      bool equal (const Vec4& lhs,const Vec4& rhs)

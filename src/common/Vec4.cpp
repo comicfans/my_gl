@@ -67,7 +67,7 @@ namespace my_gl {
      {return operator()(idx);}
 
      const float& Vec4::operator[](size_t idx)const 
-     {return operator[](idx);}
+     {return operator()(idx);}
 
      const float& Vec4::operator()(size_t idx) const 
      {
@@ -121,7 +121,19 @@ namespace my_gl {
      {
 	  Vec4 ret=lhs;
 	  ret*=scalar;
-	  return lhs;
+	  return ret;
+     }
+
+     Vec4 Vec4::operator-()const
+     {
+	  return Vec4(-x(),-y(),-z(),-w());
+     }
+
+     Vec4 operator-(const Vec4& lhs,const Vec4& rhs)
+     {
+	  Vec4 ret(lhs);
+	  ret+=(-rhs);
+	  return ret;
      }
 
      Vec4 operator/(const Vec4& lhs,float scalar)
