@@ -24,16 +24,3 @@ ADD_LIBRARY(Context Context.cpp)
 
 ADD_LIBRARY(Common UntypedArray.cpp PixelUnpacker.cpp )
 
-ADD_EXECUTABLE(Vec4ReaderTest Vec4ReaderTest.cpp)
-TARGET_LINK_LIBRARIES(Vec4ReaderTest Common)
-
-ADD_EXECUTABLE(UntypedCowArrayTest UntypedCowArrayTest.cpp)
-TARGET_LINK_LIBRARIES(UntypedCowArrayTest Common)
-
-ADD_EXECUTABLE(Vec4Test Vec4Test.cpp)
-TARGET_LINK_LIBRARIES(Vec4Test Common)
-
-ADD_TEST(Test1 UntypedCowArrayTest)
-ADD_TEST(Test2 Vec4ReaderTest)
-ADD_TEST(Test3 Vec4Test)
-
