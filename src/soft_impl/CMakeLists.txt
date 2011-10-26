@@ -1,9 +1,11 @@
 SUBDIRS(attribute_manager object test shader pipeline)
 
-INCLUDE_DIRECTORIES(.)
+INCLUDE_DIRECTORIES(. ${SDL_INCLUDE_DIR})
 ADD_LIBRARY(SoftImpl 
      SoftContext.cpp
      ElementIndexManager.cpp
+     PixelDrawer.cpp
+     SDLPixelDrawer.cpp
      )
 
 TARGET_LINK_LIBRARIES(SoftImpl 
@@ -12,4 +14,5 @@ TARGET_LINK_LIBRARIES(SoftImpl
      Context
      Matrix
      Shader
-     Pipeline)
+     Pipeline ${SDL_LIBRARY})
+

@@ -36,7 +36,7 @@ namespace my_gl {
 
 	  typedef multi_array<Vec4,2> SuperType;
 
-	  FrameBuffer (size_t heigt,size_t width);
+	  FrameBuffer (size_t width,size_t height);
 
 	  Vec4& operator()(const WindowCoordinates& winCoord);
 

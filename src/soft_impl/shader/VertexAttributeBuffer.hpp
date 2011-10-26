@@ -59,6 +59,8 @@ namespace my_gl {
 	       //reserved for quad use, right now only triangle is used
 	       static const size_t MAX_VERTEX_PER_ELEMENT=4;
 
+	       static const size_t DEFAULT_OUT_SIZE=5;
+
 	       enum OutIndex{POSITION,POINT_SIZE,
 		    FRONT_COLOR,BACK_COLOR,TEXCOORD};
 

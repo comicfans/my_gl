@@ -48,13 +48,18 @@
 
 #include "pipeline/ClippedPrimitiveGroup.hpp"
 
+#include "SDLPixelDrawer.hpp"
 namespace my_gl {
 
 
      using boost::extents;
 
-     SoftContext::SoftContext()
+     SoftContext::SoftContext(size_t width,size_t height)
      {
+
+	  _height=height;
+	  _width=width;
+
 	  //init vec4 manager;
 	  _allVec4Manager.replace(int(BindState::NORMAL),new NormalManager());
 	  _allVec4Manager.replace(int(BindState::COLOR),new ColorManager());
@@ -62,6 +67,7 @@ namespace my_gl {
 	  _allVec4Manager.replace(int(BindState::TEXCOORD),new TexCoordManager());
 
 
+	  _pixelDrawerPtr.reset(new SDLPixelDrawer());
 	  //init clippers;
 
 	  _clippers.replace(int(PrimitiveMode::POINTS),
@@ -71,8 +77,13 @@ namespace my_gl {
 	  _clippers.replace(int(PrimitiveMode::TRIANGLES),
 		    new TriangleClipper());
 
-	  //TODO init FragmentAttributeBuffer first
 	  //then rasterizers
+
+	  _fragmentAttributeBufferPtr.reset(new 
+		    FragmentAttributeBuffer(width,height,
+			 VertexAttributeBuffer::DEFAULT_OUT_SIZE));
+	  _frameBufferPtr.reset(new 
+		    FrameBuffer(width,height));
 
 	  _interpolatorPtr.reset(new WindowCoordinatesInterpolator());
 	  //init rasterizers
@@ -104,6 +115,11 @@ namespace my_gl {
      {
 	  static SoftContext instance;
 	  return instance;
+     }
+
+     void SoftContext::flush()
+     {
+	  _pixelDrawerPtr->onDraw(*_frameBufferPtr);
      }
 
      void SoftContext::genBuffers(size_t size,  Name *names)

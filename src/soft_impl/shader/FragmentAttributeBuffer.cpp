@@ -20,7 +20,15 @@
 #include "pipeline/rasterizer/WindowCoordinates.hpp"
 
 namespace my_gl {
+     using boost::extents;
 	
+     FragmentAttributeBuffer::FragmentAttributeBuffer 
+	     (size_t width,size_t height,size_t attributeNumber)
+	     :SuperType(extents[height][width][attributeNumber])
+	     {
+
+	     }
+
 	  AttributeGroupRef FragmentAttributeBuffer::operator()
 	       (const WindowCoordinates& windowCoordinate)
 	       {

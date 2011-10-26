@@ -20,6 +20,8 @@
 
 #define PIXEL_DRAWER_HPP
 
+#include <cstddef>
+
 
 namespace my_gl {
 
@@ -27,9 +29,13 @@ namespace my_gl {
      class PixelDrawer {
 	  public:
 
-	       void onInit(size_t height,size_t width);
+	       virtual ~PixelDrawer();
 
-	       void onDraw(const FrameBuffer& frameBuffer);
+	       virtual void onInit
+		    (size_t height,size_t width)=0;
+
+	       virtual void onDraw
+		    (const FrameBuffer& frameBuffer)=0;
      };
 	
 } /* my_gl */

@@ -24,8 +24,8 @@ namespace my_gl {
 
      using boost::extents;
 
-     FrameBuffer::FrameBuffer (size_t heigt,size_t width):
-	  SuperType(extents[heigt][width])
+     FrameBuffer::FrameBuffer (size_t width,size_t height):
+	  SuperType(extents[height][width])
      {}
 
 	  Vec4& FrameBuffer::operator()

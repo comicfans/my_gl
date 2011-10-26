@@ -56,13 +56,16 @@ namespace my_gl {
      class Rasterizer;
      class FragmentAttributeBuffer;
      class FrameBuffer;
+     class PixelDrawer;
 
      class SoftContext :public Context{
      public:
-     	SoftContext ();
+     	SoftContext (size_t width=600,size_t height=400);
 
      	virtual ~SoftContext ();
 
+	//glFlush
+	virtual void flush();
 
 	//glGenBuffers
 	virtual void genBuffers(size_t size,Name *names);
@@ -161,6 +164,10 @@ namespace my_gl {
      
      private:
 
+	size_t _height;
+
+	size_t _width;
+
 	ObjectNameManager _objectNameManager;
 
 	ArrayBufferObjectManager _arrayBufferObjectManager;
@@ -196,6 +203,8 @@ namespace my_gl {
 	unique_ptr<Interpolator> _interpolatorPtr;
 
 	unique_ptr<FrameBuffer> _frameBufferPtr;
+
+	unique_ptr<PixelDrawer> _pixelDrawerPtr;
 
 	ptr_array<Clipper,3> _clippers;
 
