@@ -44,7 +44,7 @@ namespace my_gl{
 
 	  _usedNames.add(Interval(beginName,beginName+size));
 
-	  for (int i=0; i<size; ++i)
+	  for (size_t i=0; i<size; ++i)
 	  {
 	       *(names+i)=beginName+i;
 	  }
@@ -52,7 +52,7 @@ namespace my_gl{
 
      void ObjectNameManager::recycleNames(size_t size, Name *names)
      {
-	  for (int i=0; i<size; ++i)
+	  for (size_t i=0; i<size; ++i)
 	  {
 	       Name thisName=*(names+i);
 	       assert(contains(_usedNames,thisName));

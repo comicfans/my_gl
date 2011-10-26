@@ -107,9 +107,9 @@ namespace my_gl {
 	  SurfaceLocker locker(_screenPtr);
 
 
-	  for (int y=0; y<_height; ++y)
+	  for (size_t y=0; y<_height; ++y)
 	  {
-	       for (int x=0; x<_width; ++x)
+	       for (size_t x=0; x<_width; ++x)
 	       {
 		    const Vec4& color=frameBuffer(
 			      WindowCoordinates(y,x));

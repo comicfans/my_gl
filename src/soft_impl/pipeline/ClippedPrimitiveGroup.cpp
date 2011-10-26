@@ -110,7 +110,7 @@ namespace my_gl {
 
 	bool ClippedPrimitiveGroup::isOriginal(size_t index)const
 	{
-		  int originalIndexRange=
+		  size_t originalIndexRange=
 		       _originalVertexAttribute.elementNumber();
 		  return index<originalIndexRange;
 	}

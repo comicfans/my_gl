@@ -34,7 +34,7 @@ namespace my_gl {
      bool equal (const Vec4& lhs,const Vec4& rhs)
      {
 	  bool prevEqual=true;
-	  for (int i=0; i<Vec4::LENGTH; ++i)
+	  for (size_t i=0; i<Vec4::LENGTH; ++i)
 	  {
 	       prevEqual=equal(lhs[i],rhs[i]);
 	       if (!prevEqual)

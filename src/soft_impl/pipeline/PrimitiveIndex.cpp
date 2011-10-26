@@ -114,7 +114,7 @@ namespace my_gl {
 
 	       resize(atMostVertexNumber);
 
-	       for (int i=0; i<atMostVertexNumber; ++i)
+	       for (size_t i=0; i<atMostVertexNumber; ++i)
 	       {(*this)[i]=indexProvider.getIndex(i);}
 	  }
 
@@ -130,7 +130,7 @@ namespace my_gl {
 
 		    resize(_elementNumber*2);
 
-		    for (int i=0; i<size(); ++i)
+		    for (size_t i=0; i<size(); ++i)
 		    {
 			 (*this)[i]=indexProvider.getIndex(i);
 		    }
@@ -144,7 +144,7 @@ namespace my_gl {
 
 		    resize(_elementNumber*2);
 
-		    for (int i=0; i<_elementNumber; ++i)
+		    for (size_t i=0; i<_elementNumber; ++i)
 		    {
 			 (*this)[i*2]=indexProvider.getIndex(i);
 			 //last point index is overflow
@@ -177,7 +177,7 @@ namespace my_gl {
 			      _elementNumber=atMostVertexNumber/3;
 			      resize(_elementNumber*3);
 
-			      for (int i=0; i<size(); ++i)
+			      for (size_t i=0; i<size(); ++i)
 			      {
 				   (*this)[i]=indexProvider.getIndex(i);
 			      }
@@ -189,7 +189,7 @@ namespace my_gl {
 			 {
 			      _elementNumber=max<int>(atMostVertexNumber-2,0);
 			      resize(_elementNumber*3);
-			      for (int i=0; i<size(); ++i)
+			      for (size_t i=0; i<size(); ++i)
 			      {
 				   (*this)[i*3]=indexProvider.getIndex(i);
 				   (*this)[i*3+1]=indexProvider.getIndex(i+1);
@@ -201,7 +201,7 @@ namespace my_gl {
 			 {
 			      _elementNumber=max<int>(atMostVertexNumber-2,0);
 			      resize(_elementNumber*3);
-			      for (int i=0; i<size(); ++i)
+			      for (size_t i=0; i<size(); ++i)
 			      {
 				   (*this)[i*3]=indexProvider.getIndex(0);
 				   (*this)[i*3+1]=indexProvider.getIndex(i+1);

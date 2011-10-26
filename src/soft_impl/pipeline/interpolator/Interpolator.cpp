@@ -37,7 +37,7 @@ namespace my_gl {
 	       float percent,AttributeGroupRef& attributeGroupResult,
 	       size_t offset)
      {
-	  for (int i=offset; i<attributeGroupSource.size(); ++i)
+	  for (size_t i=offset; i<attributeGroupSource.size(); ++i)
 	  {
 		    
 	       Interpolator::calculate(attributeGroupSource[i], 

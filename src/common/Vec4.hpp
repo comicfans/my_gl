@@ -40,7 +40,7 @@ namespace my_gl {
 
 	       void operator+=(const Vec4& rhs);
 
-	       static const int LENGTH=4;
+	       static const size_t LENGTH=4;
 
 	       float& operator()(size_t idx);
 	       const float& operator()(size_t idx)const ;

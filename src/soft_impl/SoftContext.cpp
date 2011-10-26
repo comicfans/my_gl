@@ -326,9 +326,11 @@ namespace my_gl {
 
 	     void SoftContext::fragmentShaderStage()
 	     {
-		  for(int y=0;y<_fragmentAttributeBufferPtr->height();++y)
+		  for(size_t y=0;y<_fragmentAttributeBufferPtr
+			    ->height();++y)
 		  {
-		       for(int x=0;x<_fragmentAttributeBufferPtr->width();++x)
+		       for(size_t x=0;x<_fragmentAttributeBufferPtr
+				 ->width();++x)
 		       {
 			    _fragmentShaderPtr->shade(
 				      (*_fragmentAttributeBufferPtr)(
@@ -354,7 +356,6 @@ namespace my_gl {
 	void SoftContext::clipPrimitive
 	     (const PrimitiveIndex& primitiveIndex,PrimitiveMode catalog)
 	     {
-		  PrimitiveMode mode=primitiveIndex.primitiveMode();
 		  //choose right clipper
 		  Clipper& clipper=_clippers[int(catalog)];
 		  
@@ -380,7 +381,7 @@ namespace my_gl {
 	     Vec4 inStream[4];
 
 
-	     for (int vertexCounter=0; vertexCounter<vertexNumber;
+	     for (size_t vertexCounter=0; vertexCounter<vertexNumber;
 		       ++vertexCounter)
 	     {
 		  int thisVertexIndex=

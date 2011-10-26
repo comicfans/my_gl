@@ -60,7 +60,7 @@ namespace my_gl {
      void ArrayBufferObjectManager::deleteBuffers(size_t size,Name *names)
 	  
      {
-	  for (int i= 0; i < size; i++) {
+	  for (size_t i= 0; i < size; i++) {
 	       Name thisName=*(names+i);
 	       assert(isBuffer(thisName));
 
@@ -108,7 +108,7 @@ namespace my_gl {
 	  SoftContext::getInstance().getObjectNameManager()
 	       .generateNames(size,names);
 
-	  for (int i = 0; i < size; i++) {
+	  for (size_t i = 0; i < size; i++) {
 	       Name thisName=*(names+i);
 	  	_objects.insert(make_pair(thisName,UniquePointer(
 				    new ArrayBufferObject(thisName))));

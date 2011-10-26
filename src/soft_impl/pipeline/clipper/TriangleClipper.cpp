@@ -153,7 +153,7 @@ namespace my_gl {
 		    merge(*pBuffer,clippedPrimitiveGroup,
 			      primitiveIndex[0]);
 
-		    for(int i=2;i<pBuffer->elementNumber();++i)
+		    for(size_t i=2;i<pBuffer->elementNumber();++i)
 		    {
 
 			 merge(*pBuffer,clippedPrimitiveGroup,

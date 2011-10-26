@@ -58,12 +58,12 @@ namespace my_gl {
 
 
 	  int globalIndex=0;
-	  for (int elementCounter=0; 
+	  for (size_t elementCounter=0; 
 		    elementCounter<primitiveIndex.elementNumber(); 
 		    ++elementCounter)
 	  {
 
-	       for(int vertexCounter=0;
+	       for(size_t vertexCounter=0;
 			 vertexCounter<primitiveIndex.vertexPerPrimitive();
 			 ++vertexCounter,++globalIndex)
 	       {
