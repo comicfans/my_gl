@@ -36,7 +36,10 @@ namespace my_gl {
 	  virtual void onInit(size_t width,size_t height);
 
 	  virtual void onDraw(const FrameBuffer& frameBuffer);
-     	virtual ~SDLPixelDrawer  ();
+
+	  virtual void onFlush();
+     	
+	  virtual ~SDLPixelDrawer  ();
      
      private:
 

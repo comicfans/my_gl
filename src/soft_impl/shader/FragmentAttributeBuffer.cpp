@@ -30,11 +30,16 @@ namespace my_gl {
 	     }
 
 	  AttributeGroupRef FragmentAttributeBuffer::operator()
+	       (size_t y,size_t x)
+	       {
+		    return (*this)[y][x];
+
+	       }
+	  AttributeGroupRef FragmentAttributeBuffer::operator()
 	       (const WindowCoordinates& windowCoordinate)
 	       {
 		    return (*this)
-			 [windowCoordinate.first]
-			 [windowCoordinate.second];
+			 (windowCoordinate.first,windowCoordinate.second);
 
 	       }
 	  size_t FragmentAttributeBuffer::

@@ -59,6 +59,12 @@ namespace my_gl {
 
      };
 
+     static void dropEvent()
+     {
+	  SDL_Event event;
+	  while(SDL_PollEvent(&event));
+     }
+
      /*
       * came from SDL guide
       * Set the pixel at (x, y) to the given value
@@ -102,6 +108,13 @@ namespace my_gl {
      {
 	  return 255*value;
      }
+
+     void SDLPixelDrawer::onFlush()
+     {
+	  SDL_Flip(_screenPtr);
+
+     }
+
      void SDLPixelDrawer::onDraw(const FrameBuffer& frameBuffer)
      {
 	  SurfaceLocker locker(_screenPtr);
@@ -116,10 +129,12 @@ namespace my_gl {
 
 		    Uint32 packedValue=
 			 SDL_MapRGB(_screenPtr->format,
-				   color[0],color[1],color[2]);
+				   toUint8(color[0]),toUint8(color[1]),toUint8(color[2]));
 		    putPixel(_screenPtr,x,y,packedValue);
 	       }
 	  }
+
+	  dropEvent();
 
      }
 

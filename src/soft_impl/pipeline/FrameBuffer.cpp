@@ -31,7 +31,12 @@ namespace my_gl {
 	  Vec4& FrameBuffer::operator()
 	       (const WindowCoordinates& winCoord)
 	  {
-	       return (*this)[winCoord.first][winCoord.second];
+	       return (*this)(winCoord.first,winCoord.second);
+	  }
+
+	  Vec4& FrameBuffer::operator()(size_t y,size_t x)
+	  {
+	       return (*this)[y][x];
 	  }
 
 	  const Vec4& FrameBuffer::operator()

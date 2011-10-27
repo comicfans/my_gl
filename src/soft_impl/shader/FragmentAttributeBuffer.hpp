@@ -51,6 +51,10 @@ namespace my_gl {
 	  AttributeGroupRef operator()
 	       (const WindowCoordinates& windowCoordinate);
 
+	  AttributeGroupRef operator()
+	       (size_t y,size_t x);
+
+
 	  size_t width()const;
 	       
 	  size_t height()const;

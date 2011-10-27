@@ -36,6 +36,8 @@ namespace my_gl {
 
 	       virtual void onDraw
 		    (const FrameBuffer& frameBuffer)=0;
+
+	       virtual void onFlush()=0;
      };
 	
 } /* my_gl */
