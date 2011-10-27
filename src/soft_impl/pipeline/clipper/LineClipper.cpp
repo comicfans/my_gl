@@ -29,80 +29,17 @@
 using std::max;
 using std::min;
 using std::abs;
+using std::minmax;
 
 
 namespace my_gl {
 
-     static const LineClipper::ClipPercent OUT_OF_PERCENT={1,0};
+     static const LineClipper::ClipPercent OUT_OF_PERCENT={2,-2};
+     static const LineClipper::ClipPercent ALL_IN_PERCENT={0,1};
 
      LineClipper::~LineClipper(){}
 
      
-
-	/** 
-	 * @brief clip in homogenous coordinates,work 
-	 * in all situation
-	 * 
-	 * @param point1
-	 * @param point2
-	 * 
-	 * @return 
-	 */
-     float LineClipper::clipInHomogenousCoordinates
-	  (const Vec4& point1,const Vec4& point2,
-	   ClipDim clipDim,ClipSide clipSide)
-	  {
-
-	       
-	       int dIndex=int(clipDim);
-
-	       //x for example
-	       //(x-x1)/(x2-x1)=(w-w1)/(w2-w1)
-	       //make deltaX = x2-x1
-	       //     deltaW = w2-w1
-	       // clip plane 
-	       // x+w=0 ->x=-1 (normalized) minClipPlane
-	       // x-w=0 ->x=1  (normalized) maxClipPlane
-	       //   |deltaW, -deltaX |     |x| |deltaW*x1-deltaX*w1|
-	       //   |		     |	x  | |=| 		   |
-	       //   |  1   ,  +/- 1  |     |w| |      0            |
-	       
-	       float d1=point1[dIndex],
-		     d2=point2[dIndex];
-
-	       float deltaD=d2-d1;
-
-	       float w1=point1.w();
-
-	       float deltaW= point2.w()-w1;
-
-	       float rowColumnValue=int(clipSide)*deltaW+deltaD;
-
-	       if (rowColumnValue==0)
-	       {
-		    //parall in this direction
-
-		    if (clipSide==ClipSide::MIN)
-		    {
-			 //if one in,another is in
-			 //or two points is out
-			 return abs(d1)<abs(w1)?0:2;
-		    }
-		    else
-		    {
-			 return abs(d1)<abs(w1)?1:-1;
-		    }
-
-	       }
-
-
-	       float wValue=-int(clipSide)*
-		    (deltaW*d1-deltaD*w1)/rowColumnValue;
-
-	       return (wValue-point1.w())/deltaW;
-	
-	  }
-
      bool LineClipper::onlyPoint(const ClipPercent& clipResult)
      {
 	  return clipResult.first==clipResult.second;
@@ -144,27 +81,105 @@ namespace my_gl {
      LineClipper::ClipPercent LineClipper::parallelClip
 	  (const Vec4& point1,const Vec4& point2,ClipDim clipDim)
 	  {
-		    float minClip=
-			 clipInHomogenousCoordinates
-			 (point1, point2,clipDim,ClipSide::MIN);
 
-		    if (minClip>1)
+	       bool point1In=PointClipper::inClipVolume(point1),
+		    point2In=PointClipper::inClipVolume(point2);
+
+	       if (point1In&&point2In)
+	       {
+		    return {0,1};
+	       }
+	       
+		     
+	       int dIndex=int(clipDim);
+
+	       //x for example
+	       //(x-x1)/(x2-x1)=(w-w1)/(w2-w1)
+	       //make deltaX = x2-x1
+	       //     deltaW = w2-w1
+	       // clip plane 
+	       // x+w=0 ->x=-1 (normalized) minClipPlane
+	       // x-w=0 ->x=1  (normalized) maxClipPlane
+	       //   |deltaW, -deltaX |     |x| |deltaW*x1-deltaX*w1|
+	       //   |		     |	x  | |=| 		   |
+	       //   |  1   ,  +/- 1  |     |w| |      0            |
+	       
+	       float d1=point1[dIndex],
+		     d2=point2[dIndex];
+
+	       float deltaD=d2-d1;
+
+	       float w1=point1.w();
+
+	       float deltaW= point2.w()-w1;
+
+	       float rowColumnMax=deltaW+deltaD,
+		     //cross point of min
+		     rowColumnMin=-deltaW+deltaD;
+
+	       if (rowColumnMax==0 || rowColumnMin==0)
+	       {
+		    //parallel to this plane
+		    if (abs(point1(dIndex))<=abs(point1.w()))
 		    {
-			 //discade this line
+			 //all in
+			 return ALL_IN_PERCENT; 
+		    }
+		    else
+		    {
 			 return OUT_OF_PERCENT;
 		    }
-		    
-		    float maxClip=
-			 clipInHomogenousCoordinates
-			 (point1,point2,clipDim,ClipSide::MAX);
+	       }
+	       
+	       //two cross point
+	       float wMax=-(deltaW*d1-deltaD*w1)/rowColumnMax,
+		     wMin=-(deltaW*d1-deltaD*w1)/rowColumnMin;
 
-		    if (maxClip<0)
+	       float percentMax=(wMax-point1.w())/deltaW,
+		     percentMin=(wMin-point1.w())/deltaW;
+	
+	       auto minMax=minmax(percentMin,percentMax);
+
+	       if (minMax.first>=0 && minMax.second<=1)
+	       {
+		    return {percentMin,percentMax};
+	       }
+	       else
+	       {
+		    //two cross point at same side
+		    if ((minMax.second<=0 || minMax.first>=1)
+			      //two cross point at different side
+			      ||(minMax.first <=0 && minMax.second >=1))
 		    {
-			 //discade this line
-			 return OUT_OF_PERCENT;
+			 //check one point in state,if in,all in
+			 //if out ,all out
+			 if (point1In)
+			 { return ALL_IN_PERCENT;}
+			 else
+			 { return OUT_OF_PERCENT; }
 		    }
+		    else 
+		    {
+			 //one point between [0,1],but another
+			 //point outside [0,1]
+			 if (percentMax<0)
+			 {
+			      return {0,percentMin};
+			 }
+			 else if(percentMin>1)
+			 {
+			      return {percentMax,1};
+			 }
+			 else
+			 {
+			      return {max(percentMin,0.0f),
+				   min(percentMax,1.0f)};
+			 }
+		    }
+	       }
+	       
 
-		    return {minClip,maxClip};
+    
 	  }
 
 	

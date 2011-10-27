@@ -48,8 +48,6 @@ namespace my_gl {
      
 	enum class ClipDim{X,Y,Z};
 
-	enum class ClipSide{MIN=1,MAX=-1};
-
 	static size_t insertInterpolatedAttributes
 	     (const ConstAttributeGroupRef& point1Attributes,
 	      size_t point1Index,
@@ -57,10 +55,6 @@ namespace my_gl {
 	      size_t point2Index,
 	      float percent,
 	      ClippedPrimitiveGroup& clippedPrimitiveGroup);
-
-	static float clipInHomogenousCoordinates
-	     (const Vec4& point1,const Vec4& point2,
-	      ClipDim clipDim,ClipSide clipSide);
 
 
 	static ClipPercent parallelClip
