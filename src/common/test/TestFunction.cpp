@@ -19,16 +19,29 @@
 #include "TestFunction.hpp"
 
 #include <cmath>
+#include <iostream>
+#include <cassert>
 
 #include "common/Vec4.hpp"
 
 namespace my_gl {
      
      using std::abs;
+     using std::cout;
+     using std::endl;
 	     
      bool equal(float lhs,float rhs)
      {
 	  return abs(lhs-rhs)<=abs(lhs)/10000;
+     }
+
+     void assertEqual(float lhs,float rhs)
+     {
+	  if (!equal(lhs,rhs))
+	  {
+	       cout<<"lhs is "<<lhs<<" but rhs is "<<rhs<<endl;
+	       assert(false);
+	  }
      }
 
      bool equal (const Vec4& lhs,const Vec4& rhs)

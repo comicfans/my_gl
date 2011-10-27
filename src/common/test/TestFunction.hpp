@@ -25,6 +25,8 @@ namespace my_gl {
 
      bool equal(float lhs,float rhs);
 
+     void assertEqual(float lhs,float rhs);
+
      struct Vec4;
      bool equal (const Vec4& lhs,const Vec4& rhs);
 	

@@ -15,13 +15,20 @@
  *
  * =====================================================================================
  */
+
+#include <cstdlib>
+#include <cmath>
+
 #include "LineClipper.hpp"
+#include "PointClipper.hpp"
 
 #include "common/test/TestFunction.hpp"
 
 #include "pipeline/interpolator/Interpolator.hpp"
 
 using namespace my_gl;
+using std::rand;
+using std::fmod;
 
 void static testAllIn()
 {
@@ -33,17 +40,50 @@ void static testAllIn()
 
      assert(!LineClipper::outOfClipVolume(percent));
 
-     assert(percent.first<=0);
-     assert(percent.second>=1);
+     assertEqual(percent.first,0);
+     assertEqual(percent.second,1);
 
 }
 
-void static testClip()
+void static testClipLogic()
+{
+     Vec4 p1,p2;
+     p1[3]=rand();
+     p2[3]=rand();
+     for(int i=0;i<3;++i)
+     {
+	  p1[i]=fmod(rand(),p1.w());
+	  p2[i]=rand();
+     }
+
+     LineClipper::ClipPercent finalResult={0,1};
+     for (int i=0; i<3; ++i)
+     {
+	  auto clipPercent=LineClipper::parallelClip(p1,p2,
+		    LineClipper::ClipDim(i));
+	  assert(clipPercent.first>=0);
+	  assert(clipPercent.second<=1);
+	  assert(clipPercent.first<=clipPercent.second);
+
+	  assertEqual(clipPercent.first,0);
+
+	  finalResult=LineClipper::mergePercent(finalResult,clipPercent);
+     }
+
+     if (!PointClipper::inClipVolume(p2))
+     {
+	  assert(finalResult.second<1);
+     }
+
+}
+
+void static testClipValue()
 {
      Vec4 p1(0,0,0.5,1.5),
 	  p2(1,0,-4,0);
 
-     auto clipPercent=LineClipper::parallelClip(p1,p2,LineClipper::ClipDim::Z);
+     auto clipPercent=LineClipper::parallelClip
+	  (p1,p2,LineClipper::ClipDim::Z);
 
 
      Vec4 result;
@@ -58,7 +98,13 @@ void static testClip()
 
 int main(int argc, const char *argv[])
 {
-     testClip();
+     testClipValue();
 	
      testAllIn();
+
+     for (int i=0; i<1000; ++i)
+     {
+	  testClipLogic();
+     }
+     
 }

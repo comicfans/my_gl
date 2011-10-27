@@ -113,9 +113,9 @@ namespace my_gl {
 
 	       float deltaW= point2.w()-w1;
 
-	       float rowColumnMax=deltaW+deltaD,
+	       float rowColumnMax=-deltaW+deltaD,
 		     //cross point of min
-		     rowColumnMin=-deltaW+deltaD;
+		     rowColumnMin=deltaW+deltaD;
 
 	       if (rowColumnMax==0 || rowColumnMin==0)
 	       {
@@ -162,18 +162,15 @@ namespace my_gl {
 		    {
 			 //one point between [0,1],but another
 			 //point outside [0,1]
-			 if (percentMax<0)
+			 float between=minMax.first>=0?
+			      minMax.first:minMax.second;
+			 if (point1In)
 			 {
-			      return {0,percentMin};
-			 }
-			 else if(percentMin>1)
-			 {
-			      return {percentMax,1};
+			      return {0,between};
 			 }
 			 else
 			 {
-			      return {max(percentMin,0.0f),
-				   min(percentMax,1.0f)};
+			      return {between,1};
 			 }
 		    }
 	       }
