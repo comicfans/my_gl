@@ -19,26 +19,39 @@
 #include "TestFunction.hpp"
 
 #include <cmath>
+#include <cstdlib>
 #include <iostream>
 #include <cassert>
 
 #include "common/Vec4.hpp"
+#include "common/Matrix.hpp"
 
 namespace my_gl {
      
      using std::abs;
+     using std::rand;
      using std::cout;
      using std::endl;
      using std::max;
 	     
-     bool equal(float lhs,float rhs)
+     bool equal(float lhs,float rhs,unsigned errorFactor)
      {
-	  return abs(lhs-rhs)<=max(abs(lhs),abs(rhs))/10000;
+
+	  float delta=abs(lhs-rhs);
+	 
+	  if (lhs==0 || rhs==0)
+	  {
+	       return delta<1.0/errorFactor;
+	  }
+
+	  float threshold=max(abs(lhs),abs(rhs))/errorFactor;
+
+	   return delta<=threshold;
      }
 
-     void assertEqual(float lhs,float rhs)
+     void assertEqual(float lhs,float rhs,unsigned errorFactor)
      {
-	  if (!equal(lhs,rhs))
+	  if (!equal(lhs,rhs,errorFactor))
 	  {
 	       cout<<"lhs is "<<lhs<<" but rhs is "<<rhs<<endl;
 	       assert(false);
@@ -59,4 +72,25 @@ namespace my_gl {
 	  return true;
      }
 	
+     bool assertEqual(const Matrix& lhs,const Matrix& rhs,unsigned errorFactor)
+     {
+	  auto values1=lhs.values(),
+	       values2=rhs.values();
+	  for(int i=0;i<Matrix::ELEMENTS_NUMBER;++i)
+	  {
+	       assertEqual(values1[i],values2[i],errorFactor);
+	  }
+
+	  return true;
+     }
+
+     int myRand()
+{
+     int ret=rand();
+
+     ret-=RAND_MAX/2;
+
+     return ret;
+}
+
 } /* my_gl */

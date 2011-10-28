@@ -36,10 +36,8 @@ namespace my_gl {
      {
 	  if (fillZero)
 	  {
-	  fill_n(_rowFirstArray,ELEMENTS_NUMBER,0);
+	       fill_n(_rowFirstArray,ELEMENTS_NUMBER,0);
 	  }
-	  //init w to 1
-	  _rowFirstArray[ELEMENTS_NUMBER-1]=1;
      }
 
      Matrix::Matrix(const float* values,bool rowFirst)
@@ -61,26 +59,27 @@ namespace my_gl {
 	  }
      }
 
-     static float rowColumnExprValue(const float* rowFirstArray,
-	       const int sideLength)
+
+     static float rowColumnExprValue3(const float* rowFirstArray)
      {
 	  float result=0;
 
-	  for (int rowCounter=0; 
-		    rowCounter<sideLength*2;
-		    ++rowCounter)
+	  for (int columnCounter=0; 
+		    columnCounter<6;
+		    ++columnCounter)
 	  {
-	       int sign=(rowCounter<sideLength?1:-1);
+	       int sign=(columnCounter<3?1:-1);
 
 	       float product=1;
 
-	       for (int columnCounter=0; 
-			 columnCounter<sideLength; 
-			 ++columnCounter)
+	       for (int rowCounter=0; 
+			 rowCounter<3; 
+			 ++rowCounter)
 	       {
+		    int columnIndex=(columnCounter%3+rowCounter*sign+3)%3;
+
 		    product*=rowFirstArray
-			 [(rowCounter+sign*columnCounter)
-			 %sideLength*sideLength+columnCounter];
+			 [rowCounter*3+columnIndex];
 	       }
 	       result+=sign*product;
 	  }
@@ -88,12 +87,8 @@ namespace my_gl {
 	  return result;
      }
 
-     static float inverseMod(const Matrix& matrix,
-	       const int row,const int column)
+     static void exclude(const Matrix& matrix,int row,int column,float* result)
      {
-
-	  //remove row/column element to make a 3x3 matrix
-	  float tmp[3][3];
 	  for (int rowFrom=0,rowTo=0; 
 		    rowFrom<Matrix::LENGTH; ++rowFrom)
 	  {
@@ -109,16 +104,49 @@ namespace my_gl {
 		    {
 			 continue;
 		    }
-		    tmp[rowTo][columnTo]=
+		    result[rowTo*3+columnTo]=
 			 matrix(rowFrom,columnFrom);
 		    ++columnTo;
 	       }
 	       ++rowTo;
 	  }
 
-	  // get the value of this row/column expression
 
-	  float result=rowColumnExprValue(&tmp[0][0],3);
+     }
+
+
+     static float rowColumnExprValue4(const Matrix& matrix)
+     {
+	  float result=0;
+
+	  for (int i=0; i<4; ++i)
+	  {
+	       int sign=(i%2==0?1:-1);
+
+	       float product=matrix(0,i);
+
+	       float tmp[9];
+
+	       exclude(matrix.values(),0,i,tmp);
+
+	       product*=rowColumnExprValue3(tmp);
+
+	       result+=sign*product;
+	  }
+
+	  return result;
+	  }
+
+         static float inverseMod(const Matrix& matrix,
+	       const int row,const int column)
+     {
+
+	  //remove row/column element to make a 3x3 matrix
+	  float tmp[9];
+
+	  exclude(matrix,row,column,tmp);
+
+	  float result=rowColumnExprValue3(tmp);
 
 	  if ((row+column)%2)
 	  {
@@ -132,15 +160,16 @@ namespace my_gl {
      {
 	  Matrix ret;
 
-	  float exprValue=rowColumnExprValue
-	       (_rowFirstArray,LENGTH);
+	  float detValue=rowColumnExprValue4
+	       (*this);
 
 	  for (int row=0; row<LENGTH; ++row)
 	  {
 	       for (int column=0; column<LENGTH; ++column)
 	       {
-		    ret(row,column)=
-			 inverseMod(*this,row,column)/exprValue;
+		    // det(Aij).transpose()/det(A)
+		    ret(column,row)=
+			 inverseMod(*this,row,column)/detValue;
 	       }
 	  }
 
@@ -193,7 +222,7 @@ namespace my_gl {
      Matrix Matrix::identity()
      {
 	  Matrix ret;
-	  for (int i=0; i<LENGTH-1; ++i)
+	  for (int i=0; i<LENGTH; ++i)
 	  {
 	       ret(i,i)=1;
 	  }
@@ -315,6 +344,10 @@ namespace my_gl {
 	  multiVec4To(lhs,vector,result);
      }
 
-
-
+     Matrix operator*(const Matrix& lhs,const Matrix& rhs)
+     {
+	  Matrix ret(lhs);
+	  ret*=rhs;
+	  return ret;
+     }
 } /* my_gl */

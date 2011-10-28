@@ -31,7 +31,7 @@ namespace my_gl {
 	     {
 		  //clipped coordinates may be out of clip volume a little
 		  //so makes FragmentAttributeBuffer a little outter
-		  reindex(SIDE_OFFSET);
+		  reindex(-SIDE_OFFSET);
 	     }
 
 	  AttributeGroupRef FragmentAttributeBuffer::operator()

@@ -16,7 +16,6 @@
  * =====================================================================================
  */
 
-#include <cstdlib>
 #include <cmath>
 
 #include "LineClipper.hpp"
@@ -27,7 +26,6 @@
 #include "pipeline/interpolator/Interpolator.hpp"
 
 using namespace my_gl;
-using std::rand;
 using std::abs;
 using std::fmod;
 
@@ -44,15 +42,6 @@ void static testAllIn()
      assertEqual(percent.first,0);
      assertEqual(percent.second,1);
 
-}
-
-static int myRand()
-{
-     int ret=rand();
-
-     ret-=RAND_MAX/2;
-
-     return ret;
 }
 
 void static testClipLogic()
