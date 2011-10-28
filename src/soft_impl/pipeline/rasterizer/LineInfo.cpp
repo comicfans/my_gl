@@ -33,20 +33,20 @@ namespace my_gl {
      LineInfo::LineInfo(const WindowCoordinates& coord1,
 		    const WindowCoordinates& coord2)
 	  :
-	  deltaX(coord2.first-coord1.first),
-	  deltaY(coord2.second-coord1.second),
-	  majorDim(deltaX>deltaY?
+	  deltaY(coord2.first-coord1.first),
+	  deltaX(coord2.second-coord1.second),
+	  majorDim(abs(deltaX)>abs(deltaY)?
 		    DimAxis::X:
 		    DimAxis::Y),
 	  nonMajorDim(DimAxis(1-int(majorDim)))
 	  {}
 
-     LineInfo::LineInfo(int deltaXSet,int deltaYSet,DimAxis majorDimSet)
-	  :deltaX(deltaXSet),deltaY(deltaYSet),
+     LineInfo::LineInfo(int deltaYSet,int deltaXSet,DimAxis majorDimSet)
+	  :deltaY(deltaYSet),deltaX(deltaXSet),
 	  majorDim(majorDimSet),
 	  nonMajorDim(DimAxis(1-int(majorDim)))
      {
-	  assert(deltaX>deltaY?
+	  assert(abs(deltaX)>abs(deltaY)?
 		    (majorDim==DimAxis::X):
 		    (majorDim==DimAxis::Y));
      }

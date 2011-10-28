@@ -31,10 +31,10 @@ namespace my_gl {
 	  LineInfo(const WindowCoordinates& coord1,
 		    const WindowCoordinates& coord2);
 
-	  LineInfo(int deltaXSet,int deltaYSet,DimAxis majorDimSet);
+	  LineInfo(int deltaYSet,int deltaXSet,DimAxis majorDimSet);
 
-	  const int deltaX;
 	  const int deltaY;
+	  const int deltaX;
 
 	  const DimAxis majorDim;
 	  const DimAxis nonMajorDim;

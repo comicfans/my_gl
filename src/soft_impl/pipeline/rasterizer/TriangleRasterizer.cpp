@@ -144,7 +144,7 @@ namespace my_gl {
 		    _pLineRasterizer->rasterizeSpecial
 			 (leftRightAttributes,*leftIt,*rightIt,
 			  //delta y=0,MajorDim=x
-			  LineInfo(rightIt->second-leftIt->second,0,LineInfo::DimAxis::X));	    
+			  LineInfo(0,rightIt->second-leftIt->second,LineInfo::DimAxis::X));	    
 
 	       }
 
