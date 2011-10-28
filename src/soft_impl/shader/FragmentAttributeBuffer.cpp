@@ -21,12 +21,17 @@
 
 namespace my_gl {
      using boost::extents;
+
+     const int SIDE_OFFSET=4;
 	
      FragmentAttributeBuffer::FragmentAttributeBuffer 
 	     (size_t width,size_t height,size_t attributeNumber)
-	     :SuperType(extents[height][width][attributeNumber])
+	     :SuperType(extents[height+SIDE_OFFSET*2]
+		       [width][attributeNumber+SIDE_OFFSET*2])
 	     {
-
+		  //clipped coordinates may be out of clip volume a little
+		  //so makes FragmentAttributeBuffer a little outter
+		  reindex(SIDE_OFFSET);
 	     }
 
 	  AttributeGroupRef FragmentAttributeBuffer::operator()

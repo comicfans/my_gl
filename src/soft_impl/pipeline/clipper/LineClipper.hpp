@@ -37,7 +37,7 @@ namespace my_gl {
 
      	virtual ~LineClipper ();
 
-	typedef pair<float,float> ClipPercent;
+	typedef pair<double,double> ClipPercent;
 
 	static bool outOfClipVolume(const ClipPercent& clipResult);
 

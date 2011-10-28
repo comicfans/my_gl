@@ -25,7 +25,7 @@ namespace my_gl {
      	virtual ~WindowCoordinatesInterpolator ();
      
      protected:
-	  virtual float getPercent(
+	  virtual double getPercent(
 		    const CoordInfo& coord1,const CoordInfo& coord2,
 		    const LineInfo& lineInfo,
 		    const WindowCoordinates& toInterpolate)const;

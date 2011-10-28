@@ -28,6 +28,7 @@
 
 using namespace my_gl;
 using std::rand;
+using std::abs;
 using std::fmod;
 
 void static testAllIn()
@@ -45,15 +46,25 @@ void static testAllIn()
 
 }
 
+static int myRand()
+{
+     int ret=rand();
+
+     ret-=RAND_MAX/2;
+
+     return ret;
+}
+
 void static testClipLogic()
 {
      Vec4 p1,p2;
-     p1[3]=rand();
-     p2[3]=rand();
+     p1[3]=myRand();
+     p2[3]=myRand();
      for(int i=0;i<3;++i)
      {
-	  p1[i]=fmod(rand(),p1.w());
-	  p2[i]=rand();
+	  int sign=(abs(myRand())%2==0?1:-1);
+	  p1[i]=fmod(myRand(),abs(p1.w()))*sign;
+	  p2[i]=myRand();
      }
 
      LineClipper::ClipPercent finalResult={0,1};
@@ -70,9 +81,27 @@ void static testClipLogic()
 	  finalResult=LineClipper::mergePercent(finalResult,clipPercent);
      }
 
+
      if (!PointClipper::inClipVolume(p2))
      {
 	  assert(finalResult.second<1);
+     
+	  Vec4 clipPoint;
+
+	  Interpolator::calculate(p1,p2,finalResult.second,clipPoint);
+
+	  bool atLeastEqual=false;
+
+	  for(int i=0;i<3;++i)
+	  {
+	       atLeastEqual=equal(abs(clipPoint[i]),abs(clipPoint.w()));
+	       if (atLeastEqual)
+	       {
+		    return;
+	       }
+	  }
+
+	  assert(false);
      }
 
 }

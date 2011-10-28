@@ -29,10 +29,11 @@ namespace my_gl {
      using std::abs;
      using std::cout;
      using std::endl;
+     using std::max;
 	     
      bool equal(float lhs,float rhs)
      {
-	  return abs(lhs-rhs)<=abs(lhs)/10000;
+	  return abs(lhs-rhs)<=max(abs(lhs),abs(rhs))/10000;
      }
 
      void assertEqual(float lhs,float rhs)

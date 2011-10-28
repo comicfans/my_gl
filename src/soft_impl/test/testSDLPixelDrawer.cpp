@@ -46,7 +46,7 @@ int main(int argc, const char *argv[])
 
      ref.onInit(400,300);
 
-     for (int i=0; i<1000; ++i)
+     for (int i=0; i<10; ++i)
      {
 	  ref.onDraw(frameBuffer);
 	  ref.onFlush();

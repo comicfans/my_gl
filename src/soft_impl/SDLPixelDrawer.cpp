@@ -24,7 +24,10 @@
 #include "pipeline/rasterizer/WindowCoordinates.hpp"
 namespace my_gl {
 
-     SDLPixelDrawer::~SDLPixelDrawer(){}
+     SDLPixelDrawer::~SDLPixelDrawer()
+     {
+	  SDL_Quit();
+     }
 
      void SDLPixelDrawer::onInit(size_t width,size_t height)
      {

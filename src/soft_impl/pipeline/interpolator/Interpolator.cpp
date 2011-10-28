@@ -26,7 +26,7 @@ namespace my_gl {
      Interpolator::~Interpolator(){}
 	  
      void Interpolator::calculate(const Vec4& source,
-	       const Vec4& destination,float persent,Vec4& result)
+	       const Vec4& destination,double persent,Vec4& result)
      {
 	  result=source+(destination-source)*persent;
      }
@@ -34,7 +34,7 @@ namespace my_gl {
      void Interpolator::interpolateAttributeGroup(
 	       const ConstAttributeGroupRef& attributeGroupSource, 
 	       const ConstAttributeGroupRef& attributeGroupDestination,
-	       float percent,AttributeGroupRef& attributeGroupResult,
+	       double percent,AttributeGroupRef& attributeGroupResult,
 	       size_t offset)
      {
 	  for (size_t i=offset; i<attributeGroupSource.size(); ++i)

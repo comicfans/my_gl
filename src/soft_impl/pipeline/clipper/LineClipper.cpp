@@ -78,12 +78,17 @@ namespace my_gl {
 		  }
 	     }
 
+     inline static bool oneDimIn(const Vec4& point,LineClipper::ClipDim clipDim)
+     {
+	  return abs(point[int(clipDim)])<=abs(point.w());
+     }
+
      LineClipper::ClipPercent LineClipper::parallelClip
 	  (const Vec4& point1,const Vec4& point2,ClipDim clipDim)
 	  {
 
-	       bool point1In=PointClipper::inClipVolume(point1),
-		    point2In=PointClipper::inClipVolume(point2);
+	       bool point1In=oneDimIn(point1,clipDim),
+		    point2In=oneDimIn(point2,clipDim);
 
 	       if (point1In&&point2In)
 	       {
@@ -103,17 +108,21 @@ namespace my_gl {
 	       //   |deltaW, -deltaX |     |x| |deltaW*x1-deltaX*w1|
 	       //   |		     |	x  | |=| 		   |
 	       //   |  1   ,  +/- 1  |     |w| |      0            |
+	       //              ~~~^~~~ factor
+	       //
+	       //  since float number error makes final abs(x) >=  abs(w) 
+	       //  clipResult may makes x and w out of clip volume a little
 	       
-	       float d1=point1[dIndex],
-		     d2=point2[dIndex];
+	       double d1=point1[dIndex],
+		      d2=point2[dIndex];
 
-	       float deltaD=d2-d1;
+	       double deltaD=d2-d1;
 
-	       float w1=point1.w();
+	       double w1=point1.w();
 
-	       float deltaW= point2.w()-w1;
+	       double deltaW= point2.w()-w1;
 
-	       float rowColumnMax=-deltaW+deltaD,
+	       double rowColumnMax=-deltaW+deltaD,
 		     //cross point of min
 		     rowColumnMin=deltaW+deltaD;
 
@@ -132,17 +141,17 @@ namespace my_gl {
 	       }
 	       
 	       //two cross point
-	       float wMax=-(deltaW*d1-deltaD*w1)/rowColumnMax,
+	       double wMax=-(deltaW*d1-deltaD*w1)/rowColumnMax,
 		     wMin=-(deltaW*d1-deltaD*w1)/rowColumnMin;
 
-	       float percentMax=(wMax-point1.w())/deltaW,
+	       double percentMax=(wMax-point1.w())/deltaW,
 		     percentMin=(wMin-point1.w())/deltaW;
 	
 	       auto minMax=minmax(percentMin,percentMax);
 
 	       if (minMax.first>=0 && minMax.second<=1)
 	       {
-		    return {percentMin,percentMax};
+		    return minMax;
 	       }
 	       else
 	       {

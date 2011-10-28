@@ -35,13 +35,13 @@ namespace my_gl {
 
 	  static void calculate(const Vec4& source,
 		    const Vec4& destination,
-		    float persent,Vec4& result);
+		    double persent,Vec4& result);
 
 
 	  static void interpolateAttributeGroup(
 	       const ConstAttributeGroupRef& attributeGroupSource, 
 	       const ConstAttributeGroupRef& attributeGroupDestination,
-	       float percent,AttributeGroupRef& attributeGroupResult,
+	       double percent,AttributeGroupRef& attributeGroupResult,
 	       size_t offset=0);
 
 
@@ -55,7 +55,7 @@ namespace my_gl {
 
 	  enum class MajorDim{X,Y};
 
-	  virtual float getPercent(
+	  virtual double getPercent(
 		    const CoordInfo& coord1,const CoordInfo& coord2,
 		    const LineInfo& lineInfo,
 		    const WindowCoordinates& toInterpolate)const=0;
