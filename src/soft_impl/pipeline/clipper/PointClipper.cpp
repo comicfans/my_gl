@@ -19,6 +19,7 @@
 #include "PointClipper.hpp"
 
 #include <algorithm>
+#include <cmath>
 #include <functional>
 
 #include "common/Vec4.hpp"
@@ -29,11 +30,15 @@
 
 using std::all_of;
 using std::bind;
-using std::less_equal;
+using std::abs;
 using std::placeholders::_1;
 
 namespace my_gl {
 
+     inline static bool absLessEqual(float value,float threshold)
+     {
+	  return abs(value)<=abs(threshold);
+     }
 
      bool PointClipper::inClipVolume
 	  (const my_gl::Vec4 &projectedCoordinate)
@@ -44,8 +49,7 @@ namespace my_gl {
 	       auto* values=projectedCoordinate.values();
 
 	       return all_of(values,values+3,bind
-			 (less_equal<float>(),_1,w));
-
+			 (absLessEqual,_1,w));
 	  }
 
      PointClipper::~PointClipper(){}
