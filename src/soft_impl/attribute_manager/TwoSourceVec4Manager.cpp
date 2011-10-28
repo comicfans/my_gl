@@ -25,7 +25,10 @@
 namespace my_gl {
 
      TwoSourceVec4Manager::TwoSourceVec4Manager(BindState bindState)
-	  :Vec4Manager(bindState){}
+	  :Vec4Manager(bindState)
+     {
+	  clientStateChangeCallback(false);
+     }
 
      void TwoSourceVec4Manager::clientStateChangeCallback(bool vertexArrayEnabled)
      {

@@ -1,1 +1,1 @@
-SUBDIRS(soft_impl common test)
+SUBDIRS(soft_impl common )
