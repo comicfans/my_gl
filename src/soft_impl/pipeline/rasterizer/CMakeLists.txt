@@ -7,3 +7,5 @@ ADD_LIBRARY(Rasterizer Rasterizer.cpp
      SimpleLineRasterizer.cpp 
      WindowCoordinates.cpp
      LineInfo.cpp)
+
+SUBDIRS(test)

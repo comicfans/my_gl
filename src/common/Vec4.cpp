@@ -141,7 +141,7 @@ namespace my_gl {
 	  assert(scalar!=0);
 	  Vec4 ret=lhs;
 	  ret/=scalar;
-	  return lhs;
+	  return ret;
      }
 
 

@@ -83,7 +83,7 @@ int main(int argc, const char *argv[])
      {
 	  testTranspose();
 	  testIdentityMul();
-	  testInverse(100);
+	  testInverse();
      }
 
 }

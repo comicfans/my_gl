@@ -109,14 +109,15 @@ namespace my_gl {
 	       WindowCoordinates ret;
 
 	       ret.first=viewportCorrectImpl(
-			 normalizedDeviceCoordinates.x(),
-			 _viewportParameter.x,
-			 _viewportParameter.width);
-
-	       ret.second=viewportCorrectImpl(
 			 normalizedDeviceCoordinates.y(),
 			 _viewportParameter.y,
 			 _viewportParameter.height);
+
+
+	       ret.second=viewportCorrectImpl(
+			 normalizedDeviceCoordinates.x(),
+			 _viewportParameter.x,
+			 _viewportParameter.width);
 
 	       return ret;
 	  }
