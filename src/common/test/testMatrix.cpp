@@ -62,7 +62,7 @@ void testIdentityMul()
      assertEqual(shouldSame1,matrix);
 }
 
-void testInverse(int gen=1)
+void testInverse()
 {
 
      Matrix matrix=randMatrix();
