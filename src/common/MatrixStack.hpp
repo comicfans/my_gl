@@ -31,6 +31,8 @@ namespace my_gl {
      class MatrixStack:protected stack<Matrix> {
      public:
 
+	  MatrixStack();
+
 	  void multiTop(const Matrix& rhs);
 
 	  void push();

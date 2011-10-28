@@ -137,7 +137,7 @@ namespace my_gl {
 	//glMultMatrixf
 	virtual void multMatrixf(const float* matrix);
 
-	//glDrawArrays TODO
+	//glDrawArrays 
 	virtual void drawArrays(PrimitiveMode primitiveMode,
 		  int first,size_t count);
 
@@ -157,6 +157,9 @@ namespace my_gl {
 	//glViewport
 	virtual void viewport(int x,int y,
 		  size_t width,size_t height);
+
+	//glLoadIdentity
+	virtual void loadIdentity();
 
 	ObjectNameManager& getObjectNameManager();
 

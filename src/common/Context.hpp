@@ -96,6 +96,30 @@ namespace my_gl {
 		  float bottom,float top,
 		  float near,float far)=0;
 
+	//glViewport
+	virtual void viewport(int x,int y,
+		  size_t width,size_t height)=0;
+
+	//glEnableClient
+	virtual void enableClientState(BindState bindState)=0;
+
+	//glDisableClient
+	virtual void disableClientState(BindState bindState)=0;
+
+	//glDrawArrays 
+	virtual void drawArrays(PrimitiveMode primitiveMode,
+		  int first,size_t count)=0;
+
+	//glDrawElements 
+	virtual void drawElements(PrimitiveMode primitiveMode,
+		  size_t count,DataType dataType,const void* indices)=0;
+
+	//glFlush
+	virtual void flush()=0;
+
+	//glLoadIdentity
+	virtual void loadIdentity()=0;
+
 	virtual ~Context();
      };
 	

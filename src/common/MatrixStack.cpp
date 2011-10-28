@@ -23,6 +23,11 @@ template class std::stack<my_gl::Matrix>;
 
 namespace my_gl {
 
+     MatrixStack::MatrixStack()
+     {
+	  stack<Matrix>::push(Matrix::identity());
+     }
+
      void MatrixStack::push()
      {
 	  stack<Matrix>::push(top());

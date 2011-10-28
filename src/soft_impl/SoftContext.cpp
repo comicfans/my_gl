@@ -68,6 +68,7 @@ namespace my_gl {
 
 
 	  _pixelDrawerPtr.reset(new SDLPixelDrawer());
+	  _pixelDrawerPtr->onInit(width,height);
 	  //init clippers;
 
 	  _clippers.replace(int(PrimitiveMode::POINTS),
@@ -119,7 +120,7 @@ namespace my_gl {
 
      void SoftContext::flush()
      {
-	  _pixelDrawerPtr->onDraw(*_frameBufferPtr);
+	  _pixelDrawerPtr->onFlush();
      }
 
      void SoftContext::genBuffers(size_t size,  Name *names)
@@ -322,6 +323,7 @@ namespace my_gl {
 
 	     fragmentShaderStage();
 
+	     _pixelDrawerPtr->onDraw(*_frameBufferPtr);
 	}
 
 	     void SoftContext::fragmentShaderStage()
@@ -494,6 +496,10 @@ namespace my_gl {
 		  {x,y,width,height};
 	}
 
+	void SoftContext::loadIdentity()
+	{
+	     currentMatrixStack().top()=Matrix::identity();
+	}
 
 
      template<typename T>
