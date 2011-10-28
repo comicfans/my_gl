@@ -28,6 +28,7 @@ namespace my_gl {
 	  virtual void shade
 	       (ConstAttributeGroupRef attributeGroupRef,
 		 Vec4& fragColor);
+	  ~SimpleFragmentShader();
      };
 	
 } /* my_gl */

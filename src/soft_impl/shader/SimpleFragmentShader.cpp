@@ -30,4 +30,5 @@ namespace my_gl {
 			 [VertexAttributeBuffer::OutIndex::FRONT_COLOR];
 	       }
  
+     SimpleFragmentShader::~SimpleFragmentShader(){}
 } /* my_gl */

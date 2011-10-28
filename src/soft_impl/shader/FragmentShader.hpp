@@ -30,6 +30,8 @@ namespace my_gl {
 	  virtual void shade
 	       (ConstAttributeGroupRef attributeGroupRef,
 		 Vec4& fragColor)=0;
+
+	  virtual ~FragmentShader();
      
      };
 	

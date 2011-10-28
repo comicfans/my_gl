@@ -125,5 +125,6 @@ int main(int argc, char **)
 
      test.test();
 
+     return 0;
 }
 }
