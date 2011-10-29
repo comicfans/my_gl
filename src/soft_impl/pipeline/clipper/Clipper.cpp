@@ -41,10 +41,7 @@ namespace my_gl {
 
 	       size_t vertexPerPrimitive=originalPrimitiveIndex.vertexPerPrimitive();
 
-	       ptr_vector<ConstAttributeGroupRef> 
-		    _attributeGroups(vertexPerPrimitive);
-
-	       size_t _vertexIndex[
+	       	       size_t _vertexIndex[
 	       VertexAttributeBuffer::MAX_VERTEX_PER_ELEMENT];
  
 		    
@@ -52,6 +49,10 @@ namespace my_gl {
 			 elementCounter<vertexPerPrimitive;
 			 ++elementCounter)
 	       {
+
+		    ConstAttributeGroupRefList 
+			 _attributeGroups(vertexPerPrimitive);
+
 
 		    for(size_t perElementIndex=0;
 			      perElementIndex<originalPrimitiveIndex.vertexPerPrimitive() ;
@@ -61,7 +62,7 @@ namespace my_gl {
 
 			 _vertexIndex[perElementIndex]=globalIndex;
 
-			 _attributeGroups.replace(perElementIndex,
+			 _attributeGroups.push_back(
 					new ConstAttributeGroupRef(
 					     projectedDataBuffer[globalIndex]));
 		    }

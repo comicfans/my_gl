@@ -230,16 +230,16 @@ namespace my_gl {
 	       size_t point2Index=vertexIndex[1];
 
 	       insertInterpolatedAttributes(
-			 originalAttributeGroups[point1Index],
+			 originalAttributeGroups[0],
 			 point1Index,
-			 originalAttributeGroups[point2Index],
+			 originalAttributeGroups[1],
 			 point2Index,
 			 result.first,clippedPrimitiveGroup);
 
 	       insertInterpolatedAttributes(
-			 originalAttributeGroups[point1Index],
+			 originalAttributeGroups[0],
 			 point1Index,
-			 originalAttributeGroups[point2Index],
+			 originalAttributeGroups[1],
 			 point2Index,
 			 result.second,clippedPrimitiveGroup);
 	  }
