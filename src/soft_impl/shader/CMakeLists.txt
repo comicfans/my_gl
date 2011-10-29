@@ -7,3 +7,5 @@ ADD_LIBRARY(Shader
      SimpleFragmentShader.cpp
      VertexAttributeBuffer.cpp
      FragmentAttributeBuffer.cpp)
+
+SUBDIRS(test)

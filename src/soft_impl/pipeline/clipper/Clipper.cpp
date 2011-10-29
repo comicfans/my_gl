@@ -19,6 +19,9 @@
 #include "Clipper.hpp"
 
 #include <cassert>
+#include <cstddef>
+
+#include <boost/ptr_container/ptr_array.hpp>
 
 #include "pipeline/PrimitiveIndex.hpp"
 
@@ -27,6 +30,8 @@
 #include "shader/VertexShader.hpp"
 
 namespace my_gl {
+
+     using boost::ptr_array;
 
      Clipper::~Clipper(){}
 
@@ -37,6 +42,13 @@ namespace my_gl {
 	  {
 	       int globalCounter=0;
 
+	       ptr_array<ConstAttributeGroupRef,
+	       VertexAttributeBuffer::MAX_VERTEX_PER_ELEMENT> 
+		    _attributeGroups;
+
+	       size_t _vertexIndex[
+	       VertexAttributeBuffer::MAX_VERTEX_PER_ELEMENT];
+ 
 
 	       for(size_t elementCounter=0;
 			 elementCounter<originalPrimitiveIndex.elementNumber();
@@ -47,6 +59,8 @@ namespace my_gl {
 			      perElementIndex<originalPrimitiveIndex.vertexPerPrimitive() ;
 			      ++perElementIndex,++globalCounter)
 		    {
+
+			 _vertexIndex[perElementIndex]=globalCounter;
 
 			      _attributeGroups.replace(perElementIndex,
 					new ConstAttributeGroupRef(

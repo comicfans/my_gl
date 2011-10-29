@@ -20,18 +20,13 @@
 
 #define CLIPPER_HPP
 
-#include <cstddef>
 
-#include <boost/ptr_container/ptr_array.hpp>
 
 #include "shader/VertexAttributeBuffer.hpp"
-
-#include "Enum.hpp"
 
 namespace my_gl {
 
 
-     using boost::ptr_array;
      
 
      class ClippedPrimitiveGroup;
@@ -55,15 +50,8 @@ namespace my_gl {
 		const size_t *vertexIndex,
 	       ClippedPrimitiveGroup& clippedPrimitiveGroup)=0;
 
-     private:
 
-	  ptr_array<ConstAttributeGroupRef,
-	       VertexAttributeBuffer::MAX_VERTEX_PER_ELEMENT> 
-		    _attributeGroups;
-
-	  size_t _vertexIndex[
-	       VertexAttributeBuffer::MAX_VERTEX_PER_ELEMENT];
-     
+    
      };
 	
 } /* my_gl */
