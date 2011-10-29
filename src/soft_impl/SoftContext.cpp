@@ -33,6 +33,8 @@
 #include "pipeline/index_provider/ArrayIndexProvider.hpp"
 
 #include "shader/VertexShader.hpp"
+#include "shader/NoLightVertexShader.hpp"
+#include "shader/SimpleFragmentShader.hpp"
 #include "shader/FragmentShader.hpp"
 #include "pipeline/PrimitiveIndex.hpp"
 #include "pipeline/FrameBuffer.hpp"
@@ -66,9 +68,23 @@ namespace my_gl {
 	  _allVec4Manager.replace(int(BindState::VERTEX),new VertexManager());
 	  _allVec4Manager.replace(int(BindState::TEXCOORD),new TexCoordManager());
 
+	  //init active streams
+	  //if light is not turned on,texture and normal will not transfered
+
+	  _activeStreams.push_back(BindState::VERTEX);
+	  _activeStreams.push_back(BindState::COLOR);
 
 	  _pixelDrawerPtr.reset(new SDLPixelDrawer());
 	  _pixelDrawerPtr->onInit(width,height);
+
+	  //init vertex shader
+	  //default light is disabled,use NoLightVertexShader
+
+	  //TODO group state related change to one 
+	  _vertexShaderPtr.reset(new NoLightVertexShader());
+	  _fragmentShaderPtr.reset(new SimpleFragmentShader());
+	  
+
 	  //init clippers;
 
 	  _clippers.replace(int(PrimitiveMode::POINTS),
@@ -386,10 +402,13 @@ namespace my_gl {
 		  int thisVertexIndex=
 		       indexProvider.getIndex(vertexCounter);
 
-		  for (int j=0; j<4; ++j)
+		  for (auto activeStream:_activeStreams)
 		  {
-		       auto& provider=_allVec4Manager[j];
-		       inStream[j]=provider.getValue(thisVertexIndex);
+		       //only transfer active streams
+		       int streamIdx=int(activeStream);
+		       auto& provider=_allVec4Manager[streamIdx];
+		       inStream[streamIdx]=
+			    provider.getValue(thisVertexIndex);
 		  }
 
 		  _vertexShaderPtr->shade(_global,inStream,

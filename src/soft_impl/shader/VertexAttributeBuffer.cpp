@@ -22,6 +22,11 @@ namespace my_gl {
 
      using boost::extents;
 
+     VertexAttributeBuffer::VertexAttributeBuffer()
+	  :SuperType(extents[0][DEFAULT_OUT_SIZE])
+     {
+
+     }
      size_t VertexAttributeBuffer::elementNumber()const
      {
 	  return shape()[0];

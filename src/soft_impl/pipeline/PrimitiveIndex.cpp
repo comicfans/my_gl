@@ -22,6 +22,7 @@
 #include <cassert>
 
 #include "index_provider/IndexProvider.hpp"
+#include "common/TypeTraits.hpp"
 
 using std::min;
 using std::max;
@@ -32,7 +33,6 @@ namespace my_gl {
      //{POINTS,LINE_STRIP,LINE_LOOP,LINES,
      //	  TRIANGLE_STRIP,TRIANGLE_FAN,TRIANGLES};
 
-     static const int VERTEX_PER_PRIMITIVE[]={1,2,2,2,3,3,3};
 
      PrimitiveIndex::PrimitiveIndex
 	  (const PrimitiveMode primitiveMode)

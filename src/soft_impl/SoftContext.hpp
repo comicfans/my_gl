@@ -21,15 +21,16 @@
 #define SOFT_CONTEXT_HPP
 
 #include <memory>
+#include <vector>
 
 #include <boost/ptr_container/ptr_array.hpp>
 
 #include "common/Context.hpp"
 #include "common/MatrixStack.hpp"
+#include "shader/VertexAttributeBuffer.hpp"
 #include "object/ObjectNameManager.hpp"
 #include "object/ArrayBufferObjectManager.hpp"
 
-#include "shader/VertexAttributeBuffer.hpp"
 #include "shader/Global.hpp"
 
 #include "ElementIndexManager.hpp"
@@ -38,6 +39,7 @@
 namespace my_gl {
 
      using std::unique_ptr;
+     using std::vector;
 
      using boost::ptr_array;
 
@@ -220,6 +222,7 @@ namespace my_gl {
 
 	ViewportParameter _viewportParameter;
 
+	vector<BindState> _activeStreams;
 	/** 
 	 * @brief using VertexShader to process
 	 * vertex (to _transformedVertexBuffer)

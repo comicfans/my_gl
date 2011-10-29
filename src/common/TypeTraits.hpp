@@ -26,6 +26,10 @@
 
 namespace my_gl {
 
+
+     //enum class PrimitiveMode{POINTS,LINES,TRIANGLES,LINE_STRIP,LINE_LOOP,
+     //	  TRIANGLE_STRIP,TRIANGLE_FAN};
+     const int VERTEX_PER_PRIMITIVE[]={1,2,3,2,2,3,3};
 	
      template<DataType=DataType::BYTE>
 	  struct DataTypeTraits
