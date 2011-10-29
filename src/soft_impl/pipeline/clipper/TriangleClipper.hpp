@@ -29,15 +29,14 @@ namespace my_gl {
 
      	virtual ~TriangleClipper ();
      protected:
+
 	  virtual void elementClip
-	       (const ConstAttributeGroupRef* attributeGroupRefs,
+	       (ConstAttributeGroupRefList& attributeGroupRefs,
 		const size_t *vertexIndex,
-		ClippedPrimitiveGroup& clippedPrimitiveGroup);
+	       ClippedPrimitiveGroup& clippedPrimitiveGroup);
 
 
 
-
-     private:
      	/* data */
      };
 	

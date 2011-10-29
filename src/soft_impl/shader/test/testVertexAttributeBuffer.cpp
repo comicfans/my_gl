@@ -35,4 +35,5 @@ int main(int argc, const char *argv[])
 
      assert(vec==attributeGroup[0]);
 	
+     assert(vec==getVertex(attributeGroup));
 }

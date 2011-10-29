@@ -63,11 +63,10 @@ namespace my_gl {
 
      protected:
 
-	virtual void elementClip
-	       (const ConstAttributeGroupRef* attributeGroupRefs,
+	  virtual void elementClip
+	       (ConstAttributeGroupRefList& attributeGroupRefs,
 		const size_t *vertexIndex,
-		ClippedPrimitiveGroup& clippedPrimitiveGroup);
-
+	       ClippedPrimitiveGroup& clippedPrimitiveGroup);
      };
 	
 } /* my_gl */

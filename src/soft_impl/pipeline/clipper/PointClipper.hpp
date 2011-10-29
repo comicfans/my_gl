@@ -36,9 +36,8 @@ namespace my_gl {
 
      protected:
 
-
 	  virtual void elementClip
-	       (const ConstAttributeGroupRef* attributeGroupRefs,
+	       (ConstAttributeGroupRefList& attributeGroupRefs,
 		const size_t *vertexIndex,
 	       ClippedPrimitiveGroup& clippedPrimitiveGroup);
 

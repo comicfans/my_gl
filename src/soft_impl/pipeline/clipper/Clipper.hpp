@@ -23,11 +23,15 @@
 
 
 #include "shader/VertexAttributeBuffer.hpp"
+#include <boost/ptr_container/ptr_vector.hpp>
+
 
 namespace my_gl {
 
 
-     
+     using boost::ptr_vector;
+
+     typedef ptr_vector<ConstAttributeGroupRef> ConstAttributeGroupRefList;
 
      class ClippedPrimitiveGroup;
      class PrimitiveIndex;
@@ -46,7 +50,7 @@ namespace my_gl {
 
 
 	  virtual void elementClip
-	       (const ConstAttributeGroupRef* attributeGroupRefs,
+	       (ConstAttributeGroupRefList& attributeGroupRefs,
 		const size_t *vertexIndex,
 	       ClippedPrimitiveGroup& clippedPrimitiveGroup)=0;
 
