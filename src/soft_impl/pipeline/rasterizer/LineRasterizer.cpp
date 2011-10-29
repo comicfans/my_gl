@@ -55,8 +55,8 @@ namespace my_gl {
 		const WindowCoordinates& winCoord,
 		StepCallback /* ignored */)
 	       {
-		    auto attributeGroupRef=
-			 _fragmentAttributeBuffer(winCoord);
+		    auto attributeGroupRef=_fragmentAttributeBuffer
+			 .writeNewFragment(winCoord);
 
 		    float percent=_interpolator.getPercent
 			 (coord1, coord2,  lineInfo,winCoord);

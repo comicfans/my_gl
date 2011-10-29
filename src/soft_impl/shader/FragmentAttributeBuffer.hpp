@@ -22,18 +22,21 @@
 
 #define FRAGMENT_ATTRIBUTE_BUFFER_HPP
 
+#include <vector>
+
 #include <boost/multi_array.hpp>
 
 #include "common/Vec4.hpp"
+#include "pipeline/rasterizer/WindowCoordinates.hpp"
 
 
 namespace my_gl {
 
      using boost::multi_array;
+     using std::vector;
 
      typedef multi_array<Vec4,3>::reference::reference AttributeGroupRef;
-
-     struct WindowCoordinates;
+     typedef multi_array<Vec4,3>::const_reference::const_reference ConstAttributeGroupRef;
 
      class FragmentAttributeBuffer :protected multi_array<Vec4,3>{
      public:
@@ -48,16 +51,27 @@ namespace my_gl {
 	  using SuperType::begin;
 	  using SuperType::end;
 
-	  AttributeGroupRef operator()
-	       (const WindowCoordinates& windowCoordinate);
+	  AttributeGroupRef writeNewFragment(const WindowCoordinates& winCoord);
 
-	  AttributeGroupRef operator()
-	       (size_t y,size_t x);
+	  ConstAttributeGroupRef operator()
+	       (const WindowCoordinates& windowCoordinate)const;
+
+	  ConstAttributeGroupRef operator()
+	       (size_t y,size_t x)const;
 
 
 	  size_t width()const;
 	       
 	  size_t height()const;
+
+	  void clear();
+
+	  //get only active fragments
+	  const vector<WindowCoordinates>& getActiveFragWinCoords()const;
+
+     private:
+
+	  vector<WindowCoordinates> _activeFragWinCoords;
 
 
      };

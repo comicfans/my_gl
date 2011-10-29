@@ -328,19 +328,16 @@ namespace my_gl {
 
 	     void SoftContext::fragmentShaderStage()
 	     {
-		  for(size_t y=0;y<_fragmentAttributeBufferPtr
-			    ->height();++y)
-		  {
-		       for(size_t x=0;x<_fragmentAttributeBufferPtr
-				 ->width();++x)
+
+		  auto activeFragWinCoords=_fragmentAttributeBufferPtr
+		       ->getActiveFragWinCoords();
+
+		  for(auto &winCoord:activeFragWinCoords)
 		       {
 			    _fragmentShaderPtr->shade(
-				      (*_fragmentAttributeBufferPtr)(
-					   WindowCoordinates(y,x)), 
-				      (*_frameBufferPtr)(
-					   WindowCoordinates(y,x)));
+				      (*_fragmentAttributeBufferPtr)(winCoord),
+				      (*_frameBufferPtr)(winCoord));
 		       }
-		  }
 
 	     }
 

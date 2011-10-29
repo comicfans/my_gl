@@ -40,8 +40,8 @@ namespace my_gl {
 	{
 	  //TODO currently point size is not implement
 
-	  auto toWrite=fragmentAttributeBuffer
-	       (winCoord);
+	  auto toWrite=fragmentAttributeBuffer.
+	       writeNewFragment(winCoord);
 	       
 	  toWrite=attributeGroup;
 
