@@ -38,10 +38,20 @@ namespace my_gl {
 	  reindex(bases);
      }
 
+     bool FragmentAttributeBuffer::inRange
+	  (const WindowCoordinates& winCoord)const
+     {
+	  return winCoord.first>=0 && winCoord.first<height()
+	       &&winCoord.second>=0&& winCoord.second<width();
+     }
+
      AttributeGroupRef FragmentAttributeBuffer::writeNewFragment(
 	       const WindowCoordinates& winCoord)
      {
-	  _activeFragWinCoords.push_back(winCoord);
+	  if (inRange(winCoord))
+	  {
+	       _activeFragWinCoords.push_back(winCoord);
+	  }
 	  return (*this)[winCoord.first][winCoord.second];
      }
 

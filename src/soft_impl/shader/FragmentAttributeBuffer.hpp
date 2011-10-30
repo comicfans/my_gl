@@ -73,6 +73,8 @@ namespace my_gl {
 
 	  vector<WindowCoordinates> _activeFragWinCoords;
 
+	  bool inRange(const WindowCoordinates& winCoord)const;
+
 
      };
 	
