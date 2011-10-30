@@ -140,21 +140,22 @@ namespace my_gl {
 		    //after clip ,pBuffer contains only internal
 		    //vertex of triangle,then use triangle fan 
 		    //to add these triangles
-
-		    if (pBuffer->elementNumber()==0)
+		    
+		    auto& primitiveIndex=
+			 pBuffer->getPrimitiveIndex();
+	
+		    if (primitiveIndex.vertexNumber()==0)
 		    {
 			 //no vertex retained,all clipped
 			 return;
 		    }
-
-		    auto& primitiveIndex=
-			 pBuffer->getPrimitiveIndex();
 		    
-		    merge(*pBuffer,clippedPrimitiveGroup,
-			      primitiveIndex[0]);
-
-		    for(size_t i=2;i<pBuffer->elementNumber();++i)
+		    assert(primitiveIndex.vertexNumber()>=3);
+		    for(size_t i=2;i<primitiveIndex.vertexNumber();++i)
 		    {
+
+			 merge(*pBuffer,clippedPrimitiveGroup,
+			      primitiveIndex[0]);
 
 			 merge(*pBuffer,clippedPrimitiveGroup,
 				   primitiveIndex[i-1]);

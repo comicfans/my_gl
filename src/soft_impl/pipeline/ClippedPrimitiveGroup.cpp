@@ -123,8 +123,7 @@ namespace my_gl {
 	     }
 	size_t ClippedPrimitiveGroup::elementNumber()const
 	{
-	     return _originalVertexAttribute.elementNumber()+
-		  _clipGeneratedVertexAttribute.elementNumber();
+	     return _mixedIndex.vertexNumber();
 	}
 
 	size_t ClippedPrimitiveGroup::attributeNumber()const

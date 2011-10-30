@@ -38,7 +38,7 @@ namespace my_gl {
 	  (const PrimitiveMode primitiveMode)
 		:_vertexPerPrimitive(
 			  VERTEX_PER_PRIMITIVE[int(primitiveMode)]),
-		_primitiveMode(primitiveMode)
+		_primitiveMode(primitiveMode),_elementNumber(0)
 	  {
 
 	  }
@@ -189,11 +189,13 @@ namespace my_gl {
 			 {
 			      _elementNumber=max<int>(atMostVertexNumber-2,0);
 			      resize(_elementNumber*3);
+			      bool odd=false;
 			      for (size_t i=0; i<_elementNumber; ++i)
 			      {
-				   (*this)[i*3]=indexProvider.getIndex(i);
-				   (*this)[i*3+1]=indexProvider.getIndex(i+1);
+				   (*this)[i*3]=indexProvider.getIndex(i+odd);
+				   (*this)[i*3+1]=indexProvider.getIndex(i+!odd);
 				   (*this)[i*3+2]=indexProvider.getIndex(i+2);
+				   odd=!odd;
 			      }
 			      break;
 			 }
