@@ -54,7 +54,7 @@ namespace my_gl {
 	  
      LineInfo::LineInfo(const LineInfo& rhs)
 	  :deltaY(rhs.deltaY),deltaX(rhs.deltaX),
-	  majorDim(majorDim),
+	  majorDim(rhs.majorDim),
 	  nonMajorDim(DimAxis(1-int(majorDim))){}
 
 
