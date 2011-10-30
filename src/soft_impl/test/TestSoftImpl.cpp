@@ -59,6 +59,16 @@ int main(int argc, char **argv)
 
 	SDL_Delay(2000);
 
+	context.vertexPointer(2,DataType::FLOAT,0,&vertex[0][0]);
+
+	context.color4f(0.5, 0.5, 0.5, 0.5);
+
+	context.drawArrays(PrimitiveMode::TRIANGLE_STRIP,0,3);
+
+	context.flush();
+
+	SDL_Delay(2000);
+
 	return 0;
 }
 }

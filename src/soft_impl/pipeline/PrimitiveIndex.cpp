@@ -189,7 +189,7 @@ namespace my_gl {
 			 {
 			      _elementNumber=max<int>(atMostVertexNumber-2,0);
 			      resize(_elementNumber*3);
-			      for (size_t i=0; i<size(); ++i)
+			      for (size_t i=0; i<_elementNumber; ++i)
 			      {
 				   (*this)[i*3]=indexProvider.getIndex(i);
 				   (*this)[i*3+1]=indexProvider.getIndex(i+1);
@@ -201,7 +201,7 @@ namespace my_gl {
 			 {
 			      _elementNumber=max<int>(atMostVertexNumber-2,0);
 			      resize(_elementNumber*3);
-			      for (size_t i=0; i<size(); ++i)
+			      for (size_t i=0; i<_elementNumber; ++i)
 			      {
 				   (*this)[i*3]=indexProvider.getIndex(0);
 				   (*this)[i*3+1]=indexProvider.getIndex(i+1);
