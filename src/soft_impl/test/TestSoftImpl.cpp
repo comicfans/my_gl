@@ -30,7 +30,7 @@ using namespace my_gl;
 
 	static const float  quodVertex[][2]={{0,2},{2,203},{204,204},{205,3}};
 
-	static const float  stripVertex[][2]={{0,2},{2,203},{205,3},{204,204}};
+	static const float  stripVertex[][2]={{5,2},{10,203},{205,16},{204,204}};
 
 void testLines()
 {
@@ -44,6 +44,22 @@ void testLines()
 
 	SDL_Delay(2000);
 
+
+}
+
+void testSpecialLine()
+{
+     static const float directLines[][2]={{10,10},{10,300},{300,300},{300,10},{150,5}};
+
+     context.vertexPointer(2, DataType::FLOAT, 0, directLines);
+
+	context.color4f(0.5, 0.5, 0.5, 0.5);
+
+	context.drawArrays(PrimitiveMode::LINE_LOOP, 0, 5);
+
+	context.flush();
+
+	SDL_Delay(2000);
 
 }
 
@@ -87,7 +103,7 @@ int main(int argc, char **argv)
 {
 
      init();
-     testTriangles();
+     testSpecialLine();
      return 0;
 }
 }

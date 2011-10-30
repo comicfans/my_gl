@@ -7,6 +7,7 @@
  *
  *        Version:  1.0
  *        Created:  2011-10-21 16:19:31
+ *
  *       Revision:  none
  *       Compiler:  gcc
  *
@@ -19,6 +20,7 @@
 #include "TriangleRasterizer.hpp"
 
 #include <functional>
+#include <climits>
 #include <vector>
 #include <algorithm>
 
@@ -58,20 +60,7 @@ namespace my_gl {
 	       _pLineRasterizer=pLineRasterizer;
 	  }
 
-
-     static bool shortLine
-	  (const WindowCoordinates& point1,
-	   const WindowCoordinates& point2)
-     {
-	  if (point1.first!=point2.first)
-	  {
-	       return false;
-	  }
-	  //only one pixel offset,no inner line segment
-	  return point2.second-point1.second<=1;
-     }
-
-     static void append(EdgePoints& edgePoints,
+        static void append(EdgePoints& edgePoints,
 	       const WindowCoordinates& winCoord)
      {
 	  edgePoints.push_back(winCoord);
@@ -105,25 +94,25 @@ namespace my_gl {
 	       }
 
 
+	       if (edgePoints.size()<=3)
+	       {
+		    //only points no inner region
+		    return;
+	       }
+
 	       //edge points inserted,dedup same point
 	       //sort by y first, x second
 	       //after sort,neighbor points is just horizontal lines
-	       //and no short line(pixel<2)
+
+	       //remove 
 	       sort(edgePoints.begin(),edgePoints.end());
 
-	       edgePoints.resize(edgePoints.end()-
-			 unique(edgePoints.begin(),edgePoints.end(),shortLine));
-
-	       if (edgePoints.size()<=3)
-	       {
-		    //no inner region
-		    return;
-	       }
 
 	       //front is smallest y,x
 	       //back is biggest y,x
 
-	       int yMin=edgePoints.front().first,
+	       //skip point only scan line
+	       const int yMin=edgePoints.front().first,
 		   yMax=edgePoints.back().first;
 
 	       auto leftIt=edgePoints.begin();
@@ -131,23 +120,58 @@ namespace my_gl {
 	       //then do scan line rasterize
 	       
 	       for(int scanLineY=yMin;
-			 scanLineY<yMax && leftIt<edgePoints.end();
+			 scanLineY<=yMax && leftIt<edgePoints.end();
 			 ++scanLineY)
 	       {
-		    auto rightIt=leftIt+1;
-		    if (rightIt==edgePoints.end())
+
+		    auto tryPos=leftIt+1;
+
+		    bool allFinished=false;
+		    bool nextLine=false;
+		    //this loop search for most inner scan line points
+		    //   *    	--------->1) pixel only ,skip
+		    //  **	--------->2) pixel is neighbor,skip
+		    // * *    	--------->3) normal situation
+		    //** * 	--------->4) left pixel is not the most inner one
+		    //  **	 
+		    //   
+		    while(1)
 		    {
-			 //toppest is a point 
+			 if (tryPos==edgePoints.end())
+			 {
+			      //top line is point 1)
+			      allFinished=true;
+			      break;
+			 }
+
+			 if (tryPos->first!=leftIt->first)
+			 {
+			      //this line is point or situation 2)
+			      nextLine=true;
+			      leftIt=tryPos;
+			      break;
+			 }
+			 
+			 if (tryPos->second-leftIt->second<=1)
+			 {
+			      //neighbor left pixel 4)
+			      leftIt=tryPos;
+			      ++tryPos;
+			      continue;
+			 }
+			 //same line ,and not neighbor pixel 3)
 			 break;
 		    }
 
-		    if (leftIt->first!=rightIt->first)
+		    if (allFinished)
 		    {
-			 //this scan line is a point
-			 leftIt=rightIt;
-			 continue;
+			 break;
 		    }
 
+		    if (nextLine)
+		    {
+			 continue;
+		    }
 
 		    ConstAttributeGroupRefList leftRightAttributes(2);
 
@@ -155,15 +179,16 @@ namespace my_gl {
 			 (new ConstAttributeGroupRef(_fragmentAttributeBuffer(*leftIt)));
 
 		    leftRightAttributes.push_back
-			 (new ConstAttributeGroupRef(_fragmentAttributeBuffer(*rightIt)));
-
-
+			 (new ConstAttributeGroupRef(_fragmentAttributeBuffer(*tryPos)));
 		    
 		    _pLineRasterizer->rasterizeSpecial
-			 (leftRightAttributes,*leftIt,*rightIt,
+			 (leftRightAttributes,*leftIt,*tryPos,
 			  //delta y=0,MajorDim=x
-			  LineInfo(0,rightIt->second-leftIt->second,LineInfo::DimAxis::X));	    
-		    leftIt=rightIt;
+			  LineInfo(0,tryPos->second-leftIt->second,
+			       LineInfo::DimAxis::X));	    
+
+		    leftIt=upper_bound(tryPos,edgePoints.end(),
+			      WindowCoordinates(scanLineY,INT_MAX));
 	       }
 
 	  }
