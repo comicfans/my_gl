@@ -302,6 +302,8 @@ namespace my_gl {
 	      const IndexProvider& indexProvider)
 	{
 
+	     prepareGlobalUniform();
+
 	     vertexShaderStage(count,indexProvider);
 
 	     //primitive assemble
@@ -443,6 +445,7 @@ namespace my_gl {
 	     matrix(2,2)=C;
 	     matrix(2,3)=D;
 	     matrix(3,2)=-1;
+	     matrix(3,3)=1;
 
 	     _matrixStacks[int(MatrixMode::PROJECTION)].
 		  multiTop(matrix);
@@ -467,6 +470,7 @@ namespace my_gl {
 	     matrix(0,3)=tx;
 	     matrix(1,3)=ty;
 	     matrix(2,3)=tz;
+	     matrix(3,3)=1;
 
 	     _matrixStacks[int(MatrixMode::PROJECTION)]
 		  .multiTop(matrix);
