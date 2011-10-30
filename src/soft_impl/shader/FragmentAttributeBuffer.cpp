@@ -18,7 +18,10 @@
 
 #include "FragmentAttributeBuffer.hpp"
 
+#include <array>
+
 namespace my_gl {
+     using std::array;
      using boost::extents;
 
      const int SIDE_OFFSET=4;
@@ -30,7 +33,9 @@ namespace my_gl {
      {
 	  //clipped coordinates may be out of clip volume a little
 	  //so makes FragmentAttributeBuffer a little outter
-	  reindex(-SIDE_OFFSET);
+	  //
+	  array<int,3> bases={-SIDE_OFFSET,-SIDE_OFFSET,0};
+	  reindex(bases);
      }
 
      AttributeGroupRef FragmentAttributeBuffer::writeNewFragment(
