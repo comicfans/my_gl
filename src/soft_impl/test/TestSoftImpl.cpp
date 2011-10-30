@@ -30,7 +30,7 @@ using namespace my_gl;
 
 	static const float  quodVertex[][2]={{0,2},{2,203},{204,204},{205,3}};
 
-	static const float  stripVertex[][2]={{0,2},{2,203},{204,204},{205,3}};
+	static const float  stripVertex[][2]={{0,2},{2,203},{205,3},{204,204}};
 
 void testLines()
 {
@@ -71,7 +71,7 @@ void testTriangles()
 
 	context.color4f(0.5, 0.5, 0.5, 0.5);
 
-	context.drawArrays(PrimitiveMode::TRIANGLE_STRIP,0,4);
+	context.drawArrays(PrimitiveMode::TRIANGLE_STRIP,1,3);
 
 	context.flush();
 

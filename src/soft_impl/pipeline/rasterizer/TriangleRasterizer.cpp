@@ -32,6 +32,7 @@ namespace my_gl {
      using std::vector;
      using std::unique;
      using std::bind;
+     using std::ref;
      using std::sort;
      using std::placeholders::_1;
 
@@ -83,7 +84,7 @@ namespace my_gl {
 	       EdgePoints edgePoints;
 
 	       LineRasterizer::StepCallback appendFunc
-		    =bind(append,edgePoints,_1);
+		    =bind(append,ref(edgePoints),_1);
 
 	       for (int i=0; i<3; ++i)
 	       {
@@ -140,6 +141,13 @@ namespace my_gl {
 			 break;
 		    }
 
+		    if (leftIt->first!=rightIt->first)
+		    {
+			 //this scan line is a point
+			 leftIt=rightIt;
+			 continue;
+		    }
+
 
 		    ConstAttributeGroupRefList leftRightAttributes(2);
 
@@ -155,7 +163,7 @@ namespace my_gl {
 			 (leftRightAttributes,*leftIt,*rightIt,
 			  //delta y=0,MajorDim=x
 			  LineInfo(0,rightIt->second-leftIt->second,LineInfo::DimAxis::X));	    
-
+		    leftIt=rightIt;
 	       }
 
 	  }
