@@ -37,7 +37,7 @@ int main(int argc, char **argv)
 
 	context.enableClientState(BindState::VERTEX);
 
-	static const float  vertex[][2]={{0,2},{2,203},{204,204}};
+	static const float  vertex[][2]={{0,2},{2,203},{204,204},{205,3}};
 
 	context.matrixMode(MatrixMode::PROJECTION);
 
@@ -53,11 +53,11 @@ int main(int argc, char **argv)
 
 	context.loadIdentity();
 
-	context.drawArrays(PrimitiveMode::LINE_LOOP, 0, 3);
+	context.drawArrays(PrimitiveMode::LINE_LOOP, 0, 4);
 
 	context.flush();
 
-	SDL_Delay(10000);
+	SDL_Delay(2000);
 
 	return 0;
 }

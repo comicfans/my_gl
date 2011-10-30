@@ -46,7 +46,7 @@ namespace my_gl {
  
 		    
 	       for(size_t elementCounter=0;
-			 elementCounter<vertexPerPrimitive;
+			 elementCounter<originalPrimitiveIndex.elementNumber();
 			 ++elementCounter)
 	       {
 

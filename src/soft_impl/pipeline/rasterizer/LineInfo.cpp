@@ -51,6 +51,12 @@ namespace my_gl {
 		    (majorDim==DimAxis::Y));
      }
 
+	  
+     LineInfo::LineInfo(const LineInfo& rhs)
+	  :deltaY(rhs.deltaY),deltaX(rhs.deltaX),
+	  majorDim(majorDim),
+	  nonMajorDim(DimAxis(1-int(majorDim))){}
+
 
      int LineInfo::getMajorDelta()const
      {
@@ -72,6 +78,11 @@ namespace my_gl {
 	  return max(abs(deltaX),
 		    abs(deltaY))<=1;
 
+     }
+
+     LineInfo LineInfo::revert()const
+     {
+	  return LineInfo(-deltaY,-deltaX,majorDim);
      }
 
      bool LineInfo::parallelToAxis()const

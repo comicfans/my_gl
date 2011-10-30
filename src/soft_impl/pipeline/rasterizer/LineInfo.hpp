@@ -33,6 +33,16 @@ namespace my_gl {
 
 	  LineInfo(int deltaYSet,int deltaXSet,DimAxis majorDimSet);
 
+	  LineInfo(const LineInfo& rhs);
+
+	  /** 
+	   * @brief makes point1->point2 point2->point1,
+	   * can adjust majorDelta sign
+	   * 
+	   * @return 
+	   */
+	  LineInfo revert()const;
+
 	  const int deltaY;
 	  const int deltaX;
 

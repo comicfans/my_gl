@@ -126,29 +126,44 @@ namespace my_gl {
 		  homogenousCoord2=getVertex(attributeGroupRefs[1]);
 
 
-	       CoordInfo coord1(homogenousCoord1),
-			 coord2(homogenousCoord2);
+	       CoordInfo rawCoord1(homogenousCoord1),
+			 rawCoord2(homogenousCoord2);
 
-	       coord1.windowCoord=toWindowCoordinates
-		    (coord1.normalizedCoord);
+	       rawCoord1.windowCoord=toWindowCoordinates
+		    (rawCoord1.normalizedCoord);
 
-	       coord2.windowCoord=toWindowCoordinates
-		    (coord2.normalizedCoord);
+	       rawCoord2.windowCoord=toWindowCoordinates
+		    (rawCoord2.normalizedCoord);
 
 
 	       //begin point need no interpolate;
 	       PointRasterizer::rasterizePoint
 			 (attributeGroupRefs[0],
 			  _fragmentAttributeBuffer,
-			  coord1.windowCoord);
+			  rawCoord1.windowCoord);
 	
-	       LineInfo lineInfo(coord1.windowCoord,coord2.windowCoord);
+	       LineInfo rawLineInfo(rawCoord1.windowCoord,rawCoord2.windowCoord),
+			revert(rawLineInfo.revert());
+
+	       auto pCoord1=&rawCoord1,
+			 pCoord2=&rawCoord2;
+	       auto pLineInfo=&rawLineInfo;
+
+	       //adjust point order,make lineInfo.getMajorDelta always >0 
+	       //this makes following rasterize simpler
+
+	       if (rawLineInfo.getMajorDelta()<0)
+	       {
+		    pLineInfo=&revert;
+		    pCoord1=&rawCoord2;
+		    pCoord2=&rawCoord1;
+	       }
 
 	       auto wrappedCallback=bind(
 			 &LineRasterizer::groupAction<hasCallback>,this,
-			 attributeGroupRefs,coord1,coord2,lineInfo,_1,stepCallback);
+			 attributeGroupRefs,*pCoord1,*pCoord2,*pLineInfo,_1,stepCallback);
 
-	       if (lineInfo.isOnlyPoint())
+	       if (rawLineInfo.isOnlyPoint())
 	       {
 		    //too small
 		    //just point, or a segment length less_equal than 1 
@@ -159,18 +174,18 @@ namespace my_gl {
 	           return;
 	       }
 
-	       if (lineInfo.parallelToAxis())
+	       if (rawLineInfo.parallelToAxis())
 	       {
 		    //horizontal or vertical
 		    rasterizeSpecialImpl
-			 (coord1.windowCoord,coord2.windowCoord,
-			  lineInfo,wrappedCallback);
+			 (pCoord1->windowCoord,pCoord2->windowCoord,
+			  *pLineInfo,wrappedCallback);
 		    return;
 	       }
 
 	       rasterize
-		    (coord1.windowCoord,coord2.windowCoord,
-		     lineInfo,
+		    (pCoord1->windowCoord,pCoord2->windowCoord,
+		     *pLineInfo,
 		     wrappedCallback);
 	
 	     }
