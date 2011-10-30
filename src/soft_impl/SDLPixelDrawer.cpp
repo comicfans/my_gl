@@ -122,6 +122,8 @@ namespace my_gl {
      {
 	  SurfaceLocker locker(_screenPtr);
 
+	  //SDL surface origin is left-upper
+	  //but opengl default frameBuffer origin is left-lower
 
 	  for (size_t y=0; y<_height; ++y)
 	  {
@@ -133,7 +135,7 @@ namespace my_gl {
 		    Uint32 packedValue=
 			 SDL_MapRGB(_screenPtr->format,
 				   toUint8(color[0]),toUint8(color[1]),toUint8(color[2]));
-		    putPixel(_screenPtr,x,y,packedValue);
+		    putPixel(_screenPtr,x,_height-y,packedValue);
 	       }
 	  }
 

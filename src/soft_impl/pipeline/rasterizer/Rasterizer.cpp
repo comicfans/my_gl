@@ -59,7 +59,7 @@ namespace my_gl {
 
 	  int vertexPerPrimitive=primitiveIndex.vertexPerPrimitive();
 
-	  int globalIndex=0;
+	  int globalCounter=0;
 	  for (size_t elementCounter=0; 
 		    elementCounter<primitiveIndex.elementNumber(); 
 		    ++elementCounter)
@@ -70,8 +70,9 @@ namespace my_gl {
 
 	       for(int vertexCounter=0;
 			 vertexCounter<vertexPerPrimitive;
-			 ++vertexCounter,++globalIndex)
+			 ++vertexCounter,++globalCounter)
 	       {
+		    int globalIndex=primitiveIndex[globalCounter];
 		    attributeGroupRefs.push_back(new 
 			      ConstAttributeGroupRef(
 				   clippedPrimitiveGroup[globalIndex]));

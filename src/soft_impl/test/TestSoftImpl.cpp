@@ -17,11 +17,14 @@
  */
 
 #include "SoftContext.hpp"
+#include "SDL.h"
 
 using namespace my_gl;
 
+extern "C"
+{
 
-int main(int argc, const char *argv[])
+int main(int argc, char **argv)
 {
      int width=400,
 	 height=300;
@@ -34,7 +37,7 @@ int main(int argc, const char *argv[])
 
 	context.enableClientState(BindState::VERTEX);
 
-	static const float  vertex[][2]={{0,0},{0,200},{200,200},{200,0}};
+	static const float  vertex[][2]={{0,2},{2,203},{204,204}};
 
 	context.matrixMode(MatrixMode::PROJECTION);
 
@@ -50,9 +53,12 @@ int main(int argc, const char *argv[])
 
 	context.loadIdentity();
 
-	context.drawArrays(PrimitiveMode::LINE_LOOP, 0, 4);
+	context.drawArrays(PrimitiveMode::LINE_LOOP, 0, 3);
 
 	context.flush();
 
+	SDL_Delay(10000);
+
 	return 0;
+}
 }
