@@ -106,7 +106,7 @@ namespace my_gl {
 		    thisCoord[nonMajorIndex]=coord1[nonMajorIndex];
 
 
-		    for(int majorValue=coord1[majorIndex];
+		    for(int majorValue=coord1[majorIndex]+1;
 			      majorValue<coord2[majorIndex];
 			      ++majorValue)
 		    {
