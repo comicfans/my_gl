@@ -160,8 +160,10 @@ namespace my_gl {
 	       }
 
 	       auto wrappedCallback=bind(
-			 &LineRasterizer::groupAction<hasCallback>,this,
-			 attributeGroupRefs,*pCoord1,*pCoord2,*pLineInfo,_1,stepCallback);
+			 &LineRasterizer::groupAction<hasCallback>,
+			 this,attributeGroupRefs,
+			 *pCoord1,*pCoord2,*pLineInfo,
+			 _1,stepCallback);
 
 	       if (rawLineInfo.isOnlyPoint())
 	       {
