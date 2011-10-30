@@ -11,6 +11,11 @@ TARGET_LINK_LIBRARIES(TestVec4 TestFunction)
 ADD_EXECUTABLE(TestMatrix testMatrix.cpp)
 TARGET_LINK_LIBRARIES(TestMatrix TestFunction)
 
+
+ADD_EXECUTABLE(TestClientArrayVec4Provider TestClientArrayVec4Provider.cpp)
+TARGET_LINK_LIBRARIES(TestClientArrayVec4Provider Vec4Provider)
+
 ADD_TEST(Vec4Test TestVec4)
 ADD_TEST(MatrixTest TestMatrix)
+ADD_TEST(ClientArrayVec4ProviderTest TestClientArrayVec4Provider)
 

@@ -73,7 +73,7 @@ DataType type,  size_t stride,  const void *pointer)
 	  {
 	       _pImpl.reset(new BufferObjectVec4Provider
 			 (*_bindedArrayBufferObject, toInt(pointer),
-			  3,type,stride));
+			  componentSize,type,stride));
 	  }
 	  else
 	  {
@@ -82,7 +82,7 @@ DataType type,  size_t stride,  const void *pointer)
 	       assert(_vertexArrayEnabled);
 	  
 	       _pImpl.reset(new ClientArrayVec4Provider
-			 (pointer,3,type,stride));
+			 (pointer,componentSize,type,stride));
 	  }
 
      }

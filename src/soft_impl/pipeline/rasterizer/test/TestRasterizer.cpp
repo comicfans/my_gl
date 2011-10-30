@@ -82,7 +82,7 @@ class ViewportTest:public Rasterizer
      {}
 	       
 	  virtual void elementRasterize
-		    (ConstAttributeGroupRef* attributeGroupRefs){}
+		    (const ConstAttributeGroupRefList &attributeGroupRefs){}
 
 
 };
