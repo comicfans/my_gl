@@ -204,7 +204,7 @@ namespace my_gl {
 	     }
 
      void LineClipper::elementClip
-	  (ConstAttributeGroupRefList& originalAttributeGroups,
+	  (const ConstAttributeGroupRefList& originalAttributeGroups,
 	   const size_t *vertexIndex,
 	   ClippedPrimitiveGroup& clippedPrimitiveGroup)
 	  {

@@ -57,6 +57,7 @@ namespace my_gl {
 	  auto& primitiveIndex=
 	       clippedPrimitiveGroup.getPrimitiveIndex();
 
+	  int vertexPerPrimitive=primitiveIndex.vertexPerPrimitive();
 
 	  int globalIndex=0;
 	  for (size_t elementCounter=0; 
@@ -64,17 +65,19 @@ namespace my_gl {
 		    ++elementCounter)
 	  {
 
-	       for(size_t vertexCounter=0;
-			 vertexCounter<primitiveIndex.vertexPerPrimitive();
+	       ConstAttributeGroupRefList 
+		    attributeGroupRefs(vertexPerPrimitive);
+
+	       for(int vertexCounter=0;
+			 vertexCounter<vertexPerPrimitive;
 			 ++vertexCounter,++globalIndex)
 	       {
-		    _attributeGroupRefs.replace(vertexCounter,new 
+		    attributeGroupRefs.push_back(new 
 			      ConstAttributeGroupRef(
 				   clippedPrimitiveGroup[globalIndex]));
 	       }
 	       //do element rasterize
-	       elementRasterize(
-			 &_attributeGroupRefs[0]);
+	       elementRasterize(attributeGroupRefs);
 	  }
 
      }

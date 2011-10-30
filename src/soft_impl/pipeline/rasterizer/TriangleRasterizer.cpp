@@ -77,7 +77,7 @@ namespace my_gl {
      }
 
      void TriangleRasterizer::elementRasterize
-	  (ConstAttributeGroupRef* attributeGroupRefs)
+	  (const ConstAttributeGroupRefList& attributeGroupRefs)
 	  {
 
 	       EdgePoints edgePoints;
@@ -88,9 +88,13 @@ namespace my_gl {
 	       for (int i=0; i<3; ++i)
 	       {
 	       
-		    ConstAttributeGroupRef edgeAttributes[2]
-			={attributeGroupRefs[i],
-			     attributeGroupRefs[(i+1)%3]};
+		    ConstAttributeGroupRefList edgeAttributes(2);
+
+		    edgeAttributes.push_back(new 
+			      ConstAttributeGroupRef(attributeGroupRefs[i]));
+
+		    edgeAttributes.push_back(new
+			      ConstAttributeGroupRef(attributeGroupRefs[(i+1)%3]));
 		    
 		    //use LineRasterizer to rasterize line
 		    //and push back edge point to edgePoints
@@ -137,9 +141,15 @@ namespace my_gl {
 		    }
 
 
-		    ConstAttributeGroupRef leftRightAttributes[]=
-		    {_fragmentAttributeBuffer(*leftIt),
-			 _fragmentAttributeBuffer(*rightIt)};
+		    ConstAttributeGroupRefList leftRightAttributes(2);
+
+		    leftRightAttributes.push_back
+			 (new ConstAttributeGroupRef(_fragmentAttributeBuffer(*leftIt)));
+
+		    leftRightAttributes.push_back
+			 (new ConstAttributeGroupRef(_fragmentAttributeBuffer(*rightIt)));
+
+
 		    
 		    _pLineRasterizer->rasterizeSpecial
 			 (leftRightAttributes,*leftIt,*rightIt,

@@ -56,7 +56,7 @@ namespace my_gl {
 	  
 
      void PointClipper::elementClip
-	  (ConstAttributeGroupRefList& attributeGroupRefs,
+	  (const ConstAttributeGroupRefList& attributeGroupRefs,
 		const size_t *vertexIndex,
 	       ClippedPrimitiveGroup& clippedPrimitiveGroup)
 	       {

@@ -34,7 +34,7 @@ namespace my_gl {
 
 
 	void PointRasterizer::rasterizePoint(
-		  ConstAttributeGroupRef& attributeGroup,
+		  const ConstAttributeGroupRef& attributeGroup,
 		  FragmentAttributeBuffer& fragmentAttributeBuffer,
 		  WindowCoordinates winCoord)
 	{
@@ -53,7 +53,7 @@ namespace my_gl {
 
 
      void PointRasterizer::elementRasterize
-	   (ConstAttributeGroupRef *attributeGroupRefs)
+	   (const ConstAttributeGroupRefList &attributeGroupRefs)
      {
 
 	  auto coordinates=

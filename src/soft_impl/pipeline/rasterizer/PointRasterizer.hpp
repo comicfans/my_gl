@@ -34,13 +34,13 @@ namespace my_gl {
 
 
 	static void rasterizePoint(
-		  ConstAttributeGroupRef& attributeGroup,
+		  const ConstAttributeGroupRef& attributeGroup,
 		  FragmentAttributeBuffer& fragmentAttributeBuffer,
 		  WindowCoordinates winCoord);
 
      protected:
 	  virtual void elementRasterize
-		(ConstAttributeGroupRef* attributeGroupRefs);
+		(const ConstAttributeGroupRefList& attributeGroupRefs);
      };
 	
 } /* my_gl */

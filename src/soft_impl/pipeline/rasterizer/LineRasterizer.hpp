@@ -43,7 +43,7 @@ namespace my_gl {
 
 	
 	  void rasterizeSpecial(
-		  ConstAttributeGroupRef* attributeGroupRefs,
+		    const ConstAttributeGroupRefList& attributeGroupRefs,
 		  const WindowCoordinates& winCoord1,
 		  const WindowCoordinates& winCoord2,
 		  const LineInfo& lineInfo);
@@ -58,7 +58,7 @@ namespace my_gl {
 	  virtual ~LineRasterizer ();
 
 	  void rasterizeWithCallback(
-		    ConstAttributeGroupRef* attributeGroupRefs,
+		    const ConstAttributeGroupRefList& attributeGroupRefs,
 		    StepCallback stepCallback);
 
      protected:
@@ -66,11 +66,11 @@ namespace my_gl {
 
 
 	virtual void elementRasterize
-	       (ConstAttributeGroupRef* attributeGroupRefs);
+	       (const ConstAttributeGroupRefList& attributeGroupRefs);
 
 	template<bool hasCallback=false>
 	     void rasterizeImpl
-	     (ConstAttributeGroupRef* attributeGroupRefs,
+	     (const ConstAttributeGroupRefList& attributeGroupRefs,
 	      StepCallback stepCallback=StepCallback());
 
 	virtual void rasterize
@@ -84,8 +84,8 @@ namespace my_gl {
      private:
 
 	template<bool hasCallback=false>
-	void groupAction
-	       (ConstAttributeGroupRef* attributeGroupRefs,
+	void groupAction(
+		  const ConstAttributeGroupRefList& attributeGroupRefs,
 		const CoordInfo& coordInfo1,const CoordInfo& coordInfo2,
 		const LineInfo& lineInfo,
 		const WindowCoordinates& winCoord,

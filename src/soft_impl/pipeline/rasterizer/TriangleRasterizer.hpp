@@ -46,7 +46,7 @@ namespace my_gl {
 	  protected:
 
 	       virtual void elementRasterize
-		    (ConstAttributeGroupRef* attributeGroupRefs);
+		    (const ConstAttributeGroupRefList& attributeGroupRefs);
 
 
 	  private:

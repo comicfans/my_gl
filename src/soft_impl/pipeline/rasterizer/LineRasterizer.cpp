@@ -49,7 +49,7 @@ namespace my_gl {
 
 	template<>
 	void LineRasterizer::groupAction<false>
-	       (ConstAttributeGroupRef* attributeGroupRefs,
+	       (const ConstAttributeGroupRefList& attributeGroupRefs,
 		const CoordInfo& coord1,const CoordInfo& coord2,
 		const LineInfo& lineInfo,
 		const WindowCoordinates& winCoord,
@@ -74,7 +74,7 @@ namespace my_gl {
 
 	template<>
 	     void LineRasterizer::groupAction<true>
-	       (ConstAttributeGroupRef* attributeGroupRefs,
+	     (const ConstAttributeGroupRefList& attributeGroupRefs,
 		const CoordInfo& coord1,const CoordInfo& coord2,
 		const LineInfo& lineInfo,
 		const WindowCoordinates& winCoord,
@@ -118,7 +118,7 @@ namespace my_gl {
 
 	template<bool hasCallback>
 	     void LineRasterizer::rasterizeImpl
-	     (ConstAttributeGroupRef* attributeGroupRefs,
+	     (const ConstAttributeGroupRefList& attributeGroupRefs,
 	      StepCallback stepCallback)
 	     {
 	       auto 
@@ -176,7 +176,7 @@ namespace my_gl {
 	     }
 		
 	void LineRasterizer::rasterizeSpecial
-	     (ConstAttributeGroupRef* attributeGroupRefs,
+	     (const ConstAttributeGroupRefList& attributeGroupRefs,
 	      const WindowCoordinates& winCoord1,
 	      const WindowCoordinates& winCoord2,
 	      const LineInfo& lineInfo)
@@ -204,13 +204,13 @@ namespace my_gl {
 
 	
      void LineRasterizer::elementRasterize
-	  (ConstAttributeGroupRef* attributeGroupRefs)
+	  (const ConstAttributeGroupRefList& attributeGroupRefs)
 	  {
 	       rasterizeImpl<false>(attributeGroupRefs);
 	  }
 
-     void LineRasterizer::rasterizeWithCallback(
-		    ConstAttributeGroupRef* attributeGroupRefs,
+     void LineRasterizer::rasterizeWithCallback
+	     (const ConstAttributeGroupRefList& attributeGroupRefs,
 		    StepCallback stepCallback)
      {
 	  rasterizeImpl<true>(attributeGroupRefs,stepCallback);

@@ -22,7 +22,7 @@
 #define RASTERIZER_HPP
 
 
-#include <boost/ptr_container/ptr_array.hpp>
+#include <boost/ptr_container/ptr_vector.hpp>
 
 #include "shader/VertexAttributeBuffer.hpp"
 
@@ -31,11 +31,13 @@
 
 namespace my_gl {
 
-     using boost::ptr_array;
+     using boost::ptr_vector;
 
      class ClippedPrimitiveGroup;
      class FragmentAttributeBuffer;
      class Interpolator;
+
+     typedef ptr_vector<ConstAttributeGroupRef> ConstAttributeGroupRefList;
 
      class Rasterizer {
 	  public:
@@ -87,17 +89,13 @@ namespace my_gl {
 		* @return 
 		*/
 	       virtual void elementRasterize
-		    (ConstAttributeGroupRef* attributeGroupRefs)=0;
+		    (const ConstAttributeGroupRefList& attributeGroupRefs)=0;
 
 	       WindowCoordinates toWindowCoordinates
 		    (const Vec4& normalizedDeviceCoordinates)const;
 
 
 	  private:
-
-	       ptr_array<ConstAttributeGroupRef,
-		    VertexAttributeBuffer::MAX_VERTEX_PER_ELEMENT>
-			 _attributeGroupRefs;
 
 	       ViewportParameter& _viewportParameter;
 

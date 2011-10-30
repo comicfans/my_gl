@@ -109,7 +109,7 @@ namespace my_gl {
      }
 
      void TriangleClipper::elementClip
-	  (ConstAttributeGroupRefList& attributeGroupRefs,
+	  (const ConstAttributeGroupRefList& attributeGroupRefs,
 	   const size_t *vertexIndex,
 	   ClippedPrimitiveGroup& clippedPrimitiveGroup)
 	  {
