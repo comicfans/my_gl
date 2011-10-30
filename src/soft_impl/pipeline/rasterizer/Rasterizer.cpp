@@ -45,12 +45,13 @@ namespace my_gl {
 
 
      Rasterizer::~Rasterizer(){}
+	       
 
      void Rasterizer::rasterize(
 	       const ClippedPrimitiveGroup& clippedPrimitiveGroup)
      {
 
-	  assert(clippedPrimitiveGroup.elementNumber()==
+	  assert(clippedPrimitiveGroup.attributeNumber()==
 		    _fragmentAttributeBuffer.attributeNumber());
 
 	  auto& primitiveIndex=

@@ -26,7 +26,7 @@ namespace my_gl {
      FragmentAttributeBuffer::FragmentAttributeBuffer 
 	  (size_t width,size_t height,size_t attributeNumber)
 	  :SuperType(extents[height+SIDE_OFFSET*2]
-		    [width][attributeNumber+SIDE_OFFSET*2])
+		    [width+SIDE_OFFSET*2][attributeNumber])
      {
 	  //clipped coordinates may be out of clip volume a little
 	  //so makes FragmentAttributeBuffer a little outter
@@ -61,11 +61,11 @@ namespace my_gl {
 
      size_t FragmentAttributeBuffer::width()const
      {
-	  return shape()[1];
+	  return shape()[1]-SIDE_OFFSET*2;
      }
      size_t FragmentAttributeBuffer::height()const
      {
-	  return shape()[0];
+	  return shape()[0]-SIDE_OFFSET*2;
      }
 
      void FragmentAttributeBuffer::clear()
