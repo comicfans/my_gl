@@ -2,9 +2,10 @@
 不支持 glBegin/End glPoint 类调用
 而支持 glBindBuffer/glDrawElements 类调用
 
-分为三种具体实现：
+分为四种具体实现：
 
 软件实现：使用C++和多线程完成渲染
+OpenGL实现：直接转发至OpenGL原始函数
 GLSL实现：使用shader完成
 OpenCL实现：使用OpenCL完成
 
@@ -31,10 +32,10 @@ glCopyTexSubImage2D	?
 glCullFace		NO/midd
 glDeleteBuffers         OK
 glDeleteTextures	NO/simple
-glDrawArrays 		PART
-glDrawElements 		WRONG
+glDrawArrays 		OK
+glDrawElements 		PART
 glFinish		NO/simple
-glFlush			NO/simple
+glFlush			OK
 glFrontFace 		?
 glFrustum         	OK
 glGenBuffers          	OK
@@ -44,11 +45,11 @@ glIsTexture		NO/simple
 glLight			NO/complex
 glLightModel		NO/complex
 glLineWidth 		?
-glLoadIdentity		NO/simple
+glLoadIdentity		OK
 glLoadMatrix		NO/simple
 glMaterial 		NO/complex
 glMatrixMode		OK
-glMultMatrix		NO/simple
+glMultMatrix		simple
 glNormal         	OK
 glNormalPointer         OK
 glOrtho         	OK
