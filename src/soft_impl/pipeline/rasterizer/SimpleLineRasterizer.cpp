@@ -45,7 +45,7 @@ namespace my_gl {
 		  int majorIndex=int(lineInfo.majorDim),
 		      nonMajorIndex=int(lineInfo.nonMajorDim);
 
-		  for (int counter=0;counter<lineInfo.getMajorDelta();
+		  for (int counter=1;counter<lineInfo.getMajorDelta();
 			    ++counter)
 		  {
 		       WindowCoordinates thisCoord;

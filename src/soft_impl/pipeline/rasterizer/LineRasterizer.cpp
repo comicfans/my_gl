@@ -107,7 +107,7 @@ namespace my_gl {
 		    thisCoord[nonMajorIndex]=coord1[nonMajorIndex];
 
 
-		    for(int majorValue=coord1[majorIndex];
+		    for(int majorValue=coord1[majorIndex]+1;
 			      majorValue<coord2[majorIndex];
 			      ++majorValue)
 		    {
@@ -137,6 +137,9 @@ namespace my_gl {
 		    (rawCoord2.normalizedCoord);
 
 
+	       //begin pixel does not need interpolate
+	       PointRasterizer::rasterizePoint(attributeGroupRefs[0], 
+			 _fragmentAttributeBuffer, rawCoord1.windowCoord);
 
 	       LineInfo rawLineInfo(rawCoord1.windowCoord,rawCoord2.windowCoord),
 			revert(rawLineInfo.revert());
@@ -160,6 +163,9 @@ namespace my_gl {
 			 this,attributeGroupRefs,
 			 *pCoord1,*pCoord2,*pLineInfo,
 			 _1,stepCallback);
+
+	       //do not forget the begin pixel 
+	       wrappedCallback(rawCoord1.windowCoord);
 
 	       if (rawLineInfo.isOnlyPoint())
 	       {
