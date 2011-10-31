@@ -139,14 +139,32 @@ namespace my_gl {
 			 return OUT_OF_PERCENT;
 		    }
 	       }
+	       double percentMin,percentMax;
 	       
+	       //inverse matrix is   result is 
+	       //|+/-1 ,  deltaX|	|deltaW*x1-deltaX*w1 (diff)|
+	       //|		|  x  	|			|
+	       //|-1   ,  deltaW|	|     0			|
+	       //
 	       //two cross point
-	       double wMax=-(deltaW*d1-deltaD*w1)/rowColumnMax,
-		     wMin=-(deltaW*d1-deltaD*w1)/rowColumnMin;
+	       //choose bigger delta to calculate percent
+	       double diff=deltaW*d1-deltaD*w1;
+	       if (abs(deltaW)>abs(deltaD))
+	       {
+		       double wMax=-diff/rowColumnMax,
+			      wMin=-diff/rowColumnMin;
 
-	       double percentMax=(wMax-point1.w())/deltaW,
-		     percentMin=(wMin-point1.w())/deltaW;
-	
+		       percentMax=(wMax-w1)/deltaW;
+		       percentMin=(wMin-w1)/deltaW;
+	       }
+	       else
+	       {
+		    double dMax= -diff/rowColumnMax,
+			   dMin=diff/rowColumnMin;
+		    percentMax=(dMax-d1)/deltaD;
+		    percentMin=(dMin-d1)/deltaD;
+	       }
+
 	       auto minMax=minmax(percentMin,percentMax);
 
 	       if (minMax.first>=0 && minMax.second<=1)
@@ -183,12 +201,12 @@ namespace my_gl {
 			 }
 		    }
 	       }
-	       
 
-    
+
+
 	  }
 
-	
+
      bool LineClipper::outOfClipVolume(const ClipPercent& clipResult)
      {
 	  return clipResult.first>clipResult.second;
@@ -196,12 +214,12 @@ namespace my_gl {
 
 
      LineClipper::ClipPercent LineClipper::mergePercent
-	     (const ClipPercent& lhs,const ClipPercent& rhs)
-	     {
-		  return {max(lhs.first,rhs.first),
-		       min(lhs.second,rhs.second)};
+	  (const ClipPercent& lhs,const ClipPercent& rhs)
+	  {
+	       return {max(lhs.first,rhs.first),
+		    min(lhs.second,rhs.second)};
 
-	     }
+	  }
 
      void LineClipper::elementClip
 	  (const ConstAttributeGroupRefList& originalAttributeGroups,
