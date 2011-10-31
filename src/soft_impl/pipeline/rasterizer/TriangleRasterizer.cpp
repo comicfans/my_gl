@@ -38,7 +38,7 @@ namespace my_gl {
      using std::sort;
      using std::placeholders::_1;
 
-     typedef vector<WindowCoordinates> EdgePoints;
+     typedef vector<WinCoord> EdgePoints;
 
      TriangleRasterizer::TriangleRasterizer
 	       (ViewportParameter& viewportParameter,
@@ -61,7 +61,7 @@ namespace my_gl {
 	  }
 
         static void append(EdgePoints& edgePoints,
-	       const WindowCoordinates& winCoord)
+	       const WinCoord& winCoord)
      {
 	  edgePoints.push_back(winCoord);
      }
@@ -188,7 +188,7 @@ namespace my_gl {
 			       LineInfo::DimAxis::X));	    
 
 		    leftIt=upper_bound(tryPos,edgePoints.end(),
-			      WindowCoordinates(scanLineY,INT_MAX));
+			      WinCoord(scanLineY,INT_MAX));
 	       }
 
 	  }

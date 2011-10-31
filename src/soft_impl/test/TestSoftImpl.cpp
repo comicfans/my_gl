@@ -36,6 +36,12 @@ static const float directLines[][2]={{10,10},{10,200},{200,200},{200,10},{150,5}
 
 void testLines()
 {
+     context.matrixMode(MatrixMode::MODEL_VIEW);
+
+     context.loadIdentity();
+
+     context.clear(COLOR_BUFFER_BIT);
+
      context.vertexPointer(2, DataType::FLOAT, 0, quodVertex);
 
 	context.color4f(0.5, 0.5, 0.5, 0.5);
@@ -51,6 +57,11 @@ void testLines()
 
 void testSpecialLine()
 {
+
+     context.matrixMode(MatrixMode::MODEL_VIEW);
+
+     context.loadIdentity();
+     context.clear(COLOR_BUFFER_BIT);
 
      context.vertexPointer(2, DataType::FLOAT, 0, directLines);
 
@@ -79,27 +90,45 @@ void init()
 	context.matrixMode(MatrixMode::MODEL_VIEW);
 
 	context.loadIdentity();
+
+	context.clearColor(0.5,0,0,0);
 }
 
 void testTriangles()
 {
 
-	context.vertexPointer(2,DataType::FLOAT,0,&stripVertex[0][0]);
+     context.matrixMode(MatrixMode::MODEL_VIEW);
+	  
+     context.color4f(0.5, 0.5, 0.5, 0.5);
+     for (int i=0; i<10; ++i)
+     {
+	  context.clear(COLOR_BUFFER_BIT);
 
-	context.color4f(0.5, 0.5, 0.5, 0.5);
+	  context.loadIdentity();
 
-	context.translatef(-30,0,0);
-	context.drawArrays(PrimitiveMode::TRIANGLE_STRIP,1,3);
+	  context.translatef(-10*i,-10*i,0);
+	  //context.rotatef(12,0,0,1);
 
-	context.flush();
+	  context.vertexPointer(2,DataType::FLOAT,0,&stripVertex[0][0]);
 
-	SDL_Delay(2000);
 
+	  context.drawArrays(PrimitiveMode::TRIANGLE_STRIP,1,3);
+	
+	  context.flush();
+
+	  SDL_Delay(200);
+
+     }
 
 }
 
 void testLineClip()
 {
+
+     context.matrixMode(MatrixMode::MODEL_VIEW);
+
+     context.loadIdentity();
+     context.clear(COLOR_BUFFER_BIT);
 
      context.vertexPointer(2, DataType::FLOAT, 0, directLines);
 
@@ -124,7 +153,10 @@ int main(int argc, char **argv)
 
      init();
 
-     testTriangles();
+    testTriangles();
+    testLines();
+    testLineClip();
+    testSpecialLine();
 
      return 0;
 }

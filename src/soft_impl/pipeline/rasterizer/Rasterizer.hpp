@@ -27,7 +27,7 @@
 #include "shader/VertexAttributeBuffer.hpp"
 
 #include "ViewportParameter.hpp"
-#include "WindowCoordinates.hpp"
+#include "WinCoord.hpp"
 
 namespace my_gl {
 
@@ -53,7 +53,7 @@ namespace my_gl {
 	       /** 
 		* @brief use this function to change viewport parameter
 		* make it as a super class function for that sub-class
-		* only need to calculate the WindowCoordinates but not 
+		* only need to calculate the WinCoord but not 
 		* need the viewport parameter
 		* 
 		* @param setValue
@@ -70,7 +70,7 @@ namespace my_gl {
 	       static int roundNearest(float value);
 
 	       static void viewportCorrect(Vec4& toCorrect,
-			 const WindowCoordinates& windowCoordinates);
+			 const WinCoord& windowCoordinates);
 
 
 	  protected:
@@ -91,7 +91,7 @@ namespace my_gl {
 	       virtual void elementRasterize
 		    (const ConstAttributeGroupRefList& attributeGroupRefs)=0;
 
-	       WindowCoordinates toWindowCoordinates
+	       WinCoord toWinCoord
 		    (const Vec4& normalizedDeviceCoordinates)const;
 
 

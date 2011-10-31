@@ -1,7 +1,7 @@
 /*
  * =====================================================================================
  *
- *       Filename:  WindowCoordinatesInterpolator.hpp
+ *       Filename:  WinCoordInterpolator.hpp
  *
  *    Description:  Interpolate value between window coordinates
  *
@@ -16,19 +16,27 @@
  * =====================================================================================
  */
 
+#ifndef WIN_COORD_INTERPOLATOR_HPP
+
+#define WIN_COORD_INTERPOLATOR_HPP
+
+
+
+
 #include "Interpolator.hpp"
 
 namespace my_gl {
 
-     class WindowCoordinatesInterpolator :public Interpolator{
+     class WinCoordInterpolator :public Interpolator{
      public:
-     	virtual ~WindowCoordinatesInterpolator ();
+     	virtual ~WinCoordInterpolator ();
      
      protected:
 	  virtual double getPercent(
 		    const CoordInfo& coord1,const CoordInfo& coord2,
 		    const LineInfo& lineInfo,
-		    const WindowCoordinates& toInterpolate)const;
+		    const WinCoord& toInterpolate)const;
      };
 	
 } /* my_gl */
+#endif /* end of include guard: WIN_COORD_INTERPOLATOR_HPP */

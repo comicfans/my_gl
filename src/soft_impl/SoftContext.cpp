@@ -39,7 +39,7 @@
 #include "pipeline/PrimitiveIndex.hpp"
 #include "pipeline/FrameBuffer.hpp"
 
-#include "pipeline/interpolator/WindowCoordinatesInterpolator.hpp"
+#include "pipeline/interpolator/WinCoordInterpolator.hpp"
 #include "pipeline/rasterizer/PointRasterizer.hpp"
 #include "pipeline/rasterizer/SimpleLineRasterizer.hpp"
 #include "pipeline/rasterizer/TriangleRasterizer.hpp"
@@ -102,7 +102,7 @@ namespace my_gl {
 	  _frameBufferPtr.reset(new 
 		    FrameBuffer(width,height));
 
-	  _interpolatorPtr.reset(new WindowCoordinatesInterpolator());
+	  _interpolatorPtr.reset(new WinCoordInterpolator());
 	  //init rasterizers
 
 	  _rasterizers.replace(int(PrimitiveMode::POINTS),

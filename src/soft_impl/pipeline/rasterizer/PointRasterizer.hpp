@@ -36,7 +36,7 @@ namespace my_gl {
 	static void rasterizePoint(
 		  const ConstAttributeGroupRef& attributeGroup,
 		  FragmentAttributeBuffer& fragmentAttributeBuffer,
-		  WindowCoordinates winCoord);
+		  WinCoord winCoord);
 
      protected:
 	  virtual void elementRasterize

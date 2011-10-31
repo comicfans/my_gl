@@ -108,10 +108,10 @@ namespace my_gl {
 	       return Rasterizer::roundNearest(value);
 	  }
 
-     WindowCoordinates Rasterizer::toWindowCoordinates
+     WinCoord Rasterizer::toWinCoord
 	  (const Vec4& normalizedDeviceCoordinates)const
 	  {
-	       WindowCoordinates ret;
+	       WinCoord ret;
 
 	       ret.first=viewportCorrectImpl(
 			 normalizedDeviceCoordinates.y(),
@@ -128,7 +128,7 @@ namespace my_gl {
 	  }
 
      void Rasterizer::viewportCorrect(Vec4& toCorrect,
-	       const WindowCoordinates& windowCoordinates)
+	       const WinCoord& windowCoordinates)
      {
 	  toCorrect[0]=windowCoordinates[0];
 	  toCorrect[1]=windowCoordinates[1];

@@ -23,7 +23,7 @@
 
 #include <SDL.h>
 
-#include "pipeline/interpolator/WindowCoordinatesInterpolator.hpp"
+#include "pipeline/interpolator/WinCoordInterpolator.hpp"
 #include "pipeline/rasterizer/SimpleLineRasterizer.hpp"
 #include "shader/FragmentAttributeBuffer.hpp"
 #include "pipeline/FrameBuffer.hpp"
@@ -37,7 +37,7 @@ using std::fill_n;
 using std::minmax;
 
 using namespace my_gl;
-WindowCoordinatesInterpolator interpolator;
+WinCoordInterpolator interpolator;
 
 int width=300,
     height=200;
@@ -59,7 +59,7 @@ class TestSimpleLineRasterizer:public  SimpleLineRasterizer
 		(parameter,interpolator,fragmentAttributeBuffer)
      {}
 
-	  static WindowCoordinates randWinCoord()
+	  static WinCoord randWinCoord()
 	  {
 		    int randX=rand()%width,
 			randY=rand()%height;
@@ -67,8 +67,8 @@ class TestSimpleLineRasterizer:public  SimpleLineRasterizer
 		    return {randY,randX};
 	  }
 
-	  static void writePixel(const WindowCoordinates& winCoord,
-		    const WindowCoordinates& beg,const WindowCoordinates& end)
+	  static void writePixel(const WinCoord& winCoord,
+		    const WinCoord& beg,const WinCoord& end)
 	  {
 
 	       auto minMaxFirst=minmax(beg.first,end.first);

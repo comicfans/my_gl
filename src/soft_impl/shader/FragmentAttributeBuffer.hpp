@@ -27,7 +27,7 @@
 #include <boost/multi_array.hpp>
 
 #include "common/Vec4.hpp"
-#include "pipeline/rasterizer/WindowCoordinates.hpp"
+#include "pipeline/rasterizer/WinCoord.hpp"
 
 
 namespace my_gl {
@@ -51,10 +51,10 @@ namespace my_gl {
 	  using SuperType::begin;
 	  using SuperType::end;
 
-	  AttributeGroupRef writeNewFragment(const WindowCoordinates& winCoord);
+	  AttributeGroupRef writeNewFragment(const WinCoord& winCoord);
 
 	  ConstAttributeGroupRef operator()
-	       (const WindowCoordinates& windowCoordinate)const;
+	       (const WinCoord& windowCoordinate)const;
 
 	  ConstAttributeGroupRef operator()
 	       (size_t y,size_t x)const;
@@ -67,13 +67,13 @@ namespace my_gl {
 	  void clear();
 
 	  //get only active fragments
-	  const vector<WindowCoordinates>& getActiveFragWinCoords()const;
+	  const vector<WinCoord>& getActiveFragWinCoords()const;
 
      private:
 
-	  vector<WindowCoordinates> _activeFragWinCoords;
+	  vector<WinCoord> _activeFragWinCoords;
 
-	  bool inRange(const WindowCoordinates& winCoord)const;
+	  bool inRange(const WinCoord& winCoord)const;
 
 
      };

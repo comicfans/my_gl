@@ -36,7 +36,7 @@ namespace my_gl {
 	void PointRasterizer::rasterizePoint(
 		  const ConstAttributeGroupRef& attributeGroup,
 		  FragmentAttributeBuffer& fragmentAttributeBuffer,
-		  WindowCoordinates winCoord)
+		  WinCoord winCoord)
 	{
 	  //TODO currently point size is not implement
 
@@ -62,7 +62,7 @@ namespace my_gl {
 	  //do perspective division first
 	  coordinates/=coordinates.w();
 
-	  auto winCoord=toWindowCoordinates(coordinates);
+	  auto winCoord=toWinCoord(coordinates);
 
 	  rasterizePoint(attributeGroupRefs[0],
 		    _fragmentAttributeBuffer,winCoord);

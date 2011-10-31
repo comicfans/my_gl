@@ -1,4 +1,4 @@
 INCLUDE_DIRECTORIES(../../)
 ADD_LIBRARY(Interpolator Interpolator.cpp 
      CoordInfo.cpp
-     WindowCoordinatesInterpolator.cpp)
+     WinCoordInterpolator.cpp)

@@ -21,7 +21,7 @@
 #include <SDL.h>
 
 #include "pipeline/FrameBuffer.hpp"
-#include "pipeline/rasterizer/WindowCoordinates.hpp"
+#include "pipeline/rasterizer/WinCoord.hpp"
 namespace my_gl {
 
      SDLPixelDrawer::~SDLPixelDrawer()
@@ -130,7 +130,7 @@ namespace my_gl {
 	       for (size_t x=0; x<_width; ++x)
 	       {
 		    const Vec4& color=frameBuffer(
-			      WindowCoordinates(y,x));
+			      WinCoord(y,x));
 
 		    Uint32 packedValue=
 			 SDL_MapRGB(_screenPtr->format,

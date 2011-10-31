@@ -29,7 +29,7 @@ namespace my_gl {
 
      using boost::multi_array;
 
-     class WindowCoordinates;
+     class WinCoord;
 
      class FrameBuffer :protected multi_array<Vec4,2>{
      public:
@@ -38,11 +38,11 @@ namespace my_gl {
 
 	  FrameBuffer (size_t width,size_t height);
 
-	  Vec4& operator()(const WindowCoordinates& winCoord);
+	  Vec4& operator()(const WinCoord& winCoord);
 
 	  Vec4& operator()(size_t y,size_t x);
 
-	  const Vec4& operator()(const WindowCoordinates& winCoord)const;
+	  const Vec4& operator()(const WinCoord& winCoord)const;
 
 	  size_t width()const;
 

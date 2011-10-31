@@ -22,14 +22,14 @@
 
 namespace my_gl {
 
-     struct WindowCoordinates;
+     struct WinCoord;
 
      struct LineInfo {
 
 	  enum class DimAxis{Y,X};
 
-	  LineInfo(const WindowCoordinates& coord1,
-		    const WindowCoordinates& coord2);
+	  LineInfo(const WinCoord& coord1,
+		    const WinCoord& coord2);
 
 	  LineInfo(int deltaYSet,int deltaXSet,DimAxis majorDimSet);
 

@@ -44,15 +44,15 @@ namespace my_gl {
 	
 	  void rasterizeSpecial(
 		    const ConstAttributeGroupRefList& attributeGroupRefs,
-		  const WindowCoordinates& winCoord1,
-		  const WindowCoordinates& winCoord2,
+		  const WinCoord& winCoord1,
+		  const WinCoord& winCoord2,
 		  const LineInfo& lineInfo);
 	
 	  /** 
 	   * @brief call this function to tell callee
 	   * a new window pixel is generated
 	   */
-	  typedef function<void(const WindowCoordinates&)> StepCallback;
+	  typedef function<void(const WinCoord&)> StepCallback;
 
 	 
 	  virtual ~LineRasterizer ();
@@ -74,8 +74,8 @@ namespace my_gl {
 	      StepCallback stepCallback=StepCallback());
 
 	virtual void rasterize
-	     (const WindowCoordinates& winCoord1,
-	      const WindowCoordinates& winCoord2,
+	     (const WinCoord& winCoord1,
+	      const WinCoord& winCoord2,
 	      const LineInfo& lineInfo,
 	      StepCallback stepCallback)=0;
 
@@ -88,7 +88,7 @@ namespace my_gl {
 		  const ConstAttributeGroupRefList& attributeGroupRefs,
 		const CoordInfo& coordInfo1,const CoordInfo& coordInfo2,
 		const LineInfo& lineInfo,
-		const WindowCoordinates& winCoord,
+		const WinCoord& winCoord,
 		StepCallback stepCallback=StepCallback());
 
 

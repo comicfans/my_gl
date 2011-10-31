@@ -25,7 +25,7 @@
 namespace my_gl {
 
      struct Vec4;
-     struct WindowCoordinates;
+     struct WinCoord;
 
      struct CoordInfo;
      struct LineInfo;
@@ -58,7 +58,7 @@ namespace my_gl {
 	  virtual double getPercent(
 		    const CoordInfo& coord1,const CoordInfo& coord2,
 		    const LineInfo& lineInfo,
-		    const WindowCoordinates& toInterpolate)const=0;
+		    const WinCoord& toInterpolate)const=0;
 	
      };
 	

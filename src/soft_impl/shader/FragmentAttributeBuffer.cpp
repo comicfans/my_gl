@@ -39,14 +39,14 @@ namespace my_gl {
      }
 
      bool FragmentAttributeBuffer::inRange
-	  (const WindowCoordinates& winCoord)const
+	  (const WinCoord& winCoord)const
      {
 	  return winCoord.first>=0 && winCoord.first<height()
 	       &&winCoord.second>=0&& winCoord.second<width();
      }
 
      AttributeGroupRef FragmentAttributeBuffer::writeNewFragment(
-	       const WindowCoordinates& winCoord)
+	       const WinCoord& winCoord)
      {
 	  if (inRange(winCoord))
 	  {
@@ -62,7 +62,7 @@ namespace my_gl {
 
 	  }
      ConstAttributeGroupRef FragmentAttributeBuffer::operator()
-	  (const WindowCoordinates& windowCoordinate)const
+	  (const WinCoord& windowCoordinate)const
 	  {
 	       return (*this)
 		    (windowCoordinate.first,windowCoordinate.second);
@@ -88,7 +88,7 @@ namespace my_gl {
 	  _activeFragWinCoords.clear();
      }
 
-     const vector<WindowCoordinates>& FragmentAttributeBuffer
+     const vector<WinCoord>& FragmentAttributeBuffer
 	  ::getActiveFragWinCoords()const
 	  {
 	       return _activeFragWinCoords;

@@ -22,7 +22,7 @@
 
 #include "common/Vec4.hpp"
 
-#include "pipeline/rasterizer/WindowCoordinates.hpp"
+#include "pipeline/rasterizer/WinCoord.hpp"
 
 
 namespace my_gl {
@@ -36,7 +36,7 @@ namespace my_gl {
 	  Vec4 normalizedCoord;
 
 	  //undefined value,need manual init
-	  WindowCoordinates windowCoord;
+	  WinCoord windowCoord;
 
      };
 	

@@ -16,9 +16,9 @@
  * =====================================================================================
  */
 
-#ifndef WINDOW_COORDINATES_HPP
+#ifndef WIN_COORD_HPP
 
-#define WINDOW_COORDINATES_HPP
+#define WIN_COORD_HPP
 
 #include <utility>
 
@@ -28,12 +28,12 @@ namespace my_gl {
      
 
      //first is y ,second is x
-     struct WindowCoordinates :public std::pair<int,int>{
-	  WindowCoordinates(int y=0,int x=0);
+     struct WinCoord :public std::pair<int,int>{
+	  WinCoord(int y=0,int x=0);
 	  int& operator[](int index);
 	  const int& operator[](int index)const;
      } /* optional variable list */;
 	
 } /* my_gl */
 
-#endif /* end of include guard: WINDOW_COORDINATES_HPP */
+#endif /* end of include guard: WIN_COORD_HPP */

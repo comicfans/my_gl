@@ -26,7 +26,7 @@
 #include "pipeline/interpolator/CoordInfo.hpp"
 #include "shader/FragmentAttributeBuffer.hpp"
 #include "LineInfo.hpp"
-#include "WindowCoordinates.hpp"
+#include "WinCoord.hpp"
 
 
 
@@ -52,7 +52,7 @@ namespace my_gl {
 	       (const ConstAttributeGroupRefList& attributeGroupRefs,
 		const CoordInfo& coord1,const CoordInfo& coord2,
 		const LineInfo& lineInfo,
-		const WindowCoordinates& winCoord,
+		const WinCoord& winCoord,
 		StepCallback /* ignored */)
 	       {
 		    auto attributeGroupRef=_fragmentAttributeBuffer
@@ -77,7 +77,7 @@ namespace my_gl {
 	     (const ConstAttributeGroupRefList& attributeGroupRefs,
 		const CoordInfo& coord1,const CoordInfo& coord2,
 		const LineInfo& lineInfo,
-		const WindowCoordinates& winCoord,
+		const WinCoord& winCoord,
 		StepCallback stepCallback)
 	     {
 		  groupAction<false>(attributeGroupRefs,
@@ -90,8 +90,8 @@ namespace my_gl {
 	 * @brief rasterize horizontal or vertical line
 	 */
 	static void rasterizeSpecialImpl(
-		  const WindowCoordinates& coord1,
-		  const WindowCoordinates& coord2,
+		  const WinCoord& coord1,
+		  const WinCoord& coord2,
 		  const LineInfo& lineInfo, 
 		  LineRasterizer::StepCallback stepCallback)
 	
@@ -99,7 +99,7 @@ namespace my_gl {
 
 		    //draw special line
 			 
-		    WindowCoordinates thisCoord;
+		    WinCoord thisCoord;
 
 		    int majorIndex=int(lineInfo.majorDim),
 			nonMajorIndex=int(lineInfo.nonMajorDim);
@@ -130,10 +130,10 @@ namespace my_gl {
 	       CoordInfo rawCoord1(homogenousCoord1),
 			 rawCoord2(homogenousCoord2);
 
-	       rawCoord1.windowCoord=toWindowCoordinates
+	       rawCoord1.windowCoord=toWinCoord
 		    (rawCoord1.normalizedCoord);
 
-	       rawCoord2.windowCoord=toWindowCoordinates
+	       rawCoord2.windowCoord=toWinCoord
 		    (rawCoord2.normalizedCoord);
 
 
@@ -196,8 +196,8 @@ namespace my_gl {
 		
 	void LineRasterizer::rasterizeSpecial
 	     (const ConstAttributeGroupRefList& attributeGroupRefs,
-	      const WindowCoordinates& winCoord1,
-	      const WindowCoordinates& winCoord2,
+	      const WinCoord& winCoord1,
+	      const WinCoord& winCoord2,
 	      const LineInfo& lineInfo)
 	{
 

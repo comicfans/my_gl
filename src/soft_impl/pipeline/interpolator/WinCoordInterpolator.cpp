@@ -1,7 +1,7 @@
 /*
  * =====================================================================================
  *
- *       Filename:  WindowCoordinatesInterpolator.cpp
+ *       Filename:  WinCoordInterpolator.cpp
  *
  *    Description:  
  *
@@ -16,20 +16,20 @@
  * =====================================================================================
  */
 
-#include "WindowCoordinatesInterpolator.hpp"
+#include "WinCoordInterpolator.hpp"
 
 #include "CoordInfo.hpp"
 
 #include "pipeline/rasterizer/LineInfo.hpp"
-#include "pipeline/rasterizer/WindowCoordinates.hpp"
+#include "pipeline/rasterizer/WinCoord.hpp"
 
 namespace my_gl {
 
-     WindowCoordinatesInterpolator::~WindowCoordinatesInterpolator(){}
-	  double WindowCoordinatesInterpolator::getPercent(
+     WinCoordInterpolator::~WinCoordInterpolator(){}
+	  double WinCoordInterpolator::getPercent(
 		    const CoordInfo& coord1,const CoordInfo& coord2,
 		    const LineInfo& lineInfo,
-		    const WindowCoordinates& toInterpolate)const
+		    const WinCoord& toInterpolate)const
 	       {
 		    int index=int(lineInfo.majorDim);
 

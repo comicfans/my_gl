@@ -19,7 +19,7 @@
 #include "FrameBuffer.hpp"
 
 #include <algorithm>
-#include "rasterizer/WindowCoordinates.hpp"
+#include "rasterizer/WinCoord.hpp"
 
 namespace my_gl {
 
@@ -32,7 +32,7 @@ namespace my_gl {
      {}
 
 	  Vec4& FrameBuffer::operator()
-	       (const WindowCoordinates& winCoord)
+	       (const WinCoord& winCoord)
 	  {
 	       return (*this)(winCoord.first,winCoord.second);
 	  }
@@ -43,7 +43,7 @@ namespace my_gl {
 	  }
 
 	  const Vec4& FrameBuffer::operator()
-	       (const WindowCoordinates& winCoord)const
+	       (const WinCoord& winCoord)const
 	  {
 	       return (*this)[winCoord.first][winCoord.second];
 	  }

@@ -35,8 +35,8 @@ namespace my_gl {
      SimpleLineRasterizer::~SimpleLineRasterizer(){}
 
 	void SimpleLineRasterizer::rasterize
-	     (const WindowCoordinates& coord1,
-	      const WindowCoordinates& coord2,
+	     (const WinCoord& coord1,
+	      const WinCoord& coord2,
 	      const LineInfo& lineInfo,
 	      StepCallback stepCallback)
 	     {
@@ -48,7 +48,7 @@ namespace my_gl {
 		  for (int counter=1;counter<lineInfo.getMajorDelta();
 			    ++counter)
 		  {
-		       WindowCoordinates thisCoord;
+		       WinCoord thisCoord;
 		       thisCoord[majorIndex]=
 			    coord1[majorIndex]+counter;
 

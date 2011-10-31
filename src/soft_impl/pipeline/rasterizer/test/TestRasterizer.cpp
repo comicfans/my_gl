@@ -20,7 +20,7 @@
 #include "pipeline/clipper/PointClipper.hpp"
 #include "common/test/TestFunction.hpp"
 #include "common/Vec4.hpp"
-#include "pipeline/interpolator/WindowCoordinatesInterpolator.hpp"
+#include "pipeline/interpolator/WinCoordInterpolator.hpp"
 #include "shader/FragmentAttributeBuffer.hpp"
 
 using namespace my_gl;
@@ -34,7 +34,7 @@ void testRoundNearest()
      assert(Rasterizer::roundNearest(3.6)==4);
 }
 
-WindowCoordinatesInterpolator interpolator;
+WinCoordInterpolator interpolator;
 
 int width=300,
     height=200;
@@ -56,7 +56,7 @@ class ViewportTest:public Rasterizer
 
 		    if (PointClipper::inClipVolume(vec4))
 		    {
-			 auto winCoord=toWindowCoordinates(vec4/vec4.w());
+			 auto winCoord=toWinCoord(vec4/vec4.w());
 
 			 assert(winCoord.first>=0 && winCoord.first<=height);
 			 assert(winCoord.second>=0 && winCoord.second<=width);

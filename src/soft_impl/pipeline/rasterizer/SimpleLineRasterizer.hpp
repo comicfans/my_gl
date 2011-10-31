@@ -36,8 +36,8 @@ namespace my_gl {
      protected:
 
 	virtual void rasterize
-	     (const WindowCoordinates& coord1,
-	      const WindowCoordinates& coord2,
+	     (const WinCoord& coord1,
+	      const WinCoord& coord2,
 	      const LineInfo& lineInfo,
 	      StepCallback stepCallback);
 

@@ -22,7 +22,7 @@
 #include <cmath>
 #include <cassert>
 
-#include "WindowCoordinates.hpp"
+#include "WinCoord.hpp"
 
 namespace my_gl {
 
@@ -30,8 +30,8 @@ namespace my_gl {
      using std::max;
      using std::abs;
 
-     LineInfo::LineInfo(const WindowCoordinates& coord1,
-		    const WindowCoordinates& coord2)
+     LineInfo::LineInfo(const WinCoord& coord1,
+		    const WinCoord& coord2)
 	  :
 	  deltaY(coord2.first-coord1.first),
 	  deltaX(coord2.second-coord1.second),

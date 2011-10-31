@@ -1,7 +1,7 @@
 /*
  * =====================================================================================
  *
- *       Filename:  WindowCoordinates.cpp
+ *       Filename:  WinCoord.cpp
  *
  *    Description:  
  *
@@ -16,22 +16,22 @@
  * =====================================================================================
  */
 
-#include "WindowCoordinates.hpp"
+#include "WinCoord.hpp"
 
 namespace my_gl {
 	
-     WindowCoordinates::WindowCoordinates(int y,int x)
+     WinCoord::WinCoord(int y,int x)
 	  :pair<int,int>(y,x)
 	  {
 
 	  }
-	  int& WindowCoordinates::operator[](int index)
+	  int& WinCoord::operator[](int index)
 	  {
 	       return index==0?first:second;
 
 	  }
 
-	  const int& WindowCoordinates::operator[](int index)const{
+	  const int& WinCoord::operator[](int index)const{
 	       return index==0?first:second;
 	  }
 
