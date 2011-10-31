@@ -32,6 +32,8 @@ namespace my_gl {
 	     (const ClippedPrimitiveGroup& rhs)
 	     :_originalVertexAttribute
 	      (rhs._originalVertexAttribute),
+	      _clipGeneratedVertexAttribute
+	      (rhs._clipGeneratedVertexAttribute),
 	      _mixedIndex(rhs._mixedIndex)
 	     {}
 
