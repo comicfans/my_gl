@@ -61,6 +61,8 @@ namespace my_gl {
 	       _clearColor=Vec4(r,g,b,a);
 	  }
 
+	  FrameBuffer::~FrameBuffer(){}
+
 	  void FrameBuffer::clear()
 	  {
 	       fill_n(origin(),width()*height(),_clearColor);
