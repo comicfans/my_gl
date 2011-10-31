@@ -14,5 +14,6 @@ TARGET_LINK_LIBRARIES(testPointClipper
      Shader
      )
 
+
 ADD_TEST(LineClipperTest testLineClipper)
 ADD_TEST(PointClipperTest testPointClipper)
