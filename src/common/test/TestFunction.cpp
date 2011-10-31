@@ -92,5 +92,16 @@ namespace my_gl {
 
      return ret;
 }
+Vec4 randVec()
+{
+     Vec4 ret;
+
+     for (int i=0; i<Vec4::LENGTH; ++i)
+     {
+	  ret[i]=myRand();
+     }
+
+     return ret;
+}
 
 } /* my_gl */

@@ -41,18 +41,6 @@ int width=300,
 
 FragmentAttributeBuffer fragmentAttributeBuffer(width,height,1);
 
-inline static Vec4 randVec()
-{
-     Vec4 ret;
-
-     for (int i=0; i<Vec4::LENGTH; ++i)
-     {
-	  ret[i]=myRand();
-     }
-
-     return ret;
-}
-	       
 ViewportParameter parameter{0,0,width,height};
 
 class ViewportTest:public Rasterizer

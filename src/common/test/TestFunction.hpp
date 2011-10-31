@@ -33,6 +33,8 @@ namespace my_gl {
      class Matrix;
      bool assertEqual(const Matrix& lhs,const Matrix& rhs,unsigned errorFactor=100);
 	
+
+     Vec4 randVec();
      int myRand();
 } /* my_gl */
 
