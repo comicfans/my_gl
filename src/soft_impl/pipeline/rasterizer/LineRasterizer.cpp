@@ -96,6 +96,7 @@ namespace my_gl {
 		  LineRasterizer::StepCallback stepCallback)
 	
 	{
+
 		    //draw special line
 			 
 		    WindowCoordinates thisCoord;
@@ -106,7 +107,7 @@ namespace my_gl {
 		    thisCoord[nonMajorIndex]=coord1[nonMajorIndex];
 
 
-		    for(int majorValue=coord1[majorIndex]+1;
+		    for(int majorValue=coord1[majorIndex];
 			      majorValue<coord2[majorIndex];
 			      ++majorValue)
 		    {
@@ -136,12 +137,7 @@ namespace my_gl {
 		    (rawCoord2.normalizedCoord);
 
 
-	       //begin point need no interpolate;
-	       PointRasterizer::rasterizePoint
-			 (attributeGroupRefs[0],
-			  _fragmentAttributeBuffer,
-			  rawCoord1.windowCoord);
-	
+
 	       LineInfo rawLineInfo(rawCoord1.windowCoord,rawCoord2.windowCoord),
 			revert(rawLineInfo.revert());
 
