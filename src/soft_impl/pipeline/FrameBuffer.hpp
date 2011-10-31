@@ -48,6 +48,16 @@ namespace my_gl {
 
 	  size_t height()const;
 
+	  void clearColor(float r,float g,float b,float a);
+
+	  virtual void clear();
+
+	  virtual ~FrameBuffer();
+
+     private:
+
+	  Vec4 _clearColor;
+
      };
 	
 } /* my_gl */

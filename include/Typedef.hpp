@@ -24,6 +24,12 @@ namespace my_gl {
 	
      typedef unsigned Name;
 
+     typedef unsigned FrameBufferMask;
+
+     const FrameBufferMask COLOR_BUFFER_BIT=1;
+
+     const FrameBufferMask DEPTH_BUFFER_BIT=2;
+
     const Name RESERVED=0;
 } /* my_gl */
 

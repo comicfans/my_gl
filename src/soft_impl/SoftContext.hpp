@@ -163,6 +163,11 @@ namespace my_gl {
 	//glLoadIdentity
 	virtual void loadIdentity();
 
+	//glClearColor
+	virtual void clearColor(float r,float g,float b,float a);
+
+	virtual void clear(FrameBufferMask frameBufferMask);
+
 	ObjectNameManager& getObjectNameManager();
 
 	static SoftContext& getInstance();

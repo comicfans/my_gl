@@ -149,6 +149,24 @@ namespace my_gl {
 	  _arrayBufferObjectManager.deleteBuffers(size,names);
      }
 
+     void SoftContext::clearColor(float r,float g,float b,float a)
+     {
+	  _frameBufferPtr->clearColor(r,g,b,a);
+     }
+
+     void SoftContext::clear(FrameBufferMask frameBufferMask)
+     {
+	  //currently,only color buffer bit clear is supported
+
+	  if (frameBufferMask|COLOR_BUFFER_BIT)
+	  {
+	       //may be refactor to use ptr_array 
+	       //to store ColorFrameBuffer and 
+	       //DepthFrameBuffer
+	       _frameBufferPtr->clear();
+	  }
+     }
+
      bool SoftContext::isBuffer(Name name) const 
      {
 	  return _arrayBufferObjectManager.isBuffer(name);

@@ -17,12 +17,15 @@
  */
 
 #include "FrameBuffer.hpp"
+
+#include <algorithm>
 #include "rasterizer/WindowCoordinates.hpp"
 
 namespace my_gl {
 
 
      using boost::extents;
+     using std::fill_n;
 
      FrameBuffer::FrameBuffer (size_t width,size_t height):
 	  SuperType(extents[height][width])
@@ -51,5 +54,15 @@ namespace my_gl {
 	  size_t FrameBuffer::height()const
 	  {
 	       return shape()[0];
+	  }
+
+	  void FrameBuffer::clearColor(float r,float g,float b,float a)
+	  {
+	       _clearColor=Vec4(r,g,b,a);
+	  }
+
+	  void FrameBuffer::clear()
+	  {
+	       fill_n(origin(),width()*height(),_clearColor);
 	  }
 } /* my_gl */
