@@ -379,6 +379,8 @@ namespace my_gl {
 
 	void SoftContext::rasterizePrimitive(PrimitiveMode catalog)
 	{
+
+	     _fragmentAttributeBufferPtr->clear();
 	     //choose rasterizer
 
 	     Rasterizer& rasterizer=_rasterizers[int(catalog)];

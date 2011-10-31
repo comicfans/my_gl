@@ -120,6 +120,8 @@ namespace my_gl {
 	//glLoadIdentity
 	virtual void loadIdentity()=0;
 
+	virtual void clear(FrameBufferMask frameBufferMask)=0;
+
 	virtual ~Context();
      };
 	
