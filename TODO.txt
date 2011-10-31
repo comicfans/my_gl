@@ -21,8 +21,8 @@ glBindBuffer		OK
 glBindTexture		NO/as bindBuffer
 glBufferData         	OK
 glBufferSubData         OK
-glClear			NO/simple
-glClearColor		NO/simple
+glClear			OK
+glClearColor		OK
 glClearDepth		NO/simple
 glClipPlane ?		NO/complex
 glColor         	OK
@@ -34,7 +34,7 @@ glDeleteBuffers         OK
 glDeleteTextures	NO/simple
 glDrawArrays 		OK
 glDrawElements 		PART
-glFinish		NO/simple
+glFinish		NOT NEED?
 glFlush			OK
 glFrontFace 		?
 glFrustum         	OK
@@ -68,19 +68,18 @@ glViewPort         	OK
 
 total	:48
 
-OK 	:20	40%
-simple	:11
+OK 	:25	52%
+simple	:6
 ?	:10
 complex	:5
-WRONG	:1
+WRONG	:0
 PART	:1
-MIDD	:1
 
 
-data bind		:OK
-vertex prepare		:WRONG(unneeded vertex)
+data bind		:OK (buffer object need test)
+vertex prepare		:OK (drawElements need test)
 vertex shader		:PART (no light support)
-primitive assemble:	:PART (wrong PrimitiveIndex)
+primitive assemble:	:OK (all PrimitiveMode need test)
 rasterize		:OK
 coord process		:PART (z,1/w process)
 interpolate		:PART (no normalizedDevice/projective correct interpolate)
@@ -89,6 +88,5 @@ framebuffer		:PART (no z-buffer support)
 
 
 
-正确实现顶点变换：现有实现错误 PrimitiveIndex 假定绑定数据全部变换，实际上仅有PrimitiveIndex指定的顶点经过变换
 列主序的矩阵实现：现有实现为行主序，与OpenGL不一致，不便使用
 合并 useVertexNumber 到 IndexProvider ?
