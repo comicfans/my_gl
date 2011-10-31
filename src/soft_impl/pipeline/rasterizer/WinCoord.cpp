@@ -18,21 +18,44 @@
 
 #include "WinCoord.hpp"
 
+#include <cassert>
+#include <utility>
+
 namespace my_gl {
 	
-     WinCoord::WinCoord(int y,int x)
-	  :pair<int,int>(y,x)
-	  {
+     using std::make_pair;
 
+     WinCoord::WinCoord(int x,int y,float z)
+	  {
+	       _xy[0]=x;
+	       _xy[1]=y;
+	       _z=z;
 	  }
+
 	  int& WinCoord::operator[](int index)
 	  {
-	       return index==0?first:second;
-
+	       assert(index>=0 && index<2);
+	       return _xy[index];
 	  }
 
 	  const int& WinCoord::operator[](int index)const{
-	       return index==0?first:second;
+	       assert(index>=0 && index<2);
+	       return _xy[index];
 	  }
 
+	  int WinCoord::x()const{return _xy[0];}
+	  int& WinCoord::x(){return _xy[0];}
+
+	  int WinCoord::y()const{return _xy[1];}
+	  int& WinCoord::y(){return _xy[1];}
+
+
+	  float WinCoord::z()const{return _z;}
+	  float& WinCoord::z(){return _z;}
+
+	  bool WinCoord::operator<(const WinCoord& rhs)const
+	  {
+	       return make_pair(y(),x())<
+		    make_pair(rhs.y(),rhs.x());
+	  }
 } /* my_gl */

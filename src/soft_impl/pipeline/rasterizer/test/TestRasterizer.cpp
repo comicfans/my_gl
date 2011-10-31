@@ -58,8 +58,8 @@ class ViewportTest:public Rasterizer
 		    {
 			 auto winCoord=toWinCoord(vec4/vec4.w());
 
-			 assert(winCoord.first>=0 && winCoord.first<=height);
-			 assert(winCoord.second>=0 && winCoord.second<=width);
+			 assert(winCoord.y()>=0 && winCoord.y()<=height);
+			 assert(winCoord.x()>=0 && winCoord.x()<=width);
 		    }
 		    
 	       }

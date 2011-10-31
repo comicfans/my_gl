@@ -130,7 +130,7 @@ namespace my_gl {
 	       for (size_t x=0; x<_width; ++x)
 	       {
 		    const Vec4& color=frameBuffer(
-			      WinCoord(y,x));
+			      WinCoord(x,y));
 
 		    Uint32 packedValue=
 			 SDL_MapRGB(_screenPtr->format,

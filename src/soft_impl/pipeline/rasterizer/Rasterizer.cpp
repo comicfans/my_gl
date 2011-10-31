@@ -113,13 +113,13 @@ namespace my_gl {
 	  {
 	       WinCoord ret;
 
-	       ret.first=viewportCorrectImpl(
+	       ret.y()=viewportCorrectImpl(
 			 normalizedDeviceCoordinates.y(),
 			 _viewportParameter.y,
 			 _viewportParameter.height);
 
 
-	       ret.second=viewportCorrectImpl(
+	       ret.x()=viewportCorrectImpl(
 			 normalizedDeviceCoordinates.x(),
 			 _viewportParameter.x,
 			 _viewportParameter.width);

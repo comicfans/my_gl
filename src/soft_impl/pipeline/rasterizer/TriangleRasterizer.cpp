@@ -112,8 +112,8 @@ namespace my_gl {
 	       //back is biggest y,x
 
 	       //skip point only scan line
-	       const int yMin=edgePoints.front().first,
-		   yMax=edgePoints.back().first;
+	       const int yMin=edgePoints.front().y(),
+		   yMax=edgePoints.back().y();
 
 	       auto leftIt=edgePoints.begin();
 	       
@@ -144,7 +144,7 @@ namespace my_gl {
 			      break;
 			 }
 
-			 if (tryPos->first!=leftIt->first)
+			 if (tryPos->y()!=leftIt->y())
 			 {
 			      //this line is point or situation 2)
 			      nextLine=true;
@@ -152,7 +152,7 @@ namespace my_gl {
 			      break;
 			 }
 			 
-			 if (tryPos->second-leftIt->second<=1)
+			 if (tryPos->x()-leftIt->x()<=1)
 			 {
 			      //neighbor left pixel 4)
 			      leftIt=tryPos;
@@ -173,6 +173,9 @@ namespace my_gl {
 			 continue;
 		    }
 
+		    assert(leftIt->y()==tryPos->y());
+		    assert(leftIt->x()<=tryPos->x());
+
 		    ConstAttributeGroupRefList leftRightAttributes(2);
 
 		    leftRightAttributes.push_back
@@ -183,12 +186,12 @@ namespace my_gl {
 		    
 		    _pLineRasterizer->rasterizeSpecial
 			 (leftRightAttributes,*leftIt,*tryPos,
-			  //delta y=0,MajorDim=x
-			  LineInfo(0,tryPos->second-leftIt->second,
+			  //MajorDim=x,delta y=0
+			  LineInfo(tryPos->x()-leftIt->x(),0,
 			       LineInfo::DimAxis::X));	    
 
 		    leftIt=upper_bound(tryPos,edgePoints.end(),
-			      WinCoord(scanLineY,INT_MAX));
+			      WinCoord(INT_MAX,scanLineY));
 	       }
 
 	  }

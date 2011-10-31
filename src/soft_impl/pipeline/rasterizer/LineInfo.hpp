@@ -26,12 +26,12 @@ namespace my_gl {
 
      struct LineInfo {
 
-	  enum class DimAxis{Y,X};
+	  enum class DimAxis{X,Y};
 
 	  LineInfo(const WinCoord& coord1,
 		    const WinCoord& coord2);
 
-	  LineInfo(int deltaYSet,int deltaXSet,DimAxis majorDimSet);
+	  LineInfo(int deltaXSet,int deltaYSet,DimAxis majorDimSet);
 
 	  LineInfo(const LineInfo& rhs);
 
@@ -43,8 +43,8 @@ namespace my_gl {
 	   */
 	  LineInfo revert()const;
 
-	  const int deltaY;
 	  const int deltaX;
+	  const int deltaY;
 
 	  const DimAxis majorDim;
 	  const DimAxis nonMajorDim;

@@ -34,10 +34,10 @@ namespace my_gl {
 	  Vec4& FrameBuffer::operator()
 	       (const WinCoord& winCoord)
 	  {
-	       return (*this)(winCoord.first,winCoord.second);
+	       return (*this)[winCoord.y()][winCoord.x()];
 	  }
 
-	  Vec4& FrameBuffer::operator()(size_t y,size_t x)
+	  Vec4& FrameBuffer::operator()(size_t x,size_t y)
 	  {
 	       return (*this)[y][x];
 	  }
@@ -45,7 +45,7 @@ namespace my_gl {
 	  const Vec4& FrameBuffer::operator()
 	       (const WinCoord& winCoord)const
 	  {
-	       return (*this)[winCoord.first][winCoord.second];
+	       return (*this)[winCoord.y()][winCoord.x()];
 	  }
 
 	  size_t FrameBuffer::width()const

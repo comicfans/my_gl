@@ -26,7 +26,7 @@
 #include "pipeline/interpolator/WinCoordInterpolator.hpp"
 #include "pipeline/rasterizer/SimpleLineRasterizer.hpp"
 #include "shader/FragmentAttributeBuffer.hpp"
-#include "pipeline/FrameBuffer.hpp"
+#include "pipeline/ColorBuffer.hpp"
 #include "SDLPixelDrawer.hpp"
 #include "pipeline/rasterizer/LineInfo.hpp"
 
@@ -46,7 +46,7 @@ FragmentAttributeBuffer fragmentAttributeBuffer(width,height,1);
 
 ViewportParameter parameter{0,0,width,height};
 
-FrameBuffer frameBuffer(width,height);
+ColorBuffer frameBuffer(width,height);
 
 SDLPixelDrawer pixelDrawer;
 
@@ -64,22 +64,22 @@ class TestSimpleLineRasterizer:public  SimpleLineRasterizer
 		    int randX=rand()%width,
 			randY=rand()%height;
 
-		    return {randY,randX};
+		    return {randX,randY};
 	  }
 
 	  static void writePixel(const WinCoord& winCoord,
 		    const WinCoord& beg,const WinCoord& end)
 	  {
 
-	       auto minMaxFirst=minmax(beg.first,end.first);
+	       auto minMaxFirst=minmax(beg.y(),end.y());
 
-	       assert(winCoord.first>=minMaxFirst.first && 
-			 winCoord.first<=minMaxFirst.second);
+	       assert(winCoord.y()>=minMaxFirst.first && 
+			 winCoord.y()<=minMaxFirst.second);
 
-	       auto minMaxSecond=minmax(beg.second,end.second);
+	       auto minMaxSecond=minmax(beg.x(),end.x());
 
-	       assert(winCoord.second>=minMaxSecond.first && 
-			 winCoord.second<=minMaxSecond.second);
+	       assert(winCoord.x()>=minMaxSecond.first && 
+			 winCoord.x()<=minMaxSecond.second);
 
 	       Vec4& rgba=frameBuffer(winCoord);
 

@@ -33,16 +33,16 @@ namespace my_gl {
      LineInfo::LineInfo(const WinCoord& coord1,
 		    const WinCoord& coord2)
 	  :
-	  deltaY(coord2.first-coord1.first),
-	  deltaX(coord2.second-coord1.second),
+	  deltaX(coord2.x()-coord1.x()),
+	  deltaY(coord2.y()-coord1.y()),
 	  majorDim(abs(deltaX)>abs(deltaY)?
 		    DimAxis::X:
 		    DimAxis::Y),
 	  nonMajorDim(DimAxis(1-int(majorDim)))
 	  {}
 
-     LineInfo::LineInfo(int deltaYSet,int deltaXSet,DimAxis majorDimSet)
-	  :deltaY(deltaYSet),deltaX(deltaXSet),
+     LineInfo::LineInfo(int deltaXSet,int deltaYSet,DimAxis majorDimSet)
+	  :deltaX(deltaXSet),deltaY(deltaYSet),
 	  majorDim(majorDimSet),
 	  nonMajorDim(DimAxis(1-int(majorDim)))
      {
@@ -53,7 +53,7 @@ namespace my_gl {
 
 	  
      LineInfo::LineInfo(const LineInfo& rhs)
-	  :deltaY(rhs.deltaY),deltaX(rhs.deltaX),
+	  :deltaX(rhs.deltaX),deltaY(rhs.deltaY),
 	  majorDim(rhs.majorDim),
 	  nonMajorDim(DimAxis(1-int(majorDim))){}
 
@@ -82,7 +82,7 @@ namespace my_gl {
 
      LineInfo LineInfo::revert()const
      {
-	  return LineInfo(-deltaY,-deltaX,majorDim);
+	  return LineInfo(-deltaX,-deltaY,majorDim);
      }
 
      bool LineInfo::parallelToAxis()const
