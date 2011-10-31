@@ -81,6 +81,26 @@ namespace my_gl {
 	       //always insert clipped end vertex,
 	       //because it must be next segment begin vertex
 
+	       if (clipPercent.second==1)
+	       {
+		    //ugly here?
+		    //check if this attributes is from prevResult
+		    //clipGeneratedVertexAttribute
+		    if (prevResult.isOriginal(endIndex))
+		    {
+			 ret.insertOriginalIndex(endIndex);
+		    }
+		    else
+		    {
+			 //manual copy 
+			 auto newData=ret.
+			      writeClipGeneratedAttribute();
+
+			 newData.second=prevResult[endIndex];
+		    }
+		    continue;
+	       }
+
 	       LineClipper::insertInterpolatedAttributes(
 			 prevResult[beginIndex],beginIndex,
 			 prevResult[endIndex],endIndex, 
