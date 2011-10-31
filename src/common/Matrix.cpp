@@ -231,7 +231,7 @@ namespace my_gl {
 
      Matrix Matrix::rotate(float angle,float x,float y,float z)
      {
-	  Matrix ret;
+	  Matrix ret=Matrix::identity();
 
 	  float rotateAxis[3]={x,y,z};
 
