@@ -19,6 +19,7 @@
 #include "SoftContext.hpp"
 
 #include <climits>
+#include <algorithm>
 
 #include "attribute_manager/NormalManager.hpp"
 #include "attribute_manager/ColorManager.hpp"
@@ -55,6 +56,7 @@
 
 namespace my_gl {
 
+     using std::remove;
 
      using boost::extents;
 
@@ -587,6 +589,33 @@ namespace my_gl {
 		  _materialParam.materialfv(face,paramName,param);
 	     }
 
+	void SoftContext::enable(LightIndex lightIndex)
+	{
+	     //TODO check LIGHTING enabled
+
+	     int idx=int(lightIndex);
+	     if (lightIndex==LightIndex::LIGHT0)
+	     {
+		  _lightSourceParams[0]=LightSourceParam(true);
+	     }
+	     else
+	     {
+		  _lightSourceParams[idx]=LightSourceParam();
+	     }
+
+	     _activeLightSourceParams.push_back(&_lightSourceParams[idx]);
+
+	}
+
+	void SoftContext::disable(LightIndex lightIndex)
+	{
+	     auto removeEndIt=remove(_activeLightSourceParams.begin(),
+		       _activeLightSourceParams.end(),
+		       &_lightSourceParams[int(lightIndex)]);
+
+	     _activeLightSourceParams.resize
+		  (_activeLightSourceParams.end()-removeEndIt);
+	}
 
 
      template<typename T>
