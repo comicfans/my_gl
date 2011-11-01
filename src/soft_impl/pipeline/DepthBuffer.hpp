@@ -20,9 +20,11 @@
 
 #define DEPTH_BUFFER_HPP
 
-#include "FrameBuffer.hpp"
 
 #include <boost/multi_array.hpp>
+
+#include "FrameBuffer.hpp"
+#include "Enum.hpp"
 namespace my_gl {
 
      using boost::multi_array;
@@ -35,13 +37,14 @@ namespace my_gl {
 	  DepthBuffer(size_t width,size_t height);
 
 	  void clearDepth(float depth);
+
+	  void depthFunc(DepthFunc func);
 	  virtual void clear();
 
 	  size_t width()const;
 	  size_t height()const;
 
-	  float operator()(const WinCoord& winCoord)const;
-	  float& operator()(const WinCoord& winCoord);
+	  bool testAndUpdate(const WinCoord& winCoord,float value);
 
      	virtual ~DepthBuffer ();
      
@@ -50,6 +53,8 @@ namespace my_gl {
 	multi_array<float,2> _impl;
 
 	float _clearDepth;
+
+	DepthFunc _func;
 
      };
 	

@@ -19,20 +19,48 @@
 #include "DepthBuffer.hpp"
 
 #include <algorithm>
+#include <functional>
 
 #include "pipeline/rasterizer/WinCoord.hpp"
 
 namespace my_gl {
 
      using std::fill_n;
+     using std::function;
+     using std::less;
+     using std::less_equal;
+     using std::equal_to;
+     using std::greater;
+     using std::greater_equal;
+     using std::not_equal_to;
 
      using boost::extents;
+
+     static inline bool always(float inValue,float originValue)
+     {
+	  return true;
+     }
+
+     static inline bool never(float inValue,float originValue)
+     {
+	  return false;
+     }
+
+
+     typedef function<bool(float,float)> ActualDepthFunc;
+
+     //enum class DepthFunc{NEVER,ALWAYS,LESS,LEQUAL,
+     //	  EQUAL,GREATER,GEQUAL,NOTEQUAL};
+     static const ActualDepthFunc DEPTH_FUNCTIONS[]={never,always,less<float>(),less_equal<float>(),
+     equal_to<float>(),greater<float>(),greater_equal<float>(),not_equal_to<float>()};
+
 
      DepthBuffer::DepthBuffer(size_t width,size_t height)
 	  :_impl(extents[height][width])
      {
 	  //glspec default GL_DEPTH_CLEAR_VALUE
 	  _clearDepth=1;
+	  _func=DepthFunc::ALWAYS;
      }
 
      DepthBuffer::~DepthBuffer()
@@ -53,22 +81,24 @@ namespace my_gl {
 
 	  }
 
-
-
-	  float DepthBuffer::operator()(const WinCoord& winCoord)const
-	  {
-	       return _impl[winCoord.y()][winCoord.x()];
-	  }
-
-	  float& DepthBuffer::operator()(const WinCoord& winCoord)
-	  {
-	       return _impl[winCoord.y()][winCoord.x()];
-	  }
-
      void DepthBuffer::clear()
      {
 	  fill_n(_impl.origin(),_impl.num_elements(),_clearDepth);
 	  
      }
 	
+	  
+     bool DepthBuffer::testAndUpdate(const WinCoord& winCoord,float value)
+     {
+	  float& originValue=_impl[winCoord.y()][winCoord.x()];
+
+	  auto& testFunc=DEPTH_FUNCTIONS[int(_func)];
+
+	  if (testFunc(value,originValue))
+	  {
+	       originValue=value;
+	       return true;
+	  }
+	  return false;
+     }
 } /* my_gl */

@@ -31,6 +31,9 @@ namespace my_gl {
      enum class DataType{BYTE,UNSIGNED_BYTE,
 	  SHORT,UNSIGNED_SHORT,FIXED,FLOAT};
     
+     /** 
+      * @brief glBindBuffer
+      */
      enum class BufferTarget{ARRAY_BUFFER,ELEMENT_ARRAY_BUFFER};
 
      enum class BindState{VERTEX,COLOR,NORMAL,TEXCOORD,ELEMENTS};
@@ -48,6 +51,12 @@ namespace my_gl {
       */
      enum class PrimitiveMode{POINTS,LINES,TRIANGLES,LINE_STRIP,LINE_LOOP,
 	  TRIANGLE_STRIP,TRIANGLE_FAN};
+
+     /** 
+      * @brief glDepthFunc
+      */
+     enum class DepthFunc{NEVER,ALWAYS,LESS,LEQUAL,
+	  EQUAL,GREATER,GEQUAL,NOTEQUAL};
 } /* my_gl */
 
 
