@@ -23,7 +23,7 @@ glBufferData         	OK
 glBufferSubData         OK
 glClear			OK
 glClearColor		OK
-glClearDepth		NO/simple
+glClearDepth		OK
 glClipPlane ?		NO/complex
 glColor         	OK
 glColorPointer       	OK
@@ -34,6 +34,7 @@ glDeleteBuffers         OK
 glDeleteTextures	NO/simple
 glDrawArrays 		OK
 glDrawElements 		PART
+glDepthFunc		OK
 glFinish		NOT NEED?
 glFlush			OK
 glFrontFace 		?
@@ -66,9 +67,9 @@ glTexSubImage2D		?
 glTranslate         	OK
 glViewPort         	OK
 
-total	:48
+total	:49
 
-OK 	:25	52%
+OK 	:27	53%
 simple	:6
 ?	:10
 complex	:5
@@ -84,7 +85,7 @@ rasterize		:OK
 coord process		:PART (z,1/w process)
 interpolate		:PART (no normalizedDevice/projective correct interpolate)
 fragment shader		:PART (no texture support)
-framebuffer		:PART (no z-buffer support)
+framebuffer		:PART 
 
 
 
