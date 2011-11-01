@@ -22,8 +22,12 @@
 #define VEC4_HPP
 
 #include <cstddef>
+#include <initializer_list>
 
 namespace my_gl {
+	  
+     using std::initializer_list;
+
      struct Vec4{
     
 	  public:
@@ -31,6 +35,10 @@ namespace my_gl {
 	       Vec4(bool fillZero=true);
 
 	       Vec4(float fx,float fy,float fz=0,float fw=1);
+
+	       Vec4(const float* values,size_t copyN=4);
+
+	       Vec4(const initializer_list<float>& initList);
 
 	       Vec4& operator=(const Vec4& rhs);
 

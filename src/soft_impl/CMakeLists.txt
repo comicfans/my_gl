@@ -1,4 +1,4 @@
-SUBDIRS(attribute_manager object test shader pipeline)
+SUBDIRS(attribute_manager object test shader lighting pipeline )
 
 INCLUDE_DIRECTORIES(. ${SDL_INCLUDE_DIR})
 ADD_LIBRARY(SoftImpl 

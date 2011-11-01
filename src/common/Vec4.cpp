@@ -48,6 +48,26 @@ namespace my_gl {
 	  _values[LENGTH-1]=1;
      }
 
+     Vec4::Vec4(const initializer_list<float>& initList)
+     {
+	  int counter=0;
+	  for (auto value:initList)
+	  {
+	       _values[counter]=value;
+	       ++counter;
+	       if (counter>=LENGTH)
+	       {
+		    break;
+	       }
+	  }
+
+     }
+
+     Vec4::Vec4(const float* values,size_t copyN)
+     {
+	  copy_n(values,copyN,_values);
+     }
+
      Vec4::Vec4(float fx,float fy,float fz,float fw)
      {
 	  _values[0]=fx;
