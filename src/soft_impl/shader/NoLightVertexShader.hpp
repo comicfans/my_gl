@@ -26,8 +26,9 @@ namespace my_gl {
      class NoLightVertexShader : public  VertexShader{
      public:
 
+	  NoLightVertexShader(const Global& global);
+
 	  virtual void shade(
-		    const Global& global,
 
 		    const Vec4& inVertex,
 		    const Vec4& inColor,

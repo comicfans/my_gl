@@ -83,7 +83,7 @@ namespace my_gl {
 	  //default light is disabled,use NoLightVertexShader
 
 	  //TODO group state related change to one 
-	  _vertexShaderPtr.reset(new NoLightVertexShader());
+	  _vertexShaderPtr.reset(new NoLightVertexShader(_global));
 	  _fragmentShaderPtr.reset(new SimpleFragmentShader());
 	  
 
@@ -451,7 +451,7 @@ namespace my_gl {
 			    provider.getValue(thisVertexIndex);
 		  }
 
-		  _vertexShaderPtr->shade(_global,inStream,
+		  _vertexShaderPtr->shade(inStream,
 			    _vertexAttributeBuffer[vertexCounter]);
 	     }
 	     

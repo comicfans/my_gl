@@ -31,16 +31,17 @@ namespace my_gl {
 
      class VertexShader {
      public:
+
+	  VertexShader(const Global& global);
+
      	virtual ~VertexShader ();
 
-	virtual void shade(const Global& global,
-		  const Vec4* inputAttributes,
+	virtual void shade(const Vec4* inputAttributes,
 		  AttributeGroupRef outputAttributes);
 
 	     protected:
 
 	virtual void shade(
-		  const Global& global,
 
 		  const Vec4& inVertex,
 		  const Vec4& inColor,
@@ -53,6 +54,7 @@ namespace my_gl {
 		  Vec4& outBackColor,
 		  Vec4& outTexCoord
 		  )=0;
+	const Global& _global;
      
      };
 	

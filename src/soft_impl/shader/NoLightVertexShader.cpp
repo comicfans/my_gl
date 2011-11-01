@@ -23,10 +23,12 @@
 
 namespace my_gl {
 
+     NoLightVertexShader::NoLightVertexShader(const Global& global)
+	  :VertexShader(global){}
+
      NoLightVertexShader::~NoLightVertexShader(){}
 
      void NoLightVertexShader::shade(
-	       const Global& global,
 
 	       const Vec4& inVertex,
 	       const Vec4& inColor,
@@ -40,7 +42,7 @@ namespace my_gl {
 	       Vec4& outTexCoord
 	       )
      {
-	  multiVec4To(global.modelViewProjection, 
+	  multiVec4To(_global.modelViewProjection, 
 		    inVertex, outPosition);
 	  outFrontColor=inColor;
 	  outBackColor=inColor;

@@ -24,15 +24,19 @@
 
 namespace my_gl {
 
+     VertexShader::VertexShader(const Global& global)
+	  :_global(global)
+     {
+     }
+
      VertexShader::~VertexShader(){}
 
 
      void VertexShader::shade
-	  (const Global& global,
-	   const Vec4* inputAttributes,
+	   (const Vec4* inputAttributes,
 	   AttributeGroupRef outputAttributes)
 	  {
-	       shade(	 global,
+	       shade(
 			 inputAttributes[int(BindState::VERTEX)],
 			 inputAttributes[int(BindState::COLOR)],
 			 inputAttributes[int(BindState::NORMAL)],
