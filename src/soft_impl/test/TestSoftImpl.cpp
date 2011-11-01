@@ -99,7 +99,7 @@ void testTriangles()
 
      context.matrixMode(MatrixMode::MODEL_VIEW);
 	  
-     context.color4f(0.0, 0.0, 0.0, 0.0);
+     context.color4f(0.2, 0.8, 0.0, 0.0);
      for (int i=0; i<10; ++i)
      {
 	  context.clear(COLOR_BUFFER_BIT);

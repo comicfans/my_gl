@@ -70,7 +70,7 @@ namespace my_gl {
 		    rightZ.z()=(1-percent)*coord1.windowCoord.z()+
 			 percent*coord2.windowCoord.z();
 
-		    if (earlyZTest(rightZ))
+		    if (!earlyZTest(rightZ))
 		    {
 			 return;
 		    }
