@@ -23,8 +23,11 @@
 
 namespace my_gl {
 
-     NoLightVertexShader::NoLightVertexShader(const Global& global)
-	  :VertexShader(global){}
+     NoLightVertexShader::NoLightVertexShader
+	  (const Global& global,
+	   const vector<LightSourceParam*>& activeLightSourceParams,
+	   const MaterialParam& materialParam)
+	  :VertexShader(global,activeLightSourceParams,materialParam){}
 
      NoLightVertexShader::~NoLightVertexShader(){}
 

@@ -83,7 +83,9 @@ namespace my_gl {
 	  //default light is disabled,use NoLightVertexShader
 
 	  //TODO group state related change to one 
-	  _vertexShaderPtr.reset(new NoLightVertexShader(_global));
+	  _vertexShaderPtr.reset(new NoLightVertexShader
+		    (_global,_activeLightSourceParams,_materialParam));
+
 	  _fragmentShaderPtr.reset(new SimpleFragmentShader());
 	  
 
@@ -558,6 +560,33 @@ namespace my_gl {
 	{
 	     currentMatrixStack().top()=Matrix::identity();
 	}
+
+	void SoftContext::lightf(LightIndex lightIndex,
+		  LightParamName paramName,float param)
+	{
+	     _lightSourceParams[int(lightIndex)].lightf
+		  (paramName,param);
+	}
+
+	void SoftContext::lightfv(LightIndex lightIndex,
+		  LightParamName paramName,const float* param)
+	{
+	     _lightSourceParams[int(lightIndex)].lightfv
+		  (paramName,param);
+	}
+
+	void SoftContext::materialf
+	     (Face face,LightParamName paramName,float param)
+	     {
+		  _materialParam.materialf(face,paramName,param);
+	     }
+
+	void SoftContext::materialfv
+	     (Face face,LightParamName paramName,const float *param)
+	     {
+		  _materialParam.materialfv(face,paramName,param);
+	     }
+
 
 
      template<typename T>

@@ -36,6 +36,8 @@
 #include "ElementIndexManager.hpp"
 #include "ViewportParameter.hpp"
 #include "DepthRange.hpp"
+#include "lighting/MaterialParam.hpp"
+#include "lighting/LightSourceParam.hpp"
 
 namespace my_gl {
 
@@ -177,6 +179,22 @@ namespace my_gl {
 	//glDepthFunc
 	virtual void depthFunc(DepthFunc func);
 
+	//glLightf
+	virtual void lightf(LightIndex lightIndex,
+		  LightParamName paramName,float param);
+
+	//glLightfv
+	virtual void lightfv(LightIndex lightIndex,
+		  LightParamName paramName,const float* param);
+
+	//glMaterialf
+	virtual void materialf
+	     (Face face,LightParamName paramName,float param);
+
+	//glMaterialfv
+	virtual void materialfv
+	     (Face face,LightParamName paramName,const float *param);
+
 	ObjectNameManager& getObjectNameManager();
 
 	static SoftContext& getInstance();
@@ -283,6 +301,13 @@ namespace my_gl {
 	 * @brief construct necessary uniform matrix
 	 */
 	void prepareGlobalUniform();
+
+
+	//light param
+	//
+	MaterialParam _materialParam;
+	vector<LightSourceParam*> _activeLightSourceParams;
+	LightSourceParam _lightSourceParams[MAX_LIGHTS];
 
      };
 

@@ -127,6 +127,8 @@ namespace my_gl {
 	virtual void clearColor(float r,float g,float b,float a)=0;
 
 	virtual ~Context();
+
+	const static int MAX_LIGHTS=8;
      };
 	
 } /* my_gl */

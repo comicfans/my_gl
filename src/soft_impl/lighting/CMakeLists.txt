@@ -1,1 +1,1 @@
-ADD_LIBRARY(Lighting MaterialParam.cpp LightParam.cpp)
+ADD_LIBRARY(Lighting MaterialParam.cpp LightSourceParam.cpp)

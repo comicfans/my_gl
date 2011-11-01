@@ -15,5 +15,6 @@ TARGET_LINK_LIBRARIES(SoftImpl
      Context
      Matrix
      Shader
+     Lighting
      Pipeline ${SDL_LIBRARY})
 

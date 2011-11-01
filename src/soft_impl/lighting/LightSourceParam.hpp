@@ -1,7 +1,7 @@
 /*
  * =====================================================================================
  *
- *       Filename:  LightParam.hpp
+ *       Filename:  LightSourceParam.hpp
  *
  *    Description:  
  *
@@ -16,16 +16,16 @@
  * =====================================================================================
  */
 
-#ifndef LIGHT_PARAM_H
+#ifndef LIGHT_SOURCE_PARAM_HPP
 
-#define LIGHT_PARAM_H
+#define LIGHT_SOURCE_PARAM_HPP
 
 #include "common/Vec4.hpp"
 #include "Enum.hpp"
 
 namespace my_gl {
 
-     struct LightParam {
+     struct LightSourceParam {
 
 	  Vec4 ambient;
 	  Vec4 diffuse;
@@ -42,7 +42,7 @@ namespace my_gl {
 	  float linearAttenuation;
 	  float quadraticAttenuation;
 
-	  LightParam(bool firstOne=false);
+	  LightSourceParam(bool firstOne=false);
 
 	  void lightf(LightParamName paramName,float param);
 
@@ -53,4 +53,4 @@ namespace my_gl {
 } /* my_gl */
 
 
-#endif /* end of include guard: LIGHT_PARAM_H */
+#endif /* end of include guard: LIGHT_SOURCE_PARAM_HPP*/

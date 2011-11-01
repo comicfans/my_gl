@@ -24,8 +24,12 @@
 
 namespace my_gl {
 
-     VertexShader::VertexShader(const Global& global)
-	  :_global(global)
+     VertexShader::VertexShader(const Global& global,
+	       const vector<LightSourceParam*>& activeLightSourceParams,
+	       const MaterialParam& materialParam)
+	  :_global(global),
+	  _activeLightSourceParams(activeLightSourceParams),
+	  _materialParam(materialParam)
      {
      }
 

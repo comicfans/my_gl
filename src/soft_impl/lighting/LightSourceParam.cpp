@@ -1,7 +1,7 @@
 /*
  * =====================================================================================
  *
- *       Filename:  LightParam.cpp
+ *       Filename:  LightSourceParam.cpp
  *
  *    Description:  
  *
@@ -16,12 +16,12 @@
  * =====================================================================================
  */
 
-#include "LightParam.hpp"
+#include "LightSourceParam.hpp"
 #include <cassert>
 
 namespace my_gl {
 
-     LightParam::LightParam(bool firstOne)
+     LightSourceParam::LightSourceParam(bool firstOne)
      {
 	  ambient={0,0,0,1};
 	  diffuse=(firstOne?Vec4{1,1,1,1}:Vec4{0,0,0,1});
@@ -44,7 +44,7 @@ namespace my_gl {
 
      }
 
-     void LightParam::lightf(LightParamName paramName,float param)
+     void LightSourceParam::lightf(LightParamName paramName,float param)
      {
 	  switch (paramName)
 	  {
@@ -71,7 +71,7 @@ namespace my_gl {
 
      }
 
-     void LightParam::lightfv(LightParamName paramName,const float* param)
+     void LightSourceParam::lightfv(LightParamName paramName,const float* param)
      {
 	  switch (paramName)
 	  {
