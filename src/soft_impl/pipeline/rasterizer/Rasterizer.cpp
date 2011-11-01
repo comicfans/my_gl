@@ -141,9 +141,9 @@ namespace my_gl {
      void Rasterizer::viewportCorrect(Vec4& toCorrect,
 	       const WinCoord& windowCoordinates)
      {
-	  toCorrect[0]=windowCoordinates[0];
-	  toCorrect[1]=windowCoordinates[1];
-	  toCorrect[2]=windowCoordinates[2];
+	  toCorrect[0]=windowCoordinates.x();
+	  toCorrect[1]=windowCoordinates.y();
+	  toCorrect[2]=windowCoordinates.z();
      }
 
 

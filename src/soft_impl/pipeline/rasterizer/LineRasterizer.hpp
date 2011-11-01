@@ -55,7 +55,7 @@ namespace my_gl {
 	   * @brief call this function to tell callee
 	   * a new window pixel is generated
 	   */
-	  typedef function<void(WinCoord&)> StepCallback;
+	  typedef function<void(const WinCoord&)> StepCallback;
 
 	 
 	  virtual ~LineRasterizer ();
@@ -91,7 +91,7 @@ namespace my_gl {
 		  const ConstAttributeGroupRefList& attributeGroupRefs,
 		const CoordInfo& coordInfo1,const CoordInfo& coordInfo2,
 		const LineInfo& lineInfo,
-		WinCoord& winCoord,
+		const WinCoord& winCoord,
 		StepCallback stepCallback=StepCallback());
 
 

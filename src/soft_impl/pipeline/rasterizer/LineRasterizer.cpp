@@ -56,7 +56,7 @@ namespace my_gl {
 	       (const ConstAttributeGroupRefList& attributeGroupRefs,
 		const CoordInfo& coord1,const CoordInfo& coord2,
 		const LineInfo& lineInfo,
-		WinCoord& winCoord,
+		const WinCoord& winCoord,
 		StepCallback /* ignored */)
 	       {
 		    auto attributeGroupRef=_fragmentAttributeBuffer
@@ -65,10 +65,12 @@ namespace my_gl {
 		    float percent=_interpolator.getPercent
 			 (coord1, coord2,  lineInfo,winCoord);
 
-		    winCoord.z()=(1-percent)*coord1.windowCoord.z()+
+		    WinCoord rightZ(winCoord.x(),winCoord.y());
+
+		    rightZ.z()=(1-percent)*coord1.windowCoord.z()+
 			 percent*coord2.windowCoord.z();
 
-		    if (earlyZTest(winCoord))
+		    if (earlyZTest(rightZ))
 		    {
 			 return;
 		    }
@@ -80,7 +82,7 @@ namespace my_gl {
 
 		    auto& fragCoord=getVertex(attributeGroupRef);
 
-		    viewportCorrect(fragCoord,winCoord);
+		    viewportCorrect(fragCoord,rightZ);
 
 		    fragCoord[3]=1.0/fragCoord.w();
 
@@ -91,7 +93,7 @@ namespace my_gl {
 	     (const ConstAttributeGroupRefList& attributeGroupRefs,
 		const CoordInfo& coord1,const CoordInfo& coord2,
 		const LineInfo& lineInfo,
-		WinCoord& winCoord,
+		const WinCoord& winCoord,
 		StepCallback stepCallback)
 	     {
 		  groupAction<false>(attributeGroupRefs,
