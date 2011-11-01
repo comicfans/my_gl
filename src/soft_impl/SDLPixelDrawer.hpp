@@ -28,14 +28,14 @@ struct SDL_Surface;
 
 namespace my_gl {
 
-     class FrameBuffer;
+     class ColorBuffer;
      class SDLPixelDrawer :public PixelDrawer
      {
      public:
 	  
 	  virtual void onInit(size_t width,size_t height);
 
-	  virtual void onDraw(const FrameBuffer& frameBuffer);
+	  virtual void onDraw(const ColorBuffer& frameBuffer);
 
 	  virtual void onFlush();
      	

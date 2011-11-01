@@ -18,7 +18,7 @@
 #include <cmath>
 
 #include "SDLPixelDrawer.hpp"
-#include "pipeline/FrameBuffer.hpp"
+#include "pipeline/ColorBuffer.hpp"
 
 using std::min;
 using namespace my_gl;
@@ -26,7 +26,7 @@ using namespace my_gl;
 int main(int argc, const char *argv[])
 {
 
-     FrameBuffer frameBuffer(400,300);
+     ColorBuffer frameBuffer(400,300);
 
      int minValue=min(frameBuffer.height(),frameBuffer.width());
 

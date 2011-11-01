@@ -20,7 +20,7 @@
 
 #include <SDL.h>
 
-#include "pipeline/FrameBuffer.hpp"
+#include "pipeline/ColorBuffer.hpp"
 #include "pipeline/rasterizer/WinCoord.hpp"
 namespace my_gl {
 
@@ -118,7 +118,7 @@ namespace my_gl {
 
      }
 
-     void SDLPixelDrawer::onDraw(const FrameBuffer& frameBuffer)
+     void SDLPixelDrawer::onDraw(const ColorBuffer& frameBuffer)
      {
 	  SurfaceLocker locker(_screenPtr);
 

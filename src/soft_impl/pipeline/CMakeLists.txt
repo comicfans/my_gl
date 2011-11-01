@@ -8,7 +8,7 @@ ADD_LIBRARY(PrimitiveIndex PrimitiveIndex.cpp)
 
 ADD_LIBRARY(ClippedPrimitiveGroup ClippedPrimitiveGroup.cpp)
 
-ADD_LIBRARY(Pipeline FrameBuffer.cpp)
+ADD_LIBRARY(Pipeline ColorBuffer.cpp)
 
 TARGET_LINK_LIBRARIES(PrimitiveIndex IndexProvider)
 

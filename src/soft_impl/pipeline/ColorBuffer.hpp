@@ -1,7 +1,7 @@
 /*
  * =====================================================================================
  *
- *       Filename:  FrameBuffer.hpp
+ *       Filename:  ColorBuffer.hpp
  *
  *    Description:  which final pixel is reached
  *
@@ -16,9 +16,9 @@
  * =====================================================================================
  */
 
-#ifndef FRAME_BUFFER_HPP
+#ifndef COLOR_BUFFER_HPP
 
-#define FRAME_BUFFER_HPP
+#define COLOR_BUFFER_HPP
 
 #include <boost/multi_array.hpp>
 
@@ -31,12 +31,12 @@ namespace my_gl {
 
      class WinCoord;
 
-     class FrameBuffer :protected multi_array<Vec4,2>{
+     class ColorBuffer :protected multi_array<Vec4,2>{
      public:
 
 	  typedef multi_array<Vec4,2> SuperType;
 
-	  FrameBuffer (size_t width,size_t height);
+	  ColorBuffer (size_t width,size_t height);
 
 	  Vec4& operator()(const WinCoord& winCoord);
 
@@ -52,7 +52,7 @@ namespace my_gl {
 
 	  virtual void clear();
 
-	  virtual ~FrameBuffer();
+	  virtual ~ColorBuffer();
 
      private:
 
@@ -63,4 +63,4 @@ namespace my_gl {
 } /* my_gl */
 
 
-#endif /* end of include guard: FRAME_BUFFER_HPP */
+#endif /* end of include guard: COLOR_BUFFER_HPP */

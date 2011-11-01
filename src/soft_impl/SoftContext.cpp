@@ -37,7 +37,7 @@
 #include "shader/SimpleFragmentShader.hpp"
 #include "shader/FragmentShader.hpp"
 #include "pipeline/PrimitiveIndex.hpp"
-#include "pipeline/FrameBuffer.hpp"
+#include "pipeline/ColorBuffer.hpp"
 
 #include "pipeline/interpolator/WinCoordInterpolator.hpp"
 #include "pipeline/rasterizer/PointRasterizer.hpp"
@@ -100,7 +100,7 @@ namespace my_gl {
 		    FragmentAttributeBuffer(width,height,
 			 VertexAttributeBuffer::DEFAULT_OUT_SIZE));
 	  _frameBufferPtr.reset(new 
-		    FrameBuffer(width,height));
+		    ColorBuffer(width,height));
 
 	  _interpolatorPtr.reset(new WinCoordInterpolator());
 	  //init rasterizers
@@ -161,8 +161,8 @@ namespace my_gl {
 	  if (frameBufferMask|COLOR_BUFFER_BIT)
 	  {
 	       //may be refactor to use ptr_array 
-	       //to store ColorFrameBuffer and 
-	       //DepthFrameBuffer
+	       //to store ColorColorBuffer and 
+	       //DepthColorBuffer
 	       _frameBufferPtr->clear();
 	  }
      }

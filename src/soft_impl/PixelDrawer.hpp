@@ -25,7 +25,7 @@
 
 namespace my_gl {
 
-     class FrameBuffer;
+     class ColorBuffer;
      class PixelDrawer {
 	  public:
 
@@ -35,7 +35,7 @@ namespace my_gl {
 		    (size_t height,size_t width)=0;
 
 	       virtual void onDraw
-		    (const FrameBuffer& frameBuffer)=0;
+		    (const ColorBuffer& frameBuffer)=0;
 
 	       virtual void onFlush()=0;
      };

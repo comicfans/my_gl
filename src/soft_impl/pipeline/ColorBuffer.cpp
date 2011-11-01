@@ -1,7 +1,7 @@
 /*
  * =====================================================================================
  *
- *       Filename:  FrameBuffer.cpp
+ *       Filename:  ColorBuffer.cpp
  *
  *    Description:  
  *
@@ -16,7 +16,7 @@
  * =====================================================================================
  */
 
-#include "FrameBuffer.hpp"
+#include "ColorBuffer.hpp"
 
 #include <algorithm>
 #include "rasterizer/WinCoord.hpp"
@@ -27,43 +27,43 @@ namespace my_gl {
      using boost::extents;
      using std::fill_n;
 
-     FrameBuffer::FrameBuffer (size_t width,size_t height):
+     ColorBuffer::ColorBuffer (size_t width,size_t height):
 	  SuperType(extents[height][width])
      {}
 
-	  Vec4& FrameBuffer::operator()
+	  Vec4& ColorBuffer::operator()
 	       (const WinCoord& winCoord)
 	  {
 	       return (*this)[winCoord.y()][winCoord.x()];
 	  }
 
-	  Vec4& FrameBuffer::operator()(size_t x,size_t y)
+	  Vec4& ColorBuffer::operator()(size_t x,size_t y)
 	  {
 	       return (*this)[y][x];
 	  }
 
-	  const Vec4& FrameBuffer::operator()
+	  const Vec4& ColorBuffer::operator()
 	       (const WinCoord& winCoord)const
 	  {
 	       return (*this)[winCoord.y()][winCoord.x()];
 	  }
 
-	  size_t FrameBuffer::width()const
+	  size_t ColorBuffer::width()const
 	  {return shape()[1];}
 
-	  size_t FrameBuffer::height()const
+	  size_t ColorBuffer::height()const
 	  {
 	       return shape()[0];
 	  }
 
-	  void FrameBuffer::clearColor(float r,float g,float b,float a)
+	  void ColorBuffer::clearColor(float r,float g,float b,float a)
 	  {
 	       _clearColor=Vec4(r,g,b,a);
 	  }
 
-	  FrameBuffer::~FrameBuffer(){}
+	  ColorBuffer::~ColorBuffer(){}
 
-	  void FrameBuffer::clear()
+	  void ColorBuffer::clear()
 	  {
 	       fill_n(origin(),width()*height(),_clearColor);
 	  }

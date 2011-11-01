@@ -57,7 +57,7 @@ namespace my_gl {
      class Clipper;
      class Rasterizer;
      class FragmentAttributeBuffer;
-     class FrameBuffer;
+     class ColorBuffer;
      class PixelDrawer;
 
      class SoftContext :public Context{
@@ -212,7 +212,7 @@ namespace my_gl {
 
 	unique_ptr<Interpolator> _interpolatorPtr;
 
-	unique_ptr<FrameBuffer> _frameBufferPtr;
+	unique_ptr<ColorBuffer> _frameBufferPtr;
 
 	unique_ptr<PixelDrawer> _pixelDrawerPtr;
 
