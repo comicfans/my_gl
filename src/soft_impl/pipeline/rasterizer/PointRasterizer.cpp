@@ -28,9 +28,12 @@ namespace my_gl {
      PointRasterizer::PointRasterizer
 	       (ViewportParameter& viewportParameter,
 		Interpolator& interpolator,
-		FragmentAttributeBuffer& fragmentAttributeBuffer)
+		FragmentAttributeBuffer& fragmentAttributeBuffer,
+		     DepthBuffer& depthBuffer,
+		     DepthRange& depthRange)
 	       :Rasterizer
-		(viewportParameter,interpolator,fragmentAttributeBuffer){}
+		(viewportParameter,interpolator,
+		 fragmentAttributeBuffer,depthBuffer,depthRange){}
 
 
 	void PointRasterizer::rasterizePoint(
@@ -64,8 +67,12 @@ namespace my_gl {
 
 	  auto winCoord=toWinCoord(coordinates);
 
-	  rasterizePoint(attributeGroupRefs[0],
+	  if (earlyZTest(winCoord.z()))
+	  {
+	       rasterizePoint(attributeGroupRefs[0],
 		    _fragmentAttributeBuffer,winCoord);
-    }
+	  }
+
+}
 	
 } /* my_gl */

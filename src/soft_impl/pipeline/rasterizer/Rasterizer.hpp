@@ -35,6 +35,8 @@ namespace my_gl {
 
      class ClippedPrimitiveGroup;
      class FragmentAttributeBuffer;
+     class DepthRange;
+     class DepthBuffer;
      class Interpolator;
 
      typedef ptr_vector<ConstAttributeGroupRef> ConstAttributeGroupRefList;
@@ -45,20 +47,12 @@ namespace my_gl {
 	       Rasterizer
 		    (ViewportParameter& viewportParameter,
 		     Interpolator& interpolator,
-		     FragmentAttributeBuffer& fragmentAttributeBuffer);
+		     FragmentAttributeBuffer& fragmentAttributeBuffer,
+		     DepthBuffer& depthBuffer,
+		     DepthRange& depthRange);
 
 	       void rasterize(
 			 const ClippedPrimitiveGroup& clippedPrimitiveGroup);
-
-	       /** 
-		* @brief use this function to change viewport parameter
-		* make it as a super class function for that sub-class
-		* only need to calculate the WinCoord but not 
-		* need the viewport parameter
-		* 
-		* @param setValue
-		*/
-	       void setViewportParameter(ViewportParameter& setValue);
 
 	       void setInterpolator(Interpolator& interpolator);
 
@@ -94,14 +88,19 @@ namespace my_gl {
 	       WinCoord toWinCoord
 		    (const Vec4& normalizedDeviceCoordinates)const;
 
+	       bool earlyZTest(const WinCoord& winCoord);
+
 
 	  private:
 
-	       ViewportParameter& _viewportParameter;
-
+	       const ViewportParameter& _viewportParameter;
 	  protected:
 	       Interpolator& _interpolator;
 	       FragmentAttributeBuffer& _fragmentAttributeBuffer;
+	  private:
+	       DepthBuffer& _depthBuffer;
+	       const DepthRange& _depthRange;
+
 
 
 

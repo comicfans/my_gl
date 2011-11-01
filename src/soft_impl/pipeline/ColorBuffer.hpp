@@ -53,6 +53,8 @@ namespace my_gl {
 
 	  virtual ~ColorBuffer();
 
+	  static const int ORDER_INDEX=0;
+
      private:
 
 	  multi_array<Vec4,2> _impl;

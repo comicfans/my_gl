@@ -71,6 +71,11 @@ namespace my_gl {
 	  _clearDepth=depth;
      }
 
+     void DepthBuffer::depthFunc(DepthFunc func)
+     {
+	  _func=func;
+     }
+
      size_t DepthBuffer::width()const
      {
 	  return _impl.shape()[1];
@@ -88,15 +93,15 @@ namespace my_gl {
      }
 	
 	  
-     bool DepthBuffer::testAndUpdate(const WinCoord& winCoord,float value)
+     bool DepthBuffer::testAndUpdate(const WinCoord& winCoord)
      {
 	  float& originValue=_impl[winCoord.y()][winCoord.x()];
 
 	  auto& testFunc=DEPTH_FUNCTIONS[int(_func)];
 
-	  if (testFunc(value,originValue))
+	  if (testFunc(winCoord.z(),originValue))
 	  {
-	       originValue=value;
+	       originValue=winCoord.z();
 	       return true;
 	  }
 	  return false;

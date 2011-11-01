@@ -44,9 +44,11 @@ namespace my_gl {
 	  size_t width()const;
 	  size_t height()const;
 
-	  bool testAndUpdate(const WinCoord& winCoord,float value);
+	  bool testAndUpdate(const WinCoord& winCoord);
 
      	virtual ~DepthBuffer ();
+
+	static const int ORDER_INDEX=1;
      
      private:
 

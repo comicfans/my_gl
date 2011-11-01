@@ -3,6 +3,7 @@ SUBDIRS(attribute_manager object test shader pipeline)
 INCLUDE_DIRECTORIES(. ${SDL_INCLUDE_DIR})
 ADD_LIBRARY(SoftImpl 
      SDLPixelDrawer.cpp
+     DepthRange.cpp
      SoftContext.cpp
      ElementIndexManager.cpp
      PixelDrawer.cpp

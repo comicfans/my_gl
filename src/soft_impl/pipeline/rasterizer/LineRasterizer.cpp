@@ -40,9 +40,13 @@ namespace my_gl {
      LineRasterizer::LineRasterizer
 	       (ViewportParameter& viewportParameter,
 		Interpolator& interpolator,
-		FragmentAttributeBuffer& fragmentAttributeBuffer)
+		FragmentAttributeBuffer& fragmentAttributeBuffer,
+		     DepthBuffer& depthBuffer,
+		     DepthRange& depthRange)
 	       :Rasterizer
-		(viewportParameter,interpolator,fragmentAttributeBuffer){}
+		(viewportParameter,interpolator,
+		 fragmentAttributeBuffer,depthBuffer,depthRange){}
+
 
 
 
@@ -52,7 +56,7 @@ namespace my_gl {
 	       (const ConstAttributeGroupRefList& attributeGroupRefs,
 		const CoordInfo& coord1,const CoordInfo& coord2,
 		const LineInfo& lineInfo,
-		const WinCoord& winCoord,
+		WinCoord& winCoord,
 		StepCallback /* ignored */)
 	       {
 		    auto attributeGroupRef=_fragmentAttributeBuffer
@@ -61,15 +65,25 @@ namespace my_gl {
 		    float percent=_interpolator.getPercent
 			 (coord1, coord2,  lineInfo,winCoord);
 
+		    winCoord.z()=(1-percent)*coord1.windowCoord.z()+
+			 percent*coord2.windowCoord.z();
+
+		    if (earlyZTest(winCoord))
+		    {
+			 return;
+		    }
+
+
 		    Interpolator::interpolateAttributeGroup
 			 (attributeGroupRefs[0], attributeGroupRefs[1], 
 			  percent, attributeGroupRef);
 
 		    auto& fragCoord=getVertex(attributeGroupRef);
 
-		    fragCoord/=fragCoord.w();
-
 		    viewportCorrect(fragCoord,winCoord);
+
+		    fragCoord[3]=1.0/fragCoord.w();
+
 	       }
 
 	template<>
@@ -77,7 +91,7 @@ namespace my_gl {
 	     (const ConstAttributeGroupRefList& attributeGroupRefs,
 		const CoordInfo& coord1,const CoordInfo& coord2,
 		const LineInfo& lineInfo,
-		const WinCoord& winCoord,
+		WinCoord& winCoord,
 		StepCallback stepCallback)
 	     {
 		  groupAction<false>(attributeGroupRefs,
@@ -138,8 +152,11 @@ namespace my_gl {
 
 
 	       //begin pixel does not need interpolate
-	       PointRasterizer::rasterizePoint(attributeGroupRefs[0], 
+	       if (earlyZTest(rawCoord1.windowCoord))
+	       {
+		    PointRasterizer::rasterizePoint(attributeGroupRefs[0], 
 			 _fragmentAttributeBuffer, rawCoord1.windowCoord);
+	       }
 
 	       LineInfo rawLineInfo(rawCoord1.windowCoord,rawCoord2.windowCoord),
 			revert(rawLineInfo.revert());

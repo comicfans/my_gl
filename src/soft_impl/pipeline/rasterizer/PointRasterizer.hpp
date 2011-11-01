@@ -30,7 +30,9 @@ namespace my_gl {
 	  PointRasterizer
 	       (ViewportParameter& viewportParameter,
 		Interpolator& interpolator,
-		FragmentAttributeBuffer& fragmentAttributeBuffer);
+		FragmentAttributeBuffer& fragmentAttributeBuffer,
+		     DepthBuffer& depthBuffer,
+		     DepthRange& depthRange);
 
 
 	static void rasterizePoint(

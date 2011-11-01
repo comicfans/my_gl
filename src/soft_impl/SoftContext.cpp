@@ -38,6 +38,7 @@
 #include "shader/FragmentShader.hpp"
 #include "pipeline/PrimitiveIndex.hpp"
 #include "pipeline/ColorBuffer.hpp"
+#include "pipeline/DepthBuffer.hpp"
 
 #include "pipeline/interpolator/WinCoordInterpolator.hpp"
 #include "pipeline/rasterizer/PointRasterizer.hpp"
@@ -51,6 +52,7 @@
 #include "pipeline/ClippedPrimitiveGroup.hpp"
 
 #include "SDLPixelDrawer.hpp"
+
 namespace my_gl {
 
 
@@ -99,20 +101,23 @@ namespace my_gl {
 	  _fragmentAttributeBufferPtr.reset(new 
 		    FragmentAttributeBuffer(width,height,
 			 VertexAttributeBuffer::DEFAULT_OUT_SIZE));
-	  _frameBufferPtr.reset(new 
-		    ColorBuffer(width,height));
+
+	  _allFrameBuffer.replace(ColorBuffer::ORDER_INDEX,new ColorBuffer(width,height));
+	  _allFrameBuffer.replace(DepthBuffer::ORDER_INDEX,new DepthBuffer(width,height));
 
 	  _interpolatorPtr.reset(new WinCoordInterpolator());
 	  //init rasterizers
 
 	  _rasterizers.replace(int(PrimitiveMode::POINTS),
 		    new PointRasterizer(_viewportParameter,
-			 *_interpolatorPtr,*_fragmentAttributeBufferPtr));
+			 *_interpolatorPtr,*_fragmentAttributeBufferPtr,
+			 getFrameBuffer<DepthBuffer>(),_depthRange));
 
 	  _rasterizers.replace(int(PrimitiveMode::LINES),
 		    new SimpleLineRasterizer
 		    (_viewportParameter,
-			 *_interpolatorPtr,*_fragmentAttributeBufferPtr));
+			 *_interpolatorPtr,*_fragmentAttributeBufferPtr,
+			 getFrameBuffer<DepthBuffer>(),_depthRange));
 
 	  Rasterizer *pLineRasterizer=&_rasterizers[1];
 
@@ -123,6 +128,8 @@ namespace my_gl {
 		    (_viewportParameter,
 			 *_interpolatorPtr,
 			 *_fragmentAttributeBufferPtr,
+			 getFrameBuffer<DepthBuffer>(),
+			 _depthRange,
 			 static_cast<LineRasterizer*>(pLineRasterizer)));
      }
 
@@ -151,7 +158,18 @@ namespace my_gl {
 
      void SoftContext::clearColor(float r,float g,float b,float a)
      {
-	  _frameBufferPtr->clearColor(r,g,b,a);
+	  getFrameBuffer<ColorBuffer>().clearColor(r,g,b,a);
+     }
+
+     void SoftContext::depthRange(float near,float far)
+     {
+	  _depthRange.near=near;
+	  _depthRange.far=far;
+     }
+
+     void SoftContext::depthFunc(DepthFunc func)
+     {
+	  getFrameBuffer<DepthBuffer>().depthFunc(func);
      }
 
      void SoftContext::clear(FrameBufferMask frameBufferMask)
@@ -163,7 +181,7 @@ namespace my_gl {
 	       //may be refactor to use ptr_array 
 	       //to store ColorColorBuffer and 
 	       //DepthColorBuffer
-	       _frameBufferPtr->clear();
+	       getFrameBuffer<ColorBuffer>().clear();
 	  }
      }
 
@@ -359,7 +377,7 @@ namespace my_gl {
 
 	     fragmentShaderStage();
 
-	     _pixelDrawerPtr->onDraw(*_frameBufferPtr);
+	     _pixelDrawerPtr->onDraw(getFrameBuffer<ColorBuffer>());
 	}
 
 	     void SoftContext::fragmentShaderStage()
@@ -372,7 +390,7 @@ namespace my_gl {
 		       {
 			    _fragmentShaderPtr->shade(
 				      (*_fragmentAttributeBufferPtr)(winCoord),
-				      (*_frameBufferPtr)(winCoord));
+				      getFrameBuffer<ColorBuffer>()(winCoord));
 		       }
 
 	     }
@@ -546,6 +564,12 @@ namespace my_gl {
 	  T& SoftContext::getVec4Manager()
 	  { return static_cast<T&>(_allVec4Manager
 		    [int(T::BIND_STATE)]);}
+
+     template<typename T>
+	  T& SoftContext::getFrameBuffer()
+	  {return static_cast<T&>(_allFrameBuffer[T::ORDER_INDEX]);}
+
+
 
      ObjectNameManager& SoftContext::getObjectNameManager()
      {

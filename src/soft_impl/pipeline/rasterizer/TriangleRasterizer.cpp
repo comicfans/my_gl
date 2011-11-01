@@ -44,11 +44,14 @@ namespace my_gl {
 	       (ViewportParameter& viewportParameter,
 		Interpolator& interpolator,
 		FragmentAttributeBuffer& fragmentAttributeBuffer,
+		     DepthBuffer& depthBuffer,
+		     DepthRange& depthRange,
 		LineRasterizer *pLineRasterizer)
 	       :Rasterizer
-		(viewportParameter,interpolator,fragmentAttributeBuffer),
-		_pLineRasterizer(pLineRasterizer)
-     {}
+		(viewportParameter,interpolator,
+		 fragmentAttributeBuffer,depthBuffer,depthRange),
+		_pLineRasterizer(pLineRasterizer){}
+		
 
 
 

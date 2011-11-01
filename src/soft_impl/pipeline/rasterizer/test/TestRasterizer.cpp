@@ -17,7 +17,9 @@
  */
 #include <cassert>
 #include "Rasterizer.hpp"
+#include "DepthRange.hpp"
 #include "pipeline/clipper/PointClipper.hpp"
+#include "pipeline/DepthBuffer.hpp"
 #include "common/test/TestFunction.hpp"
 #include "common/Vec4.hpp"
 #include "pipeline/interpolator/WinCoordInterpolator.hpp"
@@ -40,6 +42,10 @@ int width=300,
     height=200;
 
 FragmentAttributeBuffer fragmentAttributeBuffer(width,height,1);
+
+DepthRange depthRange;
+
+DepthBuffer depthBuffer(width,height);
 
 ViewportParameter parameter{0,0,width,height};
 
@@ -66,7 +72,7 @@ class ViewportTest:public Rasterizer
 	  }
 
 	  ViewportTest():
-	       Rasterizer(parameter,interpolator,fragmentAttributeBuffer)
+	       Rasterizer(parameter,interpolator,fragmentAttributeBuffer,depthBuffer,depthRange)
      {}
 	       
 	  virtual void elementRasterize

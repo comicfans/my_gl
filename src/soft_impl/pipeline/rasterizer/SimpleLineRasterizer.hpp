@@ -29,7 +29,10 @@ namespace my_gl {
 	  SimpleLineRasterizer
 	       (ViewportParameter& viewportParameter,
 		Interpolator& interpolator,
-		FragmentAttributeBuffer& fragmentAttributeBuffer);
+		FragmentAttributeBuffer& fragmentAttributeBuffer,
+		     DepthBuffer& depthBuffer,
+		     DepthRange& depthRange);
+	
 
 	  ~SimpleLineRasterizer();
 

@@ -21,16 +21,22 @@
 #include "pipeline/ClippedPrimitiveGroup.hpp"
 #include "shader/FragmentAttributeBuffer.hpp"
 #include "pipeline/interpolator/Interpolator.hpp"
+#include "DepthRange.hpp"
+#include "pipeline/DepthBuffer.hpp"
 
 namespace my_gl {
 
      Rasterizer::Rasterizer
 	       (ViewportParameter& viewportParameter,
 		Interpolator& interpolator,
-		FragmentAttributeBuffer& fragmentAttributeBuffer)
+		FragmentAttributeBuffer& fragmentAttributeBuffer,
+		     DepthBuffer& depthBuffer,
+		     DepthRange& depthRange)
 	  :_viewportParameter(viewportParameter),
 	  _interpolator(interpolator),
-	  _fragmentAttributeBuffer(fragmentAttributeBuffer)
+	  _fragmentAttributeBuffer(fragmentAttributeBuffer),
+	  _depthBuffer(depthBuffer),
+	  _depthRange(depthRange)
      { }
 
 
@@ -83,46 +89,51 @@ namespace my_gl {
 
      }
 
-     void Rasterizer::setViewportParameter
-	  (ViewportParameter& setValue)
-	  {
-	       _viewportParameter=setValue;
-
-	  }
-
      int Rasterizer::roundNearest(float value)
      {
 	  //0.5 up down/splite
 	  return int(value+0.5);
      }
 
-     static inline int viewportCorrectImpl
+     template<typename T=int>
+     static inline float viewportCorrectImpl
 	  (float normalizedDeviceCoordinate,
-	   int begin,int length)
+	   T begin,T length)
 	  {
 	       float value=(normalizedDeviceCoordinate+1)
 		    *(length/2)+begin;
 
-	       //see gl spec Basic Line Segment Rasterization
-	       //"diamond - exit" rule
-	       return Rasterizer::roundNearest(value);
+	       return value;
 	  }
+
+     bool Rasterizer::earlyZTest(const WinCoord& winCoord)
+     {
+	  return _depthBuffer.testAndUpdate(winCoord);
+     }
 
      WinCoord Rasterizer::toWinCoord
 	  (const Vec4& normalizedDeviceCoordinates)const
 	  {
 	       WinCoord ret;
+	       //see gl spec Basic Line Segment Rasterization
+	       //"diamond - exit" rule
 
-	       ret.y()=viewportCorrectImpl(
+	       ret.y()=Rasterizer::roundNearest(
+			 viewportCorrectImpl<int>(
 			 normalizedDeviceCoordinates.y(),
 			 _viewportParameter.y,
-			 _viewportParameter.height);
+			 _viewportParameter.height));
 
 
-	       ret.x()=viewportCorrectImpl(
+	       ret.x()=Rasterizer::roundNearest(
+			 viewportCorrectImpl<int>(
 			 normalizedDeviceCoordinates.x(),
 			 _viewportParameter.x,
-			 _viewportParameter.width);
+			 _viewportParameter.width));
+
+	       ret.z()=viewportCorrectImpl(normalizedDeviceCoordinates.z(),
+			 _depthRange.near,
+			 _depthRange.far-_depthRange.near);
 
 	       return ret;
 	  }
@@ -132,6 +143,7 @@ namespace my_gl {
      {
 	  toCorrect[0]=windowCoordinates[0];
 	  toCorrect[1]=windowCoordinates[1];
+	  toCorrect[2]=windowCoordinates[2];
      }
 
 

@@ -35,9 +35,11 @@ namespace my_gl {
 
 	       TriangleRasterizer
 		    (ViewportParameter& viewportParameter,
-		     Interpolator& interpolator,
-		     FragmentAttributeBuffer& fragmentAttributeBuffer,
-		     LineRasterizer *pLineRasterizer);
+		Interpolator& interpolator,
+		FragmentAttributeBuffer& fragmentAttributeBuffer,
+		     DepthBuffer& depthBuffer,
+		     DepthRange& depthRange,
+		LineRasterizer *pLineRasterizer);
 
 	       virtual ~TriangleRasterizer ();
 

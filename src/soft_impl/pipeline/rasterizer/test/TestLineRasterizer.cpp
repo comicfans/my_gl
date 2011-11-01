@@ -29,6 +29,8 @@
 #include "pipeline/ColorBuffer.hpp"
 #include "SDLPixelDrawer.hpp"
 #include "pipeline/rasterizer/LineInfo.hpp"
+#include "pipeline/DepthBuffer.hpp"
+#include "DepthRange.hpp"
 
 using std::bind;
 using std::placeholders::_1;
@@ -44,6 +46,10 @@ int width=300,
 
 FragmentAttributeBuffer fragmentAttributeBuffer(width,height,1);
 
+DepthBuffer depthBuffer(width,height);
+
+DepthRange depthRange;
+
 ViewportParameter parameter{0,0,width,height};
 
 ColorBuffer frameBuffer(width,height);
@@ -56,7 +62,8 @@ class TestSimpleLineRasterizer:public  SimpleLineRasterizer
 	  
 	  TestSimpleLineRasterizer()
 	       :SimpleLineRasterizer
-		(parameter,interpolator,fragmentAttributeBuffer)
+		(parameter,interpolator,fragmentAttributeBuffer,
+		 depthBuffer,depthRange)
      {}
 
 	  static WinCoord randWinCoord()

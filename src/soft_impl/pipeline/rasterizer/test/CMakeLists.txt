@@ -2,8 +2,7 @@ INCLUDE_DIRECTORIES(../ )
 
 ADD_EXECUTABLE(TestRasterizer TestRasterizer.cpp)
 TARGET_LINK_LIBRARIES(TestRasterizer 
-     TestFunction Vec4 Clipper
-     Interpolator Rasterizer ClippedPrimitiveGroup Shader )
+     TestFunction Pipeline Shader SoftImpl)
 
 ADD_EXECUTABLE(TestLineRasterizer TestLineRasterizer.cpp)
 TARGET_LINK_LIBRARIES(TestLineRasterizer 

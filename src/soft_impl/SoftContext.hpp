@@ -35,6 +35,7 @@
 
 #include "ElementIndexManager.hpp"
 #include "ViewportParameter.hpp"
+#include "DepthRange.hpp"
 
 namespace my_gl {
 
@@ -59,6 +60,7 @@ namespace my_gl {
      class FragmentAttributeBuffer;
      class ColorBuffer;
      class PixelDrawer;
+     class FrameBuffer;
 
      class SoftContext :public Context{
      public:
@@ -166,7 +168,14 @@ namespace my_gl {
 	//glClearColor
 	virtual void clearColor(float r,float g,float b,float a);
 
+	//glClear
 	virtual void clear(FrameBufferMask frameBufferMask);
+
+	//glDepthRange
+	virtual void depthRange(float near,float far);
+
+	//glDepthFunc
+	virtual void depthFunc(DepthFunc func);
 
 	ObjectNameManager& getObjectNameManager();
 
@@ -188,6 +197,12 @@ namespace my_gl {
 
 	template<typename T>
 	     T& getVec4Manager();
+
+
+	ptr_array<FrameBuffer,2> _allFrameBuffer;
+
+	template<typename T>
+	     T& getFrameBuffer();
 
 	MatrixMode _matrixMode;
 
@@ -212,8 +227,6 @@ namespace my_gl {
 
 	unique_ptr<Interpolator> _interpolatorPtr;
 
-	unique_ptr<ColorBuffer> _frameBufferPtr;
-
 	unique_ptr<PixelDrawer> _pixelDrawerPtr;
 
 	ptr_array<Clipper,3> _clippers;
@@ -226,6 +239,7 @@ namespace my_gl {
 	VertexAttributeBuffer _vertexAttributeBuffer;
 
 	ViewportParameter _viewportParameter;
+	DepthRange _depthRange;
 
 	vector<BindState> _activeStreams;
 	/** 

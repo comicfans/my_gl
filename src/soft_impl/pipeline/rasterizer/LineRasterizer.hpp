@@ -38,7 +38,10 @@ namespace my_gl {
 	  LineRasterizer
 	       (ViewportParameter& viewportParameter,
 		Interpolator& interpolator,
-		FragmentAttributeBuffer& fragmentAttributeBuffer);
+		FragmentAttributeBuffer& fragmentAttributeBuffer,
+		     DepthBuffer& depthBuffer,
+		     DepthRange& depthRange);
+	
 
 
 	
@@ -52,7 +55,7 @@ namespace my_gl {
 	   * @brief call this function to tell callee
 	   * a new window pixel is generated
 	   */
-	  typedef function<void(const WinCoord&)> StepCallback;
+	  typedef function<void(WinCoord&)> StepCallback;
 
 	 
 	  virtual ~LineRasterizer ();
@@ -88,7 +91,7 @@ namespace my_gl {
 		  const ConstAttributeGroupRefList& attributeGroupRefs,
 		const CoordInfo& coordInfo1,const CoordInfo& coordInfo2,
 		const LineInfo& lineInfo,
-		const WinCoord& winCoord,
+		WinCoord& winCoord,
 		StepCallback stepCallback=StepCallback());
 
 
