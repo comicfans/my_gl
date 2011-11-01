@@ -22,6 +22,7 @@
 
 #include <boost/multi_array.hpp>
 
+#include "FrameBuffer.hpp"
 #include "common/Vec4.hpp"
 
 namespace my_gl {
@@ -31,10 +32,8 @@ namespace my_gl {
 
      class WinCoord;
 
-     class ColorBuffer :protected multi_array<Vec4,2>{
+     class ColorBuffer :public FrameBuffer{
      public:
-
-	  typedef multi_array<Vec4,2> SuperType;
 
 	  ColorBuffer (size_t width,size_t height);
 
@@ -55,6 +54,8 @@ namespace my_gl {
 	  virtual ~ColorBuffer();
 
      private:
+
+	  multi_array<Vec4,2> _impl;
 
 	  Vec4 _clearColor;
 

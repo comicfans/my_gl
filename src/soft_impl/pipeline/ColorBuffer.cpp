@@ -28,32 +28,32 @@ namespace my_gl {
      using std::fill_n;
 
      ColorBuffer::ColorBuffer (size_t width,size_t height):
-	  SuperType(extents[height][width])
+	  _impl(extents[height][width])
      {}
 
 	  Vec4& ColorBuffer::operator()
 	       (const WinCoord& winCoord)
 	  {
-	       return (*this)[winCoord.y()][winCoord.x()];
+	       return _impl[winCoord.y()][winCoord.x()];
 	  }
 
 	  Vec4& ColorBuffer::operator()(size_t x,size_t y)
 	  {
-	       return (*this)[y][x];
+	       return _impl[y][x];
 	  }
 
 	  const Vec4& ColorBuffer::operator()
 	       (const WinCoord& winCoord)const
 	  {
-	       return (*this)[winCoord.y()][winCoord.x()];
+	       return _impl[winCoord.y()][winCoord.x()];
 	  }
 
 	  size_t ColorBuffer::width()const
-	  {return shape()[1];}
+	  {return _impl.shape()[1];}
 
 	  size_t ColorBuffer::height()const
 	  {
-	       return shape()[0];
+	       return _impl.shape()[0];
 	  }
 
 	  void ColorBuffer::clearColor(float r,float g,float b,float a)
@@ -65,6 +65,6 @@ namespace my_gl {
 
 	  void ColorBuffer::clear()
 	  {
-	       fill_n(origin(),width()*height(),_clearColor);
+	       fill_n(_impl.origin(),_impl.num_elements(),_clearColor);
 	  }
 } /* my_gl */
