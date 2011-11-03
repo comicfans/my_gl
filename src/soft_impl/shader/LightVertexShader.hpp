@@ -39,7 +39,7 @@ namespace my_gl {
 
 		    const Vec4& inVertex,
 		    const Vec4& /* not used */,
-		    const Vec4& inNormal,
+		    const Vec3& inNormal,
 		    const Vec4& inTexCoord,
 
 		    Vec4& outPosition,

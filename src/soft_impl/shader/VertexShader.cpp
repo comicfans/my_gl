@@ -66,7 +66,7 @@ namespace my_gl {
 	       shade(
 			 inputAttributes[int(BindState::VERTEX)],
 			 inputAttributes[int(BindState::COLOR)],
-			 inputAttributes[int(BindState::NORMAL)],
+			 Vec3(inputAttributes[int(BindState::NORMAL)].values(),3),
 			 inputAttributes[int(BindState::TEXCOORD)],
 
 			 outputAttributes[int(
