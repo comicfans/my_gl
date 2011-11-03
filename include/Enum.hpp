@@ -69,6 +69,7 @@ namespace my_gl {
 
      enum class Face{FRONT,BACK,FRONT_AND_BACK};
 
+     enum class NormalizeNormal{RESCALE_NORMAL,NORMALIZE};
 } /* my_gl */
 
 
