@@ -18,7 +18,7 @@
 
 #include <cassert>
 #include "pipeline/clipper/PointClipper.hpp"
-#include "common/Vec4.hpp"
+#include "common/Vec.hpp"
 
 using namespace my_gl;
 int main(int argc, const char *argv[])

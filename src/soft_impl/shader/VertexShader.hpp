@@ -23,31 +23,52 @@
 #include <vector>
 
 #include "Enum.hpp"
+#include "common/VecFwd.hpp"
 
 #include "VertexAttributeBuffer.hpp"
 
 namespace my_gl {
 
-     struct Vec4;
-     struct Global;
-     struct LightSourceParam;
-     struct MaterialParam;
+     struct MatrixParam;
+     struct GroupLightingParam;
 
      using std::vector;
 
      class VertexShader {
 	  public:
 
-	       VertexShader(const Global& global,
-			 const vector<LightSourceParam*>& activeLightSourceParams,
-			 const MaterialParam& materialParam);
+	       VertexShader(const MatrixParam& matrixParam,
+			 const GroupLightingParam& groupLightingParam);
+
+	       void setNormalizedNormal(bool normalizedNormal);
 
 	       virtual ~VertexShader ();
 
 	       virtual void shade(const Vec4* inputAttributes,
 			 AttributeGroupRef outputAttributes);
 
+	       void enable(NormalizeNormal normalizeNormal);
+
 	  protected:
+
+	       /** 
+		* @brief emulate GLSL  ftransform()
+		* 
+		* @param inVertex
+		* 
+		* @return 
+		*/
+	       Vec4 ftransform(const Vec4& inVertex);
+
+	       /** 
+		* @brief process normal with _normalizeNormal 
+		* parameter 
+		* 
+		* @param inNormal
+		* 
+		* @return 
+		*/
+	       Vec4 fnormal(const Vec4& inNormal);
 
 	       virtual void shade(
 
@@ -64,9 +85,13 @@ namespace my_gl {
 			 )=0;
 
 	  protected:
-	       const Global& _global;
-	       const vector<LightSourceParam*>& _activeLightSourceParams;
-	       const MaterialParam& _materialParam;
+	       const MatrixParam& _matrixParam;
+	       const GroupLightingParam& _groupLightingParam;
+
+	  private:
+
+	       bool _normalizeNormal;
+	       bool _rescaleNormal;
 
      };
 

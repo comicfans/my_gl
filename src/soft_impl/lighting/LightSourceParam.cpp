@@ -95,7 +95,10 @@ namespace my_gl {
 	  }
      }
 
-
+     bool LightSourceParam::isDirectional()const
+     {
+	  return position.w()==0;
+     }
 
 
 } /* my_gl */

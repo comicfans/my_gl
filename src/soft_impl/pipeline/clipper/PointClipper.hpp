@@ -20,11 +20,11 @@
 
 #define POINT_CLIPPER_HPP
 
+#include "common/VecFwd.hpp"
 #include "Clipper.hpp"
 
 namespace my_gl {
 
-     struct Vec4;
      class PointClipper :public Clipper{
      public:
 

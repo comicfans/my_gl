@@ -26,10 +26,10 @@
 #include "PrimitiveIndex.hpp"
 
 #include "shader/VertexAttributeBuffer.hpp"
+#include "common/VecFwd.hpp"
 
 namespace my_gl {
 
-     struct Vec4;
 
      using std::vector;
      using std::pair;

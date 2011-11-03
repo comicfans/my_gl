@@ -31,13 +31,12 @@
 #include "object/ObjectNameManager.hpp"
 #include "object/ArrayBufferObjectManager.hpp"
 
-#include "shader/Global.hpp"
+#include "shader/MatrixParam.hpp"
 
 #include "ElementIndexManager.hpp"
 #include "ViewportParameter.hpp"
 #include "DepthRange.hpp"
-#include "lighting/MaterialParam.hpp"
-#include "lighting/LightSourceParam.hpp"
+#include "lighting/GroupLightingParam.hpp"
 
 namespace my_gl {
 
@@ -233,14 +232,14 @@ namespace my_gl {
 
 	MatrixStack _matrixStacks[3];
 
-	void multMatrixf(const Matrix& matrix);
+	void multMatrixf(const Matrix4& matrix);
 
 	MatrixStack& currentMatrixStack() ;
 
 	/** 
 	 * @brief global uniform values
 	 */
-	Global _global;
+	MatrixParam _matrixParam;
 
 	unique_ptr<VertexShader> _vertexShaderPtr;
 
@@ -309,13 +308,10 @@ namespace my_gl {
 	 */
 	void prepareGlobalUniform();
 
+	GroupLightingParam _groupLightingParam;
 
 	//light param
 	//
-	MaterialParam _materialParam;
-	vector<LightSourceParam*> _activeLightSourceParams;
-	LightSourceParam _lightSourceParams[MAX_LIGHTS];
-
      };
 
 

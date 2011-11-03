@@ -21,7 +21,7 @@
 #define TWO_SOURCE_VEC4_MANAGER_HPP
 
 #include "common/Vec4Manager.hpp"
-#include "common/Vec4.hpp"
+#include "common/Vec.hpp"
 
 namespace my_gl {
 

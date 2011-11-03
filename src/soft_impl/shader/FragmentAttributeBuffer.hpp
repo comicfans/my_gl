@@ -26,7 +26,7 @@
 
 #include <boost/multi_array.hpp>
 
-#include "common/Vec4.hpp"
+#include "common/Vec.hpp"
 #include "pipeline/rasterizer/WinCoord.hpp"
 
 

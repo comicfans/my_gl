@@ -23,7 +23,7 @@
 #include <boost/multi_array.hpp>
 
 #include "FrameBuffer.hpp"
-#include "common/Vec4.hpp"
+#include "common/Vec.hpp"
 
 namespace my_gl {
 

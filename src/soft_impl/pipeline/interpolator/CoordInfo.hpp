@@ -20,7 +20,7 @@
 
 #define COORD_INFO_HPP
 
-#include "common/Vec4.hpp"
+#include "common/Vec.hpp"
 
 #include "pipeline/rasterizer/WinCoord.hpp"
 

@@ -1,12 +1,12 @@
 /*
  * =====================================================================================
  *
- *       Filename:  Vec4SizeTest.cpp
+ *       Filename:  TestLightingLink.cpp
  *
- *    Description:  test sizeof Vec4
+ *    Description:  
  *
  *        Version:  1.0
- *        Created:  2011-9-28 9:57:56
+ *        Created:  2011-11-3 1:59:14
  *       Revision:  none
  *       Compiler:  gcc
  *
@@ -16,25 +16,11 @@
  * =====================================================================================
  */
 
-#include <iostream>
-
-#include "common/Vec.hpp"
-
-
-using std::cout;
-using std::endl;
-
-using my_gl::Vec4;
-
-class Vec4Class
-{
-	       float _values[4];
- 
-
-};
+#include "common/Matrix.hpp"
 
 int main(int argc, const char *argv[])
 {
+     my_gl::Matrix4 ma;
 	
-     cout<<sizeof(Vec4)<<" "<<sizeof(Vec4Class)<<endl;
+	return 0;
 }

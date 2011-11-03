@@ -20,17 +20,17 @@
 
 #define MATERIAL_PARAM_H
 
-#include "common/Vec4.hpp"
+#include "common/Vec.hpp"
 #include "Enum.hpp"
 
 namespace my_gl {
      struct MaterialParam {
 
-	  Vec4 emission;
-	  Vec4 ambient;
-	  Vec4 diffuse;
-	  Vec4 specular;
-	  float shininess;
+	  Vec4 emission;//Ecm
+	  Vec4 ambient;//Acm
+	  Vec4 diffuse;//Dcm
+	  Vec4 specular;//Scm
+	  float shininess;//Srm
 
 	  MaterialParam();
 

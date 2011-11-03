@@ -19,11 +19,12 @@
 #include "TestFunction.hpp"
 
 #include <cmath>
+#include <climits>
 #include <cstdlib>
 #include <iostream>
 #include <cassert>
 
-#include "common/Vec4.hpp"
+#include "common/Vec.hpp"
 #include "common/Matrix.hpp"
 
 namespace my_gl {
@@ -72,11 +73,11 @@ namespace my_gl {
 	  return true;
      }
 	
-     bool assertEqual(const Matrix& lhs,const Matrix& rhs,unsigned errorFactor)
+     bool assertEqual(const Matrix4& lhs,const Matrix4& rhs,unsigned errorFactor)
      {
 	  auto values1=lhs.values(),
 	       values2=rhs.values();
-	  for(int i=0;i<Matrix::ELEMENTS_NUMBER;++i)
+	  for(int i=0;i<Matrix4::ELEMENTS_NUMBER;++i)
 	  {
 	       assertEqual(values1[i],values2[i],errorFactor);
 	  }
@@ -103,5 +104,29 @@ Vec4 randVec()
 
      return ret;
 }
+
+     bool assertEqual(const Vec4& lhs,const Vec4& rhs)
+{
+     assert(equal(lhs,rhs));
+
+}
+
+Matrix4 randMatrix()
+{
+
+     Matrix4 matrix;
+
+     for(int i=0;i<Matrix4::LENGTH;++i)
+     {
+	  for (int j=0; j<Matrix4::LENGTH; ++j)
+	  {
+	       matrix(i,j)=float(myRand())/INT_MAX;
+	  }
+     }
+
+     return matrix;
+
+}
+
 
 } /* my_gl */

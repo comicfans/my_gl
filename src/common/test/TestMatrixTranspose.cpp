@@ -1,12 +1,12 @@
 /*
  * =====================================================================================
  *
- *       Filename:  Vec4SizeTest.cpp
+ *       Filename:  TestMatrixTranspose.cpp
  *
- *    Description:  test sizeof Vec4
+ *    Description:  
  *
  *        Version:  1.0
- *        Created:  2011-9-28 9:57:56
+ *        Created:  2011-11-3 12:40:46
  *       Revision:  none
  *       Compiler:  gcc
  *
@@ -15,26 +15,22 @@
  *
  * =====================================================================================
  */
+#include "common/test/TestFunction.hpp"
+using namespace my_gl;
 
-#include <iostream>
-
-#include "common/Vec.hpp"
-
-
-using std::cout;
-using std::endl;
-
-using my_gl::Vec4;
-
-class Vec4Class
+void testTranspose()
 {
-	       float _values[4];
- 
+     Matrix4 matrix=randMatrix();
 
-};
+     assertEqual(matrix,matrix.transpose().transpose());
+}
+
 
 int main(int argc, const char *argv[])
 {
 	
-     cout<<sizeof(Vec4)<<" "<<sizeof(Vec4Class)<<endl;
+     for (int i=0; i<300; ++i)
+     {
+	  testTranspose();
+     }
 }

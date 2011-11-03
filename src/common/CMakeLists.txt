@@ -2,7 +2,7 @@ INCLUDE_DIRECTORIES(../soft_impl)
 
 SUBDIRS(test)
 
-ADD_LIBRARY(Vec4 Vec4.cpp)
+ADD_LIBRARY(Vec Vec.cpp)
 
 ADD_LIBRARY(Matrix Matrix.cpp MatrixStack.cpp)
 
@@ -16,7 +16,8 @@ ADD_LIBRARY(Vec4Provider
      BufferObjectVec4Provider.cpp
      ClientArrayVec4Provider.cpp
      )
-TARGET_LINK_LIBRARIES(Vec4Provider Vec4)
+
+TARGET_LINK_LIBRARIES(Vec4Provider Vec)
 
 TARGET_LINK_LIBRARIES(Vec4Manager Vec4Provider)
 

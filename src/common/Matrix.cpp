@@ -1,9 +1,9 @@
 /*
  * =====================================================================================
  *
- *       Filename:  Matrix.cpp
+ *       Filename:  MatrixBase<L>.cpp
  *
- *    Description:  implementation of Matrix float 4x4
+ *    Description:  implementation of MatrixBase float 4x4
  *
  *        Version:  1.0
  *        Created:  2011-9-13 15:58:56
@@ -22,7 +22,7 @@
 #include <cmath>
 #include <utility>
 
-#include "Vec4.hpp"
+#include "Vec.hpp"
 
 using std::fill_n;
 using std::copy_n;
@@ -32,19 +32,22 @@ using std::sin;
 
 namespace my_gl {
 
-     Matrix::Matrix(bool fillZero)
+
+     template<size_t L>
+     MatrixBase<L>::MatrixBase(bool fillZero)
      {
 	  if (fillZero)
 	  {
-	       fill_n(_rowFirstArray,ELEMENTS_NUMBER,0);
+	       fill_n(_columnPriorityValues,ELEMENTS_NUMBER,0);
 	  }
      }
 
-     Matrix::Matrix(const float* values,bool rowFirst)
+     template<size_t L>
+     MatrixBase<L>::MatrixBase(const float* values,bool rowFirst)
      {
-	  if (rowFirst)
+	  if (!rowFirst)
 	  {
-	       copy_n(values,ELEMENTS_NUMBER,_rowFirstArray);
+	       copy_n(values,ELEMENTS_NUMBER,_columnPriorityValues);
 	  }
 	  else
 	  {
@@ -52,84 +55,66 @@ namespace my_gl {
 	       {
 		    for (int row=0; row<LENGTH; ++row)
 		    {
-			 _rowFirstArray[row*LENGTH+column]
-			      =values[column*LENGTH+row];
+			 _columnPriorityValues[column*LENGTH+row]
+			      =values[row*LENGTH+column];
 		    }
 	       }
 	  }
      }
 
 
-     static float rowColumnExprValue3(const float* rowFirstArray)
+
+     template<size_t L>
+     static void exclude(const MatrixBase<L>& matrix,int column,int row,
+	       MatrixBase<L-1>& result)
      {
-	  float result=0;
-
-	  for (int columnCounter=0; 
-		    columnCounter<6;
-		    ++columnCounter)
+	  for (int columnFrom=0,columnTo=0; 
+		    columnFrom<MatrixBase<L>::LENGTH; ++columnFrom)
 	  {
-	       int sign=(columnCounter<3?1:-1);
-
-	       float product=1;
-
-	       for (int rowCounter=0; 
-			 rowCounter<3; 
-			 ++rowCounter)
-	       {
-		    int columnIndex=(columnCounter%3+rowCounter*sign+3)%3;
-
-		    product*=rowFirstArray
-			 [rowCounter*3+columnIndex];
-	       }
-	       result+=sign*product;
-	  }
-
-	  return result;
-     }
-
-     static void exclude(const Matrix& matrix,int row,int column,float* result)
-     {
-	  for (int rowFrom=0,rowTo=0; 
-		    rowFrom<Matrix::LENGTH; ++rowFrom)
-	  {
-	       if (rowFrom==row)
+	       if (columnFrom==column)
 	       {
 		    continue;
 	       }
 	       
-	       for (int columnFrom=0,columnTo=0; 
-			 columnFrom<Matrix::LENGTH; ++columnFrom)
+	       for (int rowFrom=0,rowTo=0; 
+			 rowFrom<MatrixBase<L>::LENGTH; ++rowFrom)
 	       {
-		    if (columnFrom==column)
+		    if (rowFrom==row)
 		    {
 			 continue;
 		    }
-		    result[rowTo*3+columnTo]=
-			 matrix(rowFrom,columnFrom);
-		    ++columnTo;
+		    result(columnTo,rowTo)=
+			 matrix(columnFrom,rowFrom);
+		    ++rowTo;
 	       }
-	       ++rowTo;
+	       ++columnTo;
 	  }
-
 
      }
 
+     template<>
+	  void exclude<2>(const MatrixBase<2>& matrix,int column,int row,
+		    MatrixBase<1>& result)
+	  {
+	       result(0,0)=matrix(1-column,1-row);
+	  }
 
-     static float rowColumnExprValue4(const Matrix& matrix)
+     template<size_t L>
+     float rowColumnExprValue(const MatrixBase<L>& matrix)
      {
 	  float result=0;
 
-	  for (int i=0; i<4; ++i)
+	  for (int column=0; column<MatrixBase<L>::LENGTH; ++column)
 	  {
-	       int sign=(i%2==0?1:-1);
+	       int sign=(column%2==0?1:-1);
 
-	       float product=matrix(0,i);
+	       float product=matrix(column,0);
 
-	       float tmp[9];
+	       MatrixBase<L-1> tmp;
 
-	       exclude(matrix.values(),0,i,tmp);
+	       exclude(matrix,column,0,tmp);
 
-	       product*=rowColumnExprValue3(tmp);
+	       product*=rowColumnExprValue(tmp);
 
 	       result+=sign*product;
 	  }
@@ -137,16 +122,23 @@ namespace my_gl {
 	  return result;
 	  }
 
-         static float inverseMod(const Matrix& matrix,
-	       const int row,const int column)
+     template<>
+	  float rowColumnExprValue<1>(const MatrixBase<1>& matrix)
+	  {
+	       return matrix(0,0);
+	  }
+
+     template<size_t L>
+         float inverseMod(const MatrixBase<L>& matrix,
+	       int column,int row)
      {
 
 	  //remove row/column element to make a 3x3 matrix
-	  float tmp[9];
+	  MatrixBase<L-1> tmp;
 
-	  exclude(matrix,row,column,tmp);
+	  exclude(matrix,column,row,tmp);
 
-	  float result=rowColumnExprValue3(tmp);
+	  float result=rowColumnExprValue(tmp);
 
 	  if ((row+column)%2)
 	  {
@@ -156,20 +148,27 @@ namespace my_gl {
 	  return result;
      }
 
-     Matrix Matrix::inverse() const 
-     {
-	  Matrix ret;
+     template<>
+	  float inverseMod(const MatrixBase<1>& matrix,
+		    int column,int row)
+	  {
+	       return matrix(0,0);
+	  }
 
-	  float detValue=rowColumnExprValue4
-	       (*this);
+	 template<size_t L>
+     MatrixBase<L> MatrixBase<L>::inverse() const 
+     {
+	  MatrixBase<L> ret;
+
+	  float detValue=rowColumnExprValue(*this);
 
 	  for (int row=0; row<LENGTH; ++row)
 	  {
 	       for (int column=0; column<LENGTH; ++column)
 	       {
 		    // det(Aij).transpose()/det(A)
-		    ret(column,row)=
-			 inverseMod(*this,row,column)/detValue;
+		    ret(row,column)=
+			 inverseMod(*this,column,row)/detValue;
 	       }
 	  }
 
@@ -177,25 +176,27 @@ namespace my_gl {
 
      }
 
-     Matrix & Matrix::operator=(const Matrix &rhs)
+	 template<size_t L>
+     MatrixBase<L> & MatrixBase<L>::operator=(const MatrixBase<L> &rhs)
      {
-	  copy_n(rhs._rowFirstArray,ELEMENTS_NUMBER,
-		    _rowFirstArray);
+	  copy_n(rhs._columnPriorityValues,ELEMENTS_NUMBER,
+		    _columnPriorityValues);
 	  return *this;
      }
 
-     void Matrix::operator*=(const my_gl::Matrix &rhs)
+	 template<size_t L>
+     void MatrixBase<L>::operator*=(const MatrixBase<L>&rhs)
      {
-	  Matrix temp;
+	  MatrixBase<L> temp;
 
-	  for(int row=0;row<LENGTH;++row)
+	  for(int column=0;column<LENGTH;++column)
 	  {
-	       for(int column=0;column<LENGTH;++column)
+	       for(int row=0;row<LENGTH;++row)
 	       {
 		    for (int i=0; i<LENGTH; ++i)
 		    {
-			 temp(row,column)+=
-			      (*this)(row,i)*rhs(i,column);
+			 temp(column,row)+=
+			      (*this)(i,row)*rhs(column,i);
 		    }
 	       }
 	  }
@@ -203,151 +204,191 @@ namespace my_gl {
 	  this->swap(temp);
      }
 
-     void Matrix::swap(my_gl::Matrix &rhs)
-     {
-	  std::swap(_rowFirstArray,rhs._rowFirstArray);
-     }
+	 template<size_t L>
+	      void MatrixBase<L>::swap(MatrixBase<L> &rhs)
+	      {
+		   std::swap(_columnPriorityValues,rhs._columnPriorityValues);
+	      }
 
-     float& Matrix::operator()(size_t rowIdx,  size_t columnIdx)
-     {
-	  return _rowFirstArray[rowIdx*LENGTH+columnIdx];
-     }
+	 template<size_t L>
+	      float& MatrixBase<L>::operator()(size_t columnIdx,  size_t rowIdx)
+	      {
+		   return _columnPriorityValues[columnIdx*LENGTH+rowIdx];
+	      }
 
-     float const& Matrix::operator()
-	  (size_t rowIdx,size_t columnIdx)const  
-	  {
-	       return const_cast<Matrix&>(*this)(rowIdx,columnIdx);
-	  }
+	 template<size_t L>
+	      float const& MatrixBase<L>::operator()
+	      (size_t columnIdx,size_t rowIdx)const  
+	      {
+		   return _columnPriorityValues[columnIdx*LENGTH+rowIdx];
+	      }
 
-     Matrix Matrix::identity()
-     {
-	  Matrix ret;
-	  for (int i=0; i<LENGTH; ++i)
-	  {
-	       ret(i,i)=1;
-	  }
-	  return ret;
-     }
+	 template<size_t L>
+	      MatrixBase<L> MatrixBase<L>::identity()
+	      {
+		   MatrixBase<L> ret;
+		   for (int i=0; i<LENGTH; ++i)
+		   {
+			ret(i,i)=1;
+		   }
+		   return ret;
+	      }
 
-     Matrix Matrix::rotate(float angle,float x,float y,float z)
-     {
-	  Matrix ret=Matrix::identity();
+	 Matrix4 rotate(float angle,float x,float y,float z)
+	 {
+	      Matrix4 ret=Matrix4::identity();
 
-	  float rotateAxis[3]={x,y,z};
+	      float rotateAxis[3]={x,y,z};
 
-	  normalize(rotateAxis);
+	      normalize3(rotateAxis);
 
-	  x=rotateAxis[0];
-	  y=rotateAxis[1];
-	  z=rotateAxis[2];
+	      x=rotateAxis[0];
+	      y=rotateAxis[1];
+	      z=rotateAxis[2];
 
-	  const float 
-	       c=cos(angle),
-	       onePlusC=1-c,
-	       s=sin(angle),
-	       xy=x*y,
-	       xz=x*z,
-	       yz=y*z,
-	       xs=x*s,
-	       ys=y*s,
-	       zs=z*s;
+	      const float 
+		   c=cos(angle),
+		   onePlusC=1-c,
+		   s=sin(angle),
+		   xy=x*y,
+		   xz=x*z,
+		   yz=y*z,
+		   xs=x*s,
+		   ys=y*s,
+		   zs=z*s;
 
-	  ret(0,0)=x*x*onePlusC+c;
-	  ret(0,1)=xy*onePlusC-zs;
-	  ret(0,2)=xz*onePlusC+ys;
-	  ret(1,0)=xy*onePlusC+zs;
-	  ret(1,1)=y*y*onePlusC+c;
-	  ret(1,2)=yz*onePlusC-xs;
-	  ret(2,0)=xz*onePlusC-ys;
-	  ret(2,1)=yz*onePlusC+xs;
-	  ret(2,2)=z*z*onePlusC+c;
+	      ret(0,0)=x*x*onePlusC+c;
+	      ret(1,0)=xy*onePlusC-zs;
+	      ret(2,0)=xz*onePlusC+ys;
+	      ret(0,1)=xy*onePlusC+zs;
+	      ret(1,1)=y*y*onePlusC+c;
+	      ret(2,1)=yz*onePlusC-xs;
+	      ret(0,2)=xz*onePlusC-ys;
+	      ret(1,2)=yz*onePlusC+xs;
+	      ret(2,2)=z*z*onePlusC+c;
 
-	  return ret;
-     }
+	      return ret;
+	 }
 
-     Matrix Matrix::translate(float x,  float y,  float z)
-     {
-	  Matrix ret=identity();
+	 Matrix4 translate(float x,  float y,  float z)
+	 {
+	      Matrix4 ret=Matrix4::identity();
 
-	  ret(0,3)=x;
-	  ret(1,3)=y;
-	  ret(2,3)=z;
+	      ret(3,0)=x;
+	      ret(3,1)=y;
+	      ret(3,2)=z;
 
-	  return ret;
-     }
+	      return ret;
+	 }
 
-     Matrix Matrix::scale(float x,float y,float z)
-     {
-	  Matrix ret=identity();
+	 Matrix4 scale(float x,float y,float z)
+	 {
+	      Matrix4 ret=Matrix4::identity();
 
-	  ret(0,0)=x;
+	      ret(0,0)=x;
 	  ret(1,1)=y;
 	  ret(2,2)=z;
 
 	  return ret;
      }
 
-     void multiVec4To(const Matrix& lhs, const float* vector, float *result) 
-     {
-	  fill_n(result,Matrix::LENGTH,0);
+	 template<size_t L>
+	      void multiVecTo(const MatrixBase<L>& lhs, const float* vector, float *result) 
+	      {
+		   fill_n(result,MatrixBase<L>::LENGTH,0);
 
-	  for (int i=0; i<Matrix::LENGTH; ++i)
-	  {
-	       for (int j=0; j<Matrix::LENGTH; ++j)
-	       {
-		    result[i]+=lhs(i,j)*vector[j];
-	       }
-	  }
-     }
+		   for (int row=0; row<MatrixBase<L>::LENGTH; ++row)
+		   {
+			for (int column=0; column<MatrixBase<L>::LENGTH; ++column)
+			{
+			     result[row]+=lhs(column,row)*vector[column];
+			}
+		   }
+	      }
 
-     Matrix Matrix::transpose()const
-     {
-	  Matrix ret=*this;
+	 template<size_t L>
+	      MatrixBase<L> MatrixBase<L>::transpose()const
+	      {
+		   MatrixBase<L> ret=*this;
 
-	  for (int i=1; i<LENGTH; ++i)
-	  {
-	       for (int j=0; j<i; ++j)
-	       {
-		    ::swap(ret(i,j),ret(j,i));
-	       }
-	  }
+		   for (int i=1; i<LENGTH; ++i)
+		   {
+			for (int j=0; j<i; ++j)
+			{
+			     ::swap(ret(i,j),ret(j,i));
+			}
+		   }
 
-	  return ret;
-     }
+		   return ret;
+	      }
 
-     const float* Matrix::values()const 
-     {return _rowFirstArray;}
-	
+	 template<size_t L>
+	      const float* MatrixBase<L>::values()const 
+	      {return _columnPriorityValues;}
 
-     void inplaceMultiVec4(const Matrix& lhs,float *pointer) 
-     {
 
-	  float temp[Matrix::LENGTH];
+	 template<size_t L>
+	      void inplaceMultiVec(const MatrixBase<L>& lhs,float *pointer) 
+	      {
+		   float temp[MatrixBase<L>::LENGTH];
 
-	  multiVec4To(lhs,pointer,temp);
+		   multiVecTo(lhs,pointer,temp);
 
-	  copy_n(temp,Matrix::LENGTH,pointer);
-     }
+		   copy_n(temp,MatrixBase<L>::LENGTH,pointer);
+	      }
 
-     void inplaceMultiVec4(const Matrix& lhs,Vec4& vector) 
-     {
-	  inplaceMultiVec4(lhs,&vector[0]);
-     }
+	 template<size_t L>
+	      void inplaceMultiVec(const MatrixBase<L>& lhs,VecBase<L>& vec) 
+	      {
+		   inplaceMultiVec(lhs,vec.values());
+	      }
 
-     void multiVec4To(const Matrix& lhs, const Vec4& vector, Vec4& result) 
-     {
-	  multiVec4To(lhs,&vector[0],&result[0]);
-     }
+	 template<size_t L>
+	      void multiVecTo(const MatrixBase<L>& lhs, const VecBase<L>& vec, VecBase<L>& result) 
+	      {
+		   multiVecTo(lhs,vec.values(),result.values());
+	      }
 
-     void multiVec4To(const Matrix& lhs, const Vec4& vector, float *result) 
-     {
-	  multiVec4To(lhs,vector,result);
-     }
+	 template<size_t L>
+	      void multiVecTo(const MatrixBase<L>& lhs, const VecBase<L>& vec, float *result) 
+	      {
+		   multiVecTo(lhs,vec,result);
+	      }
 
-     Matrix operator*(const Matrix& lhs,const Matrix& rhs)
-     {
-	  Matrix ret(lhs);
-	  ret*=rhs;
-	  return ret;
-     }
+	 template<size_t L>
+	      MatrixBase<L> MatrixBase<L>::operator*
+	      (const MatrixBase<L>& rhs)const
+	      {
+		   MatrixBase<L> ret(*this);
+		   ret*=rhs;
+		   return ret;
+	      }
+
+	 template<size_t L>
+	      VecBase<L> MatrixBase<L>::operator*
+	      (const VecBase<L>& rhs)const
+	      {
+		   VecBase<L> ret(rhs);
+
+		   multiVecTo(*this,rhs,ret);
+
+		   return ret;
+	      }
+
+	 template struct MatrixBase<2>;
+	 template struct MatrixBase<3>;
+	 template struct MatrixBase<4>;
+
+	 template void inplaceMultiVec(const MatrixBase<4>& lhs,float *pointer) ;
+	 template void inplaceMultiVec(const MatrixBase<3>& lhs,float *pointer) ;
+
+	 template void inplaceMultiVec(const MatrixBase<4>& lhs,VecBase<4>& vector) ;
+
+	 template void multiVecTo(const MatrixBase<4>& lhs,const VecBase<4>& vector,float *result) ;
+
+	 template void multiVecTo(const MatrixBase<4>& lhs,const float* vector,float * result);
+
+	 template void multiVecTo(const MatrixBase<4>& lhs,const VecBase<4>& vector, VecBase<4>& result) ;
+
+
 } /* my_gl */

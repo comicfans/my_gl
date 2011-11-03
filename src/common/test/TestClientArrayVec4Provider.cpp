@@ -29,7 +29,7 @@ int main(int argc, const char *argv[])
 
      Vec4 readOut=provider.getValue(0);
 
-     assert(readOut==Vec4(0.6,0.2,0,1));
+     assert((readOut==Vec4{0.6,0.2,0,1}));
 	
      return 0;
 }

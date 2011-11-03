@@ -18,26 +18,51 @@
 
 #include "VertexShader.hpp"
 
-#include "common/Vec4.hpp"
+#include "common/Vec.hpp"
 
-#include "Global.hpp"
+#include "common/Matrix.hpp"
+
+#include "MatrixParam.hpp"
+
+#include "lighting/GroupLightingParam.hpp"
 
 namespace my_gl {
 
-     VertexShader::VertexShader(const Global& global,
-	       const vector<LightSourceParam*>& activeLightSourceParams,
-	       const MaterialParam& materialParam)
-	  :_global(global),
-	  _activeLightSourceParams(activeLightSourceParams),
-	  _materialParam(materialParam)
+     VertexShader::VertexShader(const MatrixParam& matrixParam,
+	       const GroupLightingParam& groupLightingParam)
+	  :_matrixParam(matrixParam),
+	  _groupLightingParam(groupLightingParam)
      {
      }
 
      VertexShader::~VertexShader(){}
 
+	       
+     Vec4 VertexShader::ftransform(const Vec4& inVertex)
+     {
+	  return _matrixParam.modelView*inVertex;
+     }
+
+     Vec4 VertexShader::fnormal(const Vec4& inNormal)
+     {
+	  Vec4 ret;
+
+	  multiVecTo(_matrixParam.normal,inNormal,ret);
+
+	  if (_rescaleNormal)
+	  {
+	       //TODO
+	  }
+	  if (_normalizeNormal)
+	  {
+	       //TODO
+	  }
+
+	  return ret;
+     }
 
      void VertexShader::shade
-	   (const Vec4* inputAttributes,
+	  (const Vec4* inputAttributes,
 	   AttributeGroupRef outputAttributes)
 	  {
 	       shade(
@@ -45,7 +70,7 @@ namespace my_gl {
 			 inputAttributes[int(BindState::COLOR)],
 			 inputAttributes[int(BindState::NORMAL)],
 			 inputAttributes[int(BindState::TEXCOORD)],
-			 
+
 			 outputAttributes[int(
 			      VertexAttributeBuffer::OutIndex::POSITION)],
 			 outputAttributes[int(
@@ -56,7 +81,7 @@ namespace my_gl {
 			      VertexAttributeBuffer::OutIndex::BACK_COLOR)],
 			 outputAttributes[int(
 			      VertexAttributeBuffer::OutIndex::TEXCOORD)]
-			 );
+		    );
 	  }
 
 

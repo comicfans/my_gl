@@ -1,12 +1,12 @@
 /*
  * =====================================================================================
  *
- *       Filename:  NoLightVertexShader.hpp
+ *       Filename:  LightVertexShader.hpp
  *
- *    Description:  vertex shader that require no light
+ *    Description:  
  *
  *        Version:  1.0
- *        Created:  2011-9-29 17:42:35
+ *        Created:  2011-11-2 12:07:17
  *       Revision:  none
  *       Compiler:  gcc
  *
@@ -16,44 +16,42 @@
  * =====================================================================================
  */
 
-#ifndef NO_LIGHT_VERTEX_SHADER_HPP
+#ifndef LIGHT_VERTEX_SHADER_HPP
 
-#define NO_LIGHT_VERTEX_SHADER_HPP
+#define LIGHT_VERTEX_SHADER_HPP
 
 #include "VertexShader.hpp"
 
 namespace my_gl {
-     class NoLightVertexShader : public  VertexShader{
-     public:
 
-	  NoLightVertexShader(const MatrixParam& matrixParam,
-	       const GroupLightingParam& groupLightingParam);
-	
-	  virtual ~NoLightVertexShader();
+     class LightVertexShader :public VertexShader{
+     public:
+ 	  LightVertexShader(const MatrixParam& matrixParam,
+			 const GroupLightingParam& groupLightParam);
+     	
+	  virtual ~LightVertexShader ();
 
      protected:
+
+
+
 	  virtual void shade(
 
 		    const Vec4& inVertex,
-		    const Vec4& inColor,
-		    const Vec4& inNormal/*not used*/,
+		    const Vec4& /* not used */,
+		    const Vec4& inNormal,
 		    const Vec4& inTexCoord,
 
 		    Vec4& outPosition,
 		    Vec4& outPointSize,
 		    Vec4& outFrontColor,
-		    Vec4& outBackColor /*not used*/,
+		    Vec4& outBackColor ,
 		    Vec4& outTexCoord
 		    );
 
-
-
-
-     private:
      };
-
+	
 } /* my_gl */
 
 
-
-#endif /* end of include guard: NO_LIGHT_VERTEX_SHADER_HPP */
+#endif /* end of include guard: LIGHT_VERTEX_SHADER_HPP */

@@ -1,7 +1,7 @@
 /*
  * =====================================================================================
  *
- *       Filename:  Matrix.hpp
+ *       Filename:  MatrixBase.hpp
  *
  *    Description:  simple float 4x4 matrix vector impl
  *
@@ -22,10 +22,13 @@
 
 #include <cstddef>
 
+#include "VecFwd.hpp"
+
 namespace my_gl {
 
 
-     class Matrix {
+     template<size_t L=4>
+     class MatrixBase {
      public:
 
 	  /** 
@@ -33,59 +36,81 @@ namespace my_gl {
 	   * 
 	   * @param fillZero
 	   */
-	  Matrix(bool fillZero=true) ;
+	  MatrixBase(bool fillZero=true) ;
 
-	  Matrix(const float* values,bool rowFirst=true) ;
+	  MatrixBase(const float* values,bool rowFirst=false) ;
 
-	  Matrix& operator=(const Matrix& rhs) ;
+	  MatrixBase& operator=(const MatrixBase& rhs) ;
 
-	  void operator*=(const Matrix& rhs) ;
+	  void operator*=(const MatrixBase& rhs) ;
 
-	  float& operator()(size_t rowIdx,size_t columnIdx) ;
+	  float& operator()(size_t columnIdx,size_t rowIdx) ;
 
-	  float const& operator()(size_t rowIdx,size_t columnIdx) 
+	  float const& operator()(size_t columnIdx,size_t rowIdx) 
 	       const ;
+     
+	  MatrixBase operator*(const MatrixBase& rhs)const;
+
+     
+	  VecBase<L> operator*(const VecBase<L>& rhs)const;
+
 
 	  const float* values()const ;
 
-	  static Matrix identity() ;
+	  static MatrixBase identity() ;
 
-	  static Matrix translate(float x,float y,float z) ;
+	  	  void swap(MatrixBase& rhs) ;
 
-	  static Matrix scale(float x,float y,float z) ;
+	  const static int LENGTH=L;
 
-	  //TODO 
-	  static Matrix rotate(float angle,float x,float y,float z) ;
+	  MatrixBase inverse()const;
 
-	  void swap(Matrix& rhs) ;
-
-	  const static int LENGTH=4;
-
-	  Matrix inverse()const;
-
-	  Matrix transpose()const;
+	  MatrixBase transpose()const;
 
 	  const static int ELEMENTS_NUMBER=LENGTH*LENGTH;
 
      private:
-	  float _rowFirstArray[ELEMENTS_NUMBER];
+	  float _columnPriorityValues[ELEMENTS_NUMBER];
 
      };
 
-     Matrix operator*(const Matrix& lhs,const Matrix& rhs);
 
-     void inplaceMultiVec4(const Matrix& lhs,float *pointer) ;
+     typedef MatrixBase<4> Matrix4;
+     typedef MatrixBase<3> Matrix3;
+     typedef MatrixBase<2> Matrix2;
 
-     struct Vec4;
 
-     void inplaceMultiVec4(const Matrix& lhs,Vec4& vector) ;
+     extern template struct MatrixBase<3>;
+     extern template struct MatrixBase<4>;
+     extern template struct MatrixBase<2>;
 
-     void multiVec4To(const Matrix& lhs,const Vec4& vector,float *result) ;
+     Matrix4 translate(float x,float y,float z) ;
 
-     void multiVec4To(const Matrix& lhs,const float* vector,float * result);
+     Matrix4 scale(float x,float y,float z) ;
 
-     void multiVec4To(const Matrix& lhs,const Vec4& vector, Vec4& result) ;
+     Matrix4 rotate(float angle,float x,float y,float z) ;
 
+     template<size_t L>
+     void inplaceMultiVec(const MatrixBase<L>& lhs,float *pointer) ;
+
+     template<size_t L>
+     void inplaceMultiVec(const MatrixBase<L>& lhs,VecBase<L>& vector) ;
+
+     template<size_t L>
+     void multiVecTo(const MatrixBase<L>& lhs,const VecBase<L>& vector,float *result) ;
+
+     template<size_t L>
+     void multiVecTo(const MatrixBase<L>& lhs,const float* vector,float * result);
+
+     template<size_t L>
+     void multiVecTo(const MatrixBase<L>& lhs,const VecBase<L>& vector, VecBase<L>& result) ;
+
+     template<size_t L>
+     float rowColumnExprValue(const MatrixBase<L>& matrix);
+
+     template<size_t L>
+         float inverseMod(const MatrixBase<L>& matrix,
+	       int column,int row);
 } /* my_gl */
 
 

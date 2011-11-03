@@ -20,6 +20,8 @@
 
 #define TEST_FUNCTION_HPP
 
+#include "common/VecFwd.hpp"
+#include "common/Matrix.hpp"
 
 namespace my_gl {
 
@@ -27,12 +29,14 @@ namespace my_gl {
 
      void assertEqual(float lhs,float rhs,unsigned errorFactor=1000);
 
-     struct Vec4;
      bool equal (const Vec4& lhs,const Vec4& rhs);
 
-     class Matrix;
-     bool assertEqual(const Matrix& lhs,const Matrix& rhs,unsigned errorFactor=100);
+     bool assertEqual(const Vec4& lhs,const Vec4& rhs);
+	  
+     bool assertEqual(const Matrix4& lhs,const Matrix4& rhs,unsigned errorFactor=100);
+
 	
+     Matrix4 randMatrix();
 
      Vec4 randVec();
      int myRand();

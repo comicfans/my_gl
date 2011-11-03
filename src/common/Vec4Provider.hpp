@@ -2,7 +2,7 @@
 
 #define VEC4_PROVIDER_HPP
 
-#include "Vec4.hpp"
+#include "Vec.hpp"
 
 namespace my_gl {
      class Vec4Provider {

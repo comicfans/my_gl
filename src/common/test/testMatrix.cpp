@@ -16,74 +16,43 @@
  * =====================================================================================
  */
 
-#include <climits>
+#include <cassert>
+#include <algorithm>
 #include "common/Matrix.hpp"
 
 #include "TestFunction.hpp"
 
+using std::generate_n;
 
 using namespace my_gl;
 
-
-static Matrix randMatrix()
+void testAssign()
 {
+     float values16[Matrix4::ELEMENTS_NUMBER];
 
-     Matrix matrix;
+     generate_n(values16,Matrix4::ELEMENTS_NUMBER,myRand);
 
-     for(int i=0;i<Matrix::LENGTH;++i)
+     Matrix4 mat;
+
+     for (int column=0; column<Matrix4::LENGTH; ++column)
      {
-	  for (int j=0; j<Matrix::LENGTH; ++j)
+	  for (int row=0; row<Matrix4::LENGTH; ++row)
 	  {
-	       matrix(i,j)=float(myRand())/INT_MAX;
+	       mat(column,row)=values16[column*Matrix4::LENGTH+row];
 	  }
      }
+     
+     bool same=std::equal(values16,values16+Matrix4::ELEMENTS_NUMBER,mat.values());
 
-     return matrix;
-
-}
-
-void testTranspose()
-{
-     Matrix matrix=randMatrix();
-
-     assertEqual(matrix,matrix.transpose().transpose());
-}
-
-void testIdentityMul()
-{
-     Matrix matrix=randMatrix();
-
-     Matrix identity=Matrix::identity();
-
-     Matrix shouldSame1=matrix*identity,
-	    shouldSame2=identity*matrix;
-
-     assertEqual(shouldSame1,shouldSame2);
-     assertEqual(shouldSame1,matrix);
-}
-
-void testInverse()
-{
-
-     Matrix matrix=randMatrix();
-
-     Matrix inverse=matrix.inverse();
-
-     Matrix shouldIdentity=matrix*inverse; 
-
-     assertEqual(shouldIdentity,Matrix::identity());
-
-
+     assert(same);
 }
 
 int main(int argc, const char *argv[])
 {
 
-     for (int i=0; i<1000; ++i)
+     for (int i=0; i<300; ++i)
      {
-	  testTranspose();
-	  testIdentityMul();
-	  testInverse();
+	  testAssign();
      }
 
 }

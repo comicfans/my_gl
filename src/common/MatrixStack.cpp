@@ -19,21 +19,21 @@
 #include "MatrixStack.hpp"
 
      
-template class std::stack<my_gl::Matrix>;
+template class std::stack<my_gl::Matrix4>;
 
 namespace my_gl {
 
      MatrixStack::MatrixStack()
      {
-	  stack<Matrix>::push(Matrix::identity());
+	  stack<Matrix4>::push(Matrix4::identity());
      }
 
      void MatrixStack::push()
      {
-	  stack<Matrix>::push(top());
+	  stack<Matrix4>::push(top());
      }
 
-     void MatrixStack::multiTop(const my_gl::Matrix &rhs)
+     void MatrixStack::multiTop(const Matrix4 &rhs)
      {
 	  top()*=rhs;
      }

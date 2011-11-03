@@ -86,7 +86,7 @@ namespace my_gl {
 
 	  //TODO group state related change to one 
 	  _vertexShaderPtr.reset(new NoLightVertexShader
-		    (_global,_activeLightSourceParams,_materialParam));
+		    (_matrixParam,_groupLightingParam));
 
 	  _fragmentShaderPtr.reset(new SimpleFragmentShader());
 	  
@@ -290,20 +290,20 @@ namespace my_gl {
 
 	void SoftContext::scalef(float x,float y, float z) 
 	{
-	     multMatrixf(Matrix::scale(x, y, z));
+	     multMatrixf(scale(x, y, z));
 	}
 
 	void SoftContext::translatef(float x, float y, float z) 
 	{
-	     multMatrixf(Matrix::translate(x, y, z));
+	     multMatrixf(translate(x, y, z));
 	}
 
 	void SoftContext::rotatef(float angle, float x, float y, float z) 
 	{
-	     multMatrixf(Matrix::rotate(angle, x, y, z));
+	     multMatrixf(rotate(angle, x, y, z));
 	}
 
-	void SoftContext::multMatrixf(const Matrix& matrix)
+	void SoftContext::multMatrixf(const Matrix4& matrix)
 	{
 	     currentMatrixStack().multiTop
 		  (matrix);
@@ -311,7 +311,7 @@ namespace my_gl {
 
 	void SoftContext::multMatrixf(const float* matrix) 
 	{
-	     multMatrixf(Matrix(matrix,false));
+	     multMatrixf(Matrix4(matrix));
 	}
 
 	void SoftContext::drawArrays(PrimitiveMode primitiveMode, int first, size_t count)
@@ -469,7 +469,7 @@ namespace my_gl {
 		  float near, float far)
 	{
 	     assert(near>0);
-	     Matrix matrix;
+	     Matrix4 matrix;
 
 	     float A=(right+left)/(right-left),
 		   B=(top+bottom)/(top-bottom),
@@ -482,11 +482,11 @@ namespace my_gl {
 
 	     matrix(1,1)=2*near/(top-bottom);
 
-	     matrix(0,2)=A;
-	     matrix(1,2)=B;
+	     matrix(2,0)=A;
+	     matrix(2,1)=B;
 	     matrix(2,2)=C;
-	     matrix(2,3)=D;
-	     matrix(3,2)=-1;
+	     matrix(3,2)=D;
+	     matrix(2,3)=-1;
 	     matrix(3,3)=1;
 
 	     _matrixStacks[int(MatrixMode::PROJECTION)].
@@ -504,14 +504,14 @@ namespace my_gl {
 	     tz=-(far+near)/(far-near);
 
 
-	     Matrix matrix;
+	     Matrix4 matrix;
 	     matrix(0,0)=2/(right-left);
 	     matrix(1,1)=2/(top-bottom);
 	     matrix(2,2)=-2/(far-near);
 
-	     matrix(0,3)=tx;
-	     matrix(1,3)=ty;
-	     matrix(2,3)=tz;
+	     matrix(3,0)=tx;
+	     matrix(3,1)=ty;
+	     matrix(3,2)=tz;
 	     matrix(3,3)=1;
 
 	     _matrixStacks[int(MatrixMode::PROJECTION)]
@@ -520,35 +520,11 @@ namespace my_gl {
 
 	void SoftContext::prepareGlobalUniform()
 	{
-	     _global.modelView=_matrixStacks
-		  [int(MatrixMode::MODEL_VIEW)].top();
-	     _global.modelViewInverse=
-		  _global.modelView.inverse();
-	     _global.modelViewInverseTranspose=
-		  _global.modelViewInverse.transpose();
-
-	     _global.projection=
-		  _matrixStacks[int(MatrixMode::PROJECTION)].top();
-	     _global.projectionInverse=
-		  _global.projection.inverse();
-	     _global.projectionInverseTranspose=
-		  _global.projectionInverse.transpose();
-
-	     _global.modelViewProjection=
-		  _global.projection;
-	     _global.modelViewProjection*=_global.modelView;
-	     _global.modelViewProjectionInverse=
-		  _global.modelViewProjection.inverse();
-	     _global.modelViewProjectionInverseTranspose=
-		  _global.modelViewProjectionInverse.transpose();
-
-	     _global.texture=_matrixStacks
-		  [int(MatrixMode::TEXTURE)].top();
-	     _global.textureInverse=
-		  _global.texture.inverse();
-	     _global.textureInverseTranspose=
-		  _global.textureInverse.transpose();
-
+	     _matrixParam.updateAll
+		  (_matrixStacks[int(MatrixMode::MODEL_VIEW)].top(),
+		  _matrixStacks[int(MatrixMode::PROJECTION)].top(),
+		  _matrixStacks[int(MatrixMode::TEXTURE)].top());
+	
 	}
 
 	void SoftContext::viewport(int x,int y,
@@ -560,61 +536,43 @@ namespace my_gl {
 
 	void SoftContext::loadIdentity()
 	{
-	     currentMatrixStack().top()=Matrix::identity();
+	     currentMatrixStack().top()=Matrix4::identity();
 	}
 
 	void SoftContext::lightf(LightIndex lightIndex,
 		  LightParamName paramName,float param)
 	{
-	     _lightSourceParams[int(lightIndex)].lightf
-		  (paramName,param);
+	     _groupLightingParam.lightf
+		  (lightIndex,paramName,param);
 	}
 
 	void SoftContext::lightfv(LightIndex lightIndex,
 		  LightParamName paramName,const float* param)
 	{
-	     _lightSourceParams[int(lightIndex)].lightfv
-		  (paramName,param);
+	     _groupLightingParam.lightfv(lightIndex,paramName,param);
 	}
 
 	void SoftContext::materialf
 	     (Face face,LightParamName paramName,float param)
 	     {
-		  _materialParam.materialf(face,paramName,param);
+		  _groupLightingParam.materialf(face,paramName,param);
 	     }
 
 	void SoftContext::materialfv
 	     (Face face,LightParamName paramName,const float *param)
 	     {
-		  _materialParam.materialfv(face,paramName,param);
+		  _groupLightingParam.materialfv(face,paramName,param);
 	     }
 
 	void SoftContext::enable(LightIndex lightIndex)
 	{
 	     //TODO check LIGHTING enabled
-
-	     int idx=int(lightIndex);
-	     if (lightIndex==LightIndex::LIGHT0)
-	     {
-		  _lightSourceParams[0]=LightSourceParam(true);
-	     }
-	     else
-	     {
-		  _lightSourceParams[idx]=LightSourceParam();
-	     }
-
-	     _activeLightSourceParams.push_back(&_lightSourceParams[idx]);
-
+	     _groupLightingParam.enable(lightIndex);
 	}
 
 	void SoftContext::disable(LightIndex lightIndex)
 	{
-	     auto removeEndIt=remove(_activeLightSourceParams.begin(),
-		       _activeLightSourceParams.end(),
-		       &_lightSourceParams[int(lightIndex)]);
-
-	     _activeLightSourceParams.resize
-		  (_activeLightSourceParams.end()-removeEndIt);
+	     _groupLightingParam.disable(lightIndex);
 	}
 
 

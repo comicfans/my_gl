@@ -21,7 +21,7 @@
 #include "pipeline/clipper/PointClipper.hpp"
 #include "pipeline/DepthBuffer.hpp"
 #include "common/test/TestFunction.hpp"
-#include "common/Vec4.hpp"
+#include "common/Vec.hpp"
 #include "pipeline/interpolator/WinCoordInterpolator.hpp"
 #include "shader/FragmentAttributeBuffer.hpp"
 

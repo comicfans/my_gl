@@ -128,7 +128,6 @@ namespace my_gl {
 
 	virtual ~Context();
 
-	const static int MAX_LIGHTS=8;
      };
 	
 } /* my_gl */

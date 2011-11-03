@@ -1,12 +1,12 @@
 /*
  * =====================================================================================
  *
- *       Filename:  testVertexAttributeBuffer.cpp
+ *       Filename:  TestMatrixMul.cpp
  *
  *    Description:  
  *
  *        Version:  1.0
- *        Created:  2011-10-29 23:33:20
+ *        Created:  2011-11-3 14:50:38
  *       Revision:  none
  *       Compiler:  gcc
  *
@@ -16,24 +16,22 @@
  * =====================================================================================
  */
 
-#include "shader/VertexAttributeBuffer.hpp"
-
+#include "common/Matrix.hpp"
+#include "common/test/TestFunction.hpp"
 
 using namespace my_gl;
 
 int main(int argc, const char *argv[])
 {
-     VertexAttributeBuffer buffer;
+     Matrix4 ran=randMatrix();
 
-     buffer.resize(1);
+     Matrix4 identity=Matrix4::identity();
 
-     auto attributeGroup=buffer[0];
+     Matrix4 shouldSame=ran*identity;
+     Matrix4 shouldSame2=identity*ran;
 
-     Vec4 vec{0.2,0.3,0.1,0.5};
-
-     attributeGroup[0]=vec;
-
-     assert(vec==attributeGroup[0]);
+     assertEqual(shouldSame,ran);
+     assertEqual(shouldSame2,ran);
 	
-     assert(vec==getVertex(attributeGroup));
+	return 0;
 }

@@ -22,7 +22,7 @@
 #include <cmath>
 #include <functional>
 
-#include "common/Vec4.hpp"
+#include "common/Vec.hpp"
 #include "shader/VertexShader.hpp"
 
 #include "pipeline/ClippedPrimitiveGroup.hpp"

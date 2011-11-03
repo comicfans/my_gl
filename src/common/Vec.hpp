@@ -1,7 +1,7 @@
 /*
  * =====================================================================================
  *
- *       Filename:  Vec4.hpp
+ *       Filename:  Vec.hpp
  *
  *    Description:  simple vector float 4 
  *
@@ -16,10 +16,10 @@
  * =====================================================================================
  */
 
-#ifndef VEC4_HPP
+#ifndef VEC_HPP
 
 
-#define VEC4_HPP
+#define VEC_HPP
 
 #include <cstddef>
 #include <initializer_list>
@@ -28,27 +28,36 @@ namespace my_gl {
 	  
      using std::initializer_list;
 
-     struct Vec4{
+     template<size_t L>
+     struct VecBase{
     
 	  public:
 
-	       Vec4(bool fillZero=true);
+	       VecBase(bool fillZero=true);
 
-	       Vec4(float fx,float fy,float fz=0,float fw=1);
+	       VecBase(const float* values,size_t copyN=L);
 
-	       Vec4(const float* values,size_t copyN=4);
+	       VecBase(const initializer_list<float>& initList);
 
-	       Vec4(const initializer_list<float>& initList);
+	       VecBase(const VecBase& rhs);
 
-	       Vec4& operator=(const Vec4& rhs);
+	       VecBase& operator=(const VecBase& rhs);
 
 	       void operator*=(float scalar);
 
 	       void operator/=(float scalar);
 
-	       void operator+=(const Vec4& rhs);
+	       void operator+=(const VecBase& rhs);
 
-	       static const size_t LENGTH=4;
+	       VecBase operator*(float scalar)const ;
+
+	       VecBase operator/(float scalar)const;
+
+	       VecBase operator+(const VecBase<L>& rhs)const;
+
+	       VecBase operator-(const VecBase<L>& rhs)const;
+
+	       static const size_t LENGTH=L;
 
 	       float& operator()(size_t idx);
 	       const float& operator()(size_t idx)const ;
@@ -64,28 +73,33 @@ namespace my_gl {
 	       const float& z()const;
 	       const float& w()const;
 
-	       bool operator==(const Vec4& rhs)const;
+	       bool operator==(const VecBase& rhs)const;
 
-	       Vec4 operator-()const;
-	       
+	       VecBase operator-()const;
+	
+	       static VecBase componentMul(const VecBase& lhs,const VecBase& rhs);
+
+	       static float dotProduct(const VecBase& lhs,const VecBase& rhs);
+
+       
 	  private:
 	       float _values[LENGTH];
      	/* data */
      };
 
-     Vec4 operator*(const Vec4& lhs,float scalar);
-     Vec4 operator*(float scalar,const Vec4& rhs);
-     Vec4 operator/(const Vec4& lhs,float scalar);
-     Vec4 operator+(const Vec4& lhs,const Vec4& rhs);
-     Vec4 operator-(const Vec4& lhs,const Vec4& rhs);
+     typedef VecBase<3> Vec3;
+     typedef VecBase<4> Vec4;
 
-     void normalize(float * values);
+     void normalize3(float * values);
 
      void perspectiveDivision(Vec4& vec4);
 
      bool isInfinit(const Vec4& vec4);
+
+     extern template struct VecBase<3>;
+     extern template struct VecBase<4>;
 	
 } /* my_gl */
 
 
-#endif /* end of include guard: VEC4_HPP */
+#endif /* end of include guard: VEC_HPP */

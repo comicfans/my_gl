@@ -20,11 +20,12 @@
 
 #define INTERPOLATOR_HPP
 
+#include "common/VecFwd.hpp"
 #include "shader/VertexAttributeBuffer.hpp"
+
 
 namespace my_gl {
 
-     struct Vec4;
      struct WinCoord;
 
      struct CoordInfo;

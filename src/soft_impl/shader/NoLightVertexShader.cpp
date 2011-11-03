@@ -18,16 +18,15 @@
 
 #include "NoLightVertexShader.hpp"
 
-#include "common/Vec4.hpp"
-#include "Global.hpp"
+#include "common/Vec.hpp"
+#include "MatrixParam.hpp"
 
 namespace my_gl {
-
-     NoLightVertexShader::NoLightVertexShader
-	  (const Global& global,
-	   const vector<LightSourceParam*>& activeLightSourceParams,
-	   const MaterialParam& materialParam)
-	  :VertexShader(global,activeLightSourceParams,materialParam){}
+     NoLightVertexShader::
+	  NoLightVertexShader(const MatrixParam& matrixParam,
+	       const GroupLightingParam& groupLightingParam)
+	  :VertexShader(matrixParam,groupLightingParam){}
+ 
 
      NoLightVertexShader::~NoLightVertexShader(){}
 
@@ -45,8 +44,9 @@ namespace my_gl {
 	       Vec4& outTexCoord
 	       )
      {
-	  multiVec4To(_global.modelViewProjection, 
-		    inVertex, outPosition);
+
+	  outPosition=_matrixParam.modelViewProjection*inVertex;
+
 	  outFrontColor=inColor;
 	  outBackColor=inColor;
      }

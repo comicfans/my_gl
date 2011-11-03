@@ -31,8 +31,8 @@ using std::fmod;
 
 void static testAllIn()
 {
-     Vec4 p1(1,1,1,1),
-	  p2(3,2,3,4);
+     Vec4 p1{1,1,1,1},
+	  p2{3,2,3,4};
 
      auto percent =LineClipper::parallelClip
 	  (p1, p2, LineClipper::ClipDim::X);
@@ -97,8 +97,8 @@ void static testClipLogic()
 
 void static testClipValue()
 {
-     Vec4 p1(0,0,0.5,1.5),
-	  p2(1,0,-4,0);
+     Vec4 p1{0,0,0.5,1.5},
+	  p2{1,0,-4,0};
 
      auto clipPercent=LineClipper::parallelClip
 	  (p1,p2,LineClipper::ClipDim::Z);
@@ -109,7 +109,7 @@ void static testClipValue()
      Interpolator::calculate(p1, p2, 
 	       clipPercent.second, result);
 
-     assert(equal(result,Vec4(1.0/3,0,-1,1)));
+     assert(equal(result,Vec4{1.0/3,0,-1,1}));
 
 
 }
