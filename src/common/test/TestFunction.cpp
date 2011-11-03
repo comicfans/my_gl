@@ -108,6 +108,7 @@ Vec4 randVec()
      bool assertEqual(const Vec4& lhs,const Vec4& rhs)
 {
      assert(equal(lhs,rhs));
+     return true;
 
 }
 
