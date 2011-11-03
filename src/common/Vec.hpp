@@ -90,13 +90,11 @@ namespace my_gl {
      typedef VecBase<3> Vec3;
      typedef VecBase<4> Vec4;
 
-     template<size_t L>
-     void normalize3(VecBase<L>& vec);
-
-     extern template void normalize3(Vec4& vec);
-     extern template void normalize3(Vec3& vec);
+     void normalize3(Vec3& vec);
 
      void perspectiveDivision(Vec4& vec4);
+
+     float length(const Vec3& vec3);
 
      bool isInfinit(const Vec4& vec4);
 
