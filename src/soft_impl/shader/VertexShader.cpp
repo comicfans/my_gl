@@ -40,7 +40,7 @@ namespace my_gl {
 	       
      Vec4 VertexShader::ftransform(const Vec4& inVertex)
      {
-	  return _matrixParam.modelView*inVertex;
+	  return _matrixParam.modelViewProjection*inVertex;
      }
 
      Vec3 VertexShader::fnormal(const Vec3& inNormal)

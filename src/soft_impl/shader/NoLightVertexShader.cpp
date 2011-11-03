@@ -45,7 +45,7 @@ namespace my_gl {
 	       )
      {
 
-	  outPosition=_matrixParam.modelViewProjection*inVertex;
+	  outPosition=ftransform(inVertex);
 
 	  outFrontColor=inColor;
 	  outBackColor=inColor;
