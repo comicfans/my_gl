@@ -129,8 +129,11 @@ namespace my_gl {
 
      inline float sq(float value){return value*value;}
 
-     void normalize3(float * values)
+     template<size_t L>
+     void normalize3(VecBase<L>& vec )
      {
+	  auto *values=vec.values();
+
 	  float lengthSq=sq(values[0])+sq(values[1])+sq(values[2]);
 
 	  float length=sqrt(lengthSq);
@@ -253,6 +256,8 @@ namespace my_gl {
 
      template struct VecBase<4>;
 	
+     template void normalize3(Vec3& vec);
+     template void normalize3(Vec4& vec);
 
      //--------------------template instantiation//
      

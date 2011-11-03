@@ -238,7 +238,7 @@ namespace my_gl {
 	 {
 	      Matrix4 ret=Matrix4::identity();
 
-	      float rotateAxis[3]={x,y,z};
+	      Vec3 rotateAxis={x,y,z};
 
 	      normalize3(rotateAxis);
 

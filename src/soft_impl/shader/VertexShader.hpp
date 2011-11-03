@@ -68,7 +68,7 @@ namespace my_gl {
 		* 
 		* @return 
 		*/
-	       Vec4 fnormal(const Vec4& inNormal);
+	       Vec3 fnormal(const Vec3& inNormal);
 
 	       virtual void shade(
 

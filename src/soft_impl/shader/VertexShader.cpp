@@ -43,11 +43,9 @@ namespace my_gl {
 	  return _matrixParam.modelView*inVertex;
      }
 
-     Vec4 VertexShader::fnormal(const Vec4& inNormal)
+     Vec3 VertexShader::fnormal(const Vec3& inNormal)
      {
-	  Vec4 ret;
-
-	  multiVecTo(_matrixParam.normal,inNormal,ret);
+	  Vec3 ret=_matrixParam.normal*Vec3(inNormal.values(),3);
 
 	  if (_rescaleNormal)
 	  {

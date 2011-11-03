@@ -30,7 +30,7 @@ namespace my_gl {
 	  Matrix4 projection;
 	  Matrix4 modelViewProjection;
 	  Matrix4 texture;
-	  Matrix4 normal;
+	  Matrix3 normal;
 
 	  Matrix4 modelViewInverse;
 	  Matrix4 projectionInverse;
