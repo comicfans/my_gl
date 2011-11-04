@@ -28,14 +28,13 @@
 
 namespace my_gl {
 
-     using boost::noncopyable;
 
      class PixelObject :public BufferObject{
      public:
 	PixelObject (Name name);
 
 	void bindImage(size_t width,size_t height,
-		  ImageFormat format,StoreType type,void *p);
+		  ImageFormat format,StoreType type,const void *p);
 
 	ImageFormat getFormat()const ;
 
@@ -43,7 +42,7 @@ namespace my_gl {
 
 	void subImage(int xOffset,int yOffset,
 		  size_t width,size_t height,
-		  ImageFormat format,StoreType type,void *p);
+		  ImageFormat format,StoreType type,const void *p);
 
      private:
 	size_t _width;

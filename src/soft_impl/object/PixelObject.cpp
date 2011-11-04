@@ -29,7 +29,7 @@ namespace my_gl {
 
 
      void PixelObject::bindImage(size_t width,size_t height,
-		  ImageFormat format,StoreType type,void *p)
+		  ImageFormat format,StoreType type,const void *p)
      {
 	  _width=width;
 	  _height=height;
@@ -47,7 +47,7 @@ namespace my_gl {
 
      void PixelObject::subImage(int xOffset,  int yOffset,
 	        size_t width,  size_t height,  ImageFormat format,
-		StoreType type,void *p)
+		StoreType type,const void *p)
      {
 	  assert(xOffset>=0 && xOffset<_width);
 	  assert(yOffset>=0 && yOffset<_height);
