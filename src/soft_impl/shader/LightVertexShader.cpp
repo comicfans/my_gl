@@ -33,6 +33,7 @@ namespace my_gl {
 	       :VertexShader(matrixParam,groupLightParam)
 	  { }
 
+     LightVertexShader::~LightVertexShader(){}
 
 	  void LightVertexShader::infiniteLight(PerLightParam perLightParam,
 		    const Vec3& normal,

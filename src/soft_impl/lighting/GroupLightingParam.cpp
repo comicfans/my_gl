@@ -47,6 +47,11 @@ namespace my_gl {
 	       }
 
 		
+	  size_t GroupLightingParam::getActiveLightNumber()const
+	  {
+	       return _activeIndices.size();
+	  }
+
 	  void GroupLightingParam::enable(LightIndex lightIndex)
 	{
 	     //check LIGHTING enabled is outside work
