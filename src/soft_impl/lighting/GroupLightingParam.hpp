@@ -48,6 +48,8 @@ namespace my_gl {
 
      struct GroupLightingParam {
 
+	  GroupLightingParam();
+
 	  const static int MAX_LIGHTS=8;
 
 	  size_t getActiveLightNumber()const;
@@ -88,6 +90,7 @@ namespace my_gl {
 
 	  vector<size_t> _activeIndices;
 
+	  bool _lightingEnabled;
 	  /* data */
      } /* optional variable list */;
 

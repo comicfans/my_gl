@@ -566,7 +566,6 @@ namespace my_gl {
 
 	void SoftContext::enable(LightIndex lightIndex)
 	{
-	     //TODO check LIGHTING enabled
 	     _groupLightingParam.enable(lightIndex);
 	}
 
