@@ -24,7 +24,6 @@ glBufferSubData         OK
 glClear			OK
 glClearColor		OK
 glClearDepth		OK
-glClipPlane ?		NO/ES 1.0 not support
 glColor         	OK
 glColorPointer       	OK
 glCopyTexImage2D	?
@@ -69,7 +68,7 @@ glTexSubImage2D		?
 glTranslate         	OK
 glViewPort         	OK
 
-total	:51
+total	:50
 
 OK 	:33	64%
 simple	:3
