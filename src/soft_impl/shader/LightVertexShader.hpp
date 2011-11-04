@@ -24,6 +24,7 @@
 
 namespace my_gl {
 
+     struct PerLightParam;
      class LightVertexShader :public VertexShader{
      public:
  	  LightVertexShader(const MatrixParam& matrixParam,
@@ -34,7 +35,14 @@ namespace my_gl {
      protected:
 
 
+	  void infiniteLight(PerLightParam perLightParam,
+		    const Vec3& normal,
+		    Vec4& ambient,Vec4& diffuse,Vec4& specular);
 
+	  void finiteLight(PerLightParam perLightParam,
+		    const Vec3& normal,const Vec3& eye,
+		    const Vec3& eyeCoordPosition,
+		    Vec4& ambient,Vec4& diffuse,Vec4& specular);
 	  virtual void shade(
 
 		    const Vec4& inVertex,

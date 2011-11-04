@@ -32,7 +32,7 @@ namespace my_gl {
 	  Vec4 specular;//Scli
 	  Vec4 position;//Ppli
 	  Vec4 halfVector;//Derived: Hi
-	  Vec4 spotDirection;//Sdli only 3 component used
+	  Vec3 spotDirection;//Sdli 
 	  float spotExponent;//Srli
 	  float spotCutoff;//Crli range:[0~90],180
 
@@ -48,7 +48,7 @@ namespace my_gl {
 
 	  void lightfv(LightParamName paramName,const float* param);
 
-	  bool isDirectional()const;
+	  bool isInfinite()const;
 
      } /* optional variable list */;
 	

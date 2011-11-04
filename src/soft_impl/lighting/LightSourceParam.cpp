@@ -87,7 +87,7 @@ namespace my_gl {
 		    position=param;
 		    break;
 	       case LightParamName::SPOT_DIRECTION:
-		    spotDirection=Vec4(param,3);
+		    spotDirection=Vec3(param,3);
 	       default:
 		    {
 			 assert(false);
@@ -95,7 +95,8 @@ namespace my_gl {
 	  }
      }
 
-     bool LightSourceParam::isDirectional()const
+
+     bool LightSourceParam::isInfinite()const
      {
 	  return position.w()==0;
      }

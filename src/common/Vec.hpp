@@ -77,10 +77,6 @@ namespace my_gl {
 
 	       VecBase operator-()const;
 	
-	       static VecBase componentMul(const VecBase& lhs,const VecBase& rhs);
-
-	       static float dotProduct(const VecBase& lhs,const VecBase& rhs);
-
        
 	  private:
 	       float _values[LENGTH];
@@ -90,7 +86,11 @@ namespace my_gl {
      typedef VecBase<3> Vec3;
      typedef VecBase<4> Vec4;
 
-     void normalize3(Vec3& vec);
+     void normalize(Vec3& vec);
+
+     float dotProduct(const Vec3& lhs,const Vec3& rhs);
+
+     Vec4 componentMul(const Vec4& lhs,const Vec4& rhs);
 
      void perspectiveDivision(Vec4& vec4);
 

@@ -5,7 +5,7 @@
  *
  *    Description:  
  *
- *        Version:  1.0
+ *        oat Version:  1.0
  *        Created:  2011-11-2 12:09:27
  *       Revision:  none
  *       Compiler:  gcc
@@ -18,55 +18,137 @@
 
 #include "LightVertexShader.hpp"
 
+#include <cmath>
+
+#include "lighting/GroupLightingParam.hpp"
+#include "MatrixParam.hpp"
+#include "common/Vec.hpp"
+
 namespace my_gl {
 
+     using std::max;
 
- 	  LightVertexShader(const MatrixParam& matrixParam,
+     LightVertexShader::LightVertexShader(const MatrixParam& matrixParam,
 			 const GroupLightingParam& groupLightParam)
 	       :VertexShader(matrixParam,groupLightParam)
 	  { }
 
 
-	  void pointLight(int lightIdx,const Vec3& normal,const Vec3& eye,
+	  void LightVertexShader::infiniteLight(PerLightParam perLightParam,
+		    const Vec3& normal,
+		    Vec4& ambient,Vec4& diffuse,Vec4& specular)
+	  {
+
+	       // length attenuation is 1.0
+
+	       auto &lightSourceParam=perLightParam.lightSourceParam;
+
+	       float nDotVP=dotProduct(normal,
+			 Vec3(lightSourceParam.position.values(),3));
+
+	       //this halfVec does not depends on 
+	       //vertex eye Coordinates 
+	       //(infinite light,direction is just light position)
+	       float nDotHV=dotProduct(normal,
+			 Vec3(lightSourceParam.halfVector.values(),3));
+
+	       float spotAttenuation=1.0;
+
+	       if (lightSourceParam.spotCutoff!=180.0)
+	       {
+		    //direction from light to vertex
+		    Vec3 Ppli=-Vec3(lightSourceParam.position.values(),3),
+			 Sdli=lightSourceParam.spotDirection;
+
+		    normalize(Ppli);
+		    normalize(Sdli);
+
+		    //cutoff < 90 .so dotProduct must be >=0
+		    float dot=dotProduct(Ppli,Sdli);
+
+		    spotAttenuation=pow(dot,_groupLightingParam.material.shininess);
+
+	       }
+
+	       float shineAttenuation=0.0;
+
+	       if (nDotVP>0 && nDotHV>0)
+	       {
+		    shineAttenuation=pow(nDotHV,_groupLightingParam.material.shininess);
+	       }
+	       //else, no specular
+	       
+	       ambient+=lightSourceParam.ambient*spotAttenuation;
+	       diffuse+=lightSourceParam.diffuse*spotAttenuation*max(0.0f,nDotVP);
+	       specular+=lightSourceParam.specular*spotAttenuation*shineAttenuation;
+
+	  }
+
+	  /** 
+	   * @brief finite spot light including cutoff=[0~90] and 180
+	   * 
+	   * @param lightIdx
+	   * @param normal
+	   * @param eye
+	   * @param eyeCoordPosition
+	   * @param ambient
+	   * @param diffuse
+	   * @param specular
+	   */
+	  void LightVertexShader::finiteLight(PerLightParam perLightParam,
+		    const Vec3& normal,const Vec3& eye,
 		    const Vec3& eyeCoordPosition,
 		    Vec4& ambient,Vec4& diffuse,Vec4& specular)
 	  {
 
-
-	       PerLightParam perLightParam=
-		    _groupLightParam.getPerLightParam(lightIdx);
-
 	       auto &lightSourceParam=perLightParam.lightSourceParam;
 
+	       Vec3 VP=Vec3(lightSourceParam.position.values(),3)-eyeCoordPosition;	       
+
+	       float VPLength=length(VP);
+
+	       //check cutoff first
+
+	       float attenuation=1.0;
+
+	       if (lightSourceParam.spotCutoff!=180.0)
+	       {
+		    float spotDot=dotProduct(-VP,lightSourceParam.spotDirection);
+
+		    if (spotDot<lightSourceParam.spotCosCutoff)
+		    {
+			 //out of spot light cutoff,no light
+			 return;
+		    }
+
+		    //this attenuation is spot cut off attenuation
+		    attenuation*=pow(spotDot,lightSourceParam.spotExponent);
+	       }
 
 
-	       float attenuation=1.0/
+	       attenuation*=1.0/
 		    (lightSourceParam.constantAttenuation+
 		     lightSourceParam.linearAttenuation*VPLength+
 		     lightSourceParam.quadraticAttenuation*VPLength*VPLength
 		     );
 
 	       //--------ambient calculation
-	       ambient+=perLightParam.ambient
+	       ambient+=lightSourceParam.ambient;
 
 	       //vector from vertex to light 
 	       //light position is transformed by modelView Matrix and 
 	       //then store in eye Coordinates,so no need to do w() division
 	       //(already processed by transformation)
-	       Vec3 VP=Vec3(lightSourceParam.position.values,3)-eyeCoordPosition;	       
-
-	       float VPLength=length(VP);
-
 	       normalize(VP);
 
 	       //theta is the angle VP between normal
 	       //diffuse(extract Dcm to outter)
 	       //percent is decided by theta
-	       //cos(theta)=dotProcduct(normal ,normalized(VP));
+	       //cos(theta)=dotProduct(normal ,normalized(VP));
 	       //if theta>90 degree, value is clamped by 0
 	       //-------------diffuse calculation
 
-	       float nDotVP=dotProcduct(normal,VP);
+	       float nDotVP=dotProduct(normal,VP);
 
 
 
@@ -81,7 +163,7 @@ namespace my_gl {
 		    return;
 	       }
 
-	       diffuse+=nDotVP*perLightParam.diffuse;
+	       diffuse+=lightSourceParam.diffuse*nDotVP;
 
 	       Vec3 halfVec=eye+VP;
 
@@ -99,18 +181,22 @@ namespace my_gl {
 	       // real angle is between  R-eye
 	       //
 
-	       float nDotHalfVec=dotProcduct(normal,halfVec);
+	       float nDotHalfVec=dotProduct(normal,halfVec);
 
 	       //shininess attenuation
 	       if (nDotHalfVec<0)
 	       {
+		    //angle between vertex-eye direction and reflect >90
+		    //no specular
 		    return;
 	       }
 	       
+	       //specular defined the "light point area" of object
 	       float shineAttenuation=pow(nDotHalfVec,
-			 _groupLightParam.material.shininess.shine);
+			 _groupLightingParam.material.shininess);
 
-	       specular+=perLightParam.specular*attenuation*shineAttenuation;
+	       specular+=lightSourceParam
+		    .specular*attenuation*shineAttenuation;
 
 
 	  }
@@ -136,14 +222,64 @@ namespace my_gl {
 	       //
 	       //
 	       //if inVertex.w()==0,this is a infinite point,
-	       //only directional light can color it 
-	       //
+	       //only infinite light can color it 
 	       //
 
-	       Vec3 eyeCoordPosition=Vec3((_matrixParam.modelView*inVertex)
-			 .values(),3)/inVertex.w();
+	       Vec4 ambient={0,0,0,0},
+	       diffuse={0,0,0,0},
+	       specular={0,0,0,0};
 
 	       Vec3 eyeCoordNormal=fnormal(inNormal);
+
+	       Vec3 eyeCoordPosition;
+	       
+	       if (inVertex.w()!=0)
+	       {
+		    eyeCoordPosition=
+			 Vec3((_matrixParam.modelView*inVertex)
+			 .values(),3)/inVertex.w();
+	       }
+	       
+
+
+		    //only apply infiniteLight
+
+		    for (int i=0; i<_groupLightingParam.getActiveLightNumber(); ++i)
+		    {
+			 //per light iterator
+			 PerLightParam perLightParam=
+			      _groupLightingParam.getPerLightParam(i);
+
+			 if (!perLightParam.lightSourceParam.isInfinite())
+			 {
+			      if (inVertex.w()==0)
+			      {
+				   continue;
+			      }
+			      finiteLight(perLightParam,
+					//OpenGL ES 1.0 only support infinite viewer
+					//eye vector will always be {0,0,1}
+					eyeCoordNormal,Vec3{0,0,1},
+					eyeCoordPosition,
+					ambient,diffuse,specular);
+			 }
+			 else
+			 {
+			      infiniteLight(perLightParam,eyeCoordNormal,
+					ambient,diffuse,specular);
+			 }
+				 
+		    }
+		    
+		    //Ecm+Acm*Acs
+		    outFrontColor=_groupLightingParam.lightModelProduct.sceneColor;
+
+		    auto & material=_groupLightingParam.material;
+		    outFrontColor+=componentMul(material.ambient,ambient);
+		    outFrontColor+=componentMul(material.diffuse,diffuse);
+		    outFrontColor+=componentMul(material.specular,specular);
+
+
 		  
 	  }
 

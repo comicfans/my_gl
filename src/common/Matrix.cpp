@@ -240,7 +240,7 @@ namespace my_gl {
 
 	      Vec3 rotateAxis={x,y,z};
 
-	      normalize3(rotateAxis);
+	      normalize(rotateAxis);
 
 	      x=rotateAxis[0];
 	      y=rotateAxis[1];

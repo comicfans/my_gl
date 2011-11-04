@@ -129,7 +129,7 @@ namespace my_gl {
 
      inline float sq(float value){return value*value;}
 
-     void normalize3(Vec3& vec )
+     void normalize(Vec3& vec )
      {
 	  float vecLength=length(vec);
 
@@ -207,11 +207,10 @@ namespace my_gl {
 	       first==_values+LENGTH;
      }
 
-     template<size_t L>
-     VecBase<L> VecBase<L>::componentMul(const VecBase<L>& lhs,const VecBase<L>& rhs)
+     Vec4 componentMul(const Vec4& lhs,const Vec4& rhs)
      {
-	  VecBase<L> ret(lhs);
-	  for (size_t i=0; i<VecBase<L>::LENGTH; ++i)
+	  Vec4 ret(lhs);
+	  for (size_t i=0; i<Vec4::LENGTH; ++i)
 	  {
 	       ret[i]*=rhs[i];
 	  }
@@ -244,11 +243,10 @@ namespace my_gl {
 	  return ret;
      }
 
-     template<size_t L>
-     float VecBase<L>::dotProduct(const VecBase<L>& lhs,const VecBase<L>& rhs)
+     float dotProduct(const Vec3& lhs,const Vec3& rhs)
      {
 	  float ret=0;
-	  for (size_t i=0; i<VecBase<L>::LENGTH; ++i)
+	  for (size_t i=0; i<Vec3::LENGTH; ++i)
 	  {
 	       ret+=lhs[i]*rhs[i];
 	  }

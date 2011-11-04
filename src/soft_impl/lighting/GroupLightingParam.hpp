@@ -29,6 +29,23 @@ namespace my_gl {
 
      using std::vector;
 
+	  struct LightProducts {
+	       Vec4 ambient;//Acm*Acli
+	       Vec4 diffuse;//Dcm*Dcli
+	       Vec4 specular;//Scm*Scli
+	  } ;
+
+
+     struct PerLightParam{
+	       PerLightParam
+		    (const LightSourceParam& lightSourceParamSet,
+		     const LightProducts& lightProductSet);
+
+	       const LightSourceParam& lightSourceParam;
+	       const LightProducts& lightProduct;
+	  };
+
+
      struct GroupLightingParam {
 
 	  const static int MAX_LIGHTS=8;
@@ -46,22 +63,7 @@ namespace my_gl {
 	  } lightModelProduct;
 
 
-	  struct LightProducts {
-	       Vec4 ambient;//Acm*Acli
-	       Vec4 diffuse;//Dcm*Dcli
-	       Vec4 specular;//Scm*Scli
-	  } ;
-
-	  struct PerLightParam{
-	       PerLightParam
-		    (const LightSourceParam& lightSourceParamSet,
-		     const LightProducts& lightProductSet);
-
-	       const LightSourceParam& lightSourceParam;
-	       const LightProducts& lightProduct;
-	  };
-
-	  const PerLightParam getPerLightParam(size_t idx)const;
+	  	  const PerLightParam getPerLightParam(size_t idx)const;
 
 	  void lightf(LightIndex lightIndex,
 		    LightParamName paramName,float param);

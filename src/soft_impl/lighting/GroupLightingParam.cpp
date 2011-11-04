@@ -26,14 +26,14 @@ using std::remove;
 namespace my_gl {
 
      
-     GroupLightingParam::PerLightParam::PerLightParam
+     PerLightParam::PerLightParam
 		    (const LightSourceParam& lightSourceParamSet,
-		     const GroupLightingParam::LightProducts& lightProductSet)
+		     const LightProducts& lightProductSet)
 		    :lightSourceParam(lightSourceParamSet),
 		    lightProduct(lightProductSet){}
 
 
-	  const GroupLightingParam::PerLightParam
+	  const PerLightParam
 	       GroupLightingParam::
 	       getPerLightParam(size_t idx)const
 	       {
@@ -94,20 +94,20 @@ namespace my_gl {
 	  void GroupLightingParam::updateAll()
 	  {
 	       lightModelProduct.sceneColor=material.emission+
-		    Vec4::componentMul(material.ambient,lightModel.ambient);
+		    componentMul(material.ambient,lightModel.ambient);
 
 	       for(auto i:_activeIndices)
 	       {
 		    //Acm * Acli
-		    _allLightProducts[i].ambient=Vec4::componentMul
+		    _allLightProducts[i].ambient=componentMul
 			 (material.ambient,_allLightSourceParams[i].ambient);
 
 		    //Dcm * Dcli
-		    _allLightProducts[i].diffuse=Vec4::componentMul
+		    _allLightProducts[i].diffuse=componentMul
 			 (material.diffuse,_allLightSourceParams[i].diffuse);
 
 		    //Scm * Scli
-		    _allLightProducts[i].specular=Vec4::componentMul
+		    _allLightProducts[i].specular=componentMul
 			 (material.specular,_allLightSourceParams[i].specular);
 	       }
 	  }
