@@ -34,10 +34,12 @@ namespace my_gl {
      using std::unique_ptr;
 
      class ArrayBufferObject;
+     class ObjectNameManager;
      class ArrayBufferObjectManager {
      public:
 
-	  ArrayBufferObjectManager();
+	  ArrayBufferObjectManager(ObjectNameManager& 
+		    objectNameManager);
 
 	  void genBuffers(size_t size,Name *names) ;
 
@@ -64,6 +66,8 @@ namespace my_gl {
 	  typedef unique_ptr<ArrayBufferObject> UniquePointer;
 
 	  unordered_map<Name,UniquePointer> _objects;
+
+	  ObjectNameManager & _objectNameManager;
 
      };
 	

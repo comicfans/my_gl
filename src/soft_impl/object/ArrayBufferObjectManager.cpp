@@ -24,7 +24,6 @@
 
 #include "common/UntypedArray.hpp"
 #include "ObjectNameManager.hpp"
-#include "SoftContext.hpp"
 #include "ArrayBufferObject.hpp"
 
 namespace my_gl {
@@ -33,7 +32,9 @@ namespace my_gl {
      using std::inserter;
      using std::fill_n;
 
-     ArrayBufferObjectManager::ArrayBufferObjectManager() 
+     ArrayBufferObjectManager::ArrayBufferObjectManager
+	  (ObjectNameManager& objectNameManager):
+	       _objectNameManager(objectNameManager)
      {
 	  fill_n(_arrayAndElements,2,nullptr);
      }
@@ -67,8 +68,7 @@ namespace my_gl {
 	       _objects.erase(thisName);
 	  }
 
-	  SoftContext::getInstance().
-	       getObjectNameManager().recycleNames(size,names);
+	       _objectNameManager.recycleNames(size,names);
 
      }
 
@@ -105,8 +105,7 @@ namespace my_gl {
 
      void ArrayBufferObjectManager::genBuffers(size_t size,Name *names)
      {
-	  SoftContext::getInstance().getObjectNameManager()
-	       .generateNames(size,names);
+	  _objectNameManager.generateNames(size,names);
 
 	  for (size_t i = 0; i < size; i++) {
 	       Name thisName=*(names+i);

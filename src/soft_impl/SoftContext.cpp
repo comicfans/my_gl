@@ -62,6 +62,7 @@ namespace my_gl {
      using boost::extents;
 
      SoftContext::SoftContext(size_t width,size_t height)
+	  :_arrayBufferObjectManager(_objectNameManager)
      {
 
 	  _height=height;
