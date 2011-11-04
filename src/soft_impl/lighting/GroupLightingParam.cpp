@@ -76,6 +76,22 @@ namespace my_gl {
 		  (_activeIndices.end()-removeEndIt);
 	}
 
+	  void GroupLightingParam::lightModelf
+	       (LightParamName paramName,float param)
+	       {
+		    //TODO 
+		    assert(paramName==LightParamName::TWO_SIDE);
+
+	       }
+
+	  void GroupLightingParam::lightModelfv
+	       (LightParamName paramName,const float* param)
+	       {
+		    assert(paramName==LightParamName::AMBIENT);
+
+		    lightModel.ambient=param;
+	       }
+
 	  void GroupLightingParam::lightf(LightIndex lightIndex,
 		    LightParamName paramName,float param)
 	  {

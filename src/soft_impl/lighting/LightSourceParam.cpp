@@ -87,7 +87,7 @@ namespace my_gl {
 		    position=param;
 		    break;
 	       case LightParamName::SPOT_DIRECTION:
-		    spotDirection=Vec3(param,3);
+		    spotDirection=param;
 	       default:
 		    {
 			 assert(false);
