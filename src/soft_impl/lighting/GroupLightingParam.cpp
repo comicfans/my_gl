@@ -46,38 +46,18 @@ namespace my_gl {
 			      _allLightProducts[directIdx]);
 	       }
 
-
-	  GroupLightingParam::GroupLightingParam()
-	  {
-	       _lightingEnabled=false;
-	  }
 		
 	  void GroupLightingParam::enable(LightIndex lightIndex)
 	{
-	     if (lightIndex==LightIndex::LIGHTING)
-	     {
-		  _lightingEnabled=true;
+	     //TODO check LIGHTING enabled
 
 	     int idx=int(lightIndex);
 
-	     if (find(_activeIndices.begin(),_activeIndices.end(),idx)
-		       ==_activeIndices.end())
-	     {
-		  _activeIndices.push_back(idx);
-	     }
-
-	     }
+	     _activeIndices.push_back(idx);
 	}
 
 	void GroupLightingParam::disable(LightIndex lightIndex)
 	{
-
-	     if (lightIndex==LightIndex::LIGHTING)
-	     {
-		  _lightingEnabled=false;
-		  return;
-	     }
-	 
 	     auto removeEndIt=remove(_activeIndices.begin(),
 		       _activeIndices.end(),int(lightIndex));
 
