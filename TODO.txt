@@ -24,7 +24,7 @@ glBufferSubData         OK
 glClear			OK
 glClearColor		OK
 glClearDepth		OK
-glClipPlane ?		NO/complex
+glClipPlane ?		NO/ES 1.0 not support
 glColor         	OK
 glColorPointer       	OK
 glCopyTexImage2D	?
@@ -33,11 +33,11 @@ glCullFace		NO/midd
 glDeleteBuffers         OK
 glDeleteTextures	NO/simple
 glDrawArrays 		OK
-glDrawElements 		PART
+glDrawElements 		NEED TEST
 glDepthFunc		OK
 glFinish		NOT NEED?
 glFlush			OK
-glFrontFace 		?
+glFrontFace 		NO/midd
 glFrustum         	OK
 glGenBuffers          	OK
 glGenTextures		NO/simple
@@ -48,11 +48,11 @@ glLightfv		OK
 glLightModel		PART
 glLineWidth 		?
 glLoadIdentity		OK
-glLoadMatrix		NO/simple
+glLoadMatrix		OK
 glMaterialf 		OK
 glMaterialfv		OK
 glMatrixMode		OK
-glMultMatrix		simple
+glMultMatrixf		OK
 glNormal         	OK
 glNormalPointer         OK
 glOrtho         	OK
@@ -71,25 +71,24 @@ glViewPort         	OK
 
 total	:51
 
-OK 	:31	60%
-simple	:6
-?	:10
-complex	:5
+OK 	:33	64%
+simple	:3
+?	:9
+complex	:1
 WRONG	:0
 PART	:1
 
 
 data bind		:OK (buffer object need test)
 vertex prepare		:OK (drawElements need test)
-vertex shader		:PART (no light support)
+vertex shader		:OK 
 primitive assemble:	:OK (all PrimitiveMode need test)
 rasterize		:OK
-coord process		:PART (z,1/w process)
+coord process		:PART (1/w process)
 interpolate		:PART (no normalizedDevice/projective correct interpolate)
 fragment shader		:PART (no texture support)
-framebuffer		:PART 
+framebuffer		:PART (z-buffer and color buffer impled)
 
 
 
-列主序的矩阵实现：现有实现为行主序，与OpenGL不一致，不便使用
 合并 useVertexNumber 到 IndexProvider ?
