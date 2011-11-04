@@ -35,6 +35,7 @@
 
 #include "shader/VertexShader.hpp"
 #include "shader/NoLightVertexShader.hpp"
+#include "shader/LightVertexShader.hpp"
 #include "shader/SimpleFragmentShader.hpp"
 #include "shader/FragmentShader.hpp"
 #include "pipeline/PrimitiveIndex.hpp"
@@ -85,6 +86,8 @@ namespace my_gl {
 	  //default light is disabled,use NoLightVertexShader
 
 	  //TODO group state related change to one 
+	  _lightingEnabled=false;
+
 	  _vertexShaderPtr.reset(new NoLightVertexShader
 		    (_matrixParam,_groupLightingParam));
 
@@ -577,13 +580,30 @@ namespace my_gl {
 
 	void SoftContext::enable(LightIndex lightIndex)
 	{
-	     //TODO check LIGHTING enabled
-	     _groupLightingParam.enable(lightIndex);
+	     if (lightIndex==LightIndex::LIGHTING)
+	     {
+		  _lightingEnabled=true;
+		  _vertexShaderPtr.reset(new LightVertexShader
+			    (_matrixParam,_groupLightingParam));
+	     }
+	     else if (_lightingEnabled)
+	     {
+		  _groupLightingParam.enable(lightIndex);
+	     }
 	}
 
 	void SoftContext::disable(LightIndex lightIndex)
 	{
-	     _groupLightingParam.disable(lightIndex);
+	     if (lightIndex==LightIndex::LIGHTING)
+	     {
+		  _vertexShaderPtr.reset(new NoLightVertexShader
+			    (_matrixParam,_groupLightingParam));
+		  _lightingEnabled=false;
+	     }
+	     else if (_lightingEnabled)
+	     {
+		  _groupLightingParam.disable(lightIndex);
+	     }
 	}
 
 

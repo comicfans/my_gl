@@ -316,8 +316,8 @@ namespace my_gl {
 
 	GroupLightingParam _groupLightingParam;
 
-	//light param
-	//
+	bool _lightingEnabled;
+
      };
 
 
