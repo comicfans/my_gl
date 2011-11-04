@@ -4,6 +4,8 @@
  *       Filename:  NormalManager.hpp
  *
  *    Description:  class to manager normal provider
+ *    		    normal is just a Vec3, but for making 
+ *    		    interface the same, use Vec4 instead
  *
  *        Version:  1.0
  *        Created:  2011-9-19 15:51:39

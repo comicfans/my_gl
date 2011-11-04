@@ -3,7 +3,11 @@
  *
  *       Filename:  TexCoordManager.hpp
  *
- *    Description:  
+ *    Description:  OpenGL Programming Guide said that
+ *    		    when texCoord is integer , it will not be
+ *    		    normalized ,but in GLSL Texture Lookup Functions
+ *    		    sampler only accept float value (after normalized)
+ *    		    so make it normalized
  *
  *        Version:  1.0
  *        Created:  2011-9-21 10:36:20
