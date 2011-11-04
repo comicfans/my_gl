@@ -130,6 +130,12 @@ namespace my_gl {
 	//glPopMatrix
 	virtual void popMatrix();
 
+	//glLoadMatrix
+	virtual void loadMatrixf(float m[16]);
+
+	//gllMultiMatrix
+	virtual void multiMatrixf(float m[16]);
+
 	//glTranlatef
 	virtual void translatef(float x,float y,float z);
 
