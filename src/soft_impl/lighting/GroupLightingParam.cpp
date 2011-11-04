@@ -49,11 +49,17 @@ namespace my_gl {
 		
 	  void GroupLightingParam::enable(LightIndex lightIndex)
 	{
-	     //TODO check LIGHTING enabled
+	     //check LIGHTING enabled is outside work
 
 	     int idx=int(lightIndex);
 
-	     _activeIndices.push_back(idx);
+	     assert(idx<MAX_LIGHTS);
+
+	     if (find(_activeIndices.begin(),_activeIndices.end(),idx)
+		       ==_activeIndices.end())
+	     {
+		  _activeIndices.push_back(idx);
+	     }
 	}
 
 	void GroupLightingParam::disable(LightIndex lightIndex)
