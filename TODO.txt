@@ -43,12 +43,14 @@ glGenBuffers          	OK
 glGenTextures		NO/simple
 glIsBuffer	        OK
 glIsTexture		NO/simple
-glLight			NO/complex
-glLightModel		NO/complex
+glLightf		OK
+glLightfv		OK
+glLightModel		PART
 glLineWidth 		?
 glLoadIdentity		OK
 glLoadMatrix		NO/simple
-glMaterial 		NO/complex
+glMaterialf 		OK
+glMaterialfv		OK
 glMatrixMode		OK
 glMultMatrix		simple
 glNormal         	OK
@@ -67,9 +69,9 @@ glTexSubImage2D		?
 glTranslate         	OK
 glViewPort         	OK
 
-total	:49
+total	:51
 
-OK 	:27	53%
+OK 	:31	60%
 simple	:6
 ?	:10
 complex	:5
