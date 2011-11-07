@@ -24,6 +24,8 @@
 
 namespace my_gl {
 
+     class TextureObject;
+
      class FragmentShader {
      public:
 
@@ -32,6 +34,13 @@ namespace my_gl {
 		 Vec4& fragColor)=0;
 
 	  virtual ~FragmentShader();
+
+	  void setTextureObject(TextureObject *textureObject);
+
+     protected:
+
+	  TextureObject *_textureObject;
+
      
      };
 	

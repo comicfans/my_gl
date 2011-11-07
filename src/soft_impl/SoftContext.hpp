@@ -30,6 +30,7 @@
 #include "shader/VertexAttributeBuffer.hpp"
 #include "object/ObjectNameManager.hpp"
 #include "object/ArrayBufferObjectManager.hpp"
+#include "object/TextureObjectManager.hpp"
 
 #include "shader/MatrixParam.hpp"
 
@@ -206,6 +207,43 @@ namespace my_gl {
 	//glDisable  (LIGHTn override)
 	virtual void disable(LightIndex lightIndex);
 
+	//glGenTextures
+	virtual void genTextures(size_t n,Name * names);
+
+	//glBindTexture
+	virtual void bindTexture(TexTarget/* ignored*/,Name texture);
+
+	//glDeleteTexture
+	virtual void deleteTextures(size_t n,Name *names);
+
+	//glTexImage2D
+	virtual void texImage2D(TexTarget/*ignored*/,int level/* ignored*/
+		  ,int internalFormat/*ignored*/,size_t width,
+		  //OpenGL ES 1.0 border must be 0
+		  size_t height,int border/* ignored */,
+		  ImageFormat imageFormat,StoreType storeType,
+		  const void *texels);
+
+	//glTexSubImage2D
+	virtual void texSubImage2D(TexTarget/*ignored*/,
+		  int level/* ignored*/,
+		  int xoffset,int yoffset,
+		  size_t width,size_t height,
+		  ImageFormat imageFormat,
+		  StoreType storeType,
+		  const void *texels);
+
+
+	//glTexParameter
+	virtual void texParameter(TexTarget target/*ignored*/,
+		  TexWrapName wrapName,
+		  TexWrapMode texWrapMode);
+
+	//glTexParameter
+	virtual void texParameter(TexTarget target/*ignored*/,
+		  TexFilterName filterName,
+		  TexFilterMode texFilterMode);
+ 
 
 	ObjectNameManager& getObjectNameManager();
 
@@ -220,6 +258,8 @@ namespace my_gl {
 	ObjectNameManager _objectNameManager;
 
 	ArrayBufferObjectManager _arrayBufferObjectManager;
+
+	TextureObjectManager _textureObjectManager;
 
 	ptr_array<Vec4Manager,4> _allVec4Manager;
 

@@ -113,7 +113,24 @@ namespace my_gl {
 
 	     }
 
+	void TextureObjectManager::
+	     texParameter(TexTarget target/*ignored*/,
+		  TexWrapName wrapName,
+		  TexWrapMode texWrapMode)
+	{
+	     getActiveTextureObject()->
+		  texParameter(wrapName,texWrapMode);
+	}
 
+	void TextureObjectManager::
+	     texParameter(TexTarget target/*ignored*/,
+		  TexFilterName filterName,
+		  TexFilterMode texFilterMode)
+	{
+	     getActiveTextureObject()->
+		  texParameter(filterName,texFilterMode);
+	}
+     
 
      TextureObject* TextureObjectManager::
 	  getActiveTextureObject()

@@ -41,6 +41,7 @@
 #include "pipeline/PrimitiveIndex.hpp"
 #include "pipeline/ColorBuffer.hpp"
 #include "pipeline/DepthBuffer.hpp"
+#include "object/TextureObject.hpp"
 
 #include "pipeline/interpolator/WinCoordInterpolator.hpp"
 #include "pipeline/rasterizer/PointRasterizer.hpp"
@@ -62,7 +63,8 @@ namespace my_gl {
      using boost::extents;
 
      SoftContext::SoftContext(size_t width,size_t height)
-	  :_arrayBufferObjectManager(_objectNameManager)
+	  :_arrayBufferObjectManager(_objectNameManager),
+	  _textureObjectManager(_objectNameManager)
      {
 
 	  _height=height;
@@ -405,6 +407,9 @@ namespace my_gl {
 		  auto activeFragWinCoords=_fragmentAttributeBufferPtr
 		       ->getActiveFragWinCoords();
 
+		  _fragmentShaderPtr->setTextureObject
+		       (_textureObjectManager.getActiveTextureObject());
+
 		  for(auto &winCoord:activeFragWinCoords)
 		       {
 			    _fragmentShaderPtr->shade(
@@ -578,7 +583,65 @@ namespace my_gl {
 	     {
 		  _groupLightingParam.materialfv(face,paramName,param);
 	     }
+	
+	void SoftContext::genTextures(size_t n,Name * names)
+	{
+	     _textureObjectManager.genTextures(n,names);
+	}
 
+	void SoftContext::bindTexture
+	     (TexTarget target/* ignored*/,Name texture)
+	     {
+		  _textureObjectManager.bindTexture(target,texture);
+	     }
+
+	void SoftContext::deleteTextures(size_t n,Name *names)
+	{
+	     _textureObjectManager.deleteTextures(n,names);
+	}
+
+	void SoftContext::texImage2D
+	     (TexTarget/*ignored*/target,int level/* ignored*/
+		  ,int internalFormat/*ignored*/,size_t width,
+		  //OpenGL ES 1.0 border must be 0
+		  size_t height,int border/* ignored */,
+		  ImageFormat imageFormat,StoreType storeType,
+		  const void *texels)
+	{
+	     _textureObjectManager.texImage2D(target,level,internalFormat,
+		       width,height,border,imageFormat,storeType,texels);
+	}
+
+	void SoftContext::texSubImage2D(TexTarget/*ignored*/target,
+		  int level/* ignored*/,
+		  int xoffset,int yoffset,
+		  size_t width,size_t height,
+		  ImageFormat imageFormat,
+		  StoreType storeType,
+		  const void *texels)
+	{
+	     _textureObjectManager.texSubImage2D(target,level,
+		       xoffset,yoffset,width,height,imageFormat,
+		       storeType,texels);
+	}
+
+
+	void SoftContext::texParameter(TexTarget target/*ignored*/,
+		  TexWrapName wrapName,
+		  TexWrapMode texWrapMode)
+	{
+	     _textureObjectManager.
+		  texParameter(target,wrapName,texWrapMode);
+	}
+
+	void SoftContext::texParameter(TexTarget target/*ignored*/,
+		  TexFilterName filterName,
+		  TexFilterMode texFilterMode)
+	{
+	     _textureObjectManager.
+		  texParameter(target,filterName,texFilterMode);
+	}
+     
 	void SoftContext::enable(LightIndex lightIndex)
 	{
 	     if (lightIndex==LightIndex::LIGHTING)

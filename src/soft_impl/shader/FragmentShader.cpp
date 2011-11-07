@@ -20,5 +20,11 @@
 
 namespace my_gl {
 
+	  void FragmentShader::setTextureObject
+	       (TextureObject *textureObject)
+	  {
+	       _textureObject=textureObject;
+	  }
+
      FragmentShader::~FragmentShader(){}
 } /* my_gl */
