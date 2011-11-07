@@ -43,7 +43,8 @@ namespace my_gl {
 
 	  BufferObject(Name name) ;
 
-	  const void * getBufferPointer()const ;
+	  template<typename T=float>
+	  const T * getBufferPointer()const ;
 
 	  Name name()const ;
 

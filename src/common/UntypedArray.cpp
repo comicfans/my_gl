@@ -62,5 +62,78 @@ namespace my_gl {
 	       copy_n(p,size,_array.get());
 	  }
 
-     
+ 	  template<typename T>
+	       T const & UntypedArray::operator[](size_t idx)const 
+	       {
+		    assert(idx<_size/sizeof(T));
+
+		    void  *p=_array.get();
+
+		    return static_cast<T*>(p)[idx];
+	       }
+
+	  template<typename T>
+	       T const * UntypedArray::get()const 
+	       {
+		    const void *p=_array.get();
+
+		    return static_cast<const T*>(p);
+	       }
+
+	  template<typename T>
+	       T * UntypedArray::get() 
+	       { 
+		    void *p=_array.get();
+		    return static_cast<T*>(p);
+	       }
+
+	  template int8_t const& UntypedArray::
+	       operator[]<int8_t>(size_t)const;
+	  template int8_t const * UntypedArray::
+	       get<int8_t>()const;
+	  template int8_t * UntypedArray::
+	       get<int8_t>();
+
+    	  template uint8_t const& UntypedArray::
+	       operator[]<uint8_t>(size_t)const;
+	  template uint8_t const * UntypedArray::
+	       get<uint8_t>()const;
+	  template uint8_t * UntypedArray::
+	       get<uint8_t>();
+    
+	  template int16_t const& UntypedArray::
+	       operator[]<int16_t>(size_t)const;
+	  template int16_t const * UntypedArray::
+	       get<int16_t>()const;
+	  template int16_t * UntypedArray::
+	       get<int16_t>();
+
+    	  template uint16_t const& UntypedArray::
+	       operator[]<uint16_t>(size_t)const;
+	  template uint16_t const * UntypedArray::
+	       get<uint16_t>()const;
+	  template uint16_t * UntypedArray::
+	       get<uint16_t>();
+    
+	  template int32_t const& UntypedArray::
+	       operator[]<int32_t>(size_t)const;
+	  template int32_t const * UntypedArray::
+	       get<int32_t>()const;
+	  template int32_t * UntypedArray::
+	       get<int32_t>();
+
+    	  template uint32_t const& UntypedArray::
+	       operator[]<uint32_t>(size_t)const;
+	  template uint32_t const * UntypedArray::
+	       get<uint32_t>()const;
+	  template uint32_t * UntypedArray::
+	       get<uint32_t>();
+    
+    	  template float const& UntypedArray::
+	       operator[]<float>(size_t)const;
+	  template float const * UntypedArray::
+	       get<float>()const;
+	  template float* UntypedArray::
+	       get<float>();
+ 
 } /* my_gl */

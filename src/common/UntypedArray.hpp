@@ -42,23 +42,13 @@ namespace my_gl {
 	  size_t size()const ;
 
 	  template<typename T>
-	       T const & operator[](size_t idx)const 
-	       {
-		    assert(idx<_size/sizeof(T));
-		    return static_cast<T*>(_array.get())[idx];
-	       }
+	       T const & operator[](size_t idx)const ;
+
 	  template<typename T=int8_t>
-	       T const * get()const 
-	       {
-		    void* p=_array.get();
-		    return static_cast<T*>(p);
-	       }
+	       T const * get()const ;
+
 	  template<typename T=int8_t>
-	       T * get() 
-	       { 
-		    void *p=_array.get();
-		    return static_cast<T*>(p);
-	       }
+	       T * get() ;
 
      private:
 

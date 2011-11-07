@@ -29,9 +29,37 @@ namespace my_gl {
      Name BufferObject::name()const 
      {return _name;}
 
-     const void* BufferObject::getBufferPointer()const 
-     {
-	  return _dataPointer->get();
-     }
+	  template<typename T>
+	  const T * BufferObject::getBufferPointer()const 
+	  {
+	       return _dataPointer->get<T>();
+	  }
+
+	  template 
+	       const float* BufferObject::
+	       getBufferPointer<float>()const;
+
+	  template 
+	       const int8_t* BufferObject::
+	       getBufferPointer<int8_t>()const;
 	
+	  template 
+	       const uint8_t* BufferObject::
+	       getBufferPointer<uint8_t>()const;
+
+	  template 
+	       const int16_t* BufferObject::
+	       getBufferPointer<int16_t>()const;
+
+	  template 
+	       const uint16_t* BufferObject::
+	       getBufferPointer<uint16_t>()const;
+
+	  template 
+	       const int32_t* BufferObject::
+	       getBufferPointer<int32_t>()const;
+
+	  template 
+	       const uint32_t* BufferObject::
+	       getBufferPointer<uint32_t>()const;
 } /* my_gl */
