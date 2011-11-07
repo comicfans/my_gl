@@ -73,11 +73,11 @@ namespace my_gl {
 
      enum class TexFilterMode{NEAREST,LINEAR};
 
-     enum class TexWarpName{TEXTURE_WRAP_S,TEXTURE_WRAP_T};
+     enum class TexWrapName{TEXTURE_WRAP_S,TEXTURE_WRAP_T};
 
      enum class	TexFilterName{TEXTURE_MAG_FILTER,TEXTURE_MIN_FILTER};
 
-     enum class TexWarpMode{CLAMP,REPEAT,MIRRORED_REPEAT};
+     enum class TexWrapMode{CLAMP,REPEAT,MIRRORED_REPEAT};
 } /* my_gl */
 
 

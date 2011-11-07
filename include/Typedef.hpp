@@ -31,6 +31,8 @@ namespace my_gl {
      const FrameBufferMask DEPTH_BUFFER_BIT=2;
 
     const Name RESERVED=0;
+
+    const float HALF_PIXEL=0.5;
 } /* my_gl */
 
 
