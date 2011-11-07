@@ -30,7 +30,7 @@ namespace my_gl {
 
      using std::function;
 
-     class TextureObject : PixelObject{
+     class TextureObject :public PixelObject{
      public:
 
      	TextureObject (Name name);

@@ -68,12 +68,18 @@ namespace my_gl {
 	  texParameter(TexWrapName::TEXTURE_WRAP_T,
 		    TexWrapMode::REPEAT);
 
+	  texParameter(TexFilterName::TEXTURE_MAG_FILTER,
+		    TexFilterMode::LINEAR);
+
+	  texParameter(TexFilterName::TEXTURE_MIN_FILTER,
+		    TexFilterMode::LINEAR);
 
 	  ALL_FILTERS[int(TexFilterMode::LINEAR)]=
 	       bind(&TextureObject::linear,this,_1,_2);
 
 	  ALL_FILTERS[int(TexFilterMode::NEAREST)]=
 	       bind(&TextureObject::nearest,this,_1,_2);
+
      }
 	
      void TextureObject::texParameter

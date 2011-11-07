@@ -71,6 +71,9 @@ namespace my_gl {
 
      enum class NormalizeNormal{RESCALE_NORMAL,NORMALIZE};
 
+     //in opengl es 1.0, only TEXTURE_2D is supported
+     enum class TexTarget{TEXTURE_2D};
+
      enum class TexFilterMode{NEAREST,LINEAR};
 
      enum class TexWrapName{TEXTURE_WRAP_S,TEXTURE_WRAP_T};

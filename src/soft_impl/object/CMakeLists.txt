@@ -6,6 +6,8 @@ ADD_LIBRARY(Object
      ObjectNameManager.cpp
      PixelObject.cpp
      TextureObject.cpp
+     TextureObjectManager.cpp
      ArrayBufferObjectManager.cpp
      )
+
 TARGET_LINK_LIBRARIES(Object Common)
