@@ -45,6 +45,16 @@ namespace my_gl {
 	  unpacker.unpack();
      }
 
+     size_t PixelObject::width()const
+     {
+	  return _width;
+     }
+
+     size_t PixelObject::height()const
+     {
+	  return _height;
+     }
+
      void PixelObject::subImage(int xOffset,  int yOffset,
 	        size_t width,  size_t height,  ImageFormat format,
 		StoreType type,const void *p)

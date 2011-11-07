@@ -40,6 +40,10 @@ namespace my_gl {
 
 	StoreType getType()const ;
 
+	size_t width()const;
+
+	size_t height()const;
+
 	void subImage(int xOffset,int yOffset,
 		  size_t width,size_t height,
 		  ImageFormat format,StoreType type,const void *p);
