@@ -53,9 +53,16 @@ namespace my_gl {
 		  for (int i=0; i<n; ++i)
 		  {
 		       Name name=names[i];
-		       _textureObjects[name].reset(
-				 new TextureObject(name));
+		       
+		  //should not in
+		  assert(_textureObjects.find(name)==
+			    _textureObjects.end());
+
+		  //makes a stub
+		  _textureObjects[name];
+
 		  }
+		  
 	     }
 
 	void TextureObjectManager::bindTexture
@@ -73,10 +80,26 @@ namespace my_gl {
 	     for (int i=0; i<n; ++i)
 	     {
 		  Name name=names[i];
-		  assert(isTexture(name));
-		  _textureObjects.erase(name);
+
+		  if (name==0)
+		  {
+		       continue;
+		  }
+
+		  auto pos=_textureObjects.find(name);
+		  if(pos!=_textureObjects.end())
+		  {
+		       if (pos->second)
+		       {
+			    if (_activeTextureObject==pos->second.get())
+			    {
+				 bindTexture(TexTarget::TEXTURE_2D,0);
+			    }
+			    _textureObjects.erase(pos);
+			    _objectNameManager.recycleName(name);
+		       }
+		  }
 	     }
-	     _objectNameManager.recycleNames(n,names);
 	}
 
 	void TextureObjectManager::texImage2D

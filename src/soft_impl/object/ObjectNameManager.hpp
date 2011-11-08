@@ -37,7 +37,7 @@ namespace my_gl {
 
 	  void generateNames(size_t size,Name* names);
      
-	  void recycleNames(size_t size,Name* names);
+	  void recycleName(Name name);
 
      private:
 

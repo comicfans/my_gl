@@ -65,6 +65,13 @@ namespace my_gl {
 
 	  typedef unique_ptr<ArrayBufferObject> UniquePointer;
 
+	  /** 
+	   * @brief all names by genBuffers is stored 
+	   * in this map,but only which has data binded
+	   * value is not null.this makes array buffer name
+	   * trace easier
+	   * 
+	   */
 	  unordered_map<Name,UniquePointer> _objects;
 
 	  ObjectNameManager & _objectNameManager;

@@ -79,6 +79,8 @@ namespace my_gl {
 
 	ObjectNameManager & _objectNameManager;
 
+	bool _texture2DEnabled;
+
 	TextureObject * _activeTextureObject;
 
 	typedef unique_ptr<TextureObject> UniquePtr;

@@ -50,15 +50,11 @@ namespace my_gl{
 	  }
      }
 
-     void ObjectNameManager::recycleNames(size_t size, Name *names)
+     void ObjectNameManager::recycleName(Name thisName)
      {
-	  for (size_t i=0; i<size; ++i)
-	  {
-	       Name thisName=*(names+i);
 	       assert(contains(_usedNames,thisName));
 	       assert(thisName>0);
 	       _usedNames.erase(thisName);
-	  }
      }
 	
 } /* my_gl */
