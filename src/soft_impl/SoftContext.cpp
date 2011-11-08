@@ -776,6 +776,40 @@ namespace my_gl {
 	     }
 	}
 
+	//glEnable (cullFace override)
+	void SoftContext::enableCullFacee()
+	{
+	     static_cast<TriangleRasterizer&>
+		  (_rasterizers[int(PrimitiveMode::TRIANGLES)]).
+		  enableCullFace();
+	}
+
+	//glDisable (cullFace override)
+	void SoftContext::disableCullFacee()
+	{
+	     static_cast<TriangleRasterizer&>
+		  (_rasterizers[int(PrimitiveMode::TRIANGLES)]).
+		  disableCullFace();
+
+	}
+
+	//glFrontFace
+	void SoftContext::frontFace(FaceMode faceMode)
+	{
+	     static_cast<TriangleRasterizer&>
+		  (_rasterizers[int(PrimitiveMode::TRIANGLES)]).
+		  frontFace(faceMode);
+	}
+
+
+	//glCullFace
+	void SoftContext::cullFace(Face face)
+	{
+	     static_cast<TriangleRasterizer&>
+		  (_rasterizers[int(PrimitiveMode::TRIANGLES)]).
+		  cullFace(face);
+	}
+
 
 
 

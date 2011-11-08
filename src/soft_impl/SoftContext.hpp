@@ -222,6 +222,18 @@ namespace my_gl {
 	//glGenTextures
 	virtual void genTextures(size_t n,Name * names);
 
+	//glEnable (cullFace override)
+	virtual void enableCullFacee();
+
+	//glDisable (cullFace override)
+	virtual void disableCullFacee();
+
+	//glFrontFace
+	virtual void frontFace(FaceMode faceMode);
+
+	//glCullFace
+	virtual void cullFace(Face face);
+
 	//glBindTexture
 	virtual void bindTexture(TexTarget/* ignored*/,Name texture);
 
