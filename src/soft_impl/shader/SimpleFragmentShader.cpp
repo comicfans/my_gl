@@ -22,6 +22,11 @@
 
 namespace my_gl {
 
+     SimpleFragmentShader::SimpleFragmentShader
+	  (const MatrixParam& matrixParam)
+	  :FragmentShader(matrixParam)
+	  {}
+
      void SimpleFragmentShader::shade
 	       (ConstAttributeGroupRef attributeGroupRef,
 		 Vec4& fragColor)

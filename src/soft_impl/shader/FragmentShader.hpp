@@ -26,8 +26,12 @@ namespace my_gl {
 
      class TextureObject;
 
+     class MatrixParam;
+
      class FragmentShader {
      public:
+
+	  FragmentShader(const MatrixParam& matrixParam);
 
 	  virtual void shade
 	       (ConstAttributeGroupRef attributeGroupRef,
@@ -40,6 +44,8 @@ namespace my_gl {
      protected:
 
 	  TextureObject *_textureObject;
+
+	  const MatrixParam& _matrixParam;
 
      
      };

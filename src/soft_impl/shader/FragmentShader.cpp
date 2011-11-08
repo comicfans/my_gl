@@ -20,6 +20,13 @@
 
 namespace my_gl {
 
+     FragmentShader::FragmentShader(const 
+	       MatrixParam& matrixParam)
+	  :_matrixParam(matrixParam)
+     {
+
+     }
+
 	  void FragmentShader::setTextureObject
 	       (TextureObject *textureObject)
 	  {

@@ -94,7 +94,7 @@ namespace my_gl {
 	  _vertexShaderPtr.reset(new NoLightVertexShader
 		    (_matrixParam,_groupLightingParam));
 
-	  _fragmentShaderPtr.reset(new SimpleFragmentShader());
+	  _fragmentShaderPtr.reset(new SimpleFragmentShader(_matrixParam));
 	  
 
 	  //init clippers;

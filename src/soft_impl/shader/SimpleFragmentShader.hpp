@@ -23,8 +23,14 @@
 #include "FragmentShader.hpp"
 
 namespace my_gl {
+
+
      class SimpleFragmentShader :public FragmentShader{
      public:
+
+     
+	  SimpleFragmentShader
+	       (const MatrixParam& matrixParam);
 	  virtual void shade
 	       (ConstAttributeGroupRef attributeGroupRef,
 		 Vec4& fragColor);
