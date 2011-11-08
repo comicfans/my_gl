@@ -18,7 +18,7 @@ OpenCL实现：使用OpenCL完成
 
 根据OpenGL ES 1.1 man手册，具体实现功能如下：
 glBindBuffer		OK
-glBindTexture		NO/as bindBuffer
+glBindTexture		OK
 glBufferData         	OK
 glBufferSubData         OK
 glClear			OK
@@ -26,22 +26,22 @@ glClearColor		OK
 glClearDepth		OK
 glColor         	OK
 glColorPointer       	OK
-glCopyTexImage2D	?
-glCopyTexSubImage2D	?
+glCopyTexImage2D	NO/simple
+glCopyTexSubImage2D	NO/simple
 glCullFace		NO/midd
 glDeleteBuffers         OK
-glDeleteTextures	NO/simple
+glDeleteTextures	OK
 glDrawArrays 		OK
-glDrawElements 		NEED TEST
+glDrawElements 		OK/NEED TEST
 glDepthFunc		OK
 glFinish		NOT NEED?
 glFlush			OK
 glFrontFace 		NO/midd
 glFrustum         	OK
 glGenBuffers          	OK
-glGenTextures		NO/simple
+glGenTextures		OK
 glIsBuffer	        OK
-glIsTexture		NO/simple
+glIsTexture		OK
 glLightf		OK
 glLightfv		OK
 glLightModel		PART
@@ -63,15 +63,15 @@ glRotate         	OK
 glScale         	OK
 glShadeModel		?
 glTexCoordPointer	OK
-glTexImage2D		?
-glTexParameter		?
-glTexSubImage2D		?
+glTexImage2D		OK
+glTexParameter		OK/NEED TEST
+glTexSubImage2D		OK/NEED TEST
 glTranslate         	OK
 glViewPort         	OK
 
 total	:51
 
-OK 	:33	64%
+OK 	:41	80%
 simple	:3
 ?	:9
 complex	:1
