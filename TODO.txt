@@ -28,7 +28,7 @@ glColor         	OK
 glColorPointer       	OK
 glCopyTexImage2D	OK
 glCopyTexSubImage2D	OK
-glCullFace		NO/midd
+glCullFace		OK
 glDeleteBuffers         OK
 glDeleteTextures	OK
 glDrawArrays 		OK
@@ -36,7 +36,7 @@ glDrawElements 		OK
 glDepthFunc		OK
 glFinish		NOT NEED?
 glFlush			OK
-glFrontFace 		NO/midd
+glFrontFace 		OK
 glFrustum         	OK
 glFog			NO/simple
 glGenBuffers          	OK
@@ -66,14 +66,14 @@ glShadeModel		?
 glTexEnv		NO/MIDD
 glTexCoordPointer	OK
 glTexImage2D		OK
-glTexParameter		OK/NEED TEST
-glTexSubImage2D		OK/NEED TEST
+glTexParameter		OK
+glTexSubImage2D		OK
 glTranslate         	OK
 glViewPort         	OK
 
 total	:53
 
-OK 	:43	81%
+OK 	:45	84%
 simple	:3
 ?	:9
 complex	:1
