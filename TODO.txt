@@ -26,13 +26,13 @@ glClearColor		OK
 glClearDepth		OK
 glColor         	OK
 glColorPointer       	OK
-glCopyTexImage2D	NO/simple
-glCopyTexSubImage2D	NO/simple
+glCopyTexImage2D	OK
+glCopyTexSubImage2D	OK
 glCullFace		NO/midd
 glDeleteBuffers         OK
 glDeleteTextures	OK
 glDrawArrays 		OK
-glDrawElements 		OK/NEED TEST
+glDrawElements 		OK
 glDepthFunc		OK
 glFinish		NOT NEED?
 glFlush			OK
@@ -46,7 +46,7 @@ glIsTexture		OK
 glLightf		OK
 glLightfv		OK
 glLightModel		PART
-glLineWidth 		?
+glLineWidth 		NO/complex no plan
 glLoadIdentity		OK
 glLoadMatrix		OK
 glMaterialf 		OK
@@ -57,7 +57,7 @@ glNormal         	OK
 glNormalPointer         OK
 glOrtho         	OK
 glPixelStorei		NO/complex internal convert,no valuable
-glPointSize 		NO/complex
+glPointSize 		NO/complex no plan
 glPopMatrix         	OK
 glPushMatrix         	OK
 glRotate         	OK
@@ -73,7 +73,7 @@ glViewPort         	OK
 
 total	:53
 
-OK 	:41	80%
+OK 	:43	81%
 simple	:3
 ?	:9
 complex	:1
@@ -93,4 +93,5 @@ framebuffer		:PART (z-buffer and color buffer impled)
 
 
 
+TWO_SIDE 光照
 合并 useVertexNumber 到 IndexProvider ?

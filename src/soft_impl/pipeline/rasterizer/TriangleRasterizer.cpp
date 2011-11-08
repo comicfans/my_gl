@@ -41,17 +41,22 @@ namespace my_gl {
      typedef vector<WinCoord> EdgePoints;
 
      TriangleRasterizer::TriangleRasterizer
-	       (ViewportParameter& viewportParameter,
-		Interpolator& interpolator,
-		FragmentAttributeBuffer& fragmentAttributeBuffer,
-		     DepthBuffer& depthBuffer,
-		     DepthRange& depthRange,
-		LineRasterizer *pLineRasterizer)
-	       :Rasterizer
-		(viewportParameter,interpolator,
-		 fragmentAttributeBuffer,depthBuffer,depthRange),
-		_pLineRasterizer(pLineRasterizer){}
-		
+	  (ViewportParameter& viewportParameter,
+	   Interpolator& interpolator,
+	   FragmentAttributeBuffer& fragmentAttributeBuffer,
+	   DepthBuffer& depthBuffer,
+	   DepthRange& depthRange,
+	   LineRasterizer *pLineRasterizer)
+	  :Rasterizer
+	   (viewportParameter,interpolator,
+	    fragmentAttributeBuffer,depthBuffer,depthRange),
+	   _pLineRasterizer(pLineRasterizer)
+     {
+	  _cullFaceEnabled=false;
+	  _frontFaceMode=FaceMode::CCW;
+	  _cullFace=Face::BACK;
+     }
+
 
 
 
@@ -63,7 +68,7 @@ namespace my_gl {
 	       _pLineRasterizer=pLineRasterizer;
 	  }
 
-        static void append(EdgePoints& edgePoints,
+     static void append(EdgePoints& edgePoints,
 	       const WinCoord& winCoord)
      {
 	  edgePoints.push_back(winCoord);
@@ -73,6 +78,12 @@ namespace my_gl {
 	  (const ConstAttributeGroupRefList& attributeGroupRefs)
 	  {
 
+	       if (isCulled(attributeGroupRefs))
+	       {
+		    return;
+	       }
+
+
 	       EdgePoints edgePoints;
 
 	       LineRasterizer::StepCallback appendFunc
@@ -80,7 +91,7 @@ namespace my_gl {
 
 	       for (int i=0; i<3; ++i)
 	       {
-	       
+
 		    ConstAttributeGroupRefList edgeAttributes(2);
 
 		    edgeAttributes.push_back(new 
@@ -88,7 +99,7 @@ namespace my_gl {
 
 		    edgeAttributes.push_back(new
 			      ConstAttributeGroupRef(attributeGroupRefs[(i+1)%3]));
-		    
+
 		    //use LineRasterizer to rasterize line
 		    //and push back edge point to edgePoints
 
@@ -116,12 +127,12 @@ namespace my_gl {
 
 	       //skip point only scan line
 	       const int yMin=edgePoints.front().y(),
-		   yMax=edgePoints.back().y();
+		     yMax=edgePoints.back().y();
 
 	       auto leftIt=edgePoints.begin();
-	       
+
 	       //then do scan line rasterize
-	       
+
 	       for(int scanLineY=yMin;
 			 scanLineY<=yMax && leftIt<edgePoints.end();
 			 ++scanLineY)
@@ -154,7 +165,7 @@ namespace my_gl {
 			      leftIt=tryPos;
 			      break;
 			 }
-			 
+
 			 if (tryPos->x()-leftIt->x()<=1)
 			 {
 			      //neighbor left pixel 4)
@@ -186,7 +197,7 @@ namespace my_gl {
 
 		    leftRightAttributes.push_back
 			 (new ConstAttributeGroupRef(_fragmentAttributeBuffer(*tryPos)));
-		    
+
 		    _pLineRasterizer->rasterizeSpecial
 			 (leftRightAttributes,*leftIt,*tryPos,
 			  //MajorDim=x,delta y=0
@@ -197,6 +208,80 @@ namespace my_gl {
 			      WinCoord(INT_MAX,scanLineY));
 	       }
 
+	  }
+
+     bool TriangleRasterizer::isCulled(const 
+	       ConstAttributeGroupRefList& attributeGroupRefs)const
+     {
+	  if (_cullFaceEnabled && _cullFace==Face::FRONT_AND_BACK)
+	  {
+	       //cull all
+	       return true;
+	  }
+
+	  WinCoord winCoords[3];
+
+	  for (int i=0; i<3; ++i)
+	  {
+	       auto & vertex=getVertex(attributeGroupRefs[i]);
+	       winCoords[i]=toWinCoord(vertex/vertex.w());
+	  }
+
+
+	  bool positive=areaSignPositive(winCoords);
+
+	  //positive -> towards to reader CCW
+	  //negative -> away from reader  CW
+	  FaceMode faceMode=FaceMode(int(positive));
+
+	  return _cullFaceMode==faceMode;
+     }
+	       void TriangleRasterizer::enableCullFace()
+	       {
+		    _cullFaceEnabled=true;
+	       }
+
+	       void TriangleRasterizer::disableCullFace()
+	       {
+		    _cullFaceEnabled=false;
+	       }
+
+	       void TriangleRasterizer::frontFace(FaceMode faceMode)
+	       {
+		    _frontFaceMode=faceMode;
+	       }
+
+	       void TriangleRasterizer::cullFace(Face face)
+	       {
+		    _cullFace=face;
+		    if (face==Face::FRONT)
+		    {
+			 _cullFaceMode=_frontFaceMode;
+		    }
+		    else if (face==Face::BACK)
+		    {
+			 _cullFaceMode=
+			      FaceMode(1-int(_frontFaceMode));
+		    }
+		    _cullFace=face;
+	       }
+
+
+     bool TriangleRasterizer::areaSignPositive
+	  (const WinCoord points[3])
+	  {
+	       float area2Times=0;
+
+	       for (int i=0; i<3; ++i)
+	       {
+		    int j=(i+1)%3;
+		    //cross product makes right hand area
+		    float sum=points[i].x()*points[j].y()-
+			 points[j].x()*points[i].y();
+		    area2Times+=sum;
+	       }
+	       //sum is 2 times of area
+	       return area2Times>0;
 	  }
 
 

@@ -69,6 +69,8 @@ namespace my_gl {
 
      enum class Face{FRONT,BACK,FRONT_AND_BACK};
 
+     enum class FaceMode{CW=0,CCW=1};
+
      enum class NormalizeNormal{RESCALE_NORMAL,NORMALIZE};
 
      //in opengl es 1.0, only TEXTURE_2D is supported

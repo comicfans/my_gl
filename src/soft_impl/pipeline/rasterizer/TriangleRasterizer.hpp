@@ -23,6 +23,7 @@
 #include <memory>
 
 #include "Rasterizer.hpp"
+#include "Enum.hpp"
 
 namespace my_gl {
 
@@ -45,6 +46,14 @@ namespace my_gl {
 
 	       void setLineRasterizer(LineRasterizer *pLineRasterizer);
 
+	       void enableCullFace();
+
+	       void disableCullFace();
+
+	       void frontFace(FaceMode faceMode);
+
+	       void cullFace(Face face);
+
 	  protected:
 
 	       virtual void elementRasterize
@@ -53,7 +62,20 @@ namespace my_gl {
 
 	  private:
 
+	       bool isCulled(const ConstAttributeGroupRefList& 
+			 attributeGroupRefs)const;
+
+	       static bool areaSignPositive(const WinCoord points[3]);
+
 	       LineRasterizer *_pLineRasterizer;
+
+	       FaceMode _cullFaceMode;
+
+	       bool _cullFaceEnabled;
+
+	       Face _cullFace;
+
+	       FaceMode _frontFaceMode;
      };
 
 } /* my_gl */
