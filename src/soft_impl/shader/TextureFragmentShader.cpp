@@ -23,6 +23,12 @@
 
 namespace my_gl {
 	
+     TextureFragmentShader::~TextureFragmentShader (){}
+
+     TextureFragmentShader::TextureFragmentShader 
+	  (const MatrixParam& matrixParam):
+	       FragmentShader(matrixParam){}
+
 	void TextureFragmentShader::shade
 	       (ConstAttributeGroupRef attributeGroupRef,
 		 Vec4& fragColor)

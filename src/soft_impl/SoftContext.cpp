@@ -35,6 +35,7 @@
 
 #include "shader/VertexShader.hpp"
 #include "shader/NoLightVertexShader.hpp"
+#include "shader/TextureLightFragmentShader.hpp"
 #include "shader/LightVertexShader.hpp"
 #include "shader/SimpleFragmentShader.hpp"
 #include "shader/FragmentShader.hpp"
@@ -644,11 +645,11 @@ namespace my_gl {
      
 	void SoftContext::enable(LightIndex lightIndex)
 	{
-	     if (lightIndex==LightIndex::LIGHTING)
+	     if (lightIndex==LightIndex::LIGHTING && 
+		       !_lightingEnabled)
 	     {
 		  _lightingEnabled=true;
-		  _vertexShaderPtr.reset(new LightVertexShader
-			    (_matrixParam,_groupLightingParam));
+		  switchShader();
 	     }
 	     else if (_lightingEnabled)
 	     {
@@ -658,15 +659,55 @@ namespace my_gl {
 
 	void SoftContext::disable(LightIndex lightIndex)
 	{
-	     if (lightIndex==LightIndex::LIGHTING)
+	     if (!_lightingEnabled)
 	     {
-		  _vertexShaderPtr.reset(new NoLightVertexShader
-			    (_matrixParam,_groupLightingParam));
-		  _lightingEnabled=false;
+		  return;
 	     }
-	     else if (_lightingEnabled)
+
+	     if (lightIndex==LightIndex::LIGHTING) {
+		  _lightingEnabled=false;
+		  switchShader();
+	     }
+	     else 
 	     {
 		  _groupLightingParam.disable(lightIndex);
+	     }
+	}
+
+	void SoftContext::switchShader()
+	{
+	     if (_lightingEnabled)
+	     {
+		  _vertexShaderPtr.reset(
+			    new LightVertexShader(_matrixParam,
+				 _groupLightingParam));
+		  if (_textureEnabled)
+		  {
+		       _fragmentShaderPtr.reset(
+				 new TextureLightFragmentShader
+				 (_matrixParam));
+		  }
+		  else
+		  {
+		       _fragmentShaderPtr.reset(new 
+				 SimpleFragmentShader(_matrixParam));
+		  }
+	     }
+	     else
+	     {
+		  _vertexShaderPtr.reset(new 
+			    NoLightVertexShader(_matrixParam,
+				 _groupLightingParam));
+		  if (_textureEnabled)
+		  {
+		       _fragmentShaderPtr.reset(new 
+				 TextureFragmentShader(_matrixParam));
+		  }
+		  else
+		  {
+		       _fragmentShaderPtr.reset(new 
+				 SimpleFragmentShader(_matrixParam));
+		  }
 	     }
 	}
 
@@ -691,13 +732,21 @@ namespace my_gl {
 	//glEnable (texture override)
 	void SoftContext::enable(TexTarget texTarget)
 	{
-	     //TODO
+	     if (!_textureEnabled)
+	     {
+		  _textureEnabled=true;
+		  switchShader();
+	     }
 	}
 
 	//glDisable (texture override)
 	void SoftContext::disable(TexTarget texTarget)
 	{
-	     //TODO
+	     if (_textureEnabled)
+	     {
+		  _textureEnabled=false;
+		  switchShader();
+	     }
 	}
 
 

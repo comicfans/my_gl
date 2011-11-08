@@ -373,6 +373,14 @@ namespace my_gl {
 
 	bool _lightingEnabled;
 
+	bool _textureEnabled;
+
+	/** 
+	 * @brief switch vertex shader and fragment shader
+	 *  depends on light and texture state
+	 */
+	void switchShader();
+
      };
 
 
