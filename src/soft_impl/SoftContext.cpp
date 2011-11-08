@@ -642,16 +642,28 @@ namespace my_gl {
 	     _textureObjectManager.
 		  texParameter(target,filterName,texFilterMode);
 	}
-     
-	void SoftContext::enable(LightIndex lightIndex)
+
+	void SoftContext::enableLighting()
 	{
-	     if (lightIndex==LightIndex::LIGHTING && 
-		       !_lightingEnabled)
+	     if (!_lightingEnabled)
 	     {
 		  _lightingEnabled=true;
 		  switchShader();
 	     }
-	     else if (_lightingEnabled)
+	}
+
+	void SoftContext::disableLighting()
+	{
+	     if (_lightingEnabled)
+	     {
+		  _lightingEnabled=false;
+		  switchShader();
+	     }
+	}
+     
+	void SoftContext::enable(LightIndex lightIndex)
+	{
+	     if (_lightingEnabled)
 	     {
 		  _groupLightingParam.enable(lightIndex);
 	     }
@@ -664,14 +676,7 @@ namespace my_gl {
 		  return;
 	     }
 
-	     if (lightIndex==LightIndex::LIGHTING) {
-		  _lightingEnabled=false;
-		  switchShader();
-	     }
-	     else 
-	     {
-		  _groupLightingParam.disable(lightIndex);
-	     }
+	     _groupLightingParam.disable(lightIndex);
 	}
 
 	void SoftContext::switchShader()

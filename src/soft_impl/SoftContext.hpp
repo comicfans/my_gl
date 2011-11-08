@@ -201,6 +201,12 @@ namespace my_gl {
 	virtual void materialfv
 	     (Face face,LightParamName paramName,const float *param);
 
+	//glEnable lighting
+	virtual void enableLighting();
+
+	//glDisable lighting
+	virtual void disableLighting();
+
 	//glEnable  (LIGHTn override)
 	virtual void enable(LightIndex lightIndex);
 
