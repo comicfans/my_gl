@@ -250,11 +250,11 @@ namespace my_gl {
 		  TexFilterName filterName,
 		  TexFilterMode texFilterMode);
 
-	virtual void CopyTexImage2D(TexTarget /*ignored*/,int level/* ignored*/,
+	virtual void copyTexImage2D(TexTarget /*ignored*/,int level/* ignored*/,
 		  int internalFormat/*ignored*/,
 		  int x,int y,size_t width,size_t height,int border);
  
-	virtual void CopyTexSubImage2D(
+	virtual void copyTexSubImage2D(
 		  TexTarget /*ignored*/,int level/* ignored*/,
 		  int internalFormat/*ignored*/,
 		  int xoffset,int yoffset,

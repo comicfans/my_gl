@@ -17,10 +17,15 @@
  */
 
 #include "PixelObject.hpp"
+
+#include <algorithm>
+
 #include "common/PixelUnpacker.hpp"
 #include "common/UntypedArray.hpp"
 
 namespace my_gl {
+
+     using std::copy_n;
 
      PixelObject::PixelObject (Name name)
 	  :BufferObject(name)
@@ -43,6 +48,35 @@ namespace my_gl {
 		    format,type);
 
 	  unpacker.unpack();
+     }
+
+     void PixelObject::directBindImage
+	  (size_t width,size_t height)
+	  {
+	       size_t byteSize=width*height*4*sizeof(float);
+
+	       _dataPointer.reset(new UntypedArray(byteSize,nullptr));
+
+	       _width=width;
+	       _height=height;
+
+	       _format=ImageFormat::RGBA;
+
+	       //this is only a stub
+	       _type=StoreType::UNSIGNED_BYTE;
+
+	  }
+
+	
+     void PixelObject::directSubImage(int xOffset,int yOffset,
+		  size_t width,const float *p)
+     {
+	  size_t floatOffset=(yOffset*_height+xOffset)*4;
+
+	  size_t copyNumber=width*4;
+
+	  copy_n(p,copyNumber,_dataPointer->
+		    get<float>()+floatOffset);
      }
 
      size_t PixelObject::width()const

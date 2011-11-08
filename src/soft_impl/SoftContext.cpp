@@ -711,22 +711,44 @@ namespace my_gl {
 	     }
 	}
 
-	void SoftContext::CopyTexImage2D
+	void SoftContext::copyTexImage2D
 	     (TexTarget /*ignored*/,int level/* ignored*/,
 		  int internalFormat/*ignored*/,
-		  int x,int y,size_t width,size_t height,int border)
+		  int x,int y,size_t width,size_t height,
+		  int border/*ignored*/)
 	     {
-		  //TODO
+		  auto & textureObject=*_textureObjectManager.
+		       getActiveTextureObject();
+
+		  textureObject.directBindImage(width,height);
+
+		  for (int i=0; i<height; ++i)
+		  {
+		       textureObject.directSubImage
+			    (0,i,width,
+			     getFrameBuffer<ColorBuffer>()(x,y+i).
+			     values());
+		  }
 
 	     }
  
-	void SoftContext::CopyTexSubImage2D(
+	void SoftContext::copyTexSubImage2D(
 		  TexTarget /*ignored*/,int level/* ignored*/,
 		  int internalFormat/*ignored*/,
 		  int xoffset,int yoffset,
-		  int x,int y,size_t width,size_t height,int border)
+		  int x,int y,size_t width,size_t height,
+		  int border/* ignored */)
 	{
-	     //TODO
+	     auto & textureObject  = *_textureObjectManager.
+		  getActiveTextureObject();
+
+	     for (int i=0; i<height; ++i)
+	     {
+		  textureObject.directSubImage
+		       (xoffset,yoffset+i,width,
+			getFrameBuffer<ColorBuffer>()(x,y+i)
+			.values());
+	     }
 	}
 
 	//glEnable (texture override)

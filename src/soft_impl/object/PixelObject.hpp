@@ -36,6 +36,21 @@ namespace my_gl {
 	void bindImage(size_t width,size_t height,
 		  ImageFormat format,StoreType type,const void *p);
 
+	/** 
+	 * @brief for copyTexImage2D use only,
+	 * because pixels in frameBuffer is not always continus
+	 * (x!=0),so call directBindImage only extends underline
+	 * UntypedArray to right size, than use directSubImage to 
+	 * fill every line of image
+	 * 
+	 * @param width
+	 * @param height
+	 * 
+	 * @return 
+	 */
+	void directBindImage
+	     (size_t width,size_t height);
+
 	ImageFormat getFormat()const ;
 
 	StoreType getType()const ;
@@ -47,6 +62,9 @@ namespace my_gl {
 	void subImage(int xOffset,int yOffset,
 		  size_t width,size_t height,
 		  ImageFormat format,StoreType type,const void *p);
+
+	void directSubImage(int xOffset,int yOffset,
+		  size_t width,const float *p);
 
      private:
 	size_t _width;
