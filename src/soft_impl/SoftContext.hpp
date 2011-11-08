@@ -207,6 +207,12 @@ namespace my_gl {
 	//glDisable  (LIGHTn override)
 	virtual void disable(LightIndex lightIndex);
 
+	//glEnable (texture override)
+	virtual void enable(TexTarget texTarget);
+
+	//glDisable (texture override)
+	virtual void disable(TexTarget texTarget);
+
 	//glGenTextures
 	virtual void genTextures(size_t n,Name * names);
 
@@ -243,7 +249,16 @@ namespace my_gl {
 	virtual void texParameter(TexTarget target/*ignored*/,
 		  TexFilterName filterName,
 		  TexFilterMode texFilterMode);
+
+	virtual void CopyTexImage2D(TexTarget /*ignored*/,int level/* ignored*/,
+		  int internalFormat/*ignored*/,
+		  int x,int y,size_t width,size_t height,int border);
  
+	virtual void CopyTexSubImage2D(
+		  TexTarget /*ignored*/,int level/* ignored*/,
+		  int internalFormat/*ignored*/,
+		  int xoffset,int yoffset,
+		  int x,int y,size_t width,size_t height,int border);
 
 	ObjectNameManager& getObjectNameManager();
 

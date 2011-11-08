@@ -670,6 +670,38 @@ namespace my_gl {
 	     }
 	}
 
+	void SoftContext::CopyTexImage2D
+	     (TexTarget /*ignored*/,int level/* ignored*/,
+		  int internalFormat/*ignored*/,
+		  int x,int y,size_t width,size_t height,int border)
+	     {
+		  //TODO
+
+	     }
+ 
+	void SoftContext::CopyTexSubImage2D(
+		  TexTarget /*ignored*/,int level/* ignored*/,
+		  int internalFormat/*ignored*/,
+		  int xoffset,int yoffset,
+		  int x,int y,size_t width,size_t height,int border)
+	{
+	     //TODO
+	}
+
+	//glEnable (texture override)
+	void SoftContext::enable(TexTarget texTarget)
+	{
+	     //TODO
+	}
+
+	//glDisable (texture override)
+	void SoftContext::disable(TexTarget texTarget)
+	{
+	     //TODO
+	}
+
+
+
 
      template<typename T>
 	  T& SoftContext::getVec4Manager()

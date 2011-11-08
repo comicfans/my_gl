@@ -7,6 +7,7 @@ ADD_LIBRARY(Shader
      FragmentShader.cpp
      MatrixParam.cpp
      SimpleFragmentShader.cpp
+     TextureFragmentShader.cpp
      VertexAttributeBuffer.cpp
      FragmentAttributeBuffer.cpp)
 
