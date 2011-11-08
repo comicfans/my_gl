@@ -38,6 +38,7 @@ glFinish		NOT NEED?
 glFlush			OK
 glFrontFace 		NO/midd
 glFrustum         	OK
+glFog			NO/simple
 glGenBuffers          	OK
 glGenTextures		OK
 glIsBuffer	        OK
@@ -62,6 +63,7 @@ glPushMatrix         	OK
 glRotate         	OK
 glScale         	OK
 glShadeModel		?
+glTexEnv		NO/MIDD
 glTexCoordPointer	OK
 glTexImage2D		OK
 glTexParameter		OK/NEED TEST
@@ -69,7 +71,7 @@ glTexSubImage2D		OK/NEED TEST
 glTranslate         	OK
 glViewPort         	OK
 
-total	:51
+total	:53
 
 OK 	:41	80%
 simple	:3
