@@ -186,13 +186,19 @@ namespace my_gl {
      {
 	  //currently,only color buffer bit clear is supported
 
-	  if (frameBufferMask|COLOR_BUFFER_BIT)
+	  if (frameBufferMask&COLOR_BUFFER_BIT)
 	  {
 	       //may be refactor to use ptr_array 
 	       //to store ColorColorBuffer and 
 	       //DepthColorBuffer
 	       getFrameBuffer<ColorBuffer>().clear();
 	  }
+
+	  if (frameBufferMask&DEPTH_COLOR_BUFFER_BIT)
+	  {
+	       getFrameBuffer<DepthBuffer>().clear();
+	  }
+	  
      }
 
      bool SoftContext::isBuffer(Name name) const 
