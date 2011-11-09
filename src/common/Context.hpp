@@ -123,8 +123,48 @@ namespace my_gl {
 	//glClear
 	virtual void clear(FrameBufferMask frameBufferMask)=0;
 
+	//glClearDepth
+	virtual void clearDepth(double depth)=0;
+
 	//glClearColor
 	virtual void clearColor(float r,float g,float b,float a)=0;
+
+	//glDepthRange
+	virtual void depthRange(double near,double far)=0;
+
+	//glDepthFunc
+	virtual void depthFunc(DepthFunc func)=0;
+
+
+	//glEnable (cullFace override)
+	virtual void enableCullFace()=0;
+
+	//glDisable (cullFace override)
+	virtual void disableCullFace()=0;
+
+	//glFrontFace
+	virtual void frontFace(FaceMode faceMode)=0;
+
+	//glCullFace
+	virtual void cullFace(Face face)=0;
+
+	//glEnable lighting
+	virtual void enableLighting()=0;
+
+	//glDisable lighting
+	virtual void disableLighting()=0;
+
+	//glEnable  (LIGHTn override)
+	virtual void enable(LightIndex lightIndex)=0;
+
+	//glDisable  (LIGHTn override)
+	virtual void disable(LightIndex lightIndex)=0;
+
+	//glEnable (texture override)
+	virtual void enable(TexTarget texTarget)=0;
+
+	//glDisable (texture override)
+	virtual void disable(TexTarget texTarget)=0;
 
 	virtual ~Context();
 

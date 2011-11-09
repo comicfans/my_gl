@@ -171,7 +171,12 @@ namespace my_gl {
 	  getFrameBuffer<ColorBuffer>().clearColor(r,g,b,a);
      }
 
-     void SoftContext::depthRange(float near,float far)
+	
+     void SoftContext::clearDepth(double depth)
+     {
+	  getFrameBuffer<DepthBuffer>().clearDepth(depth);
+     }
+     void SoftContext::depthRange(double near,double far)
      {
 	  _depthRange.near=near;
 	  _depthRange.far=far;

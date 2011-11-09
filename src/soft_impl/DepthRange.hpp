@@ -22,13 +22,13 @@
 namespace my_gl {
 
      struct DepthRange {
-	  float near;
-	  float far;
-	  float diff;
+	  double near;
+	  double far;
+	  double diff;
 
 	  void update();
 
-	  DepthRange(float nearSet=0,float farSet=1);
+	  DepthRange(double nearSet=0,double farSet=1);
      } /* optional variable list */;
 	
 } /* my_gl */

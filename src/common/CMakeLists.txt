@@ -25,3 +25,10 @@ ADD_LIBRARY(Context Context.cpp)
 
 ADD_LIBRARY(Common UntypedArray.cpp PixelUnpacker.cpp )
 
+FIND_LIBRARY(OpenGL REQUIRED)
+
+INCLUDE_DIRECTORIES(${OPENGL_INCLUDE_DIR})
+
+ADD_LIBRARY(Export Export.cpp)
+
+TARGET_LINK_LIBRARIES(Export SoftImpl)

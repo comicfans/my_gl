@@ -180,8 +180,11 @@ namespace my_gl {
 	//glClear
 	virtual void clear(FrameBufferMask frameBufferMask);
 
+	//glClearDepth
+	virtual void clearDepth(double depth);
+
 	//glDepthRange
-	virtual void depthRange(float near,float far);
+	virtual void depthRange(double near,double far);
 
 	//glDepthFunc
 	virtual void depthFunc(DepthFunc func);

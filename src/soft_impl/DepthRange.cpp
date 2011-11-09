@@ -20,7 +20,7 @@
 
 namespace my_gl {
 
-     DepthRange::DepthRange(float nearSet,float farSet)
+     DepthRange::DepthRange(double nearSet,double farSet)
 	  :near(nearSet),far(farSet){}
 
      void DepthRange::update()
