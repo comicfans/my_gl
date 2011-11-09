@@ -158,7 +158,11 @@ namespace my_gl {
      TextureObject* TextureObjectManager::
 	  getActiveTextureObject()
 	  {
-	       assert(_activeTextureObject);
+	       if (_texture2DEnabled)
+	       {
+		    assert(_activeTextureObject);
+	       }
+
 	       return _activeTextureObject;
 	  }
 	
