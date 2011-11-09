@@ -83,6 +83,8 @@ namespace my_gl {
      enum class	TexFilterName{TEXTURE_MAG_FILTER,TEXTURE_MIN_FILTER};
 
      enum class TexWrapMode{CLAMP,REPEAT,MIRRORED_REPEAT};
+
+     enum class TexEnvMode{REPLACE,MODULATE,DECAL};
 } /* my_gl */
 
 

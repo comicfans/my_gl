@@ -14,6 +14,7 @@ ADD_LIBRARY(FragmentShader FragmentShader.cpp
 ADD_LIBRARY(Shader 
      MatrixParam.cpp
      VertexAttributeBuffer.cpp
+     TextureFunc.cpp
      FragmentAttributeBuffer.cpp)
 
 TARGET_LINK_LIBRARIES(Shader VertexShader FragmentShader)
