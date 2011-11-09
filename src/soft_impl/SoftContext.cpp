@@ -194,7 +194,7 @@ namespace my_gl {
 	       getFrameBuffer<ColorBuffer>().clear();
 	  }
 
-	  if (frameBufferMask&DEPTH_COLOR_BUFFER_BIT)
+	  if (frameBufferMask&DEPTH_BUFFER_BIT)
 	  {
 	       getFrameBuffer<DepthBuffer>().clear();
 	  }

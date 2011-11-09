@@ -36,23 +36,25 @@ namespace my_gl {
 
      using boost::extents;
 
-     static inline bool always(float inValue,float originValue)
+     static inline bool always(double inValue,double originValue)
      {
 	  return true;
      }
 
-     static inline bool never(float inValue,float originValue)
+     static inline bool never(double inValue,double originValue)
      {
 	  return false;
      }
 
 
-     typedef function<bool(float,float)> ActualDepthFunc;
+     typedef function<bool(double,double)> ActualDepthFunc;
 
      //enum class DepthFunc{NEVER,ALWAYS,LESS,LEQUAL,
      //	  EQUAL,GREATER,GEQUAL,NOTEQUAL};
-     static const ActualDepthFunc DEPTH_FUNCTIONS[]={never,always,less<float>(),less_equal<float>(),
-     equal_to<float>(),greater<float>(),greater_equal<float>(),not_equal_to<float>()};
+     static const ActualDepthFunc DEPTH_FUNCTIONS[]={never,always,
+	  less<double>(),less_equal<double>(),
+     equal_to<double>(),greater<double>(),
+     greater_equal<double>(),not_equal_to<double>()};
 
 
      DepthBuffer::DepthBuffer(size_t width,size_t height)
@@ -66,7 +68,7 @@ namespace my_gl {
      DepthBuffer::~DepthBuffer()
      {}
 
-     void DepthBuffer::clearDepth(float depth)
+     void DepthBuffer::clearDepth(double depth)
      {
 	  _clearDepth=depth;
      }
@@ -95,7 +97,7 @@ namespace my_gl {
 	  
      bool DepthBuffer::testAndUpdate(const WinCoord& winCoord)
      {
-	  float& originValue=_impl[winCoord.y()][winCoord.x()];
+	  double& originValue=_impl[winCoord.y()][winCoord.x()];
 
 	  auto& testFunc=DEPTH_FUNCTIONS[int(_func)];
 

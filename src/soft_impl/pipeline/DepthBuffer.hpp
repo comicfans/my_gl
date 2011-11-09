@@ -36,7 +36,7 @@ namespace my_gl {
 
 	  DepthBuffer(size_t width,size_t height);
 
-	  void clearDepth(float depth);
+	  void clearDepth(double depth);
 
 	  void depthFunc(DepthFunc func);
 	  virtual void clear();
@@ -52,9 +52,9 @@ namespace my_gl {
      
      private:
 
-	multi_array<float,2> _impl;
+	multi_array<double,2> _impl;
 
-	float _clearDepth;
+	double _clearDepth;
 
 	DepthFunc _func;
 

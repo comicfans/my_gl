@@ -61,8 +61,6 @@ namespace my_gl {
 
 	       virtual ~Rasterizer();
 
-	       static int roundNearest(float value);
-
 	       static void viewportCorrect(Vec4& toCorrect,
 			 const WinCoord& windowCoordinates);
 

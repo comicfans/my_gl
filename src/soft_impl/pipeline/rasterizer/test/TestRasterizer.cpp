@@ -16,6 +16,7 @@
  * =====================================================================================
  */
 #include <cassert>
+#include <cmath>
 #include "Rasterizer.hpp"
 #include "DepthRange.hpp"
 #include "pipeline/clipper/PointClipper.hpp"
@@ -27,13 +28,14 @@
 
 using namespace my_gl;
 
+using std::nearbyint;
 void testRoundNearest()
 {
 
-     assert(Rasterizer::roundNearest(3.0)==3);
-     assert(Rasterizer::roundNearest(3.4)==3);
-     assert(Rasterizer::roundNearest(3.5)==4);
-     assert(Rasterizer::roundNearest(3.6)==4);
+     assert(nearbyint(3.0)==3);
+     assert(nearbyint(3.4)==3);
+     assert(nearbyint(3.5)==4);
+     assert(nearbyint(3.6)==4);
 }
 
 WinCoordInterpolator interpolator;

@@ -25,7 +25,7 @@ namespace my_gl {
 	
      using std::make_pair;
 
-     WinCoord::WinCoord(int x,int y,float z)
+     WinCoord::WinCoord(int x,int y,double z)
 	  {
 	       _xy[0]=x;
 	       _xy[1]=y;
@@ -50,8 +50,8 @@ namespace my_gl {
 	  int& WinCoord::y(){return _xy[1];}
 
 
-	  float WinCoord::z()const{return _z;}
-	  float& WinCoord::z(){return _z;}
+	  double WinCoord::z()const{return _z;}
+	  double & WinCoord::z(){return _z;}
 
 	  bool WinCoord::operator<(const WinCoord& rhs)const
 	  {

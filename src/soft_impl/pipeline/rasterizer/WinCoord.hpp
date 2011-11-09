@@ -28,23 +28,23 @@ namespace my_gl {
 
      //first is y ,second is x
      struct WinCoord{
-	  WinCoord(int x=0,int y=0,float z=0);
+	  WinCoord(int x=0,int y=0,double z=0);
 	  int& operator[](int index);
 	  const int& operator[](int index)const;
 
 	  int y()const;
 	  int x()const;
-	  float z()const;
+	  double z()const;
 
 	  int& y();
 	  int& x();
-	  float& z();
+	  double& z();
 
 	  bool operator<(const WinCoord& rhs)const;
 
 	  private:
 	  int _xy[2];
-	  float _z;
+	  double _z;
      } /* optional variable list */;
 	
 } /* my_gl */

@@ -18,12 +18,16 @@
 
 #include "SimpleLineRasterizer.hpp"
 
+#include <cmath>
+
 #include "pipeline/interpolator/Interpolator.hpp"
 #include "pipeline/interpolator/CoordInfo.hpp"
 
 #include "LineInfo.hpp"
 
 namespace my_gl {
+
+     using std::nearbyint;
 
      SimpleLineRasterizer::SimpleLineRasterizer
 	       (ViewportParameter& viewportParameter,
@@ -64,7 +68,7 @@ namespace my_gl {
 			    lambda*
 			    coord2[nonMajorIndex];
 
-		       thisCoord[nonMajorIndex]=roundNearest(anotherValue);
+		       thisCoord[nonMajorIndex]=nearbyint(anotherValue);
 
 		       stepCallback(thisCoord);
 		  }

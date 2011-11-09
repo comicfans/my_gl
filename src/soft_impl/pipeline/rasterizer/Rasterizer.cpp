@@ -18,6 +18,8 @@
 
 #include "Rasterizer.hpp"
 
+#include <cmath>
+
 #include "pipeline/ClippedPrimitiveGroup.hpp"
 #include "shader/FragmentAttributeBuffer.hpp"
 #include "pipeline/interpolator/Interpolator.hpp"
@@ -25,6 +27,8 @@
 #include "pipeline/DepthBuffer.hpp"
 
 namespace my_gl {
+
+     using std::nearbyint;
 
      Rasterizer::Rasterizer
 	       (ViewportParameter& viewportParameter,
@@ -89,18 +93,13 @@ namespace my_gl {
 
      }
 
-     int Rasterizer::roundNearest(float value)
-     {
-	  //0.5 up down/splite
-	  return int(value+0.5);
-     }
 
      template<typename T=int>
-     static inline float viewportCorrectImpl
+     static inline double viewportCorrectImpl
 	  (float normalizedDeviceCoordinate,
 	   T begin,T length)
 	  {
-	       float value=(normalizedDeviceCoordinate+1)
+	       double value=(normalizedDeviceCoordinate+1)
 		    *(length/2)+begin;
 
 	       return value;
@@ -118,20 +117,20 @@ namespace my_gl {
 	       //see gl spec Basic Line Segment Rasterization
 	       //"diamond - exit" rule
 
-	       ret.y()=Rasterizer::roundNearest(
+	       ret.y()=nearbyint(
 			 viewportCorrectImpl<int>(
 			 normalizedDeviceCoordinates.y(),
 			 _viewportParameter.y,
 			 _viewportParameter.height));
 
 
-	       ret.x()=Rasterizer::roundNearest(
+	       ret.x()=nearbyint(
 			 viewportCorrectImpl<int>(
 			 normalizedDeviceCoordinates.x(),
 			 _viewportParameter.x,
 			 _viewportParameter.width));
 
-	       ret.z()=viewportCorrectImpl(normalizedDeviceCoordinates.z(),
+	       ret.z()=viewportCorrectImpl<double>(normalizedDeviceCoordinates.z(),
 			 _depthRange.near,
 			 _depthRange.diff);
 
