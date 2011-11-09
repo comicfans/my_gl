@@ -422,6 +422,7 @@ namespace my_gl {
 
 	void SoftContext::rasterizePrimitive(PrimitiveMode catalog)
 	{
+	     _depthRange.update();
 
 	     _fragmentAttributeBufferPtr->clear();
 	     //choose rasterizer

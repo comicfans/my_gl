@@ -133,7 +133,7 @@ namespace my_gl {
 
 	       ret.z()=viewportCorrectImpl(normalizedDeviceCoordinates.z(),
 			 _depthRange.near,
-			 _depthRange.far-_depthRange.near);
+			 _depthRange.diff);
 
 	       return ret;
 	  }

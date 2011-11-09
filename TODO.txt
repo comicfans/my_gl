@@ -88,8 +88,8 @@ primitive assemble:	:OK (all PrimitiveMode need test)
 rasterize		:OK
 coord process		:PART (1/w process)
 interpolate		:PART (no normalizedDevice/projective correct interpolate)
-fragment shader		:PART (no texture support)
-framebuffer		:PART (z-buffer and color buffer impled)
+fragment shader		:PART 
+framebuffer		:OK
 
 
 

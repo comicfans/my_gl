@@ -24,6 +24,9 @@ namespace my_gl {
      struct DepthRange {
 	  float near;
 	  float far;
+	  float diff;
+
+	  void update();
 
 	  DepthRange(float nearSet=0,float farSet=1);
      } /* optional variable list */;

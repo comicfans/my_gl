@@ -22,5 +22,10 @@ namespace my_gl {
 
      DepthRange::DepthRange(float nearSet,float farSet)
 	  :near(nearSet),far(farSet){}
+
+     void DepthRange::update()
+     {
+	  diff=far-near;
+     }
 	
 } /* my_gl */
