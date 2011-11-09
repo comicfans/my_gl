@@ -4,6 +4,13 @@
  *       Filename:  PixelObject.hpp
  *
  *    Description:  PixelObject respect to glTexImage2D/glTexSubImage2D
+ *    OpenGL texture internal store is controlled by PixelStore function
+ *    it can retain a packed format until read (decompress on the fly)
+ *    but this makes pixel rect implementation complex 
+ *    every StoreType need a pack/unpack function to store/read
+ *    for this reason ,this implementation not support PixelStore function
+ *    all data transfered to PixelObject is unpack to RGBA float 
+ *    after bindImage
  *
  *        Version:  1.0
  *        Created:  2011-9-13 21:06:26

@@ -31,10 +31,17 @@ namespace my_gl {
      
 	  SimpleFragmentShader
 	       (const MatrixParam& matrixParam);
-	  virtual void shade
-	       (ConstAttributeGroupRef attributeGroupRef,
-		 Vec4& fragColor);
 	  ~SimpleFragmentShader();
+     protected:
+	  virtual void shade
+	       (const Vec4& inPosition,
+		const Vec4& inPointSize,
+		const Vec4& inFrontColor,
+		const Vec4& inBackColor,
+		const Vec4& inTexCoord,
+		Vec4& outFragColor);
+
+
      };
 	
 } /* my_gl */

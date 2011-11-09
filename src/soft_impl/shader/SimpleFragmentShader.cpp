@@ -18,8 +18,6 @@
 
 #include "SimpleFragmentShader.hpp"
 
-#include "VertexAttributeBuffer.hpp"
-
 namespace my_gl {
 
      SimpleFragmentShader::SimpleFragmentShader
@@ -28,12 +26,16 @@ namespace my_gl {
 	  {}
 
      void SimpleFragmentShader::shade
-	       (ConstAttributeGroupRef attributeGroupRef,
-		 Vec4& fragColor)
+	       (const Vec4& inPosition,
+		const Vec4& inPointSize,
+		const Vec4& inFrontColor,
+		const Vec4& inBackColor,
+		const Vec4& inTexCoord,
+		Vec4& outFragColor)
 	       {
-		    fragColor=attributeGroupRef
-			 [VertexAttributeBuffer::OutIndex::FRONT_COLOR];
+		    outFragColor=inFrontColor;
 	       }
- 
+
+
      SimpleFragmentShader::~SimpleFragmentShader(){}
 } /* my_gl */

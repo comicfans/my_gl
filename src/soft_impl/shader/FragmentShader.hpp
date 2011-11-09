@@ -35,13 +35,22 @@ namespace my_gl {
 
 	  virtual void shade
 	       (ConstAttributeGroupRef attributeGroupRef,
-		 Vec4& fragColor)=0;
+		 Vec4& fragColor);
 
 	  virtual ~FragmentShader();
 
 	  void setTextureObject(TextureObject *textureObject);
 
-     protected:
+
+    protected:
+
+	  virtual void shade
+	       (const Vec4& inPosition,
+		const Vec4& inPointSize,
+		const Vec4& inFrontColor,
+		const Vec4& inBackColor,
+		const Vec4& inTexCoord,
+		Vec4& outFragColor)=0;
 
 	  TextureObject *_textureObject;
 

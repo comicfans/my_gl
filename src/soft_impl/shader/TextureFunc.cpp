@@ -83,15 +83,16 @@ namespace my_gl {
      };
 
      TextureFunc::TextureFunc 
-	  (ImageFormat textureFormat,TexEnvMode texEnvMode)
-	  :_textureFormat(textureFormat),_texEnvMode(texEnvMode)
+	  (TexEnvMode texEnvMode)
+	  :_texEnvMode(texEnvMode)
 	  {
-	       _func=ALL_FUNC[int(textureFormat)][int(texEnvMode)];
 	  }
 
      Vec4 TextureFunc::operator()
-	  (const Vec4& fragmentColor,const Vec4& textureColor)
+	  (ImageFormat textureFormat,
+	   const Vec4& fragmentColor,const Vec4& textureColor)const
 	  {
-	       return _func(fragmentColor,textureColor);
+	       return ALL_FUNC[int(_texEnvMode)][int(textureFormat)]
+		    (fragmentColor,textureColor);
 	  }
 } /* my_gl */

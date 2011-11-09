@@ -35,8 +35,8 @@
 
 #include "shader/VertexShader.hpp"
 #include "shader/NoLightVertexShader.hpp"
-#include "shader/TextureLightFragmentShader.hpp"
 #include "shader/LightVertexShader.hpp"
+#include "shader/TextureFragmentShader.hpp"
 #include "shader/SimpleFragmentShader.hpp"
 #include "shader/TwoSideLightVertexShader.hpp"
 #include "shader/FragmentShader.hpp"
@@ -618,6 +618,12 @@ namespace my_gl {
 	     _textureObjectManager.deleteTextures(n,names);
 	}
 
+	void SoftContext::texEnvi(int target/*ignored*/,
+		  int pname/* ignored*/,TexEnvMode texEnvMode)
+	{
+	     _textureFunc=TextureFunc(texEnvMode);
+	}
+
 	void SoftContext::texImage2D
 	     (TexTarget/*ignored*/target,int level/* ignored*/
 		  ,int internalFormat/*ignored*/,size_t width,
@@ -698,10 +704,8 @@ namespace my_gl {
 
 	void SoftContext::switchShader()
 	{
-	     if (_lightingEnabled)
-	     {
-		  if (_twoSideLightingEnabled)
-		  {
+	     if (_lightingEnabled){
+		  if (_twoSideLightingEnabled){
 		       _vertexShaderPtr.reset(
 				 new TwoSideLightVertexShader
 				 (_matrixParam,_groupLightingParam));
@@ -711,34 +715,24 @@ namespace my_gl {
 				 new LightVertexShader(_matrixParam,
 				      _groupLightingParam));
 		  }
-		  if (_textureEnabled)
-		  {
-		       _fragmentShaderPtr.reset(
-				 new TextureLightFragmentShader
-				 (_matrixParam));
-		  }
-		  else
-		  {
-		       _fragmentShaderPtr.reset(new 
-				 SimpleFragmentShader(_matrixParam));
-		  }
 	     }
-	     else
-	     {
+	     else{
 		  _vertexShaderPtr.reset(new 
 			    NoLightVertexShader(_matrixParam,
 				 _groupLightingParam));
-		  if (_textureEnabled)
-		  {
-		       _fragmentShaderPtr.reset(new 
-				 TextureFragmentShader(_matrixParam));
-		  }
-		  else
-		  {
-		       _fragmentShaderPtr.reset(new 
-				 SimpleFragmentShader(_matrixParam));
-		  }
+	
 	     }
+
+	     if (_textureEnabled){
+		  _fragmentShaderPtr.reset(
+			    new TextureFragmentShader
+			    (_matrixParam,_textureFunc));
+	     }
+	     else {
+		  _fragmentShaderPtr.reset(new 
+			    SimpleFragmentShader(_matrixParam));
+	     }
+
 	}
 
 	void SoftContext::copyTexImage2D

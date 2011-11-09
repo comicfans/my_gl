@@ -38,6 +38,7 @@
 #include "ViewportParameter.hpp"
 #include "DepthRange.hpp"
 #include "lighting/GroupLightingParam.hpp"
+#include "shader/TextureFunc.hpp"
 
 namespace my_gl {
 
@@ -240,6 +241,19 @@ namespace my_gl {
 	//glCullFace
 	virtual void cullFace(Face face);
 
+	//glTexEnvi
+	/** 
+	 * @brief OpenGL ES 1.0 support pname=TEXTURE_ENV_COLOR
+	 * but this color is only used in COMBINE mode which ES 1.0
+	 * not support,so this Function is only used for TEXTURE_ENV_MODE
+	 * 
+	 * @param target
+	 * @param pname
+	 * @param texEnvMode
+	 */
+	virtual void texEnvi(int target/*ignored*/,
+		  int pname/* ignored*/,TexEnvMode texEnvMode);
+
 	//glBindTexture
 	virtual void bindTexture(TexTarget/* ignored*/,Name texture);
 
@@ -274,10 +288,12 @@ namespace my_gl {
 		  TexFilterName filterName,
 		  TexFilterMode texFilterMode);
 
+	//glCopyTexImage2D
 	virtual void copyTexImage2D(TexTarget /*ignored*/,int level/* ignored*/,
 		  ImageFormat internalFormat,
 		  int x,int y,size_t width,size_t height,int border);
  
+	//glCopyTexSubImage2D
 	virtual void copyTexSubImage2D(
 		  TexTarget /*ignored*/,int level/* ignored*/,
 		  int internalFormat/*ignored*/,
@@ -400,6 +416,8 @@ namespace my_gl {
 	bool _twoSideLightingEnabled;
 
 	bool _textureEnabled;
+
+	TextureFunc _textureFunc;
 
 	/** 
 	 * @brief switch vertex shader and fragment shader

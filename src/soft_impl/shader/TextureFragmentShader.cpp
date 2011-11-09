@@ -19,30 +19,37 @@
 #include "TextureFragmentShader.hpp"
 #include "MatrixParam.hpp"
 #include "object/TextureObject.hpp"
-#include "VertexAttributeBuffer.hpp"
+#include "TextureFunc.hpp"
 
 namespace my_gl {
 	
      TextureFragmentShader::~TextureFragmentShader (){}
 
      TextureFragmentShader::TextureFragmentShader 
-	  (const MatrixParam& matrixParam):
-	       FragmentShader(matrixParam){}
+	  (const MatrixParam& matrixParam,
+	   TextureFunc& textureFunc):
+	       FragmentShader(matrixParam),_textureFunc(textureFunc)
+     {}
 
-	void TextureFragmentShader::shade
-	       (ConstAttributeGroupRef attributeGroupRef,
-		 Vec4& fragColor)
+     void TextureFragmentShader::shade
+	       (const Vec4& inPosition,
+		const Vec4& inPointSize,
+		const Vec4& inFrontColor,
+		const Vec4& inBackColor,
+		const Vec4& inTexCoord,
+		Vec4& outFragColor)
 	       {
-
-		    auto & texCoord=attributeGroupRef
-			 [int(VertexAttributeBuffer::OutIndex::TEXCOORD)];
-
-		    Vec4 translatedTexCoord=_matrixParam.texture*texCoord;
+		    Vec4 translatedTexCoord=
+			 _matrixParam.texture*inTexCoord;
 
 		    assert(_textureObject);
 
-		    fragColor=(*_textureObject)
-			 (translatedTexCoord.x(),
-			  translatedTexCoord.y());
+		    Vec4 textureColor=(*_textureObject)
+			 (translatedTexCoord.x(),translatedTexCoord.y());
+
+		    outFragColor=_textureFunc(_textureObject->getFormat(),
+			      inFrontColor,textureColor);
+
 	       }
+	
 } /* my_gl */

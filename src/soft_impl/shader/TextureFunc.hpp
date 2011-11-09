@@ -32,19 +32,19 @@ namespace my_gl {
 
      class TextureFunc {
      public:
-     	TextureFunc (ImageFormat textureFormat, TexEnvMode texEnvMode);
+     	TextureFunc (TexEnvMode texEnvMode=TexEnvMode::REPLACE);
 
-	Vec4 operator()(const Vec4& fragmentColor,const Vec4& textureColor);
+	Vec4 operator()
+	     (ImageFormat imageFormat,
+	      const Vec4& fragmentColor,
+	      const Vec4& textureColor)const;
 
 	typedef function<Vec4(const Vec4& ,const Vec4& )> Func;
 
      private:
 
-	const ImageFormat _textureFormat;
+	TexEnvMode _texEnvMode;
 
-	const TexEnvMode _texEnvMode;
-
-	Func _func;
      };
 	
 } /* my_gl */

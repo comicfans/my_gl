@@ -32,6 +32,15 @@ namespace my_gl {
      {
      }
 
+	
+     ImageFormat PixelObject::getFormat()const 
+     {return _format;}
+
+	StoreType PixelObject::getType()const 
+	{
+	     return _type;
+	}
+
 
      void PixelObject::bindImage(size_t width,size_t height,
 		  ImageFormat format,StoreType type,const void *p)

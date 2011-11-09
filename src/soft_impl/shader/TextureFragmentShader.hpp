@@ -23,17 +23,27 @@
 
 namespace my_gl {
 
+     class TextureFunc;
+
      class TextureFragmentShader :public FragmentShader{
      public:
-     	TextureFragmentShader (const MatrixParam& matrixParam);
+     	TextureFragmentShader (const MatrixParam& matrixParam,
+		  TextureFunc& textureFunc);
+
      	virtual ~TextureFragmentShader ();
      
      protected:
 
+     
 	virtual void shade
-	       (ConstAttributeGroupRef attributeGroupRef,
-		 Vec4& fragColor);
-
+	       (const Vec4& inPosition,
+		const Vec4& inPointSize,
+		const Vec4& inFrontColor,
+		const Vec4& inBackColor,
+		const Vec4& inTexCoord,
+		Vec4& outFragColor);
+	
+	TextureFunc& _textureFunc;
 
      };
 	

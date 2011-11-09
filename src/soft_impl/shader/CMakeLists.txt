@@ -7,8 +7,7 @@ ADD_LIBRARY(VertexShader VertexShader.cpp
 
 
 ADD_LIBRARY(FragmentShader FragmentShader.cpp
-     SimpleFragmentShader.cpp TextureFragmentShader.cpp
-     TextureLightFragmentShader.cpp)
+     SimpleFragmentShader.cpp TextureFragmentShader.cpp)
 
 
 ADD_LIBRARY(Shader 
