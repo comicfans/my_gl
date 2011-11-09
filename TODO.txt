@@ -34,11 +34,11 @@ glDeleteTextures	OK
 glDrawArrays 		OK
 glDrawElements 		OK
 glDepthFunc		OK
-glFinish		OK/NOT NEED
+glFinish		NO/NOT NEED
 glFlush			OK
 glFrontFace 		OK
 glFrustum         	OK
-glFog			NO/simple but need per pixel calculation
+glFog			NO/need eye coord disance and per-pixel calc no plan
 glGenBuffers          	OK
 glGenTextures		OK
 glIsBuffer	        OK
@@ -62,7 +62,7 @@ glPopMatrix         	OK
 glPushMatrix         	OK
 glRotate         	OK
 glScale         	OK
-glShadeModel		NO/VertexShader/Interpolator change/SMOOTH impled 
+glShadeModel		NO/SMOOTH shading impled,FLAT shading is simpler
 glTexEnv		OK
 glTexCoordPointer	OK
 glTexImage2D		OK
@@ -73,12 +73,8 @@ glViewPort         	OK
 
 total	:53
 
-OK 	:47	86%
-simple	:3
-?	:9
-complex	:1
-WRONG	:0
-PART	:1
+OK 	:47	89%
+NO	:6	11%
 
 
 data bind		:OK (buffer object need test)
