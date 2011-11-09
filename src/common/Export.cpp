@@ -204,3 +204,52 @@ GLAPI void APIENTRY glLoadIdentity( void )
 {
      Context::getInstance().loadIdentity();
 }
+
+GLAPI void APIENTRY glLoadMatrixf( const GLfloat *m )
+{
+     Context::getInstance().loadMatrixf(m);
+}
+
+GLAPI void APIENTRY glMultMatrixf( const GLfloat *m )
+{
+     Context::getInstance().multMatrixf(m);
+}
+
+GLAPI void APIENTRY glRotatef( GLfloat angle, GLfloat x, GLfloat y, GLfloat z )
+{
+     Context::getInstance().rotatef(angle,x,y,z);
+}
+
+GLAPI void APIENTRY glScalef( GLfloat x, GLfloat y, GLfloat z )
+{
+     Context::getInstance().scalef(x,y,z);
+}
+
+GLAPI void APIENTRY glTranslatef( GLfloat x, GLfloat y, GLfloat z )
+{
+     Context::getInstance().translatef(x,y,z);
+}
+GLAPI void APIENTRY glNormal3f( GLfloat nx, GLfloat ny, GLfloat nz )
+{
+     Context::getInstance().normal3f(nx,ny,nz);
+}
+GLAPI void APIENTRY glColor4f( GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha )
+{
+     Context::getInstance().color4f(red,green,blue,alpha);
+}
+
+GLAPI void APIENTRY glLightf( GLenum light, GLenum pname, GLfloat param )
+{
+     //TODO
+
+}
+
+GLAPI void APIENTRY glLighti( GLenum light, GLenum pname, GLint param )
+{
+     //TODO
+}
+GLAPI void APIENTRY glLightfv( GLenum light, GLenum pname, const GLfloat *params )
+{
+     //TODO
+}
+

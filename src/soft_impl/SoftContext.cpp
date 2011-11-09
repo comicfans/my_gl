@@ -320,12 +320,12 @@ namespace my_gl {
 	     multMatrixf(rotate(angle, x, y, z));
 	}
 	
-	void SoftContext::loadMatrixf(float m[16])
+	void SoftContext::loadMatrixf(const float m[16])
 	{
 	     currentMatrixStack().top()=Matrix4(m);
 	}
 
-	void SoftContext::multiMatrixf(float m[16])
+	void SoftContext::multiMatrixf(const float m[16])
 	{
 	     multMatrixf(Matrix4(m));
 	}
