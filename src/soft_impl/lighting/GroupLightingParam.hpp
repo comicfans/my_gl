@@ -71,8 +71,6 @@ namespace my_gl {
 	  void lightfv(LightIndex lightIndex,
 		    LightParamName paramName,const float* param);
 
-	  void lightModelf(LightParamName paramName,float param);
-
 	  void lightModelfv(LightParamName paramName,const float* param);
 
 	  void materialf(Face face,LightParamName paramName,float param);

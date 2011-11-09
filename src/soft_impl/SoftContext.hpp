@@ -201,6 +201,12 @@ namespace my_gl {
 	virtual void materialfv
 	     (Face face,LightParamName paramName,const float *param);
 
+	//glLightModelfv
+	virtual void lightModelfv(LightParamName paramName,const float* param);
+
+	//glLightModelf
+	virtual void lightModelf(LightParamName paramName,float param);
+
 	//glEnable lighting
 	virtual void enableLighting();
 
@@ -223,10 +229,10 @@ namespace my_gl {
 	virtual void genTextures(size_t n,Name * names);
 
 	//glEnable (cullFace override)
-	virtual void enableCullFacee();
+	virtual void enableCullFace();
 
 	//glDisable (cullFace override)
-	virtual void disableCullFacee();
+	virtual void disableCullFace();
 
 	//glFrontFace
 	virtual void frontFace(FaceMode faceMode);
@@ -390,6 +396,8 @@ namespace my_gl {
 	GroupLightingParam _groupLightingParam;
 
 	bool _lightingEnabled;
+
+	bool _twoSideLightingEnabled;
 
 	bool _textureEnabled;
 

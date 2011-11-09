@@ -19,6 +19,14 @@
 #include "TwoSideLightVertexShader.hpp"
 
 namespace my_gl {
+     TwoSideLightVertexShader::TwoSideLightVertexShader
+	  (const MatrixParam& matrixParam,
+	   const GroupLightingParam& groupLightParam)
+	  :LightVertexShader(matrixParam,groupLightParam){}
+     	
+     TwoSideLightVertexShader::~TwoSideLightVertexShader (){}
+
+
 	 	  void TwoSideLightVertexShader::shade(
 
 		    const Vec4& inVertex,

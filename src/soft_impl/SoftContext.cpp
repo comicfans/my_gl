@@ -38,6 +38,7 @@
 #include "shader/TextureLightFragmentShader.hpp"
 #include "shader/LightVertexShader.hpp"
 #include "shader/SimpleFragmentShader.hpp"
+#include "shader/TwoSideLightVertexShader.hpp"
 #include "shader/FragmentShader.hpp"
 #include "pipeline/PrimitiveIndex.hpp"
 #include "pipeline/ColorBuffer.hpp"
@@ -92,10 +93,9 @@ namespace my_gl {
 	  //TODO group state related change to one 
 	  _lightingEnabled=false;
 
-	  _vertexShaderPtr.reset(new NoLightVertexShader
-		    (_matrixParam,_groupLightingParam));
+	  _twoSideLightingEnabled=false;
 
-	  _fragmentShaderPtr.reset(new SimpleFragmentShader(_matrixParam));
+	  switchShader();
 	  
 
 	  //init clippers;
@@ -113,8 +113,11 @@ namespace my_gl {
 		    FragmentAttributeBuffer(width,height,
 			 VertexAttributeBuffer::DEFAULT_OUT_SIZE));
 
-	  _allFrameBuffer.replace(ColorBuffer::ORDER_INDEX,new ColorBuffer(width,height));
-	  _allFrameBuffer.replace(DepthBuffer::ORDER_INDEX,new DepthBuffer(width,height));
+	  _allFrameBuffer.replace(ColorBuffer::ORDER_INDEX,
+		    new ColorBuffer(width,height));
+
+	  _allFrameBuffer.replace(DepthBuffer::ORDER_INDEX,
+		    new DepthBuffer(width,height));
 
 	  _interpolatorPtr.reset(new WinCoordInterpolator());
 	  //init rasterizers
@@ -567,6 +570,19 @@ namespace my_gl {
 	     _groupLightingParam.lightf
 		  (lightIndex,paramName,param);
 	}
+	  
+	void SoftContext::lightModelf
+	       (LightParamName paramName,float param)
+	       {
+		    assert(paramName==LightParamName::TWO_SIDE);
+		    _twoSideLightingEnabled=(param!=0);
+	       }
+
+	void SoftContext::lightModelfv
+	     (LightParamName paramName,const float* param)
+	     {
+		  _groupLightingParam.lightModelfv(paramName,param);
+	     }
 
 	void SoftContext::lightfv(LightIndex lightIndex,
 		  LightParamName paramName,const float* param)
@@ -684,9 +700,17 @@ namespace my_gl {
 	{
 	     if (_lightingEnabled)
 	     {
-		  _vertexShaderPtr.reset(
-			    new LightVertexShader(_matrixParam,
-				 _groupLightingParam));
+		  if (_twoSideLightingEnabled)
+		  {
+		       _vertexShaderPtr.reset(
+				 new TwoSideLightVertexShader
+				 (_matrixParam,_groupLightingParam));
+		  }
+		  else{
+		       _vertexShaderPtr.reset(
+				 new LightVertexShader(_matrixParam,
+				      _groupLightingParam));
+		  }
 		  if (_textureEnabled)
 		  {
 		       _fragmentShaderPtr.reset(
@@ -719,8 +743,8 @@ namespace my_gl {
 
 	void SoftContext::copyTexImage2D
 	     (TexTarget /*ignored*/,int level/* ignored*/,
-		  int internalFormat/*ignored*/,
-		  int x,int y,size_t width,size_t height,
+	      int internalFormat/*ignored*/,
+	      int x,int y,size_t width,size_t height,
 		  int border/*ignored*/)
 	     {
 		  auto & textureObject=*_textureObjectManager.
@@ -778,7 +802,7 @@ namespace my_gl {
 	}
 
 	//glEnable (cullFace override)
-	void SoftContext::enableCullFacee()
+	void SoftContext::enableCullFace()
 	{
 	     static_cast<TriangleRasterizer&>
 		  (_rasterizers[int(PrimitiveMode::TRIANGLES)]).
@@ -786,7 +810,7 @@ namespace my_gl {
 	}
 
 	//glDisable (cullFace override)
-	void SoftContext::disableCullFacee()
+	void SoftContext::disableCullFace()
 	{
 	     static_cast<TriangleRasterizer&>
 		  (_rasterizers[int(PrimitiveMode::TRIANGLES)]).
