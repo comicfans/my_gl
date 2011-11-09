@@ -154,18 +154,31 @@ namespace my_gl {
 	virtual void drawArrays(PrimitiveMode primitiveMode,
 		  int first,size_t count);
 
-	//glDrawElements TODO
+	//glDrawElements 
 	virtual void drawElements(PrimitiveMode primitiveMode,
 		  size_t count,DataType dataType,const void* indices);
 
 	//glFrustumf
-	virtual void frustumf(float left,float right,
-		  float bottom,float top,float near,float far);
+	virtual void frustum(double left,double right,
+		  double bottom,double top,double near,double far);
+
 
 	//glOrtho
-	virtual void orthof(float left,float right,
-		  float bottom,float top,
-		  float near,float far);
+	/** 
+	 * @brief OpenGL ES 1.0 single-precision extension
+	 * can use float as argument
+	 * 
+	 * @param left
+	 * @param right
+	 * @param bottom
+	 * @param top
+	 * @param near
+	 * @param far
+	 */
+	virtual void ortho(double left,double right,
+		  double bottom,double top,
+		  double near,double far);
+
 
 	//glViewport
 	virtual void viewport(int x,int y,

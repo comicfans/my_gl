@@ -85,7 +85,7 @@ void init()
 
 	context.loadIdentity();
 
-	context.orthof( 0,width,0,height,-1,1);
+	context.ortho( 0,width,0,height,-1,1);
 
 	context.matrixMode(MatrixMode::MODEL_VIEW);
 

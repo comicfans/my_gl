@@ -496,14 +496,14 @@ namespace my_gl {
 
 	}
 
-	void SoftContext::frustumf(float left, float right, 
-		  float bottom, float top, 
-		  float near, float far)
+	void SoftContext::frustum(double left, double right, 
+		  double bottom, double top, 
+		  double near, double far)
 	{
 	     assert(near>0);
 	     Matrix4 matrix;
 
-	     float A=(right+left)/(right-left),
+	     double A=(right+left)/(right-left),
 		   B=(top+bottom)/(top-bottom),
 		   C=-(far+near)/(far-near),
 		   D=-2*(far*near)/(far-near);
@@ -526,12 +526,12 @@ namespace my_gl {
 
 	}
 
-	//glOrtho
-	void SoftContext::orthof(float left,float right,
-		  float bottom,float top,
-		  float near,float far)
+	//glOrthof
+	void SoftContext::ortho(double left,double right,
+		  double bottom,double top,
+		  double near,double far)
 	{
-	     float tx=-(right+left)/(right-left),
+	     double tx=-(right+left)/(right-left),
 	     ty=-(top+bottom)/(top-bottom),
 	     tz=-(far+near)/(far-near);
 

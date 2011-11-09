@@ -87,14 +87,14 @@ namespace my_gl {
 	virtual void multMatrixf(const float* matrix)=0;
 
 	//glFrustumf
-	virtual void frustumf(float left, float right, 
-		  float bottom, float top, 
-		  float near, float far)=0;
+	virtual void frustum(double left, double right, 
+		  double bottom, double top, 
+		  double near, double far)=0;
 
 	//glOrtho
-	virtual void orthof(float left,float right,
-		  float bottom,float top,
-		  float near,float far)=0;
+	virtual void ortho(double left,double right,
+		  double bottom,double top,
+		  double near,double far)=0;
 
 	//glViewport
 	virtual void viewport(int x,int y,

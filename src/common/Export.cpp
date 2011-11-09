@@ -162,4 +162,45 @@ GLAPI void APIENTRY glDepthRange( GLclampd near_val, GLclampd far_val )
 }
 
 
+GLAPI void APIENTRY glMatrixMode( GLenum mode )
+{
+     static unordered_map<GLenum,MatrixMode> map={
+	  {GL_MODELVIEW,MatrixMode::MODEL_VIEW},
+	  {GL_PROJECTION,MatrixMode::PROJECTION},
+	  {GL_TEXTURE,MatrixMode::TEXTURE}};
 
+     Context::getInstance().matrixMode(map[mode]);
+}
+
+GLAPI void APIENTRY glOrtho( GLdouble left, GLdouble right, 
+	  GLdouble bottom, GLdouble top, GLdouble near_val, GLdouble far_val )
+{
+
+     Context::getInstance().ortho(left,right,bottom,top,near_val,far_val);
+}
+
+
+GLAPI void APIENTRY glFrustum( GLdouble left, GLdouble right, 
+	  GLdouble bottom, GLdouble top, GLdouble near_val, GLdouble far_val )
+{
+     Context::getInstance().frustum(left,right,bottom,top,near_val,far_val);
+}
+
+GLAPI void APIENTRY glViewport( GLint x, GLint y, GLsizei width, GLsizei height )
+{
+     Context::getInstance().viewport(x,y,width,height);
+}
+GLAPI void APIENTRY glPushMatrix( void )
+{
+     Context::getInstance().pushMatrix();
+}
+
+GLAPI void APIENTRY glPopMatrix( void )
+{
+     Context::getInstance().popMatrix();
+}
+
+GLAPI void APIENTRY glLoadIdentity( void )
+{
+     Context::getInstance().loadIdentity();
+}
