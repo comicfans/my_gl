@@ -50,7 +50,7 @@ namespace my_gl {
 
 	void bindTexture(TexTarget/* ignored*/,Name texture);
 
-	void deleteTextures(size_t n,Name *names);
+	void deleteTextures(size_t n,const Name *names);
 
 	void texImage2D(TexTarget/*ignored*/,int level/* ignored*/
 		  ,int internalFormat/*ignored*/,size_t width,

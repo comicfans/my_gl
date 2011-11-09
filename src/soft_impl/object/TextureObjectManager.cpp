@@ -75,7 +75,7 @@ namespace my_gl {
 	}
 
 	void TextureObjectManager::deleteTextures
-	     (size_t n,Name *names)
+	     (size_t n,const Name *names)
 	{
 	     for (int i=0; i<n; ++i)
 	     {

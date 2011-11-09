@@ -620,9 +620,14 @@ namespace my_gl {
 		  _textureObjectManager.bindTexture(target,texture);
 	     }
 
-	void SoftContext::deleteTextures(size_t n,Name *names)
+	void SoftContext::deleteTextures(size_t n,const Name *names)
 	{
 	     _textureObjectManager.deleteTextures(n,names);
+	}
+
+	bool SoftContext::isTexture(Name name)
+	{
+	     return _textureObjectManager.isTexture(name);
 	}
 
 	void SoftContext::texEnvi(int target/*ignored*/,
@@ -765,10 +770,8 @@ namespace my_gl {
  
 	void SoftContext::copyTexSubImage2D(
 		  TexTarget /*ignored*/,int level/* ignored*/,
-		  int internalFormat/*ignored*/,
 		  int xoffset,int yoffset,
-		  int x,int y,size_t width,size_t height,
-		  int border/* ignored */)
+		  int x,int y,size_t width,size_t height)
 	{
 	     auto & textureObject  = *_textureObjectManager.
 		  getActiveTextureObject();

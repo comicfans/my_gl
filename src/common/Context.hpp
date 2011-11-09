@@ -167,6 +167,65 @@ namespace my_gl {
 	//glDisable  (LIGHTn override)
 	virtual void disable(LightIndex lightIndex)=0;
 
+	//glMaterialf
+	virtual void materialf
+	     (Face face,LightParamName paramName,float param)=0;
+
+	//glMaterialfv
+	virtual void materialfv
+	     (Face face,LightParamName paramName,const float *param)=0;
+
+	//glDeleteTexture
+	virtual void deleteTextures(size_t n,const Name *names)=0;
+
+	//glLightf
+	virtual void lightf(LightIndex lightIndex,
+		  LightParamName paramName,float param)=0;
+
+	//glLightfv
+	virtual void lightfv(LightIndex lightIndex,
+		  LightParamName paramName,const float* param)=0;
+
+	//glLightModelf
+	virtual void lightModelf(LightParamName paramName,float param)=0;
+
+	//glLightModelfv
+	virtual void lightModelfv(LightParamName paramName,const float *param)=0;
+
+	//glTexImage2D
+	virtual void texImage2D(TexTarget/*ignored*/,int level/* ignored*/
+		  ,int internalFormat/*ignored*/,size_t width,
+		  //OpenGL ES 1.0 border must be 0
+		  size_t height,int border/* ignored */,
+		  ImageFormat imageFormat,StoreType storeType,
+		  const void *texels)=0;
+
+	//glTexSubImage2D
+	virtual void texSubImage2D(TexTarget/*ignored*/,
+		  int level/* ignored*/,
+		  int xoffset,int yoffset,
+		  size_t width,size_t height,
+		  ImageFormat imageFormat,
+		  StoreType storeType,
+		  const void *texels)=0;
+
+	//glCopyTexImage2D
+	virtual void copyTexImage2D(TexTarget /*ignored*/,int level/* ignored*/,
+		  ImageFormat internalFormat,
+		  int x,int y,size_t width,size_t height,int border)=0;
+ 
+	//glCopyTexSubImage2D
+	virtual void copyTexSubImage2D(
+		  TexTarget /*ignored*/,int level/* ignored*/,
+		  int xoffset,int yoffset,
+		  int x,int y,size_t width,size_t height)=0;
+
+	//glBindTexture
+	virtual void bindTexture(TexTarget/* ignored*/,Name texture)=0;
+
+	//glIsTexture
+	virtual bool isTexture(Name name)=0;
+
 	//glEnable (texture override)
 	virtual void enable(TexTarget texTarget)=0;
 

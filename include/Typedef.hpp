@@ -22,7 +22,7 @@
 
 namespace my_gl {
 	
-     typedef unsigned Name;
+     typedef unsigned int Name;
 
      typedef unsigned FrameBufferMask;
 

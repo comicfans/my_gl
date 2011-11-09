@@ -274,7 +274,9 @@ namespace my_gl {
 	virtual void bindTexture(TexTarget/* ignored*/,Name texture);
 
 	//glDeleteTexture
-	virtual void deleteTextures(size_t n,Name *names);
+	virtual void deleteTextures(size_t n,const Name *names);
+
+	virtual bool isTexture(Name name);
 
 	//glTexImage2D
 	virtual void texImage2D(TexTarget/*ignored*/,int level/* ignored*/
@@ -312,9 +314,8 @@ namespace my_gl {
 	//glCopyTexSubImage2D
 	virtual void copyTexSubImage2D(
 		  TexTarget /*ignored*/,int level/* ignored*/,
-		  int internalFormat/*ignored*/,
 		  int xoffset,int yoffset,
-		  int x,int y,size_t width,size_t height,int border);
+		  int x,int y,size_t width,size_t height);
 
 	ObjectNameManager& getObjectNameManager();
 
