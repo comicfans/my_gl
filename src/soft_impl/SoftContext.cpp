@@ -743,14 +743,14 @@ namespace my_gl {
 
 	void SoftContext::copyTexImage2D
 	     (TexTarget /*ignored*/,int level/* ignored*/,
-	      int internalFormat/*ignored*/,
+	      ImageFormat internalFormat/*ignored*/,
 	      int x,int y,size_t width,size_t height,
 		  int border/*ignored*/)
 	     {
 		  auto & textureObject=*_textureObjectManager.
 		       getActiveTextureObject();
 
-		  textureObject.directBindImage(width,height);
+		  textureObject.directBindImage(width,height,internalFormat);
 
 		  for (int i=0; i<height; ++i)
 		  {

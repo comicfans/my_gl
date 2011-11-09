@@ -48,8 +48,8 @@ namespace my_gl {
 	 * 
 	 * @return 
 	 */
-	void directBindImage
-	     (size_t width,size_t height);
+	void directBindImage(size_t width,size_t height,
+		  ImageFormat internalFormat);
 
 	ImageFormat getFormat()const ;
 

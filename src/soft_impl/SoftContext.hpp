@@ -275,7 +275,7 @@ namespace my_gl {
 		  TexFilterMode texFilterMode);
 
 	virtual void copyTexImage2D(TexTarget /*ignored*/,int level/* ignored*/,
-		  int internalFormat/*ignored*/,
+		  ImageFormat internalFormat,
 		  int x,int y,size_t width,size_t height,int border);
  
 	virtual void copyTexSubImage2D(

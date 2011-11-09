@@ -51,7 +51,7 @@ namespace my_gl {
      }
 
      void PixelObject::directBindImage
-	  (size_t width,size_t height)
+	  (size_t width,size_t height,ImageFormat internalFormat)
 	  {
 	       size_t byteSize=width*height*4*sizeof(float);
 
@@ -60,7 +60,7 @@ namespace my_gl {
 	       _width=width;
 	       _height=height;
 
-	       _format=ImageFormat::RGBA;
+	       _format=internalFormat;
 
 	       //this is only a stub
 	       _type=StoreType::UNSIGNED_BYTE;

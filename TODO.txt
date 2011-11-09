@@ -38,14 +38,14 @@ glFinish		NOT NEED?
 glFlush			OK
 glFrontFace 		OK
 glFrustum         	OK
-glFog			NO/simple
+glFog			NO/simple but 
 glGenBuffers          	OK
 glGenTextures		OK
 glIsBuffer	        OK
 glIsTexture		OK
 glLightf		OK
 glLightfv		OK
-glLightModel		PART
+glLightModel		OK
 glLineWidth 		NO/complex no plan
 glLoadIdentity		OK
 glLoadMatrix		OK
@@ -73,7 +73,7 @@ glViewPort         	OK
 
 total	:53
 
-OK 	:45	84%
+OK 	:46	86%
 simple	:3
 ?	:9
 complex	:1
