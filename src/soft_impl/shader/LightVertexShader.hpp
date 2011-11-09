@@ -43,6 +43,11 @@ namespace my_gl {
 		    const Vec3& normal,const Vec3& eye,
 		    const Vec3& eyeCoordPosition,
 		    Vec4& ambient,Vec4& diffuse,Vec4& specular);
+
+
+	  Vec4 singleSideLighting
+	       (const Vec4& inVertex,const Vec3& inNormal);
+
 	  virtual void shade(
 
 		    const Vec4& inVertex,

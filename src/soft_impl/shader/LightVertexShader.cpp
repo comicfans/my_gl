@@ -202,20 +202,9 @@ namespace my_gl {
 
 	  }
 
-		  void LightVertexShader::shade(
-
-		    const Vec4& inVertex,
-		    const Vec4& inColor/*not used*/,
-		    const Vec3& inNormal,
-		    const Vec4& inTexCoord,
-
-		    Vec4& outPosition,
-		    Vec4& outPointSize,
-		    Vec4& outFrontColor,
-		    Vec4& outBackColor, 
-		    Vec4& outTexCoord
-		    )
-	  {
+	  Vec4 LightVertexShader::singleSideLighting
+	       (const Vec4& inVertex,const Vec3& inNormal)
+	       {
 	       //reference 3DLabs GLSL ShaderGen
 	       //for a vertex pass,material param is fixed
 	       //so calculate ambient diffuse and specular pecent 
@@ -271,16 +260,38 @@ namespace my_gl {
 			 }
 				 
 		    }
+
 		    
 		    //Ecm+Acm*Acs
-		    outFrontColor=_groupLightingParam.lightModelProduct.sceneColor;
+		    Vec4 finalColor=_groupLightingParam.
+			 lightModelProduct.sceneColor;
 
 		    auto & material=_groupLightingParam.material;
-		    outFrontColor+=componentMul(material.ambient,ambient);
-		    outFrontColor+=componentMul(material.diffuse,diffuse);
-		    outFrontColor+=componentMul(material.specular,specular);
+		    finalColor+=componentMul(material.ambient,ambient);
+		    finalColor+=componentMul(material.diffuse,diffuse);
+		    finalColor+=componentMul(material.specular,specular);
 
+		    return finalColor;
 
+	       }
+
+		  void LightVertexShader::shade(
+
+		    const Vec4& inVertex,
+		    const Vec4& inColor/*not used*/,
+		    const Vec3& inNormal,
+		    const Vec4& inTexCoord,
+
+		    Vec4& outPosition,
+		    Vec4& outPointSize,
+		    Vec4& outFrontColor,
+		    Vec4& outBackColor, 
+		    Vec4& outTexCoord
+		    )
+	  {
+	       outFrontColor=singleSideLighting(inVertex,inNormal);
+
+	       outPosition=ftransform(inVertex);
 		  
 	  }
 
