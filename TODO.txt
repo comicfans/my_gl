@@ -34,11 +34,11 @@ glDeleteTextures	OK
 glDrawArrays 		OK
 glDrawElements 		OK
 glDepthFunc		OK
-glFinish		NOT NEED?
+glFinish		OK/NOT NEED
 glFlush			OK
 glFrontFace 		OK
 glFrustum         	OK
-glFog			NO/simple but 
+glFog			NO/simple but need per pixel calculation
 glGenBuffers          	OK
 glGenTextures		OK
 glIsBuffer	        OK
@@ -62,8 +62,8 @@ glPopMatrix         	OK
 glPushMatrix         	OK
 glRotate         	OK
 glScale         	OK
-glShadeModel		?
-glTexEnv		NO/MIDD
+glShadeModel		NO/VertexShader/Interpolator change/SMOOTH impled 
+glTexEnv		OK
 glTexCoordPointer	OK
 glTexImage2D		OK
 glTexParameter		OK
@@ -73,7 +73,7 @@ glViewPort         	OK
 
 total	:53
 
-OK 	:46	86%
+OK 	:47	86%
 simple	:3
 ?	:9
 complex	:1
@@ -85,7 +85,7 @@ data bind		:OK (buffer object need test)
 vertex prepare		:OK (drawElements need test)
 vertex shader		:OK 
 primitive assemble:	:OK (all PrimitiveMode need test)
-rasterize		:OK
+rasterize		:OK (breshenHam algorithm)
 coord process		:PART (1/w process)
 interpolate		:PART (no normalizedDevice/projective correct interpolate)
 fragment shader		:PART 
@@ -93,5 +93,5 @@ framebuffer		:OK
 
 
 
-TWO_SIDE 光照
 合并 useVertexNumber 到 IndexProvider ?
+Front Face 和FragmentShader 的交互
