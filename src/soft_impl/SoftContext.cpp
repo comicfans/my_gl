@@ -145,15 +145,11 @@ namespace my_gl {
 			 getFrameBuffer<DepthBuffer>(),
 			 _depthRange,
 			 static_cast<LineRasterizer*>(pLineRasterizer)));
+
+	  setInstance(this);
      }
 
      SoftContext::~SoftContext(){}
-
-     SoftContext& SoftContext::getInstance()
-     {
-	  static SoftContext instance;
-	  return instance;
-     }
 
      void SoftContext::flush()
      {

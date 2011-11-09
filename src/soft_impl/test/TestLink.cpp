@@ -20,10 +20,12 @@
 
 using namespace my_gl;
 
+SoftContext softContext;
+
 int main(int argc, const char *argv[])
 {
 	
-     SoftContext& instance=SoftContext::getInstance();
+     Context& instance=Context::getInstance();
 
      instance.color4f(0, 0, 0, 0);
 	return 0;

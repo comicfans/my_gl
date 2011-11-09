@@ -128,6 +128,16 @@ namespace my_gl {
 
 	virtual ~Context();
 
+	static Context&  getInstance();
+
+     protected:
+
+	static void setInstance(Context * instance);
+
+     private:
+
+	static Context *_instance;
+
      };
 	
 } /* my_gl */

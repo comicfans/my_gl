@@ -17,7 +17,22 @@
  */
 
 #include "Context.hpp"
+
+#include <cassert>
 namespace my_gl {
      Context::~Context(){}
+
+     Context *Context::_instance;
+
+     Context&  Context::getInstance()
+     {
+	  assert(_instance);
+	  return *_instance;
+     }
 	
+     void Context::setInstance(Context * instance)
+     {
+	  _instance=instance;
+     }
+
 } /* my_gl */

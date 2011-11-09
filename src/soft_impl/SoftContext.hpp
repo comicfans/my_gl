@@ -302,8 +302,6 @@ namespace my_gl {
 
 	ObjectNameManager& getObjectNameManager();
 
-	static SoftContext& getInstance();
-     
      private:
 
 	size_t _height;
