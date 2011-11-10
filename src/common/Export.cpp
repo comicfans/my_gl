@@ -45,11 +45,11 @@ GLAPI void APIENTRY glClear( GLbitfield mask )
 
      if (mask&GL_COLOR_BUFFER_BIT)
      {
-	  internalMask&=COLOR_BUFFER_BIT;
+	  internalMask|=COLOR_BUFFER_BIT;
      }
      if (mask&GL_DEPTH_BUFFER_BIT)
      {
-	  internalMask&=DEPTH_BUFFER_BIT;
+	  internalMask|=DEPTH_BUFFER_BIT;
      }
      Context::getInstance().clear(internalMask);
 }
