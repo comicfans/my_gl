@@ -160,6 +160,10 @@ namespace my_gl {
 			 _fragmentAttributeBuffer, rawCoord1.windowCoord);
 	       }
 
+	       ConstAttributeGroupRefList reorder;
+
+	       int orderIdx[2]={0,1};
+
 	       LineInfo rawLineInfo(rawCoord1.windowCoord,rawCoord2.windowCoord),
 			revert(rawLineInfo.revert());
 
@@ -175,11 +179,19 @@ namespace my_gl {
 		    pLineInfo=&revert;
 		    pCoord1=&rawCoord2;
 		    pCoord2=&rawCoord1;
-	       }
 
+		    orderIdx[0]=1;
+		    orderIdx[1]=0;
+       
+	       }
+		    reorder.push_back(new ConstAttributeGroupRef
+			      (attributeGroupRefs[orderIdx[0]]));
+		    reorder.push_back(new ConstAttributeGroupRef
+			      (attributeGroupRefs[orderIdx[1]]));
+	
 	       auto wrappedCallback=bind(
 			 &LineRasterizer::groupAction<hasCallback>,
-			 this,attributeGroupRefs,
+			 this,reorder,
 			 *pCoord1,*pCoord2,*pLineInfo,
 			 _1,stepCallback);
 
