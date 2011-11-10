@@ -43,8 +43,9 @@ namespace my_gl {
 	  getArrayBuffer()const 
      {
 	  auto p=_arrayAndElements[int(BufferTarget::ARRAY_BUFFER)];
-	  //0 is bind
-	  assert(p);
+	  //if 0 is bind
+	  // 
+	  // null is returned
 	  return p;
      }
 

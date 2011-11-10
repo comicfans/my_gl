@@ -3,6 +3,7 @@ INCLUDE_DIRECTORIES(../)
 ADD_EXECUTABLE(GlutTestArrayBufferObject GlutTestArrayBufferObject.cpp)
 
 TARGET_LINK_LIBRARIES(GlutTestArrayBufferObject 
+     GlutInit
      ${GLEW_LIBRARY}
      ${GLUT_LIBRARY}
      ${OPENGL_LIBRARIES}

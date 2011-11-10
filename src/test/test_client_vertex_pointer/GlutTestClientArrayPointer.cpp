@@ -3,10 +3,10 @@
  *
  *       Filename:  GlutTest.cpp
  *
- *    Description:  use glut and glew 
+ *    Description:  
  *
  *        Version:  1.0
- *        Created:  2011-11-10 13:56:21
+ *        Created:  2011-11-10 19:23:33
  *       Revision:  none
  *       Compiler:  gcc
  *
@@ -15,25 +15,24 @@
  *
  * =====================================================================================
  */
-
 #include <GL/glew.h>
 #include <GL/glut.h>
 
 #include "GlutInit.hpp"
-#include "TestArrayBufferObject.hpp"
+#include "TestClientArrayPointer.hpp"
 
 using namespace my_gl;
 
-int main(int argc, char *argv[])
+int main(int argc, const char *argv[])
 {
-     initGlutGlew("GlutTestArrayBufferObject");
+     initGlutGlew();
 
-     glutDisplayFunc(TestArrayBufferObject::render);
+     glutDisplayFunc(TestClientArrayPointer::render);
 
-     TestArrayBufferObject::init();
+     TestClientArrayPointer::init();
 
      glutMainLoop();
 	
-     return 0;
+	return 0;
 }
 

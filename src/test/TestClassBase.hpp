@@ -29,18 +29,22 @@
 
 #define TEST_CLASS_BASE_HPP
 
+#include "GlutInit.hpp"
+
 namespace my_gl {
      class TestClassBase {
      public:
- 	  static void init(int width,int height)
+ 	  static void init()
 	  {
+
+
 	       glMatrixMode(GL_PROJECTION);
 
 	       glLoadIdentity();
 
-	       glOrtho(0,width,0,height,-1,1);
+	       glOrtho(0,DEFAULT_WIDTH,0,DEFAULT_HEIGHT,-1,1);
 
-	       glViewport(0,0,width,height);
+	       glViewport(0,0,DEFAULT_WIDTH,DEFAULT_HEIGHT);
 
 	       glMatrixMode(GL_MODELVIEW);
 

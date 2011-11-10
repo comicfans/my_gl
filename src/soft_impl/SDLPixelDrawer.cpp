@@ -38,7 +38,7 @@ namespace my_gl {
 	  _height=height;
 
 	  _screenPtr= 
-	       SDL_SetVideoMode(width, height, 8, SDL_SWSURFACE);
+	       SDL_SetVideoMode(width, height, 0, SDL_SWSURFACE);
      }
 
      struct SurfaceLocker

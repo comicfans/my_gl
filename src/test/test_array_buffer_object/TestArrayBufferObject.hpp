@@ -28,10 +28,10 @@ namespace my_gl {
      class TestArrayBufferObject {
      public:
 
-	  static void init(int width,int height)
+	  static void init()
 	  {
 
-	       TestClassBase::init(width,height);
+	       TestClassBase::init();
 
 	       createTriangleBuffer();
 	  }
@@ -53,11 +53,13 @@ namespace my_gl {
 	  static void render()
 	  {
 
-	       glColor4f(1,1,1,1);
+	       glColor4f(0.5,0.6,0.1,1);
 
 	       glVertexPointer(2,GL_FLOAT,0,0);
 
 	       glDrawArrays(GL_TRIANGLES,0,3);
+
+	       glFlush();
 
 	  }
 
