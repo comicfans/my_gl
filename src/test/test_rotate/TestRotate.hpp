@@ -49,11 +49,11 @@ namespace my_gl {
 
 	       glLoadIdentity();
 
-	       glTranslatef(-81,-115,0);
+	       glTranslatef(200,200,0);
 
 	       glRotatef(360.0/loop*counter,0,0,1);
 
-	       glTranslatef(200,200,0);
+	       glTranslatef(-54,-77,0);
 
 	       TestClientArrayPointer::render();
 
