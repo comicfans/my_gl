@@ -76,10 +76,10 @@ namespace my_gl {
 	  _arrayAndElements[int(target)]=pos->second.get();
      }
 
-     void ArrayBufferObjectManager::deleteBuffers(size_t size,Name *names)
+     void ArrayBufferObjectManager::deleteBuffers(size_t size,const Name *names)
      {
 	  for (size_t i= 0; i < size; i++) {
-	       Name thisName=*(names+i);
+	       auto thisName=*(names+i);
 
 	       //OpenGL programming guide said that
 	       //if a name is not buffer ,no error is generated

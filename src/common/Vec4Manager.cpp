@@ -66,7 +66,10 @@ namespace my_gl{
      void Vec4Manager::vertexArrayChange(int componentSize,  
 DataType type,  size_t stride,  const void *pointer)
      {
-
+	       //should this a assert?
+	       //OpenGL defined that if 
+	  assert(_vertexArrayEnabled);
+	
 	  //if none zero array buffer object is binded to NORMAL_ARRAY_BINDING
 	  //pointer is interperate as a offset in buffer object
 	  if(_bindedArrayBufferObject)
@@ -77,10 +80,7 @@ DataType type,  size_t stride,  const void *pointer)
 	  }
 	  else
 	  {
-	       //should this a assert?
-	       //OpenGL defined that if 
-	       assert(_vertexArrayEnabled);
-	  
+  
 	       _pImpl.reset(new ClientArrayVec4Provider
 			 (pointer,componentSize,type,stride));
 	  }

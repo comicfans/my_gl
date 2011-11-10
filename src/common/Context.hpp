@@ -34,9 +34,21 @@ namespace my_gl {
 	  //glGenBuffers
 	virtual void  genBuffers(size_t size,Name *names)=0;
 	//glDeleteBuffers
-	virtual void  deleteBuffers(size_t size,Name *names)=0;
+	virtual void  deleteBuffers(size_t size,const Name *names)=0;
 	//glIsBuffer
 	virtual bool isBuffer(Name name) const =0;
+
+	//glBindBuffer
+	virtual void bindBuffer(BufferTarget target,Name name)=0;
+
+	//glBufferData
+	virtual void bufferData(BufferTarget target,size_t size,
+		    const void* data, DataUsage usage)=0;
+
+	//glBufferSubData
+	virtual void bufferSubData(BufferTarget target,ptrdiff_t offset,
+		    size_t size,const void* data)=0;
+
 
 	//glVertexPointer
 	virtual void  vertexPointer(int componentSize,DataType type, 

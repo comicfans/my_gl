@@ -1,0 +1,3 @@
+INCLUDE_DIRECTORIES(${GLUT_INCLUDE_DIR} ${GLEW_INCLUDE_PATH})
+
+SUBDIRS(test_array_buffer_object)

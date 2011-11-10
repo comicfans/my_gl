@@ -28,9 +28,9 @@ namespace my_gl {
 
 	
      void ElementIndexManager::bindArrayBufferObject
-	  (const ArrayBufferObject& toBind)
+	  (const ArrayBufferObject* toBind)
      {
-	  _bindedArrayBufferObjectPtr=&toBind;
+	  _bindedArrayBufferObjectPtr=toBind;
      }
 	  const ArrayIndexProvider& ElementIndexManager::
 	       elements(PrimitiveMode primitiveMode,
@@ -48,6 +48,10 @@ namespace my_gl {
 			 _bindedArrayBufferObjectPtr->getBufferPointer(),
 			 toInt(indices));
 	  }
+	  //drawElements is the final function call
+	  //before geometery enter pipeline,so there is 
+	  //no need to make a indirect ArrayBufferObject store
+	  //(as BufferObjectVec4Provider vs ClientArrayVec4Provider)
 
 	  _indexProviderPtr.reset(new 
 		    ArrayIndexProvider( 

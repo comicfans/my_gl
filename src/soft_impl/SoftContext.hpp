@@ -77,7 +77,7 @@ namespace my_gl {
 	//glGenBuffers
 	virtual void genBuffers(size_t size,Name *names);
 	//glDeleteBuffers
-	virtual void deleteBuffers(size_t size,Name *names);
+	virtual void deleteBuffers(size_t size,const Name *names);
 	//glIsBuffer
 	virtual bool isBuffer(Name name) const ;
 
@@ -382,6 +382,17 @@ namespace my_gl {
 	DepthRange _depthRange;
 
 	vector<BindState> _activeStreams;
+
+
+	/** 
+	 * @brief if *pointer family function is called
+	 * current Array Buffer Object is copy to corresponding
+	 * Binding. if zero is binded as current Array Buffer,
+	 * client vertex pointer is used
+	 *
+	 */
+	void copyArrayBufferBind(BindState bindState);
+
 	/** 
 	 * @brief using VertexShader to process
 	 * vertex (to _transformedVertexBuffer)

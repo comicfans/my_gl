@@ -161,7 +161,7 @@ namespace my_gl {
 	  _arrayBufferObjectManager.genBuffers(size,names);
      }
 
-     void SoftContext::deleteBuffers(size_t size,  Name *names)
+     void SoftContext::deleteBuffers(size_t size,const  Name *names)
      {
 	  _arrayBufferObjectManager.deleteBuffers(size,names);
      }
@@ -242,15 +242,25 @@ namespace my_gl {
 	  _allVec4Manager[int(bindState)].enableVertexArray(false);
      }
 
+	
+     void SoftContext::copyArrayBufferBind(BindState bindState)
+     {
+	  _allVec4Manager[int(bindState)].bindArrayBufferObject(
+			 _arrayBufferObjectManager.getArrayBuffer());
+     }
 
      void SoftContext::normal3f(float nx,float ny,float nz)
      {
 	  getVec4Manager<NormalManager>().normal3f(nx,ny,nz);
      }
 
-     void SoftContext::normalPointer(DataType type,size_t stride, const void *pointer)
+     void SoftContext::normalPointer
+	  (DataType type,size_t stride, const void *pointer)
      {
-	  getVec4Manager<NormalManager>().normalPointer(type, stride, pointer);
+	  copyArrayBufferBind(BindState::NORMAL);
+
+	  getVec4Manager<NormalManager>().
+	       normalPointer(type, stride, pointer);
      }
 
      void SoftContext::color4f(float red,float green,
@@ -269,6 +279,8 @@ namespace my_gl {
 	void SoftContext::colorPointer(int componentSize,
 		  DataType type,size_t stride,const void *pointer)
 	{
+	     copyArrayBufferBind(BindState::COLOR);
+
 	     getVec4Manager<ColorManager>().
 		  colorPointer(componentSize, type, stride, pointer);
 	}
@@ -276,6 +288,9 @@ namespace my_gl {
 	void SoftContext::vertexPointer(int componentSize, 
 		  DataType type, size_t stride, const void* pointer)
 	{
+	  
+	     copyArrayBufferBind(BindState::VERTEX);
+
 	     getVec4Manager<VertexManager>().vertexPointer
 		  (componentSize, type, stride, pointer);
 	}
@@ -283,6 +298,9 @@ namespace my_gl {
 	void SoftContext::texCoordPointer(int componentSize, 
 		  DataType type, size_t stride, const void* pointer)
 	{
+
+	     copyArrayBufferBind(BindState::TEXCOORD);
+
 	     getVec4Manager<TexCoordManager>().texCoordPointer
 		  (componentSize, type, stride, pointer);
 	}
@@ -355,9 +373,12 @@ namespace my_gl {
 	     (PrimitiveMode primitiveMode, size_t count, 
 		  DataType dataType, const void* indices)
 	{
-	     //TODO
 	     assert(dataType==DataType::UNSIGNED_BYTE || 
 		       dataType==DataType::UNSIGNED_SHORT);
+
+	     _elementIndexManager.bindArrayBufferObject
+		  (_arrayBufferObjectManager.getElementsBuffer());
+
 
 	     enterPipeline(primitiveMode,count,
 		       _elementIndexManager.elements(

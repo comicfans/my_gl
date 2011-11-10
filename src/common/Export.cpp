@@ -17,6 +17,7 @@
  */
 
 #include <GL/gl.h>
+#include <GL/glext.h>
 
 #include <cassert>
 #include <unordered_map>
@@ -26,6 +27,11 @@
 using namespace my_gl;
 
 using std::unordered_map;
+
+#ifdef __cplusplus
+
+extern "C"
+{
 
 GLAPI void  APIENTRY glClearColor( GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha )
 {
@@ -407,3 +413,46 @@ GLAPI void APIENTRY glDrawElements( GLenum mode, GLsizei count,
      Context::getInstance().drawElements(PRIMITIVE_MODE_MAP[mode],count,
 	       DATA_TYPE_MAP[type],indices);
 }
+     
+     static unordered_map<GLenum,BufferTarget> BUFFER_TARGET_MAP={
+	  {GL_ELEMENT_ARRAY_BUFFER,BufferTarget::ELEMENT_ARRAY_BUFFER},
+	  {GL_ARRAY_BUFFER,BufferTarget::ARRAY_BUFFER}};
+
+GLAPI void APIENTRY glBindBuffer (GLenum target, GLuint buffer)
+{
+     Context::getInstance().bindBuffer(BUFFER_TARGET_MAP[target],buffer);
+}
+GLAPI void APIENTRY glDeleteBuffers (GLsizei n, const GLuint *buffers)
+{
+     Context::getInstance().deleteBuffers(n,buffers);
+}
+
+GLAPI void APIENTRY glGenBuffers (GLsizei n, GLuint *buffers)
+{
+     Context::getInstance().genBuffers(n,buffers);
+}
+GLAPI GLboolean APIENTRY glIsBuffer (GLuint buffer)
+{
+     return Context::getInstance().isBuffer(buffer);
+
+}
+
+GLAPI void APIENTRY glBufferData 
+(GLenum target, GLsizeiptr size, const GLvoid *data, GLenum usage)
+{
+
+     //TODO no data usage map
+     Context::getInstance().bufferData(BUFFER_TARGET_MAP[target],
+	       size,data,DataUsage::STATIC_DRAW);
+}
+
+GLAPI void APIENTRY glBufferSubData 
+(GLenum target, GLintptr offset, GLsizeiptr size, const GLvoid *data)
+{
+
+     Context::getInstance().bufferSubData(BUFFER_TARGET_MAP[target],
+	       offset,size,data);
+}
+}
+
+#endif

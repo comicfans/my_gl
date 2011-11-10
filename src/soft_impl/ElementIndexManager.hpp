@@ -36,7 +36,7 @@ namespace my_gl{
      class ElementIndexManager{
      public:
 
-	  void bindArrayBufferObject(const ArrayBufferObject& toBind);
+	  void bindArrayBufferObject(const ArrayBufferObject* toBind);
 
 	  //partial glDrawElements
 	  const ArrayIndexProvider& elements(PrimitiveMode primitiveMode,

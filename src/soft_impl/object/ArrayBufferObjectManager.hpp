@@ -43,7 +43,7 @@ namespace my_gl {
 
 	  void genBuffers(size_t size,Name *names) ;
 
-	  void deleteBuffers(size_t size, Name *names) ;
+	  void deleteBuffers(size_t size,const Name *names) ;
 
 	  void bindBuffer(BufferTarget target,Name name);
 
