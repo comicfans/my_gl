@@ -20,6 +20,7 @@
 #define TEST_ARRAY_BUFFER_OBJECT_HPP
 
 
+#include "TestClassBase.hpp"
 
 
 namespace my_gl {
@@ -29,14 +30,14 @@ namespace my_gl {
 
 	  static void init(int width,int height)
 	  {
-	       glMatrixMode(GL_PROJECTION);
 
-	       glLoadIdentity();
+	       TestClassBase::init(width,height);
 
-	       glOrtho(0,width,0,height,-1,1);
+	       createTriangleBuffer();
+	  }
 
-	       glViewport(0,0,width,height);
-
+	  static void createTriangleBuffer()
+	  {
 	       glEnableClientState(GL_VERTEX_ARRAY);
 
 	       GLuint objectName;
@@ -47,12 +48,8 @@ namespace my_gl {
 
 	       GLfloat triangle[][2]={{12,12},{100,19},{50,200}};
 	       
-	       glBufferData(GL_ARRAY_BUFFER,sizeof(triangle),triangle,GL_STATIC_DRAW);
-
-	       glMatrixMode(GL_MODELVIEW);
-
-	       glLoadIdentity();
-
+	       glBufferData(GL_ARRAY_BUFFER,sizeof(triangle),
+			 triangle,GL_STATIC_DRAW);
 	  }
 
 	  static void render()
@@ -65,6 +62,8 @@ namespace my_gl {
 	       glDrawArrays(GL_TRIANGLES,0,3);
 
 	  }
+
+	  static GLuint triangleVertexName;
 
      
      };

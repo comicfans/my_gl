@@ -1,3 +1,5 @@
+INCLUDE_DIRECTORIES(../)
+
 ADD_EXECUTABLE(GlutTestArrayBufferObject GlutTest.cpp)
 
 TARGET_LINK_LIBRARIES(GlutTestArrayBufferObject 
