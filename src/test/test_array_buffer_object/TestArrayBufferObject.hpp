@@ -40,11 +40,9 @@ namespace my_gl {
 	  {
 	       glEnableClientState(GL_VERTEX_ARRAY);
 
-	       GLuint objectName;
+	       glGenBuffers(1,&triangleVertexName);
 
-	       glGenBuffers(1,&objectName);
-
-	       glBindBuffer(GL_ARRAY_BUFFER,objectName);
+	       glBindBuffer(GL_ARRAY_BUFFER,triangleVertexName);
 
 	       GLfloat triangle[][2]={{12,12},{100,19},{50,200}};
 	       
@@ -67,6 +65,8 @@ namespace my_gl {
 
      
      };
+
+     GLuint TestArrayBufferObject::triangleVertexName;
 	
 } /* my_gl */
 
