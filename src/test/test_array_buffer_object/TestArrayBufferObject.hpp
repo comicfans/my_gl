@@ -59,8 +59,6 @@ namespace my_gl {
 
 	       glDrawArrays(GL_TRIANGLES,0,3);
 
-	       glFlush();
-
 	  }
 
 	  static GLuint triangleVertexName;

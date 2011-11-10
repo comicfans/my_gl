@@ -1,5 +1,3 @@
-INCLUDE_DIRECTORIES(../ ../test_array_buffer_object/)
-
 ADD_EXECUTABLE(GlutTestClientArrayPointer GlutTestClientArrayPointer.cpp)
 
 TARGET_LINK_LIBRARIES(GlutTestClientArrayPointer

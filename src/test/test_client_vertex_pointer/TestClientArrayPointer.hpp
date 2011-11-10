@@ -20,7 +20,7 @@
 
 #define TEST_CLIENT_ARRAY_POINTER_HPP
 
-#include "TestArrayBufferObject.hpp"
+#include "test_array_buffer_object/TestArrayBufferObject.hpp"
 
 namespace my_gl {
 		  static float color3x3[3][3]={
@@ -57,7 +57,6 @@ namespace my_gl {
 	       glColorPointer(3,GL_FLOAT,0,color3x3);
 
 	       glDrawArrays(GL_TRIANGLES,0,3);
-	       glFlush();
 	  }
      
      };

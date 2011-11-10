@@ -39,6 +39,7 @@ int main(int argc, const char *argv[])
      for (int i=0; i<30; ++i)
      {
 	  TestArrayBufferObject::render();
+	  glFlush();
      }
      
 	return 0;

@@ -1,12 +1,12 @@
 /*
  * =====================================================================================
  *
- *       Filename:  GlutTest.cpp
+ *       Filename:  MyGLTestRotate.cpp
  *
  *    Description:  
  *
  *        Version:  1.0
- *        Created:  2011-11-10 19:23:33
+ *        Created:  2011-11-10 23:27:51
  *       Revision:  none
  *       Compiler:  gcc
  *
@@ -15,32 +15,28 @@
  *
  * =====================================================================================
  */
-#include <GL/glew.h>
-#include <GL/glut.h>
 
-#include "GlutInit.hpp"
-#include "TestClientArrayPointer.hpp"
+#define GL_GLEXT_PROTOTYPES
+#include <GL/gl.h>
+#include <GL/glext.h>
+
+#include "TestRotate.hpp"
+#include "soft_impl/SoftContext.hpp"
 
 using namespace my_gl;
 
-static void idleFunc()
-{
-     glutSwapBuffers();
-     glutPostRedisplay();
-}
+SoftContext context(DEFAULT_WIDTH,DEFAULT_HEIGHT);
 
 int main(int argc, const char *argv[])
 {
-     initGlutGlew();
+     TestRotate::init();
 
-     glutDisplayFunc(TestClientArrayPointer::render);
-
-     glutIdleFunc(idleFunc);
-
-     TestClientArrayPointer::init();
-
-     glutMainLoop();
+     for (int i=0; i<100; ++i)
+     {
+	  TestRotate::render();
+	  glFlush();
+     }
+     
 	
 	return 0;
 }
-

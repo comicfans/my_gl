@@ -27,7 +27,7 @@ namespace my_gl {
 	  int argc=0;
      glutInit(&argc, nullptr);
 
-     glutInitDisplayMode(GLUT_SINGLE|GLUT_RGB);
+     glutInitDisplayMode(GLUT_DOUBLE|GLUT_RGB);
 
      glutInitWindowSize(DEFAULT_WIDTH,DEFAULT_HEIGHT);
 

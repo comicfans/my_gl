@@ -24,11 +24,19 @@
 
 using namespace my_gl;
 
+static void idleFunc()
+{
+     glutSwapBuffers();
+     glutPostRedisplay();
+
+}
 int main(int argc, char *argv[])
 {
      initGlutGlew("GlutTestArrayBufferObject");
 
      glutDisplayFunc(TestArrayBufferObject::render);
+
+     glutIdleFunc(idleFunc);
 
      TestArrayBufferObject::init();
 

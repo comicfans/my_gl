@@ -1,12 +1,12 @@
 /*
  * =====================================================================================
  *
- *       Filename:  GlutTest.cpp
+ *       Filename:  GlutTestRotate.cpp
  *
  *    Description:  
  *
  *        Version:  1.0
- *        Created:  2011-11-10 19:23:33
+ *        Created:  2011-11-10 23:22:20
  *       Revision:  none
  *       Compiler:  gcc
  *
@@ -15,16 +15,18 @@
  *
  * =====================================================================================
  */
-#include <GL/glew.h>
-#include <GL/glut.h>
 
 #include "GlutInit.hpp"
-#include "TestClientArrayPointer.hpp"
+
+#include <gl/glew.h>
+#include <gl/glut.h>
+#include "TestRotate.hpp"
 
 using namespace my_gl;
 
 static void idleFunc()
 {
+
      glutSwapBuffers();
      glutPostRedisplay();
 }
@@ -33,14 +35,13 @@ int main(int argc, const char *argv[])
 {
      initGlutGlew();
 
-     glutDisplayFunc(TestClientArrayPointer::render);
+     glutDisplayFunc(TestRotate::render);
 
      glutIdleFunc(idleFunc);
 
-     TestClientArrayPointer::init();
-
-     glutMainLoop();
+     TestRotate::init();
 	
-	return 0;
-}
+     glutMainLoop();
 
+     return 0;
+}
