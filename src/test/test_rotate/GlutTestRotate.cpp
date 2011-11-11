@@ -24,13 +24,6 @@
 
 using namespace my_gl;
 
-static void idleFunc()
-{
-
-     glutSwapBuffers();
-     glutPostRedisplay();
-}
-
 int main(int argc, const char *argv[])
 {
      initGlutGlew();

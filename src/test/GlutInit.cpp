@@ -37,4 +37,10 @@ namespace my_gl {
 
 
      }
+
+     void idleFunc()
+     {
+	  glutSwapBuffers();
+	  glutPostRedisplay();
+     }
 } /* my_gl */

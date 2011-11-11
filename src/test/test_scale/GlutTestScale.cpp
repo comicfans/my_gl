@@ -1,12 +1,12 @@
 /*
  * =====================================================================================
  *
- *       Filename:  GlutTest.cpp
+ *       Filename:  GlutTestScale.cpp
  *
- *    Description:  use glut and glew 
+ *    Description:  
  *
  *        Version:  1.0
- *        Created:  2011-11-10 13:56:21
+ *        Created:  2011-11-11 8:26:52
  *       Revision:  none
  *       Compiler:  gcc
  *
@@ -18,24 +18,24 @@
 
 #include <GL/glew.h>
 #include <GL/glut.h>
-
+#include "TestScale.hpp"
 #include "GlutInit.hpp"
-#include "TestArrayBufferObject.hpp"
 
 using namespace my_gl;
 
-int main(int argc, char *argv[])
+int main(int argc, const char *argv[])
 {
-     initGlutGlew("GlutTestArrayBufferObject");
 
-     glutDisplayFunc(TestArrayBufferObject::render);
+     initGlutGlew();
 
      glutIdleFunc(idleFunc);
 
-     TestArrayBufferObject::init();
+     glutDisplayFunc(TestScale::render);
+
+     TestScale::init();
 
      glutMainLoop();
-	
+
      return 0;
 }
 

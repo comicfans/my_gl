@@ -1,5 +1,3 @@
-INCLUDE_DIRECTORIES(../ ../test_client_vertex_pointer/)
-
 ADD_EXECUTABLE(GlutTestRotate GlutTestRotate.cpp)
 
 TARGET_LINK_LIBRARIES(GlutTestRotate

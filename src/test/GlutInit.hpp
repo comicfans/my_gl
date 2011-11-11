@@ -28,6 +28,8 @@ namespace my_gl {
      const int DEFAULT_HEIGHT=300;
 
      void initGlutGlew(const char *p="test");
+
+     void idleFunc();
 } /* my_gl */
 
 
