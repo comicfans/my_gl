@@ -39,7 +39,6 @@ namespace my_gl {
 	       static float normalize(underlineType);
 	  };
 
-     const int DATA_TYPE_UNDERLINE_SIZE[]={1,1,2,2,4,4};
 
      template<>
 	  struct DataTypeTraits<DataType::BYTE>
