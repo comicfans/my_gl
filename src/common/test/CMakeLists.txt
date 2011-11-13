@@ -33,6 +33,9 @@ ADD_EXECUTABLE(TestClientArrayVec4Provider TestClientArrayVec4Provider.cpp)
 TARGET_LINK_LIBRARIES(TestClientArrayVec4Provider Vec4Provider)
 
 
+ADD_EXECUTABLE(TestVecNormalize TestVecNormalize.cpp)
+TARGET_LINK_LIBRARIES(TestVecNormalize TestFunction Vec)
+
 ADD_TEST(Vec4Test TestVec)
 ADD_TEST(MatrixTest TestMatrix)
 ADD_TEST(ClientArrayVec4ProviderTest TestClientArrayVec4Provider)
@@ -41,4 +44,5 @@ ADD_TEST(MatrixInverseTest TestMatrixInverse)
 ADD_TEST(MatrixRowColumnTest TestMatrixRowColumnValue)
 ADD_TEST(MatrixVecMulTest TestMatrixVecMul)
 ADD_TEST(MatrixMulTest TestMatrixMul)
+ADD_TEST(VecNormalizeTest TestVecNormalize)
 

@@ -28,7 +28,6 @@ using std::copy_n;
 using std::sin;
 using std::cos;
 using std::sqrt;
-using std::for_each;
 using std::mismatch;
 using std::divides;
 using std::plus;
@@ -135,7 +134,7 @@ namespace my_gl {
 
 	  auto values=vec.values();
 
-	  for_each(values,values+3,bind(divides<float>(),_1,vecLength));
+	  transform(values,values+3,values,bind(divides<float>(),_1,vecLength));
      }
 
      float length(const Vec3& vec3)
