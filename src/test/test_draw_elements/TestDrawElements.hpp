@@ -62,8 +62,6 @@ namespace my_gl {
 	  {
 	       TestClassBase::init();
 
-//	       frustum();
-//
 	       generateColor();
 
 	       genCube();
@@ -71,29 +69,9 @@ namespace my_gl {
 	       glClearColor(0,0,0,0);
 	  }
 
-	  static void render()
+	  static void drawCube()
 	  {
-
 	       glClear(GL_COLOR_BUFFER_BIT);
-
-	       static int counter=0;
-
-	       static const int loop=100;
-
-	       glMatrixMode(GL_MODELVIEW);
-
-	       glLoadIdentity();
-
-	       glTranslatef(DEFAULT_WIDTH/2,DEFAULT_HEIGHT/2,0);
-
-	       
-	       glRotatef(360.0/loop*counter,0,1,0);
-
-	       glRotatef(45,0,0,1);
-
-	       glRotatef(45,1,0,0);
-
-	       glScalef(80,80,80);
 
 	       glBindBuffer(GL_ARRAY_BUFFER,cubeVertexName);
 	       glVertexPointer(3,GL_FLOAT,sizeof(GL_FLOAT)*4,0);
@@ -106,7 +84,41 @@ namespace my_gl {
 
 	       glDrawElements(GL_TRIANGLES,36,GL_UNSIGNED_SHORT,0);
 
+	  }
+
+	  static void transformPosition()
+	  {
+	       static int counter=0;
+
+	       static const int loop=100;
+
+	       glTranslatef(DEFAULT_WIDTH/2,DEFAULT_HEIGHT/2,0);
+
+	       
+	       glRotatef(360.0/loop*counter,0,1,0);
+
+	       glRotatef(45,0,0,1);
+
+	       glRotatef(45,1,0,0);
+
+	       glScalef(80,80,80);
+
 	       counter=(counter+1)%loop;
+
+	  }
+
+	  static void render()
+	  {
+
+
+	       glMatrixMode(GL_MODELVIEW);
+
+	       glLoadIdentity();
+
+	       transformPosition();
+
+	       drawCube();
+	       	       
 	  }
 
 	  static void genCube()
