@@ -213,7 +213,12 @@ namespace my_gl {
      bool TriangleRasterizer::isCulled(const 
 	       ConstAttributeGroupRefList& attributeGroupRefs)const
      {
-	  if (_cullFaceEnabled && _cullFace==Face::FRONT_AND_BACK)
+	  if (!_cullFaceEnabled)
+	  {
+	       return false;
+	  }
+
+	  else if (_cullFace==Face::FRONT_AND_BACK)
 	  {
 	       //cull all
 	       return true;
