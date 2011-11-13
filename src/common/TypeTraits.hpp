@@ -92,7 +92,20 @@ namespace my_gl {
 	       typedef float underlineType;
 	       static const int size=4;
 	       static float normalize(underlineType value)
-	       {return value;}
+	       {
+		    if (value<0)
+		    {
+			 return 0;
+		    }
+		    else if (value>1)
+		    {
+			 return 1;
+		    }
+		    else
+		    {
+			 return value;
+		    }
+	       }
 	  };
 
 
