@@ -27,7 +27,8 @@ namespace my_gl {
      static size_t calcBlockSize(DataType type,int componentNumber,
 	       size_t stride)
      {
-	  return DATA_TYPE_UNDERLINE_SIZE[int(type)]*componentNumber+stride;
+	  return stride? stride :
+	  DATA_TYPE_UNDERLINE_SIZE[int(type)]*componentNumber;
      }
 
      ArrayVec4Provider::ArrayVec4Provider
