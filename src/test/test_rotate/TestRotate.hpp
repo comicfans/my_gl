@@ -39,7 +39,7 @@ namespace my_gl {
 
 	  static void render()
 	  {
-	       static const int loop=1000;
+	       static const int loop=100;
 
 	       static int counter=0;
 
@@ -51,13 +51,17 @@ namespace my_gl {
 
 	       glTranslatef(200,200,0);
 
-	       glRotatef(360.0/loop*counter,0,0,1);
+	       glRotatef(90.0/loop*counter,0,0,1);
 
 	       glTranslatef(-54,-77,0);
 
 	       TestClientArrayPointer::render();
 
-	       counter=(counter+1)%loop;
+	       if (counter>loop)
+	       {
+		    return;
+	       }
+	       ++counter;
 
 	  }
      

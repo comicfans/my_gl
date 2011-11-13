@@ -36,7 +36,6 @@ namespace my_gl {
 	  {
 	       static const int loop=100;
 	       static int counter=1;
-	       static int step=1;
 
 	       glMatrixMode(GL_MODELVIEW);
 
@@ -54,15 +53,13 @@ namespace my_gl {
 
 	       TestClientArrayPointer::render();
 
-	       counter+=step;
 
-	       if (counter==loop)
+	       if (counter>loop)
 	       {
-		    step=-1;
-	       }else if (counter==0)
-	       {
-		    step=1;
+		    return;
 	       }
+
+	       ++counter;
 	       
 	  }
      

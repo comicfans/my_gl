@@ -25,6 +25,7 @@
 #include "Vec.hpp"
 
 using std::fill_n;
+using std::tan;
 using std::copy_n;
 using std::swap;
 using std::cos;
@@ -234,6 +235,15 @@ namespace my_gl {
 		   return ret;
 	      }
 
+
+	      
+	 const float PI=4*atan(1);
+
+	 inline float toRad(float degree)
+	 {
+	      return degree/180*PI;
+	 }
+
 	 Matrix4 rotate(float angle,float x,float y,float z)
 	 {
 	      Matrix4 ret=Matrix4::identity();
@@ -246,10 +256,12 @@ namespace my_gl {
 	      y=rotateAxis[1];
 	      z=rotateAxis[2];
 
+	      float rad=toRad(angle);
+
 	      const float 
-		   c=cos(angle),
+		   c=cos(rad),
 		   onePlusC=1-c,
-		   s=sin(angle),
+		   s=sin(rad),
 		   xy=x*y,
 		   xz=x*z,
 		   yz=y*z,
