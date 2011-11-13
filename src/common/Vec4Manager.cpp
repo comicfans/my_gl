@@ -64,7 +64,7 @@ namespace my_gl{
      }
 
      void Vec4Manager::vertexArrayChange(int componentSize,  
-DataType type,  size_t stride,  const void *pointer)
+DataType type,  size_t stride,  const void *pointer,bool normalize)
      {
 	       //should this a assert?
 	       //OpenGL defined that if 
@@ -76,13 +76,13 @@ DataType type,  size_t stride,  const void *pointer)
 	  {
 	       _pImpl.reset(new BufferObjectVec4Provider
 			 (*_bindedArrayBufferObject, toInt(pointer),
-			  componentSize,type,stride));
+			  componentSize,type,stride,normalize));
 	  }
 	  else
 	  {
   
-	       _pImpl.reset(new ClientArrayVec4Provider
-			 (pointer,componentSize,type,stride));
+	       _pImpl.reset(new ClientArrayVec4Provider(pointer,
+			      componentSize,type,stride,normalize));
 	  }
 
      }

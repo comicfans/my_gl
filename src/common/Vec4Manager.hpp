@@ -54,7 +54,8 @@ namespace my_gl {
 	  virtual void clientStateChangeCallback(bool value);
 
 	  void vertexArrayChange(int componentSize,
-		    DataType type,size_t stride,const void* pointer);
+		    DataType type,size_t stride,const void* pointer,
+		    bool normalize=false);
 
 	  unique_ptr<Vec4Provider> _pImpl;
 
