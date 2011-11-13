@@ -35,7 +35,7 @@ namespace my_gl {
 	  (int componentNumber,DataType type,size_t stride,bool normalize)
 	  :_dataType(type),_componentNumber(componentNumber),
 	  _blockSize(calcBlockSize(type,componentNumber,stride)),
-	  _normalize(type==DataType::FLOAT?true:normalize)
+	  _normalize(normalize)
      {}
 
 	  template<DataType dataType>
