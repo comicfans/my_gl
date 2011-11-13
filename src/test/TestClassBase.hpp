@@ -42,7 +42,7 @@ namespace my_gl {
 
 	       glLoadIdentity();
 
-	       glOrtho(0,DEFAULT_WIDTH,0,DEFAULT_HEIGHT,-1,1);
+	       glOrtho(0,DEFAULT_WIDTH,0,DEFAULT_HEIGHT,-10000,10000);
 
 	       glViewport(0,0,DEFAULT_WIDTH,DEFAULT_HEIGHT);
 
