@@ -28,18 +28,18 @@
 #include "common/Matrix.hpp"
 
 namespace my_gl {
-     
+
      using std::abs;
      using std::rand;
      using std::cout;
      using std::endl;
      using std::max;
-	     
+
      bool equal(float lhs,float rhs,unsigned errorFactor)
      {
 
 	  float delta=abs(lhs-rhs);
-	 
+
 	  if (lhs==0 || rhs==0)
 	  {
 	       return delta<1.0/errorFactor;
@@ -47,7 +47,7 @@ namespace my_gl {
 
 	  float threshold=max(abs(lhs),abs(rhs))/errorFactor;
 
-	   return delta<=threshold;
+	  return delta<=threshold;
      }
 
      void assertEqual(float lhs,float rhs,unsigned errorFactor)
@@ -72,62 +72,74 @@ namespace my_gl {
 	  }
 	  return true;
      }
-	
-     bool assertEqual(const Matrix4& lhs,const Matrix4& rhs,unsigned errorFactor)
-     {
-	  auto values1=lhs.values(),
-	       values2=rhs.values();
-	  for(int i=0;i<Matrix4::ELEMENTS_NUMBER;++i)
+
+     template <typename M>
+	  bool assertEqualTpl(const M& lhs,const M& rhs,unsigned errorFactor)
 	  {
-	       assertEqual(values1[i],values2[i],errorFactor);
+	       auto values1=lhs.values(),
+		    values2=rhs.values();
+	       for (int i=0; i<M::ELEMENTS_NUMBER; ++i)
+	       {
+		    assertEqual(values1[i],values2[i],errorFactor);
+	       }
+	       return true;
+
 	  }
 
-	  return true;
+     bool assertEqual(const Matrix4& lhs,const Matrix4& rhs,unsigned errorFactor)
+     {
+	  return assertEqualTpl(lhs,rhs,errorFactor);
+     }
+
+
+     bool assertEqual(const Matrix3& lhs,const Matrix3& rhs,unsigned errorFactor)
+     {
+	  return assertEqualTpl(lhs,rhs,errorFactor);
      }
 
      int myRand()
-{
-     int ret=rand();
-
-     ret-=RAND_MAX/2;
-
-     return ret;
-}
-Vec4 randVec()
-{
-     Vec4 ret;
-
-     for (int i=0; i<Vec4::LENGTH; ++i)
      {
-	  ret[i]=myRand();
-     }
+	  int ret=rand();
 
-     return ret;
-}
+	  ret-=RAND_MAX/2;
+
+	  return ret;
+     }
+     Vec4 randVec()
+     {
+	  Vec4 ret;
+
+	  for (int i=0; i<Vec4::LENGTH; ++i)
+	  {
+	       ret[i]=myRand();
+	  }
+
+	  return ret;
+     }
 
      bool assertEqual(const Vec4& lhs,const Vec4& rhs)
-{
-     assert(equal(lhs,rhs));
-     return true;
-
-}
-
-Matrix4 randMatrix()
-{
-
-     Matrix4 matrix;
-
-     for(int i=0;i<Matrix4::LENGTH;++i)
      {
-	  for (int j=0; j<Matrix4::LENGTH; ++j)
-	  {
-	       matrix(i,j)=float(myRand())/INT_MAX;
-	  }
+	  assert(equal(lhs,rhs));
+	  return true;
+
      }
 
-     return matrix;
+     Matrix4 randMatrix()
+     {
 
-}
+	  Matrix4 matrix;
+
+	  for(int i=0;i<Matrix4::LENGTH;++i)
+	  {
+	       for (int j=0; j<Matrix4::LENGTH; ++j)
+	       {
+		    matrix(i,j)=float(myRand())/INT_MAX;
+	       }
+	  }
+
+	  return matrix;
+
+     }
 
 
 } /* my_gl */

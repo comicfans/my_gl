@@ -35,6 +35,8 @@ namespace my_gl {
 	  
      bool assertEqual(const Matrix4& lhs,const Matrix4& rhs,unsigned errorFactor=100);
 
+     bool assertEqual(const Matrix3& lhs,const Matrix3& rhs,unsigned errorFactor=100);
+
 	
      Matrix4 randMatrix();
 
