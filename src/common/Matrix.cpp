@@ -93,12 +93,6 @@ namespace my_gl {
 
      }
 
-     template<>
-	  void exclude<2>(const MatrixBase<2>& matrix,int column,int row,
-		    MatrixBase<1>& result)
-	  {
-	       result(0,0)=matrix(1-column,1-row);
-	  }
 
      template<size_t L>
      float rowColumnExprValue(const MatrixBase<L>& matrix)
@@ -149,12 +143,6 @@ namespace my_gl {
 	  return result;
      }
 
-     template<>
-	  float inverseMod(const MatrixBase<1>& matrix,
-		    int column,int row)
-	  {
-	       return matrix(0,0);
-	  }
 
 	 template<size_t L>
      MatrixBase<L> MatrixBase<L>::inverse() const 
