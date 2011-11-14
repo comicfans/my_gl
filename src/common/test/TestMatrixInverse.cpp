@@ -29,6 +29,21 @@ void testInverse()
 
      assertEqual(shouldIdentity,Matrix4::identity());
 
+     Matrix3 mat3;
+
+     for (int i=0; i<3; ++i)
+     {
+	  for (int j=0; j<3; ++j)
+	  {
+	       mat3(i,j)=matrix(i,j);
+	  }
+     }
+     
+     Matrix3 inverse3=mat3.inverse();
+
+     Matrix3 shouldIdentity3=inverse3*mat3;
+
+     assertEqual(mat3,Matrix3::identity());
 
 }
 
