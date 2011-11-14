@@ -49,6 +49,8 @@ namespace my_gl {
 
 	       void enable(NormalizeNormal normalizeNormal);
 
+	       void disable(NormalizeNormal normalizeNormal);
+
 	  protected:
 
 	       /** 

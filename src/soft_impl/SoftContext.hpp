@@ -251,6 +251,12 @@ namespace my_gl {
 	//glDisable (cullFace override)
 	virtual void disableCullFace();
 
+	//glEnable (normlize override)
+	virtual void enable(NormalizeNormal normalizeNormal);
+	       
+	//glDisable (cullFace override)
+	virtual void disable(NormalizeNormal normalizeNormal);
+
 	//glFrontFace
 	virtual void frontFace(FaceMode faceMode);
 

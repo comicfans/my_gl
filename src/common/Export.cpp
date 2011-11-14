@@ -102,6 +102,12 @@ GLAPI void APIENTRY glEnable( GLenum cap )
 	  case GL_CULL_FACE:
 	       context.enableCullFace();
 	       return;
+	  case GL_NORMALIZE:
+	       context.enable(NormalizeNormal::NORMALIZE);
+	       return;
+	  case GL_RESCALE_NORMAL:
+	       context.enable(NormalizeNormal::RESCALE_NORMAL);
+	       return;
      }
 
 }
@@ -129,6 +135,13 @@ GLAPI void APIENTRY glDisable( GLenum cap )
 	  case GL_CULL_FACE:
 	       context.disableCullFace();
 	       return;
+	  case GL_NORMALIZE:
+	       context.disable(NormalizeNormal::NORMALIZE);
+	       return;
+	  case GL_RESCALE_NORMAL:
+	       context.disable(NormalizeNormal::RESCALE_NORMAL);
+	       return;
+
      }
 }
 

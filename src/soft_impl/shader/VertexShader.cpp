@@ -42,6 +42,34 @@ namespace my_gl {
      {
 	  return _matrixParam.modelViewProjection*inVertex;
      }
+	       
+     void VertexShader::enable(NormalizeNormal normalizeNormal)
+     {
+
+	  switch(normalizeNormal)
+	  {
+	       case NormalizeNormal::NORMALIZE:
+		    _normalizeNormal=true;
+		    break;
+	       case NormalizeNormal::RESCALE_NORMAL:
+		    _rescaleNormal=true;
+		    break;
+	  }
+     }
+
+     void VertexShader::disable(NormalizeNormal normalizeNormal)
+     {
+	  switch(normalizeNormal)
+	  {
+	       case NormalizeNormal::NORMALIZE:
+		    _normalizeNormal=false;
+		    break;
+	       case NormalizeNormal::RESCALE_NORMAL:
+		    _rescaleNormal=false;
+		    break;
+	  }
+     }
+
 
      Vec3 VertexShader::fnormal(const Vec3& inNormal)
      {

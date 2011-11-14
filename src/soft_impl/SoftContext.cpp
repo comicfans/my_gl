@@ -716,7 +716,19 @@ namespace my_gl {
 		  switchShader();
 	     }
 	}
-     
+	       
+	void SoftContext::enable(NormalizeNormal normalizeNormal)
+	{
+	     _vertexShaderPtr->enable(normalizeNormal);
+	}
+
+	       
+	void SoftContext::disable(NormalizeNormal normalizeNormal)
+	{
+	     _vertexShaderPtr->disable(normalizeNormal);
+	}
+
+
 	void SoftContext::enable(LightIndex lightIndex)
 	{
 	     if (_lightingEnabled)
@@ -836,7 +848,7 @@ namespace my_gl {
 	     auto & textureObject  = *_textureObjectManager.
 		  getActiveTextureObject();
 
-	     for (int i=0; i<height; ++i)
+	     for (size_t i=0; i<height; ++i)
 	     {
 		  textureObject.directSubImage
 		       (xoffset,yoffset+i,width,

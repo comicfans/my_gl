@@ -172,6 +172,8 @@ namespace my_gl {
 
 		    glLightModelfv(GL_LIGHT_MODEL_AMBIENT,modelAmbient);
 
+		    glEnable(GL_NORMALIZE);
+
 
 	       }
 

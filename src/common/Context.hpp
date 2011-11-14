@@ -173,6 +173,12 @@ namespace my_gl {
 	//glDisable lighting
 	virtual void disableLighting()=0;
 
+	//glEnable (normlize override)
+	virtual void enable(NormalizeNormal normalizeNormal)=0;
+	       
+	//glDisable (cullFace override)
+	virtual void disable(NormalizeNormal normalizeNormal)=0;
+
 	//glEnable  (LIGHTn override)
 	virtual void enable(LightIndex lightIndex)=0;
 
