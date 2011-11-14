@@ -137,7 +137,7 @@ namespace my_gl {
 
 	  if ((row+column)%2)
 	  {
-	       result*=-1;
+	       result=-result;
 	  }
 
 	  return result;
