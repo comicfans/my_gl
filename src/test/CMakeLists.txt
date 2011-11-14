@@ -11,4 +11,5 @@ SUBDIRS(test_array_buffer_object
      test_rotate test_scale
      test_draw_elements
      test_perspective_project
-     test_cull_face)
+     test_cull_face
+     test_lighting)
