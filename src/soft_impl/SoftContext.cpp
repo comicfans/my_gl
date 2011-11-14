@@ -767,9 +767,12 @@ namespace my_gl {
 	     //enable NORMAL if lighting is enabled
 	     //remove if disabled
 	     uniqueProcess(_activeStreams,BindState::NORMAL,_lightingEnabled);
+	     //when lighting is enabled, color is decided by lighting param
+	     uniqueProcess(_activeStreams,BindState::COLOR,!_lightingEnabled);
 	     //enable TEXCOORD if texture is enabled
 	     //remove if disable
 	     uniqueProcess(_activeStreams,BindState::TEXCOORD,_textureEnabled);
+
 
 	     if (_lightingEnabled){
 
@@ -815,7 +818,7 @@ namespace my_gl {
 
 		  textureObject.directBindImage(width,height,internalFormat);
 
-		  for (int i=0; i<height; ++i)
+		  for (size_t i=0; i<height; ++i)
 		  {
 		       textureObject.directSubImage
 			    (0,i,width,
