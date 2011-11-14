@@ -18,8 +18,14 @@
 
 #include "LightSourceParam.hpp"
 #include <cassert>
+#include <cmath>
 
 namespace my_gl {
+
+     using std::atan;
+     using std::cos;
+
+     static const float PI=4*atan(1);
 
      LightSourceParam::LightSourceParam(bool firstOne)
      {
@@ -27,20 +33,16 @@ namespace my_gl {
 	  diffuse=(firstOne?Vec4{1,1,1,1}:Vec4{0,0,0,1});
 	  specular=(firstOne?Vec4{1,1,1,1}:Vec4{0,0,0,1});
 	  position={1,1,1,0};
-	  //TODO
-	  //halfVector ?;
 	  spotDirection={0,0,-1,0};//only 3 component used
 
 	  spotExponent=0;
 	  spotCutoff=180;
 
-	  //TODO
-	  //spotCosCutoff ?;
-
 	  constantAttenuation=1;
 	  linearAttenuation=0;
 	  quadraticAttenuation=0;
 
+	  updateAll();
 
      }
 
@@ -95,6 +97,22 @@ namespace my_gl {
 	  }
      }
 
+     void LightSourceParam::updateAll()
+     {
+
+	  //halfVector is the sum of 
+	  //vertex-lightPostion direction vector and vertex-eye direction vector
+	  //in OpenGL ES 1.0, only infinite eye position is supported
+	  //so use {0,0,1} as eye direction
+	  halfVector=Vec3(position.values(),3)+Vec3{0,0,1};
+
+	  normalize(halfVector);
+
+
+	  spotCosCutoff=cos(spotCutoff/180*PI);
+
+
+     }
 
      bool LightSourceParam::isInfinite()const
      {

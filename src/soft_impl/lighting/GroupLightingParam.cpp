@@ -128,6 +128,9 @@ namespace my_gl {
 		    //Scm * Scli
 		    _allLightProducts[i].specular=componentMul
 			 (material.specular,_allLightSourceParams[i].specular);
+
+		    _allLightSourceParams[i].updateAll();
+		    
 	       }
 	  }
 

@@ -143,6 +143,8 @@ namespace my_gl {
 
 		    glEnable(GL_LIGHTING);
 
+		    glEnable(GL_LIGHT0);
+
 		    genSphere(4);
 	       }
 
