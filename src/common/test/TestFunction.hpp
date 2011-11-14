@@ -33,12 +33,11 @@ namespace my_gl {
 
      bool assertEqual(const Vec4& lhs,const Vec4& rhs);
 	  
-     bool assertEqual(const Matrix4& lhs,const Matrix4& rhs,unsigned errorFactor=100);
-
-     bool assertEqual(const Matrix3& lhs,const Matrix3& rhs,unsigned errorFactor=100);
-
+     template<typename M>
+     bool assertEqual(const M& lhs,const M& rhs,unsigned errorFactor=100);
 	
-     Matrix4 randMatrix();
+     template<typename M>
+     M randMatrix();
 
      Vec4 randVec();
      int myRand();

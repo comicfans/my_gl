@@ -23,7 +23,7 @@ using namespace my_gl;
 
 int main(int argc, const char *argv[])
 {
-     Matrix4 ran=randMatrix();
+     Matrix4 ran=randMatrix<Matrix4>();
 
      Matrix4 identity=Matrix4::identity();
 

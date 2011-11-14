@@ -20,7 +20,7 @@ using namespace my_gl;
 
 void testTranspose()
 {
-     Matrix4 matrix=randMatrix();
+     Matrix4 matrix=randMatrix<Matrix4>();
 
      assertEqual(matrix,matrix.transpose().transpose());
 }

@@ -74,7 +74,7 @@ namespace my_gl {
      }
 
      template <typename M>
-	  bool assertEqualTpl(const M& lhs,const M& rhs,unsigned errorFactor)
+	  bool assertEqual(const M& lhs,const M& rhs,unsigned errorFactor)
 	  {
 	       auto values1=lhs.values(),
 		    values2=rhs.values();
@@ -86,16 +86,8 @@ namespace my_gl {
 
 	  }
 
-     bool assertEqual(const Matrix4& lhs,const Matrix4& rhs,unsigned errorFactor)
-     {
-	  return assertEqualTpl(lhs,rhs,errorFactor);
-     }
-
-
-     bool assertEqual(const Matrix3& lhs,const Matrix3& rhs,unsigned errorFactor)
-     {
-	  return assertEqualTpl(lhs,rhs,errorFactor);
-     }
+     template bool assertEqual<Matrix4>(const Matrix4&,const Matrix4&,unsigned);
+     template bool assertEqual<Matrix3>(const Matrix3&,const Matrix3&,unsigned);
 
      int myRand()
      {
@@ -124,14 +116,15 @@ namespace my_gl {
 
      }
 
-     Matrix4 randMatrix()
+     template<typename M>
+     M randMatrix()
      {
 
-	  Matrix4 matrix;
+	  M matrix;
 
-	  for(int i=0;i<Matrix4::LENGTH;++i)
+	  for(int i=0;i<M::LENGTH;++i)
 	  {
-	       for (int j=0; j<Matrix4::LENGTH; ++j)
+	       for (int j=0; j<M::LENGTH; ++j)
 	       {
 		    matrix(i,j)=float(myRand())/INT_MAX;
 	       }
@@ -140,6 +133,9 @@ namespace my_gl {
 	  return matrix;
 
      }
+
+     template Matrix3 randMatrix<Matrix3>();
+     template Matrix4 randMatrix<Matrix4>();
 
 
 } /* my_gl */
