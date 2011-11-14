@@ -141,11 +141,38 @@ namespace my_gl {
 
 		    glEnable(GL_CULL_FACE);
 
+		    initLighting();
+
+		    genSphere(4);
+	       }
+
+	       static void initLighting()
+	       {
 		    glEnable(GL_LIGHTING);
 
 		    glEnable(GL_LIGHT0);
 
-		    genSphere(4);
+		    GLfloat matSpecular[]={1,1,1,1};
+
+		    GLfloat lightPosition[]={1,1,1,0};
+
+		    GLfloat whiteLight[]={1,1,1,1};
+
+		    GLfloat modelAmbient[]={0.2,0.2,0.2,1};
+
+		    glMaterialfv(GL_FRONT_AND_BACK,GL_SPECULAR,matSpecular);
+
+		    glMaterialf(GL_FRONT_AND_BACK,GL_SHININESS,50);
+
+		    glLightfv(GL_LIGHT0,GL_POSITION,lightPosition);
+
+		    glLightfv(GL_LIGHT0,GL_DIFFUSE,whiteLight);
+
+		    glLightfv(GL_LIGHT0,GL_SPECULAR,whiteLight);
+
+		    glLightModelfv(GL_LIGHT_MODEL_AMBIENT,modelAmbient);
+
+
 	       }
 
 	       static void drawPartSphere()
