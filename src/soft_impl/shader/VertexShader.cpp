@@ -53,7 +53,7 @@ namespace my_gl {
 	  }
 	  if (_normalizeNormal)
 	  {
-	       //TODO
+	       normalize(ret);
 	  }
 
 	  return ret;
