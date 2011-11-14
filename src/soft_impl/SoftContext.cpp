@@ -735,9 +735,44 @@ namespace my_gl {
 	     _groupLightingParam.disable(lightIndex);
 	}
 
+	static void uniqueProcess(vector<BindState>& all,BindState toProcess,bool add)
+	{
+		  auto pos=find(all.begin(),all.end(),toProcess);
+
+		  bool has=(pos!=all.end());
+		  if (add)
+		  {
+		       if (!has)
+		       {
+		       all.push_back(toProcess);
+		       }
+		       return;
+		  }
+		  else
+		  {
+		       if (has)
+		       {
+			    all.erase(pos);
+		       }
+		       return;
+		  }
+	}
+
+
+
+
 	void SoftContext::switchShader()
 	{
+
+	     //enable NORMAL if lighting is enabled
+	     //remove if disabled
+	     uniqueProcess(_activeStreams,BindState::NORMAL,_lightingEnabled);
+	     //enable TEXCOORD if texture is enabled
+	     //remove if disable
+	     uniqueProcess(_activeStreams,BindState::TEXCOORD,_textureEnabled);
+
 	     if (_lightingEnabled){
+
 		  if (_twoSideLightingEnabled){
 		       _vertexShaderPtr.reset(
 				 new TwoSideLightVertexShader
@@ -757,6 +792,7 @@ namespace my_gl {
 	     }
 
 	     if (_textureEnabled){
+
 		  _fragmentShaderPtr.reset(
 			    new TextureFragmentShader
 			    (_matrixParam,_textureFunc));
