@@ -391,7 +391,10 @@ namespace my_gl {
 	      const IndexProvider& indexProvider)
 	{
 
+	     //TODO make param interface updatable
+	     //and flush all need param
 	     prepareGlobalUniform();
+	     _groupLightingParam.updateAll();
 
 	     vertexShaderStage(count,indexProvider);
 
@@ -512,9 +515,6 @@ namespace my_gl {
 			    _vertexAttributeBuffer[vertexCounter]);
 	     }
 	     
-	     //TODO
-
-
 	}
 
 	void SoftContext::frustum(double left, double right, 
