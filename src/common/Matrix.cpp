@@ -355,6 +355,21 @@ namespace my_gl {
 		   multiVecTo(lhs,vec,result);
 	      }
 
+     
+	 Matrix3 upperLeft(const Matrix4& matrix4)
+	 {
+	      Matrix3 ret;
+	      for (int i=0; i<Matrix3::LENGTH; ++i)
+	      {
+		   for (int j=0; i<Matrix3::LENGTH; ++j)
+		   {
+			ret(i,j)=matrix4(i,j);
+		   }
+	      }
+
+	      return ret;
+	 }
+
 	 template<size_t L>
 	      MatrixBase<L> MatrixBase<L>::operator*
 	      (const MatrixBase<L>& rhs)const

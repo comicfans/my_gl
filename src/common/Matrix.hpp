@@ -84,6 +84,8 @@ namespace my_gl {
      extern template struct MatrixBase<4>;
      extern template struct MatrixBase<2>;
 
+     Matrix3 upperLeft(const Matrix4& matrix4);
+
      Matrix4 translate(float x,float y,float z) ;
 
      Matrix4 scale(float x,float y,float z) ;
