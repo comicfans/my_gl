@@ -68,7 +68,7 @@ namespace my_gl {
 		  }
 	     }
 
-	     normal=upperLeft.inverse();
+	     normal=upperLeft.inverse().transpose();
 
      }
 	
