@@ -143,7 +143,7 @@ namespace my_gl {
 
 		    initLighting();
 
-		    genSphere(4);
+		    genSphere(10);
 	       }
 
 	       static void initLighting()
@@ -152,15 +152,26 @@ namespace my_gl {
 
 		    glEnable(GL_LIGHT0);
 
-		    GLfloat matSpecular[]={1,1,1,1};
+		    GLfloat matSpecular[]={1,1,1,0};
 
-		    GLfloat lightPosition[]={1,1,1,0};
+		    GLfloat ambient[]={0.2,0.2,0.2,0};
+
+		    GLfloat diffuse[]={0,1,0,0};
+
+		    GLfloat lightPosition[]={1000,1000,1000,1};
 
 		    GLfloat whiteLight[]={1,1,1,1};
 
 		    GLfloat modelAmbient[]={0.2,0.2,0.2,1};
 
-		    glMaterialfv(GL_FRONT_AND_BACK,GL_SPECULAR,matSpecular);
+		    glMaterialfv(GL_FRONT_AND_BACK,
+			      GL_SPECULAR,matSpecular);
+
+		    glMaterialfv(GL_FRONT_AND_BACK,
+			      GL_AMBIENT,ambient);
+
+		    glMaterialfv(GL_FRONT_AND_BACK,
+			      GL_DIFFUSE,diffuse);
 
 		    glMaterialf(GL_FRONT_AND_BACK,GL_SHININESS,50);
 
