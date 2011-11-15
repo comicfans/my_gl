@@ -99,6 +99,7 @@ namespace my_gl {
 			 .inverse().transpose();
 
 		    spotDirection=mat3*Vec3(param);
+		    normalize(spotDirection);
 
 		    break;
 		    }
