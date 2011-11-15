@@ -82,7 +82,6 @@ namespace my_gl {
 	  //if light is not turned on,texture and normal will not transfered
 
 	  _activeStreams.push_back(BindState::VERTEX);
-	  _activeStreams.push_back(BindState::COLOR);
 
 	  _pixelDrawerPtr.reset(new SDLPixelDrawer());
 	  _pixelDrawerPtr->onInit(width,height);
@@ -92,6 +91,7 @@ namespace my_gl {
 
 	  //TODO group state related change to one 
 	  _lightingEnabled=false;
+	  _textureEnabled=false;
 
 	  _twoSideLightingEnabled=false;
 
