@@ -16,30 +16,16 @@
  * =====================================================================================
  */
 
-#include "soft_impl/SoftContext.hpp"
-#include "common/Context.hpp"
 
-#define GL_GLEXT_PROTOTYPES
-#include <GL/gl.h>
-#include <GL/glext.h>
+#include "MyGLTestTpl.hpp"
 #include "TestClientArrayPointer.hpp"
 
 using namespace my_gl;
 
-SoftContext context(DEFAULT_WIDTH,DEFAULT_HEIGHT);
 
 int main(int argc, const char *argv[])
 {
 
-     TestClientArrayPointer::init();
-
-     for (int i=0; i<10; ++i)
-     {
-	  TestClientArrayPointer::render();
-	  glFlush();
-     }
-     
-	
-	return 0;
+     myGLTestRun<TestClientArrayPointer>();
 }
 

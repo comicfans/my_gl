@@ -16,33 +16,11 @@
  * =====================================================================================
  */
 
-#include <GL/glew.h>
-#include <GL/glut.h>
-#include "GlutInit.hpp"
+#include "GlutTestTpl.hpp"
 #include "TestDrawElements.hpp"
 
 using namespace my_gl;
-
-static void display(int arg)
-{
-     TestDrawElements::render();
-     glutSwapBuffers();
-
-     glutTimerFunc(100,display,1);
-
-}
-
 int main(int argc, const char *argv[])
 {
-
-     initGlutGlew();
-
-     glutDisplayFunc(TestDrawElements::render);
-
-     glutTimerFunc(100,display,1);
-
-     TestDrawElements::init();
-	
-     glutMainLoop();
-	return 0;
+     doubleBufferRun<TestDrawElements>();
 }

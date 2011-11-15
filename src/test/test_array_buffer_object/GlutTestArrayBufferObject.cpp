@@ -16,26 +16,14 @@
  * =====================================================================================
  */
 
-#include <GL/glew.h>
-#include <GL/glut.h>
 
-#include "GlutInit.hpp"
+#include "GlutTestTpl.hpp"
 #include "TestArrayBufferObject.hpp"
 
 using namespace my_gl;
 
 int main(int argc, char *argv[])
 {
-     initGlutGlew("GlutTestArrayBufferObject");
-
-     glutDisplayFunc(TestArrayBufferObject::render);
-
-     glutIdleFunc(idleFunc);
-
-     TestArrayBufferObject::init();
-
-     glutMainLoop();
-	
-     return 0;
+     singleBufferRun<TestArrayBufferObject>();
 }
 

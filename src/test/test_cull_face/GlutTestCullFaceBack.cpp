@@ -16,24 +16,13 @@
  * =====================================================================================
  */
 
-#include <GL/glew.h>
-#include <GL/glut.h>
+
+#include "GlutTestTpl.hpp"
 #include "TestCullFaceBack.hpp"
 
 using namespace my_gl;
 
-static void display(int )
-{
-     TestCullFaceBack::render();
-     glutSwapBuffers();
-     glutTimerFunc(1000,display,1);
-}
 int main(int argc, const char *argv[])
 {
-	
-     initGlutGlew();
-     TestCullFaceBack::init();
-     glutTimerFunc(1000,display,1);
-     glutMainLoop();
-	return 0;
+     doubleBufferRun<TestCullFaceBack>();
 }

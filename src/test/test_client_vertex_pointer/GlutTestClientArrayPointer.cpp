@@ -15,10 +15,8 @@
  *
  * =====================================================================================
  */
-#include <GL/glew.h>
-#include <GL/glut.h>
 
-#include "GlutInit.hpp"
+#include "GlutTestTpl.hpp"
 #include "TestClientArrayPointer.hpp"
 
 using namespace my_gl;
@@ -26,16 +24,6 @@ using namespace my_gl;
 
 int main(int argc, const char *argv[])
 {
-     initGlutGlew();
-
-     glutDisplayFunc(TestClientArrayPointer::render);
-
-     glutIdleFunc(idleFunc);
-
-     TestClientArrayPointer::init();
-
-     glutMainLoop();
-	
-	return 0;
+     singleBufferRun<TestClientArrayPointer>();
 }
 

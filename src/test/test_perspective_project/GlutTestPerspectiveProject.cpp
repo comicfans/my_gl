@@ -15,34 +15,15 @@
  *
  * =====================================================================================
  */
-#include <GL/glew.h>
-#include <GL/glut.h>
 
+#include "GlutTestTpl.hpp"
 #include "TestPerspectiveProject.hpp"
 
-#include "GlutInit.hpp"
 
 using namespace my_gl;
 
-static void display(int )
-{
-
-     TestPerspectiveProject::render();
-     glutSwapBuffers();
-     glutTimerFunc(1000,display,1);
-}
-
 int main(int argc, const char *argv[])
 {
-
-     initGlutGlew();
-
-     TestPerspectiveProject::init();
-
-     glutTimerFunc(1000,display,1);
-
-     glutMainLoop();
-
-	return 0;
+     doubleBufferRun<TestPerspectiveProject>();
 }
 

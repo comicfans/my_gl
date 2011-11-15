@@ -16,25 +16,13 @@
  * =====================================================================================
  */
 
-#include "GlutInit.hpp"
 
-#include <gl/glew.h>
-#include <gl/glut.h>
+#include "GlutTestTpl.hpp"
 #include "TestRotate.hpp"
 
 using namespace my_gl;
 
 int main(int argc, const char *argv[])
 {
-     initGlutGlew();
-
-     glutDisplayFunc(TestRotate::render);
-
-     glutIdleFunc(idleFunc);
-
-     TestRotate::init();
-	
-     glutMainLoop();
-
-     return 0;
+     doubleBufferRun<TestRotate>();
 }

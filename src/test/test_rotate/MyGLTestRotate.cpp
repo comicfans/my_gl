@@ -16,27 +16,14 @@
  * =====================================================================================
  */
 
-#define GL_GLEXT_PROTOTYPES
-#include <GL/gl.h>
-#include <GL/glext.h>
 
+#include "MyGLTestTpl.hpp"
 #include "TestRotate.hpp"
-#include "soft_impl/SoftContext.hpp"
 
 using namespace my_gl;
 
-SoftContext context(DEFAULT_WIDTH,DEFAULT_HEIGHT);
 
 int main(int argc, const char *argv[])
 {
-     TestRotate::init();
-
-     for (int i=0; i<100; ++i)
-     {
-	  TestRotate::render();
-	  glFlush();
-     }
-     
-	
-	return 0;
+     myGLTestRun<TestRotate>();
 }

@@ -16,31 +16,16 @@
  * =====================================================================================
  */
 
-#define GL_GLEXT_PROTOTYPES
 
-#include <GL/gl.h>
-#include <GL/glext.h>
-
-#include "common/Context.hpp"
-#include "soft_impl/SoftContext.hpp"
-
-
+#include "MyGLTestTpl.hpp"
 #include "TestArrayBufferObject.hpp"
 
 using namespace my_gl;
 
-SoftContext context(DEFAULT_WIDTH,DEFAULT_HEIGHT);
 
 int main(int argc, const char *argv[])
 {
 
-     TestArrayBufferObject::init();
+     myGLTestRun<TestArrayBufferObject>();
 
-     for (int i=0; i<30; ++i)
-     {
-	  TestArrayBufferObject::render();
-	  glFlush();
-     }
-     
-	return 0;
 }
