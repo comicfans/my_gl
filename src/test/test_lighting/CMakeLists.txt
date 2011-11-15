@@ -32,6 +32,21 @@ ADD_EXECUTABLE(MyGLTestSpotLight MyGLTestSpotLight.cpp)
 TARGET_LINK_LIBRARIES(MyGLTestSpotLight Export)
 
 
+ADD_EXECUTABLE(GlutTestInfinitePointLight 
+     GlutTestInfinitePointLight.cpp)
+TARGET_LINK_LIBRARIES(GlutTestInfinitePointLight
+     GlutInit
+     ${GLEW_LIBRARY}
+     ${GLUT_LIBRARY}
+     ${OPENGL_LIBRARIES})
+
+ADD_EXECUTABLE(MyGLTestInfinitePointLight 
+     MyGLTestInfinitePointLight.cpp)
+TARGET_LINK_LIBRARIES(MyGLTestInfinitePointLight Export)
+
+
+
+
 ADD_TEST(LightingGlutTest GlutTestLighting)
 ADD_TEST(LightingMyGLTest MyGLTestLighting)
 
@@ -40,3 +55,6 @@ ADD_TEST(MovingLightMyGLTest MyGLTestMovingLight)
 
 ADD_TEST(SpotLightGlutTest GlutTestSpotLight)
 ADD_TEST(SpotLightMyGLTest MyGLTestSpotLight)
+
+ADD_TEST(InfinitePointLightGlutTest GlutTestInfinitePointLight)
+ADD_TEST(InfinitePointLightMyGLTest MyGLTestInfinitePointLight)
