@@ -18,7 +18,11 @@ TARGET_LINK_LIBRARIES(GlutTestMovingLight
      ${GLUT_LIBRARY}
      ${OPENGL_LIBRARIES})
 
+ADD_EXECUTABLE(MyGLTestMovingLight MyGLTestMovingLight.cpp)
+TARGET_LINK_LIBRARIES(MyGLTestMovingLight Export)
+
 ADD_TEST(LightingGlutTest GlutTestLighting)
 ADD_TEST(LightingMyGLTest MyGLTestLighting)
 
 ADD_TEST(MovingLightGlutTest GlutTestMovingLight)
+ADD_TEST(MovingLightMyGLTest MyGLTestMovingLight)
