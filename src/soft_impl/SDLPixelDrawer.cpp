@@ -18,6 +18,7 @@
 
 #include "SDLPixelDrawer.hpp"
 
+#include <cassert>
 #include <SDL.h>
 
 #include "pipeline/ColorBuffer.hpp"
@@ -109,6 +110,7 @@ namespace my_gl {
 
      static inline Uint8 toUint8(float value)
      {
+	  assert(value>=0 && value<=1);
 	  return 255*value;
      }
 
