@@ -45,8 +45,11 @@ namespace my_gl {
 
 	       auto &lightSourceParam=perLightParam.lightSourceParam;
 
-	       float nDotVP=dotProduct(normal,
-			 Vec3(lightSourceParam.position.values(),3));
+	       Vec3 VP=Vec3(lightSourceParam.position.values(),3);
+
+	       normalize(VP);
+
+	       float nDotVP=dotProduct(normal,VP);
 
 	       //this halfVec does not depends on 
 	       //vertex eye Coordinates 
@@ -108,6 +111,8 @@ namespace my_gl {
 	       Vec3 VP=Vec3(lightSourceParam.position.values(),3)-eyeCoordPosition;	       
 
 	       float VPLength=length(VP);
+
+	       normalize(VP);
 
 	       //check cutoff first
 
