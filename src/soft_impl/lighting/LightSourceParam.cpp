@@ -17,8 +17,11 @@
  */
 
 #include "LightSourceParam.hpp"
+
 #include <cassert>
 #include <cmath>
+
+#include "common/Matrix.hpp"
 
 namespace my_gl {
 
@@ -73,7 +76,8 @@ namespace my_gl {
 
      }
 
-     void LightSourceParam::lightfv(LightParamName paramName,const float* param)
+     void LightSourceParam::lightfv(LightParamName paramName,
+	       const float* param,const Matrix4& modelViewMatrix)
      {
 	  switch (paramName)
 	  {
@@ -86,10 +90,18 @@ namespace my_gl {
 		    specular=param;
 		    break;
 	       case LightParamName::POSITION:
-		    position=param;
+		    position=modelViewMatrix*Vec4(param);
 		    break;
 	       case LightParamName::SPOT_DIRECTION:
-		    spotDirection=param;
+		    {
+
+		    Matrix3 mat3=upperLeft(modelViewMatrix)
+			 .inverse().transpose();
+
+		    spotDirection=mat3*Vec3(param);
+
+		    break;
+		    }
 	       default:
 		    {
 			 assert(false);

@@ -21,6 +21,7 @@
 #define LIGHT_SOURCE_PARAM_HPP
 
 #include "common/Vec.hpp"
+#include "common/MatrixFwd.hpp"
 #include "Enum.hpp"
 
 namespace my_gl {
@@ -46,7 +47,8 @@ namespace my_gl {
 
 	  void lightf(LightParamName paramName,float param);
 
-	  void lightfv(LightParamName paramName,const float* param);
+	  void lightfv(LightParamName paramName,const float* param,
+		    const Matrix4& modelViewMatrix);
 
 	  bool isInfinite()const;
 

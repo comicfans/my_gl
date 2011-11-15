@@ -22,6 +22,7 @@
 
 #include <vector>
 
+#include "common/MatrixFwd.hpp"
 #include "MaterialParam.hpp"
 #include "LightSourceParam.hpp"
 
@@ -69,7 +70,8 @@ namespace my_gl {
 		    LightParamName paramName,float param);
 
 	  void lightfv(LightIndex lightIndex,
-		    LightParamName paramName,const float* param);
+		    LightParamName paramName,const float* param,
+		    const Matrix4& modelViewMatrix);
 
 	  void lightModelfv(LightParamName paramName,const float* param);
 

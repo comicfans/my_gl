@@ -615,7 +615,9 @@ namespace my_gl {
 	void SoftContext::lightfv(LightIndex lightIndex,
 		  LightParamName paramName,const float* param)
 	{
-	     _groupLightingParam.lightfv(lightIndex,paramName,param);
+	     _groupLightingParam.lightfv(lightIndex,paramName,param,
+		       _matrixStacks[int(MatrixMode::MODEL_VIEW)].
+		       top());
 	}
 
 	void SoftContext::materialf

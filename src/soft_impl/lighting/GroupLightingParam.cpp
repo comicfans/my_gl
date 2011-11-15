@@ -92,10 +92,11 @@ namespace my_gl {
 	  }
 
 	  void GroupLightingParam::lightfv(LightIndex lightIndex,
-		    LightParamName paramName,const float* param)
+		    LightParamName paramName,const float* param,
+		    const Matrix4& modelViewMatrix)
 	  {
 	       _allLightSourceParams[int(lightIndex)]
-		    .lightfv(paramName,param);
+		    .lightfv(paramName,param,modelViewMatrix);
 	  }
 
 	  void GroupLightingParam::materialf(Face face,
