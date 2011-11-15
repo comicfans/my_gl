@@ -77,8 +77,8 @@ OK 	:47	89%
 NO	:6	11%
 
 
-data bind		:OK (buffer object need test)
-vertex prepare		:OK (drawElements need test)
+data bind		:OK 
+vertex prepare		:OK 
 vertex shader		:OK 
 primitive assemble:	:OK (all PrimitiveMode need test)
 rasterize		:OK (breshenHam algorithm)
@@ -91,3 +91,4 @@ framebuffer		:OK
 
 合并 useVertexNumber 到 IndexProvider ?
 Front Face 和FragmentShader 的交互
+FragmentAttributeBuffer 到FragmentShader
