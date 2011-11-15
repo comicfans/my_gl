@@ -59,16 +59,7 @@ namespace my_gl {
 
 	     //normal matrix is the inverse matrix of 
 	     //upper left 3x3 of modelView 
-	     Matrix3 upperLeft;
-	     for(int i=0;i<3;++i)
-	     {
-		  for (int j=0; j<3; ++j)
-		  {
-		       upperLeft(i,j)=modelView(i,j);
-		  }
-	     }
-
-	     normal=upperLeft.inverse().transpose();
+	     normal=upperLeft(modelView).inverse().transpose();
 
      }
 	
