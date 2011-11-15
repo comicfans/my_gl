@@ -361,7 +361,7 @@ namespace my_gl {
 	      Matrix3 ret;
 	      for (int i=0; i<Matrix3::LENGTH; ++i)
 	      {
-		   for (int j=0; i<Matrix3::LENGTH; ++j)
+		   for (int j=0; j<Matrix3::LENGTH; ++j)
 		   {
 			ret(i,j)=matrix4(i,j);
 		   }
