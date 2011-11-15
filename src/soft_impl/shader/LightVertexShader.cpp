@@ -20,6 +20,7 @@
 
 #include <cmath>
 
+#include "common/TypeTraits.hpp"
 #include "lighting/GroupLightingParam.hpp"
 #include "MatrixParam.hpp"
 #include "common/Vec.hpp"
@@ -232,50 +233,59 @@ namespace my_gl {
 	       
 
 
-		    //only apply infiniteLight
 
-		    for (int i=0; i<_groupLightingParam.getActiveLightNumber(); ++i)
+	       for (int i=0; i<_groupLightingParam.
+			 getActiveLightNumber(); ++i)
+	       {
+		    //per light iterator
+		    PerLightParam perLightParam=
+			 _groupLightingParam.getPerLightParam(i);
+
+		    if (!perLightParam.lightSourceParam.isInfinite())
 		    {
-			 //per light iterator
-			 PerLightParam perLightParam=
-			      _groupLightingParam.getPerLightParam(i);
-
-			 if (!perLightParam.lightSourceParam.isInfinite())
+			 if (inVertex.w()==0)
 			 {
-			      if (inVertex.w()==0)
-			      {
-				   continue;
-			      }
-			      finiteLight(perLightParam,
-					//OpenGL ES 1.0 only support infinite viewer
-					//eye vector will always be {0,0,1}
-					eyeCoordNormal,Vec3{0,0,1},
-					eyeCoordPosition,
-					ambient,diffuse,specular);
+			      //only apply infiniteLight to 
+			      //infinite point
+			      continue;
 			 }
-			 else
-			 {
-			      infiniteLight(perLightParam,eyeCoordNormal,
-					ambient,diffuse,specular);
-			 }
-				 
+			 finiteLight(perLightParam,
+				   //OpenGL ES 1.0 only support infinite viewer
+				   //eye vector will always be {0,0,1}
+				   eyeCoordNormal,Vec3{0,0,1},
+				   eyeCoordPosition,
+				   ambient,diffuse,specular);
 		    }
-
-		    
-		    //Ecm+Acm*Acs
-		    Vec4 finalColor=_groupLightingParam.
-			 lightModelProduct.sceneColor;
-
-		    auto & material=_groupLightingParam.material;
-		    finalColor+=componentMul(material.ambient,ambient);
-		    finalColor+=componentMul(material.diffuse,diffuse);
-		    finalColor+=componentMul(material.specular,specular);
-
-		    return finalColor;
+		    else
+		    {
+			 infiniteLight(perLightParam,eyeCoordNormal,
+				   ambient,diffuse,specular);
+		    }
 
 	       }
 
-		  void LightVertexShader::shade(
+
+	       //Ecm+Acm*Acs
+	       Vec4 finalColor=_groupLightingParam.
+		    lightModelProduct.sceneColor;
+
+	       auto & material=_groupLightingParam.material;
+	       finalColor+=componentMul(material.ambient,ambient);
+	       finalColor+=componentMul(material.diffuse,diffuse);
+	       finalColor+=componentMul(material.specular,specular);
+
+	       for (int i=0; i<Vec4::LENGTH; ++i)
+	       {
+		    auto& value=finalColor[i];
+		    value=DataTypeTraits<DataType::FLOAT>
+			 ::normalize(value);
+	       }
+
+	       return finalColor;
+
+	       }
+
+	  void LightVertexShader::shade(
 
 		    const Vec4& inVertex,
 		    const Vec4& inColor/*not used*/,
@@ -292,7 +302,7 @@ namespace my_gl {
 	       outFrontColor=singleSideLighting(inVertex,inNormal);
 
 	       outPosition=ftransform(inVertex);
-		  
+
 	  }
 
 
