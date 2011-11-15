@@ -16,31 +16,14 @@
  * =====================================================================================
  */
 
-#include <GL/glew.h>
-#include <GL/glut.h>
 
+#include "GlutTestTpl.hpp"
 #include "TestLighting.hpp"
 
 using namespace my_gl;
 
-static void display(int)
-{
-
-     TestLighting::render();
-     glutSwapBuffers();
-      
-     glutTimerFunc(500,display,0);
-
-}
  int main(int argc, const char *argv[])
  {
-      initGlutGlew();
+      doubleBufferRun<TestLighting>();
 
-      TestLighting::init();
-
-      glutTimerFunc(500,display,0);
-
-      glutMainLoop();
- 	
-      return 0;
  }
