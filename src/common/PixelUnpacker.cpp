@@ -40,13 +40,6 @@ namespace my_gl {
 	  }
      }
 
-     size_t PixelUnpacker::calcTotalExpandedSize
-	  (size_t width,size_t height, 
-	   ImageFormat format,StoreType type)
-     {
-	  return width*height*calcBlockSize(format,type);
-     }
-
      static void RGBUnpack(const void *source,float *dest)
      {
 	  const uint8_t *pUbyte=static_cast<const uint8_t*>(source);

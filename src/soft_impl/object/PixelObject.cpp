@@ -50,8 +50,7 @@ namespace my_gl {
 	  _type=type;
 	  _format=format;
 	  _dataPointer.reset(new UntypedArray(
-			 PixelUnpacker::calcTotalExpandedSize
-			 (width, height, format, type),nullptr));
+			 width*height*4*sizeof(float),nullptr));
 
 	  PixelUnpacker unpacker(p,_dataPointer->get<float>(),width,height,
 		    format,type);
