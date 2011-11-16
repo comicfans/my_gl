@@ -107,7 +107,7 @@ namespace my_gl {
 	  _currentSource(static_cast<const int8_t*>(source)
 		    +_blockSize*jumpBlocks),
 	  _currentDest(dest+4*sizeof(float)*jumpBlocks),
-	  _sourceEnd(_currentDest+(jumpBlocks+width*height)*_blockSize)
+	  _sourceEnd(_currentSource+(jumpBlocks+width*height)*_blockSize)
 	   
      {
 	  if (type==StoreType::UNSIGNED_BYTE)
