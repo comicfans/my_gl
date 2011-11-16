@@ -832,6 +832,11 @@ namespace my_gl {
 
 	     if (_textureEnabled){
 
+		  _vertexShaderPtr.reset(
+			    new WrapTextureVertexShader
+			    (_matrixParam,_groupLightingParam,
+			     _vertexShaderPtr.release()));
+	
 		  _fragmentShaderPtr.reset(
 			    new TextureFragmentShader
 			    (_matrixParam,_textureFunc));
