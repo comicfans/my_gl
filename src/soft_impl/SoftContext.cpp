@@ -83,6 +83,7 @@ namespace my_gl {
 	  //if light is not turned on,texture and normal will not transfered
 
 	  _activeStreams.push_back(BindState::VERTEX);
+	  _activeStreams.push_back(BindState::COLOR);
 
 	  _pixelDrawerPtr.reset(new SDLPixelDrawer());
 	  _pixelDrawerPtr->onInit(width,height);
