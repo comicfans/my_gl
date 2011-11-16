@@ -21,8 +21,11 @@
 #define TEST_TEXTURE_HPP
 
 #include "test_array_buffer_object/TestArrayBufferObject.hpp"
+#include <cstdlib>
 
 namespace my_gl {
+
+	       
 
      class TestTexture {
      public:
@@ -36,47 +39,59 @@ namespace my_gl {
 
 	  static void loadTexture()
 	  {
+
+	       glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
 	       glEnable(GL_TEXTURE_2D);
 
-//	       glGenTextures(1,&textureName);
 
-	       glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,
-			 GL_REPLACE);
+	       glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE, GL_REPLACE);
+	
+	       glGenTextures(1,&textureName);
 
-//	       glBindTexture(GL_TEXTURE_2D,textureName);
+	       glBindTexture(GL_TEXTURE_2D,textureName);
 
-	       const int segment=10;
+       
+	       glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_REPEAT);
+	       glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_REPEAT);
+	       glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
+	       glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
 
-	       GLubyte check[segment*segment][4];
+
+	       const int segment=64;
+
+	       GLubyte check[segment*segment][3];
 
 	       for (int i=0; i<segment; ++i)
 	       {
 		    for (int j=0; j<segment; ++j)
 		    {
-			 bool flag=((i+j)%2==0);
 
-			 check[i*segment+j][0]=255;//(flag?128:0);
-			 check[i*segment+j][1]=0;//(flag?64:255);
-			 check[i*segment+j][2]=0;//(flag?32:8);
+			 bool flag=!(((i&8)==0)^((j&8)==0));
+			 GLubyte color=flag*255;
+
+			 float value=255*((i+j)/2.0/segment);
+
+			 check[i*segment+j][0]=color;
+			 check[i*segment+j][1]=color;
+			 check[i*segment+j][2]=color;
 		    }
 	       }
 
-	       glTexImage2D(GL_TEXTURE_2D,0,GL_RGBA,
+	       glTexImage2D(GL_TEXTURE_2D,0,GL_RGB,
 			 segment,segment,0,
-			 GL_RGBA,GL_UNSIGNED_BYTE,check);
+			 GL_RGB,GL_UNSIGNED_BYTE,check);
 
 	  }
 
 	  static void initTexCoord()
 	  {
 
-	       glEnableClientState(GL_VERTEX_ARRAY);
 	       glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
 	       glGenBuffers(1,&texCoordName);	       
 
-
-	       GLfloat texCoord[3][2]={{0,0},{1,0},{0.5,0.5}};
+	       GLfloat texCoord[3][2]={{0,0},{1,0},{0.5,1}};
 	       glBindBuffer(GL_ARRAY_BUFFER,texCoordName);
 
 	       glBufferData(GL_ARRAY_BUFFER,sizeof(texCoord),
@@ -85,28 +100,8 @@ namespace my_gl {
 
 	  static void render()
 	  {
-	       const int segment=10;
 
-	       GLubyte check[segment*segment][4];
-
-	       for (int i=0; i<segment; ++i)
-	       {
-		    for (int j=0; j<segment; ++j)
-		    {
-			 bool flag=((i+j)%2==0);
-
-			 check[i*segment+j][0]=255;//(flag?128:0);
-			 check[i*segment+j][1]=0;//(flag?64:255);
-			 check[i*segment+j][2]=0;//(flag?32:8);
-		    }
-	       }
-
-	       glBindTexture(GL_TEXTURE_2D,0);
-	       glTexImage2D(GL_TEXTURE_2D,0,GL_RGBA,
-			 segment,segment,0,
-			 GL_RGBA,GL_UNSIGNED_BYTE,check);
-
-
+	       glBindTexture(GL_TEXTURE_2D,textureName);
 
 	       glMatrixMode(GL_MODELVIEW);
 	       glLoadIdentity();
@@ -115,10 +110,8 @@ namespace my_gl {
 			 TestArrayBufferObject::triangleVertexName);
 	       glVertexPointer(2,GL_FLOAT,0,0);
 
-	       GLfloat texCoord[3][2]={{0,0},{1,0},{0.5,0.5}};
-
-	       glBindBuffer(GL_ARRAY_BUFFER,0);
-	       glTexCoordPointer(2,GL_FLOAT,0,texCoord);
+	       glBindBuffer(GL_ARRAY_BUFFER,texCoordName);
+	       glTexCoordPointer(2,GL_FLOAT,0,0);
 
 	       glDrawArrays(GL_TRIANGLES,0,3);
 

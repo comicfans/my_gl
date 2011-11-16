@@ -7,4 +7,8 @@ TARGET_LINK_LIBRARIES(GlutTestTexture
      ${GLEW_LIBRARY}
      ${OPENGL_LIBRARIES})
 
+ADD_EXECUTABLE(MyGLTestTexture MyGLTestTexture.cpp)
+TARGET_LINK_LIBRARIES(MyGLTestTexture Export)
+
 ADD_TEST(TextureGlutTest GlutTestTexture)
+ADD_TEST(TestTextureMyGL MyGLTestTexture)
