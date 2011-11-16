@@ -80,6 +80,9 @@ namespace my_gl {
 	  ALL_FILTERS[int(TexFilterMode::NEAREST)]=
 	       bind(&TextureObject::nearest,this,_1,_2);
 
+	  _stWrapper[0]=WRAPPERS[int(TexWrapMode::REPEAT)];
+	  _stWrapper[1]=WRAPPERS[int(TexWrapMode::REPEAT)];
+
      }
 	
      void TextureObject::texParameter
