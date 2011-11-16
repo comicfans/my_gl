@@ -3,7 +3,8 @@ INCLUDE_DIRECTORIES(../)
 ADD_LIBRARY(VertexShader VertexShader.cpp 
      NoLightVertexShader.cpp
      LightVertexShader.cpp
-     TwoSideLightVertexShader.cpp)
+     TwoSideLightVertexShader.cpp
+     WrapTextureVertexShader.cpp)
 
 
 ADD_LIBRARY(FragmentShader FragmentShader.cpp

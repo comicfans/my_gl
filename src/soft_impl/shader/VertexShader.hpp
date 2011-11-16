@@ -24,6 +24,7 @@
 
 #include "Enum.hpp"
 #include "common/VecFwd.hpp"
+#include "MatrixParam.hpp"
 
 #include "VertexAttributeBuffer.hpp"
 
@@ -51,6 +52,21 @@ namespace my_gl {
 
 	       void disable(NormalizeNormal normalizeNormal);
 
+	       virtual void shade(
+
+			 const Vec4& inVertex,
+			 const Vec4& inColor,
+			 const Vec3& inNormal,
+			 const Vec4& inTexCoord,
+
+			 Vec4& outPosition,
+			 Vec4& outPointSize,
+			 Vec4& outFrontColor,
+			 Vec4& outBackColor,
+			 Vec4& outTexCoord
+			 )=0;
+
+
 	  protected:
 
 	       /** 
@@ -71,20 +87,6 @@ namespace my_gl {
 		* @return 
 		*/
 	       Vec3 fnormal(const Vec3& inNormal);
-
-	       virtual void shade(
-
-			 const Vec4& inVertex,
-			 const Vec4& inColor,
-			 const Vec3& inNormal,
-			 const Vec4& inTexCoord,
-
-			 Vec4& outPosition,
-			 Vec4& outPointSize,
-			 Vec4& outFrontColor,
-			 Vec4& outBackColor,
-			 Vec4& outTexCoord
-			 )=0;
 
 	  protected:
 	       const MatrixParam& _matrixParam;

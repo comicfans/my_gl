@@ -38,6 +38,7 @@
 #include "shader/LightVertexShader.hpp"
 #include "shader/TextureFragmentShader.hpp"
 #include "shader/SimpleFragmentShader.hpp"
+#include "shader/WrapTextureVertexShader.hpp"
 #include "shader/TwoSideLightVertexShader.hpp"
 #include "shader/FragmentShader.hpp"
 #include "pipeline/PrimitiveIndex.hpp"
@@ -95,7 +96,10 @@ namespace my_gl {
 
 	  _twoSideLightingEnabled=false;
 
-	  switchShader();
+	  _vertexShaderPtr.reset(new NoLightVertexShader
+		    (_matrixParam,_groupLightingParam));
+	  _fragmentShaderPtr.reset(new SimpleFragmentShader
+		    (_matrixParam));
 	  
 
 	  //init clippers;
@@ -814,10 +818,19 @@ namespace my_gl {
 		  _fragmentShaderPtr.reset(
 			    new TextureFragmentShader
 			    (_matrixParam,_textureFunc));
+		  _vertexShaderPtr.reset(
+			    new WrapTextureVertexShader
+			    (_matrixParam,_groupLightingParam,
+			     _vertexShaderPtr.release()));
 	     }
 	     else {
 		  _fragmentShaderPtr.reset(new 
 			    SimpleFragmentShader(_matrixParam));
+
+		  WrapTextureVertexShader *box=static_cast
+		       <WrapTextureVertexShader*>(_vertexShaderPtr.release());
+
+		  _vertexShaderPtr.reset(box->releaseWrapped());
 	     }
 
 	}
