@@ -653,7 +653,7 @@ namespace my_gl {
 	     return _textureObjectManager.isTexture(name);
 	}
 
-	void SoftContext::texEnvi(int target/*ignored*/,
+	void SoftContext::texEnvf(int target/*ignored*/,
 		  int pname/* ignored*/,TexEnvMode texEnvMode)
 	{
 	     _textureFunc=TextureFunc(texEnvMode);
@@ -685,7 +685,8 @@ namespace my_gl {
 	}
 
 
-	void SoftContext::texParameter(TexTarget target/*ignored*/,
+
+	void SoftContext::texParameteri(TexTarget target/*ignored*/,
 		  TexWrapName wrapName,
 		  TexWrapMode texWrapMode)
 	{
@@ -693,7 +694,7 @@ namespace my_gl {
 		  texParameter(target,wrapName,texWrapMode);
 	}
 
-	void SoftContext::texParameter(TexTarget target/*ignored*/,
+	void SoftContext::texParameteri(TexTarget target/*ignored*/,
 		  TexFilterName filterName,
 		  TexFilterMode texFilterMode)
 	{

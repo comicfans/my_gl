@@ -20,13 +20,17 @@
 #include <GL/glext.h>
 
 #include <cassert>
+#include <cmath>
 #include <unordered_map>
+#include <unordered_set>
 
 #include "Context.hpp"
 
 using namespace my_gl;
 
 using std::unordered_map;
+using std::unordered_set;
+using std::nearbyint;
 
 #ifdef __cplusplus
 
@@ -317,10 +321,8 @@ GLAPI void APIENTRY glLightfv( GLenum light, GLenum pname, const GLfloat *params
 
      Context::getInstance().lightfv(LIGHT_INDEX_MAP[light],map[pname],params);
 }
-GLAPI void APIENTRY glTexEnvf( GLenum target, GLenum pname, GLfloat param )
-{//TODO
-}
-     static unordered_map<GLenum,ImageFormat> IMAGE_FORMAT_MAP={
+     
+static unordered_map<GLenum,ImageFormat> IMAGE_FORMAT_MAP={
 	  {GL_RGB,ImageFormat::RGB},
 	  {GL_RGBA,ImageFormat::RGBA}};
 
@@ -465,6 +467,73 @@ GLAPI void APIENTRY glBufferSubData
 
      Context::getInstance().bufferSubData(BUFFER_TARGET_MAP[target],
 	       offset,size,data);
+}
+
+GLAPI void APIENTRY glTexEnvf( GLenum target, GLenum pname, GLfloat param )
+{
+     static unordered_map<int,TexEnvMode> ENV_MODE_MAP={
+	  {GL_REPLACE,TexEnvMode::REPLACE},
+	  {GL_MODULATE,TexEnvMode::MODULATE},
+	  {GL_DECAL,TexEnvMode::DECAL}};
+
+     int nearby=nearbyint(param);
+
+     Context::getInstance().texEnvf(0,0,ENV_MODE_MAP[nearby]);
+
+}
+
+GLAPI void APIENTRY glTexParameteri( GLenum target, GLenum pname, GLint param )
+{
+
+     static unordered_map<GLenum,TexWrapName> WRAP_NAME_MAP={
+	  {GL_TEXTURE_WRAP_S,TexWrapName::TEXTURE_WRAP_S},
+	  {GL_TEXTURE_WRAP_T,TexWrapName::TEXTURE_WRAP_T}};
+
+     static unordered_map<GLenum,TexWrapMode> WRAP_MODE_MAP={
+	  {GL_CLAMP,TexWrapMode::CLAMP},
+	  {GL_REPEAT,TexWrapMode::REPEAT},
+	  {GL_MIRRORED_REPEAT,TexWrapMode::MIRRORED_REPEAT}};
+
+     static unordered_map<GLenum,TexFilterName> FILTER_NAME_MAP={
+	  {GL_TEXTURE_MIN_FILTER,TexFilterName::TEXTURE_MIN_FILTER},
+	  {GL_TEXTURE_MAG_FILTER,TexFilterName::TEXTURE_MAG_FILTER}};
+
+     static unordered_map<GLenum,TexFilterMode> FILTER_MODE_MAP={
+	  {GL_NEAREST,TexFilterMode::NEAREST},
+	  {GL_LINEAR,TexFilterMode::LINEAR}};
+
+     auto& context=Context::getInstance();
+
+     switch (pname)
+     {
+	  case GL_TEXTURE_WRAP_S:
+	       context.texParameteri(TexTarget::TEXTURE_2D,
+			 WRAP_NAME_MAP[pname],WRAP_MODE_MAP[param]);
+	       break;
+	  case GL_TEXTURE_WRAP_T:
+	       context.texParameteri(TexTarget::TEXTURE_2D,
+			 WRAP_NAME_MAP[pname],WRAP_MODE_MAP[param]);
+	       break;
+	  case GL_TEXTURE_MIN_FILTER:
+	       context.texParameteri(TexTarget::TEXTURE_2D,
+			 FILTER_NAME_MAP[pname],FILTER_MODE_MAP[param]);
+	       break;
+	  case GL_TEXTURE_MAG_FILTER:
+	       context.texParameteri(TexTarget::TEXTURE_2D,
+			 FILTER_NAME_MAP[pname],FILTER_MODE_MAP[param]);
+	       break;
+
+	  default:
+	       {
+		    assert(false);
+	       }
+
+     }
+
+}
+GLAPI void APIENTRY glGenTextures( GLsizei n, GLuint *textures )
+{
+     Context::getInstance().genTextures(n,textures);
 }
 }
 

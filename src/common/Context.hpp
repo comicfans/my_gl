@@ -238,6 +238,9 @@ namespace my_gl {
 		  int xoffset,int yoffset,
 		  int x,int y,size_t width,size_t height)=0;
 
+	//glGenTextures
+	virtual void genTextures(size_t n,Name * names)=0;
+
 	//glBindTexture
 	virtual void bindTexture(TexTarget/* ignored*/,Name texture)=0;
 
@@ -249,6 +252,17 @@ namespace my_gl {
 
 	//glDisable (texture override)
 	virtual void disable(TexTarget texTarget)=0;
+
+	virtual void texParameteri(TexTarget target/*ignored*/,
+		  TexFilterName filterName,
+		  TexFilterMode texFilterMode)=0;
+		
+	virtual void texParameteri(TexTarget target/*ignored*/,
+		  TexWrapName wrapName,
+		  TexWrapMode texWrapMode)=0;
+	
+	virtual void texEnvf(int target/*ignored*/,
+		  int pname/* ignored*/,TexEnvMode texEnvMode)=0;
 
 	virtual ~Context();
 

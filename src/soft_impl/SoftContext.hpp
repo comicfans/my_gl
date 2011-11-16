@@ -120,6 +120,19 @@ namespace my_gl {
 		  size_t stride,const void *pointer);
 
 	//glTexCoordPointer
+	/** 
+	 * @brief OpenGL 1.2.1 add glClientActiveTexture command to 
+	 * control which texture unit is enabled to be affected by
+	 * glEnableClient and glTexCoordPointer, but all client 
+	 * state related function is deprecated. so I decide not to
+	 * impl this complex behavior, makes texCoordPointer function
+	 * just as other array buffer pointer call
+	 * 
+	 * @param componentSize
+	 * @param type
+	 * @param stride
+	 * @param pointer
+	 */
 	virtual void texCoordPointer(int componentSize, 
 		  DataType type, size_t stride, const void* pointer);
 
@@ -268,12 +281,14 @@ namespace my_gl {
 	 * @brief OpenGL ES 1.0 support pname=TEXTURE_ENV_COLOR
 	 * but this color is only used in COMBINE mode which ES 1.0
 	 * not support,so this Function is only used for TEXTURE_ENV_MODE
+	 * prototype of this function accept float value as last argument
+	 * but here makes a little change
 	 * 
 	 * @param target
 	 * @param pname
 	 * @param texEnvMode
 	 */
-	virtual void texEnvi(int target/*ignored*/,
+	virtual void texEnvf(int target/*ignored*/,
 		  int pname/* ignored*/,TexEnvMode texEnvMode);
 
 	//glBindTexture
@@ -303,12 +318,12 @@ namespace my_gl {
 
 
 	//glTexParameter
-	virtual void texParameter(TexTarget target/*ignored*/,
+	virtual void texParameteri(TexTarget target/*ignored*/,
 		  TexWrapName wrapName,
 		  TexWrapMode texWrapMode);
 
 	//glTexParameter
-	virtual void texParameter(TexTarget target/*ignored*/,
+	virtual void texParameteri(TexTarget target/*ignored*/,
 		  TexFilterName filterName,
 		  TexFilterMode texFilterMode);
 
