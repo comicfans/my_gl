@@ -35,21 +35,21 @@ namespace my_gl {
      using std::placeholders::_2;
      using std::nearbyint;
 
-     float clamp(float value,size_t total)
+     float clamp(float value,float total)
      {
 	  return value>0?
 	       min<float>(value,total):
 	       max<float>(value,0.0);
      }
 
-     float repeat(float value,size_t total)
+     float repeat(float value,float total)
      {
 	  return value>0?
 	       fmod(value,total):
 	       total+fmod(value,total);
      }
 
-     float mirrorRepeat(float value,size_t total)
+     float mirrorRepeat(float value,float total)
      {
 	  float mirrorPart=fmod(abs(value),total*2);
 
@@ -88,7 +88,7 @@ namespace my_gl {
      {
 	  int idx=int(warpName);
 	  _stWrapMode[idx]=warpMode;
-	  _stWrapper[idx]=WRAPPERS[idx];
+	  _stWrapper[idx]=WRAPPERS[int(warpMode)];
      }
 
      void TextureObject::texParameter

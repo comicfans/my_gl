@@ -64,7 +64,7 @@ namespace my_gl {
 	void texParameter
 	     (TexFilterName filterName,TexFilterMode filterMode);
 
-	typedef function<float(float,size_t)> Wrapper;
+	typedef function<float(float,float)> Wrapper;
 
      private:
 
