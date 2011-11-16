@@ -92,7 +92,7 @@ namespace my_gl {
 	  (ImageFormat textureFormat,
 	   const Vec4& fragmentColor,const Vec4& textureColor)const
 	  {
-	       return ALL_FUNC[int(_texEnvMode)][int(textureFormat)]
+	       return ALL_FUNC[int(textureFormat)][int(_texEnvMode)]
 		    (fragmentColor,textureColor);
 	  }
 } /* my_gl */
