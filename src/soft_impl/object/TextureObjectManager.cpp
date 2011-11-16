@@ -34,6 +34,8 @@ namespace my_gl {
 
 	       _textureObjects[RESERVED].reset(
 			 new TextureObject(RESERVED));
+
+	       _activeTextureObject=_textureObjects[RESERVED].get();
 	  }
 
      bool TextureObjectManager::isTexture(Name name)const
@@ -70,6 +72,11 @@ namespace my_gl {
 	{
 	     auto pos=_textureObjects.find(name);
 	     assert(pos!=_textureObjects.end());
+
+	     if (!(pos->second))
+	     {
+		  pos->second.reset(new TextureObject(name));
+	     }
 
 	     _activeTextureObject=pos->second.get();
 	}
