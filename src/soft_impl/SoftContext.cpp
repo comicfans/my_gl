@@ -711,7 +711,7 @@ namespace my_gl {
 	     if (!_lightingEnabled)
 	     {
 		  _lightingEnabled=true;
-		  switchShader();
+		  lightingStateChange();
 	     }
 	}
 
@@ -720,7 +720,7 @@ namespace my_gl {
 	     if (_lightingEnabled)
 	     {
 		  _lightingEnabled=false;
-		  switchShader();
+		  lightingStateChange();
 	     }
 	}
 	       
@@ -780,7 +780,7 @@ namespace my_gl {
 
 
 
-	void SoftContext::switchShader()
+	void SoftContext::lightingStateChange()
 	{
 
 	     //enable NORMAL if lighting is enabled
@@ -788,11 +788,10 @@ namespace my_gl {
 	     uniqueProcess(_activeStreams,BindState::NORMAL,_lightingEnabled);
 	     //when lighting is enabled, color is decided by lighting param
 	     uniqueProcess(_activeStreams,BindState::COLOR,!_lightingEnabled);
-	     //enable TEXCOORD if texture is enabled
-	     //remove if disable
-	     uniqueProcess(_activeStreams,BindState::TEXCOORD,_textureEnabled);
 
 
+	     unique_ptr<VertexShader> finalPtr;
+	     
 	     if (_lightingEnabled){
 
 		  if (_twoSideLightingEnabled){
@@ -810,18 +809,31 @@ namespace my_gl {
 		  _vertexShaderPtr.reset(new 
 			    NoLightVertexShader(_matrixParam,
 				 _groupLightingParam));
+	     }
+
+	     if (_textureEnabled)
+	     {
+		  _vertexShaderPtr.reset(
+			    new WrapTextureVertexShader
+			    (_matrixParam,_groupLightingParam,
+			     _vertexShaderPtr.release()));
 	
 	     }
+	     
+	}
+
+	void SoftContext::textureStateChange()
+	{
+
+	     //enable TEXCOORD if texture is enabled
+	     //remove if disable
+	     uniqueProcess(_activeStreams,BindState::TEXCOORD,_textureEnabled);
 
 	     if (_textureEnabled){
 
 		  _fragmentShaderPtr.reset(
 			    new TextureFragmentShader
 			    (_matrixParam,_textureFunc));
-		  _vertexShaderPtr.reset(
-			    new WrapTextureVertexShader
-			    (_matrixParam,_groupLightingParam,
-			     _vertexShaderPtr.release()));
 	     }
 	     else {
 		  _fragmentShaderPtr.reset(new 
@@ -879,7 +891,7 @@ namespace my_gl {
 	     if (!_textureEnabled)
 	     {
 		  _textureEnabled=true;
-		  switchShader();
+		  textureStateChange();
 	     }
 	}
 
@@ -889,7 +901,7 @@ namespace my_gl {
 	     if (_textureEnabled)
 	     {
 		  _textureEnabled=false;
-		  switchShader();
+		  textureStateChange();
 	     }
 	}
 

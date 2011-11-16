@@ -470,7 +470,8 @@ namespace my_gl {
 	 * @brief switch vertex shader and fragment shader
 	 *  depends on light and texture state
 	 */
-	void switchShader();
+	void lightingStateChange();
+	void textureStateChange();
 
      };
 
