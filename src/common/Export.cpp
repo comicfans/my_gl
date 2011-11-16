@@ -94,13 +94,12 @@ GLAPI void APIENTRY glEnable( GLenum cap )
 	  return;
      }
 
-
      switch(cap)
      {
 	  case GL_LIGHTING:
 	       context.enableLighting();
 	       return;
-	  case GL_TEXTURE:
+	  case GL_TEXTURE_2D:
 	       context.enable(TexTarget::TEXTURE_2D);
 	       return;
 	  case GL_CULL_FACE:
@@ -112,6 +111,10 @@ GLAPI void APIENTRY glEnable( GLenum cap )
 	  case GL_RESCALE_NORMAL:
 	       context.enable(NormalizeNormal::RESCALE_NORMAL);
 	       return;
+	  default:
+	       {
+		    assert(false);
+	       }
      }
 
 }
@@ -125,15 +128,14 @@ GLAPI void APIENTRY glDisable( GLenum cap )
      {
 	  context.disable(LIGHT_INDEX_MAP[cap]);
 	  return;
-     }
-
+     } 
 
      switch(cap)
      {
 	  case GL_LIGHTING:
 	       context.disableLighting();
 	       return;
-	  case GL_TEXTURE:
+	  case GL_TEXTURE_2D:
 	       context.disable(TexTarget::TEXTURE_2D);
 	       return;
 	  case GL_CULL_FACE:
@@ -145,6 +147,10 @@ GLAPI void APIENTRY glDisable( GLenum cap )
 	  case GL_RESCALE_NORMAL:
 	       context.disable(NormalizeNormal::RESCALE_NORMAL);
 	       return;
+	  default:
+	       {
+		    assert(false);
+	       }
 
      }
 }
