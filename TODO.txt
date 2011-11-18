@@ -62,6 +62,10 @@ glPopMatrix         	OK
 glPushMatrix         	OK
 glRotate         	OK
 glScale         	OK
+glScissor		NO
+glAlphaFunc		NO/no plan
+glStencilFunc		NO/no plan
+glBlendFunc		NO/no plan
 glShadeModel		NO/SMOOTH shading impled,FLAT shading is simpler
 glTexEnv		OK
 glTexCoordPointer	OK

@@ -3,7 +3,10 @@
  *
  *       Filename:  DepthBuffer.hpp
  *
- *    Description:  
+ *    Description:  OpenGL depth buffer , which can be used
+ *    in z-buffer hidden surface remove. store final 
+ *    z value in double format (scaled by DepthRange parameter)
+ *    also known as z-buffer
  *
  *        Version:  1.0
  *        Created:  2011-11-1 10:19:38
@@ -36,14 +39,38 @@ namespace my_gl {
 
 	  DepthBuffer(size_t width,size_t height);
 
+	  /** 
+	   * @brief depth value used to clear whole buffer
+	   * 
+	   * @param depth
+	   */
 	  void clearDepth(double depth);
 
+	  /** 
+	   * @brief depth function decide 
+	   * which type value can pass depth buffer test
+	   * 
+	   * @param func
+	   */
 	  void depthFunc(DepthFunc func);
 	  virtual void clear();
 
 	  size_t width()const;
 	  size_t height()const;
 
+	  /** 
+	   * @brief check winCoord.z() can be passed
+	   * depth test . if passed ,new value is stored
+	   * in depth buffer. (OpenGL can only test depth
+	   * value ,but disable update, but not implemented )
+	   *
+	   * in multi thread updating ,pixel operated on should be 
+	   * a atomic action
+	   * 
+	   * @param winCoord
+	   * 
+	   * @return 
+	   */
 	  bool testAndUpdate(const WinCoord& winCoord);
 
      	virtual ~DepthBuffer ();

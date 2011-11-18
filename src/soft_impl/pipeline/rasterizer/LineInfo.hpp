@@ -4,6 +4,8 @@
  *       Filename:  LineInfo.hpp
  *
  *    Description:  information of a line segment
+ *    test if this is a point ,is parallel to Axis
+ *    store which Dim is major Dim
  *
  *        Version:  1.0
  *        Created:  2011-10-21 20:39:29
@@ -16,21 +18,42 @@
  * =====================================================================================
  */
 
-#ifndef LINE_INFO_H
+#ifndef LINE_INFO_HPP
 
-#define LINE_INFO_H
+#define LINE_INFO_HPP
 
 namespace my_gl {
 
      struct WinCoord;
 
+     /** 
+	   * @brief which delta of Dim is bigger,
+	   * bigger Dim makes percent calculation 
+	   * more precision
+	   */
      struct LineInfo {
 
 	  enum class DimAxis{X,Y};
 
+	  /** 
+	   * @brief construct LineInfo from two coord
+	   *
+	   * 
+	   * @param coord1
+	   * @param coord2
+	   */
 	  LineInfo(const WinCoord& coord1,
 		    const WinCoord& coord2);
 
+	  /** 
+	   * @brief construct LineInfo from known data
+	   * but this call will do a check to
+	   * determind whether these data are correct
+	   * 
+	   * @param deltaXSet
+	   * @param deltaYSet
+	   * @param majorDimSet
+	   */
 	  LineInfo(int deltaXSet,int deltaYSet,DimAxis majorDimSet);
 
 	  LineInfo(const LineInfo& rhs);
@@ -60,4 +83,4 @@ namespace my_gl {
 } /* my_gl */
 
 
-#endif /* end of include guard: LINE_INFO_H*/
+#endif /* end of include guard: LINE_INFO_HPP*/

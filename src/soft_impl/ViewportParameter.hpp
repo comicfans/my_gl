@@ -3,7 +3,9 @@
  *
  *       Filename:  ViewportParameter.hpp
  *
- *    Description:  
+ *    Description:  parameter for glViewport call
+ *    store x,y,width and height
+ *
  *
  *        Version:  1.0
  *        Created:  2011-10-20 11:25:24

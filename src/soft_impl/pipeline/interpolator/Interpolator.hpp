@@ -3,7 +3,8 @@
  *
  *       Filename:  Interpolator.hpp
  *
- *    Description:  interpolate between values 
+ *    Description:  interpolate between values ,and do 
+ *    interpolate between two CoordInfo
  *
  *        Version:  1.0
  *        Created:  2011-10-9 17:07:13
@@ -34,11 +35,35 @@ namespace my_gl {
      class Interpolator {
      public:
 
+	  /** 
+	   * @brief simple linear interpolate,
+	   * from source to destination at percent,
+	   * write in result 
+	   * 
+	   * @param source
+	   * @param destination
+	   * @param percent
+	   * @param result
+	   */
 	  static void calculate(const Vec4& source,
 		    const Vec4& destination,
-		    double persent,Vec4& result);
+		    double percent,Vec4& result);
 
 
+	  /** 
+	   * @brief interpolate between two group of 
+	   * Vec4, with percent ,for every Vec4,
+	   * do linear interpolate
+	   *
+	   * (for further use, offset param is provided
+	   * to skip unneeded channel)
+	   * 
+	   * @param attributeGroupSource
+	   * @param attributeGroupDestination
+	   * @param percent
+	   * @param attributeGroupResult
+	   * @param offset
+	   */
 	  static void interpolateAttributeGroup(
 	       const ConstAttributeGroupRef& attributeGroupSource, 
 	       const ConstAttributeGroupRef& attributeGroupDestination,
@@ -47,14 +72,6 @@ namespace my_gl {
 
 
 	  virtual ~Interpolator();
-
-	  /** 
-	   * @brief which delta of Dim is bigger,
-	   * bigger Dim makes percent calculation 
-	   * more precision
-	   */
-
-	  enum class MajorDim{X,Y};
 
 	  virtual double getPercent(
 		    const CoordInfo& coord1,const CoordInfo& coord2,

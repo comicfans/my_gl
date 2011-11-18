@@ -4,6 +4,7 @@
  *       Filename:  WinCoordInterpolator.hpp
  *
  *    Description:  Interpolate value between window coordinates
+ *    simplest Interpolator
  *
  *        Version:  1.0
  *        Created:  2011-10-20 23:37:37

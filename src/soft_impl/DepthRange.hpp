@@ -24,8 +24,15 @@ namespace my_gl {
      struct DepthRange {
 	  double near;
 	  double far;
+	  /** 
+	   * @brief diff=far-near;
+	   */
 	  double diff;
 
+	  /** 
+	   * @brief should be called after value change
+	   * TODO need refactor
+	   */
 	  void update();
 
 	  DepthRange(double nearSet=0,double farSet=1);

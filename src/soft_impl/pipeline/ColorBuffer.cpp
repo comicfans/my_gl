@@ -3,7 +3,9 @@
  *
  *       Filename:  ColorBuffer.cpp
  *
- *    Description:  
+ *    Description:  OpenGL color buffer ,
+ *    store RGBA data in float format 
+ *    
  *
  *        Version:  1.0
  *        Created:  2011-10-22 17:00:29

@@ -42,6 +42,9 @@ namespace my_gl {
 	       SDL_SetVideoMode(width, height, 0, SDL_SWSURFACE);
      }
 
+     /** 
+      * @brief implement SDL_Surface lock RAII idiom
+      */
      struct SurfaceLocker
      {
 	  SurfaceLocker(SDL_Surface * toLock)
@@ -66,6 +69,10 @@ namespace my_gl {
      static void dropEvent()
      {
 	  SDL_Event event;
+	  //use sdl as final output 
+	  //but sdl poll event from system
+	  //drop all these event 
+	  //if not ,window will be locked
 	  while(SDL_PollEvent(&event));
      }
 

@@ -3,7 +3,7 @@
  *
  *       Filename:  IndexProvider.hpp
  *
- *    Description:  class to read Integer index from array
+ *    Description:  class to escape index fetching ,as "index array"
  *
  *        Version:  1.0
  *        Created:  2011-10-10 16:35:19
@@ -31,6 +31,13 @@ namespace my_gl {
      public:
 
 	  virtual ~IndexProvider();
+	  /** 
+	   * @brief fetch a integer at offset index
+	   * 
+	   * @param index offset index
+	   * 
+	   * @return index integer at index of index(confused?)
+	   */
 	  virtual size_t getIndex(size_t index)const=0;
      
      };

@@ -4,6 +4,8 @@
  *       Filename:  NaturalOrderIndexProvider.hpp
  *
  *    Description:  index value is just the index 
+ *                  can be used in in order vertex draw command
+ *                  glDrawArrays etc.
  *
  *        Version:  1.0
  *        Created:  2011-10-10 16:44:11

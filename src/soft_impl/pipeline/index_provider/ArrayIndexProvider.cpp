@@ -33,7 +33,16 @@ namespace my_gl {
      ArrayIndexProvider::~ArrayIndexProvider()
      {}
 
+
+     /** 
+      * @brief cast raw array data to specified data type
+      * 
+      * @param index index of integer in -DataType- format
+      * 
+      * @return 
+      */
      template<DataType dataType>
+	  
 	  size_t ArrayIndexProvider::castRead
 	  (size_t index)const
 	  {

@@ -26,9 +26,9 @@ namespace my_gl {
      Interpolator::~Interpolator(){}
 	  
      void Interpolator::calculate(const Vec4& source,
-	       const Vec4& destination,double persent,Vec4& result)
+	       const Vec4& destination,double percent,Vec4& result)
      {
-	  result=source+(destination-source)*persent;
+	  result=source+(destination-source)*percent;
      }
 
      void Interpolator::interpolateAttributeGroup(

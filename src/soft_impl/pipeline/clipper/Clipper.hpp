@@ -31,7 +31,8 @@ namespace my_gl {
 
      using boost::ptr_vector;
 
-     typedef ptr_vector<ConstAttributeGroupRef> ConstAttributeGroupRefList;
+     typedef ptr_vector<ConstAttributeGroupRef> 
+	  ConstAttributeGroupRefList;
 
      class ClippedPrimitiveGroup;
      class PrimitiveIndex;
@@ -41,6 +42,20 @@ namespace my_gl {
 
 	  virtual ~Clipper ();
 
+	  /** 
+	   * @brief 
+	   * 
+	   * @param projectedDataBuffer 
+	   * all vertex data comes from vertex shader
+	   *
+	   * @param originalPrimitiveIndex
+	   * PrimitiveIndex which ref all vertex shader data
+	   * @param clippedPrimitiveGroup
+	   * clip result,contains new vertex data and complete
+	   * index of these vertex data
+	   * 
+	   * @return 
+	   */
 	  void clip
 	       (const VertexAttributeBuffer& projectedDataBuffer,
 		const PrimitiveIndex& originalPrimitiveIndex,
@@ -49,6 +64,23 @@ namespace my_gl {
      protected:
 
 
+	  /** 
+	   * @brief single element clip 
+	   * all needed vertex data is stored in attributeGroupRefs
+	   * (in order of drawing command)
+	   * and these vertex index of all vertex output data
+	   * is stored in vertexIndex,use these index to 
+	   * optimize output data(ClippedPrimitiveGroup holds a 
+	   * reference of all vertex output data,only store clip 
+	   * generated vertex data ,original vertex only stores a 
+	   * index)
+	   * 
+	   * @param attributeGroupRefs
+	   * @param vertexIndex
+	   * @param clippedPrimitiveGroup
+	   * 
+	   * @return 
+	   */
 	  virtual void elementClip
 	       (const ConstAttributeGroupRefList& attributeGroupRefs,
 		const size_t *vertexIndex,

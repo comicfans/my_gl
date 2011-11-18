@@ -3,7 +3,8 @@
  *
  *       Filename:  ColorBuffer.hpp
  *
- *    Description:  which final pixel is reached
+ *    Description:  OpenGL color buffer 
+ *    which final pixel is reached, store RGBA pixel in float format
  *
  *        Version:  1.0
  *        Created:  2011-10-22 16:08:03
@@ -47,12 +48,25 @@ namespace my_gl {
 
 	  size_t height()const;
 
+	  /** 
+	   * @brief glClearColor ,rgba value is used to 
+	   * clear whole buffer
+	   * 
+	   * @param r
+	   * @param g
+	   * @param b
+	   * @param a
+	   */
 	  void clearColor(float r,float g,float b,float a);
 
 	  virtual void clear();
 
 	  virtual ~ColorBuffer();
 
+	  /** 
+	   * @brief which index of frameBuffer vector
+	   * need refactor ?
+	   */
 	  static const int ORDER_INDEX=0;
 
      private:

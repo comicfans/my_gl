@@ -3,7 +3,8 @@
  *
  *       Filename:  ElementIndexManager.hpp
  *
- *    Description:  manage glDrawElements 
+ *    Description:  manage glDrawElements indirect index 
+ *    drawing command
  *
  *        Version:  1.0
  *        Created:  2011-10-10 12:30:36
@@ -36,6 +37,28 @@ namespace my_gl{
      class ElementIndexManager{
      public:
 
+	  /** 
+	   * @brief call glBindBuffer with 
+	   * target=GL_ELEMENT_ARRAY_BUFFER
+	   * will bind corresponding buffer object
+	   * to ELEMENT_ARRAY_BUFFER_BIND
+	   * this array buffer object will be used
+	   * when glBufferData with target=GL_ELEMENT_ARRAY_BUFFER
+	   * is called.
+	   * element index will be also fected from this 
+	   * buffer object
+	   *
+	   * if non null ArrayBufferObject is binded,
+	   * indices in glDrawElements will be interpret
+	   * as offset of basic machine unit in buffer object
+	   *
+	   * if call glBindBuffer with GL_ELEMENT_ARRAY_BUFFER,0
+	   * nullptr will be binded to this,
+	   * indices in glDrawElements will be interpret
+	   * as client array pointer of draw index
+	   * 
+	   * @param toBind
+	   */
 	  void bindArrayBufferObject(const ArrayBufferObject* toBind);
 
 	  //partial glDrawElements

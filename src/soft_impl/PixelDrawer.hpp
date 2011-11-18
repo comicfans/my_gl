@@ -34,9 +34,21 @@ namespace my_gl {
 	       virtual void onInit
 		    (size_t height,size_t width)=0;
 
+	       /** 
+		* @brief will be called when frameBuffer 
+		* is drawn
+		* 
+		* @param frameBuffer
+		* 
+		* @return 
+		*/
 	       virtual void onDraw
 		    (const ColorBuffer& frameBuffer)=0;
 
+	       /** 
+		* @brief will be called when all drawing 
+		* command is flushed
+		*/
 	       virtual void onFlush()=0;
      };
 	
