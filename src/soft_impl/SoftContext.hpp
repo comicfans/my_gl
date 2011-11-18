@@ -35,7 +35,7 @@
 #include "shader/MatrixParam.hpp"
 
 #include "ElementIndexManager.hpp"
-#include "ViewportParameter.hpp"
+#include "Rectangle.hpp"
 #include "DepthRange.hpp"
 #include "lighting/GroupLightingParam.hpp"
 #include "shader/TextureFunc.hpp"

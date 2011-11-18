@@ -26,7 +26,7 @@
 
 #include "shader/VertexAttributeBuffer.hpp"
 
-#include "ViewportParameter.hpp"
+#include "Rectangle.hpp"
 #include "WinCoord.hpp"
 
 namespace my_gl {

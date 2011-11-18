@@ -18,7 +18,6 @@
 
 #include "PointRasterizer.hpp"
 
-#include "ViewportParameter.hpp"
 #include "shader/VertexAttributeBuffer.hpp"
 #include "shader/FragmentAttributeBuffer.hpp"
 
