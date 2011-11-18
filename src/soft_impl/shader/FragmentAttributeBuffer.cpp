@@ -24,17 +24,19 @@ namespace my_gl {
      using std::array;
      using boost::extents;
 
-     const int SIDE_OFFSET=4;
+     const int SIDE_OFFSET=1;
 
      FragmentAttributeBuffer::FragmentAttributeBuffer 
 	  (size_t width,size_t height,size_t attributeNumber)
-	  :SuperType(extents[height+SIDE_OFFSET*2]
-		    [width+SIDE_OFFSET*2][attributeNumber])
+	  :SuperType(extents[height+SIDE_OFFSET]
+		    [width][attributeNumber])
      {
 	  //clipped coordinates may be out of clip volume a little
 	  //so makes FragmentAttributeBuffer a little outter
+	  //if writeNewFragment is called with WinCoord out of range
+	  //just return a dummy vec4 group ([-1][0])
 	  //
-	  array<int,3> bases={-SIDE_OFFSET,-SIDE_OFFSET,0};
+	  array<int,3> bases={-SIDE_OFFSET,0,0};
 	  reindex(bases);
      }
 
@@ -51,8 +53,10 @@ namespace my_gl {
 	  if (inRange(winCoord))
 	  {
 	       _activeFragWinCoords.push_back(winCoord);
+	       return (*this)[winCoord.y()][winCoord.x()];
 	  }
-	  return (*this)[winCoord.y()][winCoord.x()];
+
+	  return (*this)[-SIDE_OFFSET][0];
      }
 
      ConstAttributeGroupRef FragmentAttributeBuffer::operator()

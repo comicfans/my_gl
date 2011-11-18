@@ -58,18 +58,12 @@ namespace my_gl {
      equal_to<double>(),greater<double>(),
      greater_equal<double>(),not_equal_to<double>()};
 
-     static const int SIDE_OFFSET=4;
-
      DepthBuffer::DepthBuffer(size_t width,size_t height)
-	  :_impl(extents[height+SIDE_OFFSET*2][width+SIDE_OFFSET*2])
+	  :_impl(extents[height][width])
      {
 	  //glspec default GL_DEPTH_CLEAR_VALUE
 	  _clearDepth=1;
 	  _func=DepthFunc::ALWAYS;
-
-	  array<int,3> bases={-SIDE_OFFSET,-SIDE_OFFSET,0};
-
-	  _impl.reindex(bases);
      }
 
      DepthBuffer::~DepthBuffer()
