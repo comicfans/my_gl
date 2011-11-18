@@ -50,6 +50,8 @@ namespace my_gl {
      AttributeGroupRef FragmentAttributeBuffer::writeNewFragment(
 	       const WinCoord& winCoord)
      {
+	  // if winCoord in range ,return actual AttributeGroupRef
+	  // or return a dummy garbage 
 	  if (inRange(winCoord))
 	  {
 	       _activeFragWinCoords.push_back(winCoord);

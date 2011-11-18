@@ -6,6 +6,10 @@
  *    Description:  store rasterized attribute
  *    			VertexAttributeBuffer->FragmentAttributeBuffer use copy approach
  *    			because a few primitive vertex may leads many fragment
+ *    			one pixel per slot ,if multi pixel in one slot (same wincoord)
+ *    			and early-z buffer test enabled, final fragment is determined
+ *    			by pixel which can pass depth test, if depth test disabled
+ *    			later reached command drawn pixel is chosen
  *
  *        Version:  1.0
  *        Created:  2011-10-19 9:39:21

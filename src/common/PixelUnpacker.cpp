@@ -61,6 +61,15 @@ namespace my_gl {
 	  dest[3]=DEFAULT_ALPHA;
      }
 
+     /** 
+      * @brief extract bit from beginBit with bit number=size
+      * 
+      * @param source
+      * @param beginBit
+      * @param size
+      * 
+      * @return 
+      */
      static uint32_t extract(const void* source,int beginBit,int size)
      {
 	  uint32_t ret= static_cast

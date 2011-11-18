@@ -3,7 +3,9 @@
  *
  *       Filename:  PixelUnpacker.hpp
  *
- *    Description:  
+ *    Description:  class to expend packed RGBA value to 4-float values
+ *    every type-format combine unpack function is small ,so not to be a class virtual 
+ *    function ,just a function object
  *
  *        Version:  1.0
  *        Created:  2011-9-18 10:30:26
@@ -31,11 +33,28 @@ namespace my_gl {
      using std::function;
      class PixelUnpacker {
      public:
+
+	  /** 
+	   * @brief construct unpacker ,but only cache parameter
+	   * not do the work
+	   *
+	   * 
+	   * @param source
+	   * @param dest
+	   * @param width
+	   * @param height
+	   * @param format
+	   * @param type
+	   * @param jumpBlocks used when part of image is changed(glTexSubImage2D)
+	   */
      	PixelUnpacker (const void * source,float* dest,
 		  size_t width,size_t height,
 		  ImageFormat format,StoreType type,
 		  size_t jumpBlocks=0);
 
+	/** 
+	 * @brief do real unpacking work
+	 */
 	void unpack();
      private:
 

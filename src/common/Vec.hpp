@@ -3,7 +3,7 @@
  *
  *       Filename:  Vec.hpp
  *
- *    Description:  simple vector float 4 
+ *    Description:  simple vector3 and vector4 
  *
  *        Version:  1.0
  *        Created:  2011-9-13 16:05:28

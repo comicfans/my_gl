@@ -3,7 +3,8 @@
  *
  *       Filename:  MatrixBase.hpp
  *
- *    Description:  simple float 4x4 matrix vector impl
+ *    Description:  simple float 4x4 3x3 matrix impl
+ *    in OpenGL ,matrix is column-priority  
  *
  *        Version:  1.0
  *        Created:  2011-9-13 15:42:52
@@ -75,8 +76,19 @@ namespace my_gl {
      };
 
 
+     /** 
+      * @brief Matrix 4x4
+      */
      typedef MatrixBase<4> Matrix4;
+
+     /** 
+      * @brief Matrix 3x3
+      */
      typedef MatrixBase<3> Matrix3;
+
+     /** 
+      * @brief Matrix 2x2
+      */
      typedef MatrixBase<2> Matrix2;
 
 
@@ -84,6 +96,13 @@ namespace my_gl {
      extern template struct MatrixBase<4>;
      extern template struct MatrixBase<2>;
 
+     /** 
+      * @brief return upper-left 3x3 matrix of matrix4
+      * 
+      * @param matrix4
+      * 
+      * @return 
+      */
      Matrix3 upperLeft(const Matrix4& matrix4);
 
      Matrix4 translate(float x,float y,float z) ;

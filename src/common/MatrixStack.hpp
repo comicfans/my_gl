@@ -3,7 +3,11 @@
  *
  *       Filename:  MatrixStack.hpp
  *
- *    Description:  a stack of Matrix
+ *    Description:  a stack of Matrix, 
+ *    just as OpenGL matrix stack, default has a identity in stack
+ *    call push will push current top matrix, and any matrix operation took
+ *    top matrix as left-hand parameter
+ *
  *
  *        Version:  1.0
  *        Created:  2011-9-13 17:06:50
@@ -33,8 +37,16 @@ namespace my_gl {
 
 	  MatrixStack();
 
+	  /** 
+	   * @brief multiply top matrix by rhs
+	   * 
+	   * @param rhs
+	   */
 	  void multiTop(const Matrix4& rhs);
 
+	  /** 
+	   * @brief push top matrix in
+	   */
 	  void push();
 
 	  using stack<Matrix4>::pop;
