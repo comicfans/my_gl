@@ -95,5 +95,4 @@ framebuffer		:OK
 
 合并 useVertexNumber 到 IndexProvider ?
 Front Face 和FragmentShader 的交互
-FragmentAttributeBuffer 到FragmentShader
 Texture 偏移半个像素，repeat模式错误

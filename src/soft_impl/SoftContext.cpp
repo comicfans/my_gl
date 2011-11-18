@@ -957,11 +957,5 @@ namespace my_gl {
 	  T& SoftContext::getFrameBuffer()
 	  {return static_cast<T&>(_allFrameBuffer[T::ORDER_INDEX]);}
 
-
-
-     ObjectNameManager& SoftContext::getObjectNameManager()
-     {
-	  return _objectNameManager;
-     }
 	
 } /* my_gl */
