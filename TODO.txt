@@ -96,3 +96,5 @@ framebuffer		:OK
 合并 useVertexNumber 到 IndexProvider ?
 Front Face 和FragmentShader 的交互
 Texture 偏移半个像素，repeat模式错误
+合并VertexShader和FragmentShader
+将必要的虚函数抽离为空基类
