@@ -338,7 +338,7 @@ namespace my_gl {
 		  int xoffset,int yoffset,
 		  int x,int y,size_t width,size_t height);
 
-     private:
+     protected:
 
 	size_t _height;
 
