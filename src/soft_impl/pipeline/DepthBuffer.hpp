@@ -85,6 +85,8 @@ namespace my_gl {
 
 	DepthFunc _func;
 
+	bool outOfRange(const WinCoord& winCoord)const;
+
      };
 	
 } /* my_gl */

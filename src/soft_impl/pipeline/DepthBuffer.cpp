@@ -95,9 +95,22 @@ namespace my_gl {
 	  
      }
 	
+     bool DepthBuffer::outOfRange(const my_gl::WinCoord &winCoord)const
+     {
+	  return (winCoord.x()<0) ||
+	       (winCoord.x()>=width()) ||
+	       (winCoord.y()<0) ||
+	       (winCoord.y()>=height());
+     }
 	  
      bool DepthBuffer::testAndUpdate(const WinCoord& winCoord)
      {
+	  //if pixel out of range ,always makes it not passed
+	  if (outOfRange(winCoord))
+	  {
+	       return false;
+	  }
+
 	  double& originValue=_impl[winCoord.y()][winCoord.x()];
 
 	  auto& testFunc=DEPTH_FUNCTIONS[int(_func)];
