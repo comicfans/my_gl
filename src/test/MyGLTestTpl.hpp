@@ -20,9 +20,7 @@
 
 #define MY_GL_TEST_TPL_HPP
 
-#define GL_GLEXT_PROTOTYPES
-#include <GL/gl.h>
-#include <GL/glext.h>
+#include "Export.hpp"
 #include "soft_impl/SoftContext.hpp"
 
 namespace my_gl {
