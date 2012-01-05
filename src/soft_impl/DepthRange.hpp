@@ -22,8 +22,8 @@
 namespace my_gl {
 
      struct DepthRange {
-	  double near;
-	  double far;
+	  double nearValue;
+	  double farValue;
 	  /** 
 	   * @brief diff=far-near;
 	   */

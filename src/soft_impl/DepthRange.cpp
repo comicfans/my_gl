@@ -21,11 +21,11 @@
 namespace my_gl {
 
      DepthRange::DepthRange(double nearSet,double farSet)
-	  :near(nearSet),far(farSet){}
+	  :nearValue(nearSet),farValue(farSet){}
 
      void DepthRange::update()
      {
-	  diff=far-near;
+	  diff=farValue-nearValue;
      }
 	
 } /* my_gl */

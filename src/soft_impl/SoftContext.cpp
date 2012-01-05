@@ -181,10 +181,10 @@ namespace my_gl {
      {
 	  getFrameBuffer<DepthBuffer>().clearDepth(depth);
      }
-     void SoftContext::depthRange(double near,double far)
+     void SoftContext::depthRange(double nearValue,double farValue)
      {
-	  _depthRange.near=near;
-	  _depthRange.far=far;
+	  _depthRange.nearValue=nearValue;
+	  _depthRange.farValue=farValue;
      }
 
      void SoftContext::depthFunc(DepthFunc func)

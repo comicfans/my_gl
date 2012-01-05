@@ -131,7 +131,7 @@ namespace my_gl {
 			 _viewportParameter.width));
 
 	       ret.z()=viewportCorrectImpl<double>(normalizedDeviceCoordinates.z(),
-			 _depthRange.near,
+			 _depthRange.nearValue,
 			 _depthRange.diff);
 
 	       return ret;
