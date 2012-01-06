@@ -1,0 +1,9 @@
+
+INCLUDE_DIRECTORIES(${OPENCL_INCLUDE_DIR})
+
+ADD_LIBRARY(OpenCLImpl OpenCLContext.cpp)
+
+TARGET_LINK_LIBRARIES(OpenCLImpl 
+     SoftContext
+     ${OPENCL_LIBRARY})
+
