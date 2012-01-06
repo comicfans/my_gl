@@ -1,1 +1,1 @@
-SUBDIRS(soft_impl common test)
+SUBDIRS( common soft_impl opencl_impl test)
