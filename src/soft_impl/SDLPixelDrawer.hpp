@@ -21,6 +21,8 @@
 #define SDL_PIXEL_DRAWER_HPP
 
 #include <memory>
+#include <functional>
+#include <cstdint>
 
 #include "PixelDrawer.hpp"
 
@@ -45,6 +47,9 @@ namespace my_gl {
 
 	size_t _width;
 	size_t _height;
+
+	std::function<void(uint8_t*,uint32_t)> _setPixelFunc;
+
 	SDL_Surface *_screenPtr;
      };
 	

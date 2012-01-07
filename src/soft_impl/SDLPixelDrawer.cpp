@@ -30,6 +30,44 @@ namespace my_gl {
 	  SDL_Quit();
      }
 
+     template<int bpp>
+	  void setPixel(Uint8 *finalPixel,Uint32 toSet);
+
+     template<>
+	  void setPixel<1>(Uint8 *finalPixel,Uint32 toSet)
+	  {
+	       *finalPixel=toSet;
+	  }
+     template<>
+	  void setPixel<2>(Uint8 *finalPixel,Uint32 toSet)
+	  {
+	       *(Uint16*)finalPixel = toSet;
+	  }
+     template<>
+	  void setPixel<4>(Uint8 *finalPixel,Uint32 toSet)
+	  {
+	       *(Uint32*)finalPixel = toSet;
+	  }
+
+     template<int bpp,bool litteEndian>
+	  void setPixel(Uint8 *finalPixel,Uint32 toSet);
+
+     template<>
+	  void setPixel<3,true>(Uint8 *finalPixel,Uint32 toSet)
+	  {
+	       finalPixel[0] = toSet & 0xff;
+	       finalPixel[1] = (toSet>> 8) & 0xff;
+	       finalPixel[2] = (toSet>> 16) & 0xff;
+	  }
+     template<>
+	  void setPixel<3,false>(Uint8 *finalPixel,Uint32 toSet)
+	  {
+	       finalPixel[0] = (toSet>> 16) & 0xff;
+	       finalPixel[1] = (toSet>> 8) & 0xff;
+	       finalPixel[2] = toSet& 0xff;
+	  }
+
+
      void SDLPixelDrawer::onInit(size_t width,size_t height)
      {
 	  //init sdl
@@ -40,6 +78,37 @@ namespace my_gl {
 
 	  _screenPtr= 
 	       SDL_SetVideoMode(width, height, 0, SDL_SWSURFACE);
+
+	  //TODO no check currently
+	  assert(_screenPtr);
+
+	  switch (_screenPtr->format->BytesPerPixel)
+	  {
+	       case 1:
+		    {
+			 _setPixelFunc=setPixel<1>;
+			 break;
+		    }
+	       case 2:
+		    {
+			 _setPixelFunc=setPixel<2>;
+			 break;
+		    }
+	       case 3:
+		    {
+			 _setPixelFunc=setPixel<3,SDL_BYTEORDER==SDL_LIL_ENDIAN>;
+			 break;
+		    }
+	       case 4:
+		    {
+			 _setPixelFunc=setPixel<4>;
+			 break;
+		    }
+	       default:
+		    {
+			 assert(false || "bpp not support");
+		    }
+	  }
      }
 
      /** 
@@ -76,45 +145,6 @@ namespace my_gl {
 	  while(SDL_PollEvent(&event));
      }
 
-     /*
-      * came from SDL guide
-      * Set the pixel at (x, y) to the given value
-      * NOTE: The surface must be locked before calling this!
-      */
-     void putPixel(SDL_Surface *surface, int x, int y, Uint32 pixel)
-     {
-	  int bpp = surface->format->BytesPerPixel;
-	  /* Here p is the address to the pixel we want to set */
-	  Uint8 *p = (Uint8 *)surface->pixels + 
-	       y * surface->pitch + x * bpp;
-
-	  switch(bpp) {
-	       case 1:
-		    *p = pixel;
-		    break;
-
-	       case 2:
-		    *(Uint16 *)p = pixel;
-		    break;
-
-	       case 3:
-		    if(SDL_BYTEORDER == SDL_BIG_ENDIAN) {
-			 p[0] = (pixel >> 16) & 0xff;
-			 p[1] = (pixel >> 8) & 0xff;
-			 p[2] = pixel & 0xff;
-		    } else {
-			 p[0] = pixel & 0xff;
-			 p[1] = (pixel >> 8) & 0xff;
-			 p[2] = (pixel >> 16) & 0xff;
-		    }
-		    break;
-
-	       case 4:
-		    *(Uint32 *)p = pixel;
-		    break;
-	  }
-     }
-
      static inline Uint8 toUint8(float value)
      {
 	  assert(value>=0 && value<=1);
@@ -131,9 +161,6 @@ namespace my_gl {
      {
 	  SurfaceLocker locker(_screenPtr);
 
-	  //SDL surface origin is left-upper
-	  //but opengl default frameBuffer origin is left-lower
-
 	  for (size_t y=0; y<_height; ++y)
 	  {
 	       for (size_t x=0; x<_width; ++x)
@@ -144,7 +171,16 @@ namespace my_gl {
 		    Uint32 packedValue=
 			 SDL_MapRGB(_screenPtr->format,
 				   toUint8(color[0]),toUint8(color[1]),toUint8(color[2]));
-		    putPixel(_screenPtr,x,_height-y,packedValue);
+
+	  //SDL surface origin is left-upper
+	  //but opengl default frameBuffer origin is left-lower
+
+		    Uint8 *p = (Uint8 *)_screenPtr ->pixels + 
+			 (_height-y) * _screenPtr->pitch + 
+			 x * _screenPtr->format->BytesPerPixel;
+
+		    _setPixelFunc(p,packedValue);
+
 	       }
 	  }
 
