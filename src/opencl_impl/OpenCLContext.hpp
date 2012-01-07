@@ -10,8 +10,8 @@
  *       Revision:  none
  *       Compiler:  gcc
  *
- *         Author:  YOUR NAME (), 
- *        Company:  
+ *         Author:  YOUR NAME (),
+ *        Company:
  *
  * =====================================================================================
  */
@@ -20,7 +20,13 @@
 
 #define OPENCL_CONTEXT_HPP
 
+#include <memory>
+
 #include "soft_impl/SoftContext.hpp"
+namespace cl
+{
+        class Context;
+}
 
 namespace my_gl {
 
@@ -29,11 +35,15 @@ namespace my_gl {
      	OpenCLContext (size_t width=600,size_t height=400);
 
      	virtual ~OpenCLContext ();
-     
+
      private:
+
+	std::unique_ptr<cl::Context> _CLContext;
+
+         void initOpenCL();
      	/* data */
      };
-	
+
 } /* my_gl */
 
 
