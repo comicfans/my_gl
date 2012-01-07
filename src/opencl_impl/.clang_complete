@@ -1,1 +1,1 @@
--I ../../src -I ../../include/
+-I ../../src -I ../../include/ -I "D:\program files\AMD APP\include"
