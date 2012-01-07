@@ -3,7 +3,7 @@ PROJECT (my_gl)
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 
 IF(${CMAKE_BUILD_TYPE} MATCHES Debug)
-     SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-arcs -ftest-coverage")
+     SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pg -fprofile-arcs -ftest-coverage")
 ENDIF()
 
 set(EXTRA_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMakeModules")
