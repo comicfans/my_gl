@@ -6,3 +6,5 @@ ADD_TEST(OpenCLContextTest TestOpenCLContext)
 
 
 
+ADD_EXECUTABLE(TestBoostInitalPath TestBoostInitalPath.cpp)
+TARGET_LINK_LIBRARIES(TestBoostInitalPath ${Boost_LIBRARIES})
