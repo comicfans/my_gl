@@ -42,6 +42,8 @@ namespace my_gl {
 
 	  Vec4& operator()(size_t y,size_t x);
 
+	  const Vec4& operator()(size_t y,size_t x)const;
+
 	  const Vec4& operator()(const WinCoord& winCoord)const;
 
 	  size_t width()const;

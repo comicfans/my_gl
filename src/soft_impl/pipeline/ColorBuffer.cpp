@@ -44,6 +44,10 @@ namespace my_gl {
 	       return _impl[y][x];
 	  }
 
+	  const Vec4& ColorBuffer::operator()(size_t x,size_t y)const
+	  {
+	       return _impl[y][x];
+	  }
 	  const Vec4& ColorBuffer::operator()
 	       (const WinCoord& winCoord)const
 	  {
