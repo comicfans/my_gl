@@ -42,15 +42,39 @@ namespace my_gl {
 	  virtual void onFlush();
      	
 	  virtual ~SDLPixelDrawer  ();
+
+	  size_t width()const ;
+
+	  size_t height()const ;
+
+     protected:
+
+	SDL_Surface *_screenPtr;
      
+	void dropEvent();
+
+	std::function<void(uint8_t*,uint32_t)> _setPixelFunc;
+
+     /** 
+      * @brief implement SDL_Surface lock RAII idiom
+      */
+	struct SurfaceLocker
+	{
+
+	     SurfaceLocker(SDL_Surface * toLock);
+	     ~SurfaceLocker();
+	     private:
+	     SDL_Surface *_toLock;
+	};
+
+	
+
      private:
 
 	size_t _width;
 	size_t _height;
 
-	std::function<void(uint8_t*,uint32_t)> _setPixelFunc;
 
-	SDL_Surface *_screenPtr;
      };
 	
 } /* my_gl */

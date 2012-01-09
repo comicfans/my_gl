@@ -111,12 +111,7 @@ namespace my_gl {
 	  }
      }
 
-     /** 
-      * @brief implement SDL_Surface lock RAII idiom
-      */
-     struct SurfaceLocker
-     {
-	  SurfaceLocker(SDL_Surface * toLock)
+     SDLPixelDrawer::SurfaceLocker::SurfaceLocker(SDL_Surface * toLock)
 	  {
 	       _toLock=toLock;
 	       if (SDL_MUSTLOCK(_toLock))
@@ -124,18 +119,16 @@ namespace my_gl {
 		    SDL_LockSurface(_toLock);
 	       }
 	  }
-	  ~SurfaceLocker()
+
+     SDLPixelDrawer::SurfaceLocker::~SurfaceLocker()
 	  {     if (SDL_MUSTLOCK(_toLock))
 	       {
 		    SDL_UnlockSurface(_toLock);
 	       }
 	  }
-	  private:
-	  SDL_Surface *_toLock;
 
-     };
 
-     static void dropEvent()
+     void SDLPixelDrawer::dropEvent()
      {
 	  SDL_Event event;
 	  //use sdl as final output 
@@ -188,4 +181,9 @@ namespace my_gl {
 
      }
 
+
+	  
+     size_t SDLPixelDrawer::width()const{return _width;}
+
+     size_t SDLPixelDrawer::height()const {return _height;}
 } /* my_gl */
