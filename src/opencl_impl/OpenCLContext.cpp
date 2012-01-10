@@ -20,6 +20,8 @@
 
 #include <CL/cl.hpp>
 
+#include "OpenCLPixelDrawer.hpp"
+
 using std::vector;
 
 namespace my_gl {
@@ -28,8 +30,13 @@ namespace my_gl {
      OpenCLContext::OpenCLContext (size_t width,size_t height)
 	  :SoftContext(width,height)
      {
+         initOpenCL();
+         SoftContext::_pixelDrawerPtr.reset(
+                     new OpenCLPixelDrawer(*_CLContext.get()));
 
+	 _pixelDrawerPtr->onInit(width,height);
 
+         Context::setInstance(this);
      }
 
      OpenCLContext::~OpenCLContext()
