@@ -160,6 +160,7 @@ namespace my_gl {
 
 	  _commandQueue.enqueueUnmapMemObject(_outputCLBuffer,temp);
 
+	  dropEvent();
      }
 	
 } /* my_gl */
