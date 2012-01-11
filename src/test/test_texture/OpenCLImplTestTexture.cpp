@@ -1,12 +1,12 @@
 /*
  * =====================================================================================
  *
- *       Filename:  MyGLTestMovingLight.cpp
+ *       Filename:  OpenCLImplTestTexture.cpp
  *
  *    Description:  
  *
  *        Version:  1.0
- *        Created:  2011-11-15 16:45:24
+ *        Created:  2012-1-10 21:06:54
  *       Revision:  none
  *       Compiler:  gcc
  *
@@ -16,13 +16,16 @@
  * =====================================================================================
  */
 
+
+
 #include "MyGLTestTpl.hpp"
-#include "soft_impl/SoftContext.hpp"
-#include "TestMovingLight.hpp"
+#include "opencl_impl/OpenCLContext.hpp"
+#include "TestTexture.hpp"
 
 using namespace my_gl;
 
 int main(int argc, const char *argv[])
 {
-     myGLTestRun<SoftContext,TestMovingLight>();
+     myGLTestRun<OpenCLContext,TestTexture>();
 }
+

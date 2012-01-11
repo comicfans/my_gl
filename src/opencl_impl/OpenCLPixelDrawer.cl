@@ -10,8 +10,7 @@ kernel void float4ToUchar4( global float4* floatRGBA, global uchar4* ucharRGBA)
 
      size_t globalOffset=sizeX*idxY+idxX;
 
-     float4 converted=floatRGBA[globalOffset]*255;
-
-     ucharRGBA[globalOffset]=convert_uchar4(converted);
+     ucharRGBA[globalOffset].xyz=
+	  convert_uchar3(floatRGBA[globalOffset].xyz*255);
 
 }

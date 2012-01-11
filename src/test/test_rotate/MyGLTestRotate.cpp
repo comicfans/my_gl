@@ -19,11 +19,12 @@
 
 #include "MyGLTestTpl.hpp"
 #include "TestRotate.hpp"
+#include "soft_impl/SoftContext.hpp"
 
 using namespace my_gl;
 
 
 int main(int argc, const char *argv[])
 {
-     myGLTestRun<TestRotate>();
+     myGLTestRun<SoftContext,TestRotate>();
 }

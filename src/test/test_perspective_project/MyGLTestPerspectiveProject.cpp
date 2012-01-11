@@ -18,6 +18,7 @@
 
 
 #include "MyGLTestTpl.hpp"
+#include "soft_impl/SoftContext.hpp"
 #include "TestPerspectiveProject.hpp"
 
 using namespace my_gl;
@@ -25,6 +26,6 @@ using namespace my_gl;
 
 int main(int argc, const char *argv[])
 {
-     myGLTestRun<TestPerspectiveProject>();
+     myGLTestRun<SoftContext,TestPerspectiveProject>();
 	
 }

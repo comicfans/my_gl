@@ -17,11 +17,12 @@
  */
 
 #include "MyGLTestTpl.hpp"
+#include "soft_impl/SoftContext.hpp"
 #include "TestTexEnvFunc.hpp"
 
 using namespace my_gl;
 
 int main(int argc, const char *argv[])
 {
-     myGLTestRun<TestTexEnvFunc>();
+     myGLTestRun<SoftContext,TestTexEnvFunc>();
 }

@@ -16,11 +16,12 @@
  * =====================================================================================
  */
 #include "MyGLTestTpl.hpp"
+#include "soft_impl/SoftContext.hpp"
 #include "TestTexture.hpp"
 
 using namespace my_gl;
 
 int main(int argc, const char *argv[])
 {
-     myGLTestRun<TestTexture>();
+     myGLTestRun<SoftContext,TestTexture>();
 }

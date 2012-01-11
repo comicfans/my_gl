@@ -17,6 +17,7 @@
  */
 
 #include "MyGLTestTpl.hpp"
+#include "soft_impl/SoftContext.hpp"
 #include "TestScale.hpp"
 
 using namespace my_gl;
@@ -25,6 +26,6 @@ using namespace my_gl;
 int main(int argc, const char *argv[])
 {
 
-     myGLTestRun<TestScale>();
+     myGLTestRun<SoftContext,TestScale>();
 }
 

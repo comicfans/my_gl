@@ -21,30 +21,33 @@
 #define MY_GL_TEST_TPL_HPP
 
 #include "Export.hpp"
-#include "soft_impl/SoftContext.hpp"
-
 namespace my_gl {
+
+
 	
-template<class T,int frames=30>
+
+
+template<class ContextT,class T,int frames=30>
 void myGLTestRun()
 {
-     const int DEFAULT_WIDTH=400;
 
-     const int DEFAULT_HEIGHT=300;
+    const int DEFAULT_WIDTH=500;
 
-     SoftContext context(DEFAULT_WIDTH,DEFAULT_HEIGHT);
+    const int DEFAULT_HEIGHT=400;
 
-     T::init();
 
-     for (int i=0; i<frames; ++i)
-     {
-	  T::render();
-	  glFlush();
-     }
+    ContextT context(DEFAULT_WIDTH,DEFAULT_HEIGHT);
+
+    T::init();
+
+    for (int i=0; i<frames; ++i)
+    {
+     T::render();
+     glFlush();
+    }
+
 
 }
-
-
 
 
 } /* my_gl */
