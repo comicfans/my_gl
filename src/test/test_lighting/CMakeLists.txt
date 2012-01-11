@@ -2,3 +2,5 @@ ADD_COMPARE_TEST(Lighting)
 ADD_COMPARE_TEST(SpotLight)
 ADD_COMPARE_TEST(InfinitePointLight)
 ADD_COMPARE_TEST(MovingLight)
+
+

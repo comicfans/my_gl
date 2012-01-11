@@ -17,11 +17,12 @@
  */
 
 #include "MyGLTestTpl.hpp"
+#include "soft_impl/SoftContext.hpp"
 #include "TestSpotLight.hpp"
 
 using namespace my_gl;
 
 int main(int argc, const char *argv[])
 {
-     myGLTestRun<TestSpotLight>();
+     myGLTestRun<SoftContext,TestSpotLight>();
 }

@@ -19,6 +19,7 @@
 
 #include "MyGLTestTpl.hpp"
 #include "TestClientArrayPointer.hpp"
+#include "soft_impl/SoftContext.hpp"
 
 using namespace my_gl;
 
@@ -26,6 +27,6 @@ using namespace my_gl;
 int main(int argc, const char *argv[])
 {
 
-     myGLTestRun<TestClientArrayPointer>();
+     myGLTestRun<SoftContext,TestClientArrayPointer>();
 }
 

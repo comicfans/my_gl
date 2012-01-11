@@ -18,11 +18,12 @@
 
 #include "MyGLTestTpl.hpp"
 #include "TestCullFace.hpp"
+#include "soft_impl/SoftContext.hpp"
 
 using namespace my_gl;
 
 
 int main(int argc, const char *argv[])
 {
-     myGLTestRun<TestCullFace>();
+     myGLTestRun<SoftContext,TestCullFace>();
 }
