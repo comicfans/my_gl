@@ -14,6 +14,7 @@ ADD_LIBRARY(SoftImpl
      )
 
 TARGET_LINK_LIBRARIES(SoftImpl 
+     Export
      SDLPixelDrawer
      Object 
      AttributeVertexManagers 
