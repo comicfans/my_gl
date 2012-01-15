@@ -35,6 +35,8 @@ namespace my_gl {
 
 	virtual void onDraw(const ColorBuffer& frameBuffer);
 
+	virtual void onFlush();
+
 	virtual void onInit(size_t width,size_t height);
 
      	virtual ~OpenCLPixelDrawer ();

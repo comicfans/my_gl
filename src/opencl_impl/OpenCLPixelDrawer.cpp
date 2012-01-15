@@ -33,7 +33,7 @@ namespace my_gl {
 	  :_openCLContext(openCLContext),_currentBindedFrameBuffer(nullptr)
      { 
 	  std::vector<cl::Device> devices= 
-	      _openCLContext.getInfo<CL_CONTEXT_DEVICES>();
+	       _openCLContext.getInfo<CL_CONTEXT_DEVICES>();
 
 	  assert(devices.size()||"no opencl device found");
 
@@ -61,7 +61,7 @@ namespace my_gl {
 	  assert(buildResult==CL_SUCCESS);
 
 	  _expendKernel=cl::Kernel(program,"float4ToUchar4");
-	  	  
+
      }
 
      void OpenCLPixelDrawer::onInit(size_t width, size_t height)
@@ -79,7 +79,7 @@ namespace my_gl {
 	  _outputUint32Buffer.resize(sizeList);
 
 	  _outputCLBuffer=cl::Buffer(_openCLContext,
-		    CL_MEM_USE_HOST_PTR,
+		    CL_MEM_WRITE_ONLY|CL_MEM_USE_HOST_PTR,
 		    _outputBufferSize,
 		    _outputUint32Buffer.data());
 
@@ -98,30 +98,35 @@ namespace my_gl {
 	  const void* pointer=
 	       (&(_currentBindedFrameBuffer->operator()(0,0)));
 
+	  int address=reinterpret_cast<int>(pointer);
+
+	  assert((address %16==0)||
+		    "vec address not align to 16 byte");
+
 	  _inputCLBuffer=cl::Buffer(_openCLContext,
-		    CL_MEM_USE_HOST_PTR,
+		    CL_MEM_READ_ONLY|CL_MEM_USE_HOST_PTR,
 		    _inputBufferSize,
 		    const_cast<void*>(pointer));
 
 	  _expendKernel.setArg(0,_inputCLBuffer);
 
      }
-	
+
      void OpenCLPixelDrawer::onDraw(const ColorBuffer& frameBuffer)
      {
 	  if ((_currentBindedFrameBuffer==nullptr )|| 
 		    (&frameBuffer != _currentBindedFrameBuffer))
 	  {
 	       _currentBindedFrameBuffer=&frameBuffer;
-           recreateInputBuffer();
+	       recreateInputBuffer();
 	  }
 
 	  cl_int result=
-	  _commandQueue.enqueueNDRangeKernel(
-		    _expendKernel,
-		    cl::NullRange,
-		    _ndRange,
-		    cl::NullRange);
+	       _commandQueue.enqueueNDRangeKernel(
+			 _expendKernel,
+			 cl::NullRange,
+			 _ndRange,
+			 cl::NDRange(1,1));
 
 	  assert(result==CL_SUCCESS || "execute opencl failed");
 
@@ -129,9 +134,14 @@ namespace my_gl {
 
 	  assert(result==CL_SUCCESS || "execute opencl finish failed");
 
+	  dropEvent();
+     }
+
+     void OpenCLPixelDrawer::onFlush()
+     {
 	  void *temp=
-	  _commandQueue.enqueueMapBuffer(_outputCLBuffer,true,
-		    CL_MAP_READ,0,_outputBufferSize);
+	       _commandQueue.enqueueMapBuffer(_outputCLBuffer,true,
+			 CL_MAP_READ,0,_outputBufferSize);
 
 	  SurfaceLocker locker(_screenPtr);
 
@@ -145,8 +155,8 @@ namespace my_gl {
 			 SDL_MapRGB(_screenPtr->format,fourBytes[0]
 				   ,fourBytes[1],fourBytes[2]);
 
-	  //SDL surface origin is left-upper
-	  //but opengl default frameBuffer origin is left-lower
+		    //SDL surface origin is left-upper
+		    //but opengl default frameBuffer origin is left-lower
 
 		    Uint8 *p = (Uint8 *)_screenPtr ->pixels + 
 			 (height()-y) * _screenPtr->pitch + 
@@ -160,7 +170,8 @@ namespace my_gl {
 
 	  _commandQueue.enqueueUnmapMemObject(_outputCLBuffer,temp);
 
-	  dropEvent();
+	  SDLPixelDrawer::onFlush();
+
      }
-	
+
 } /* my_gl */
