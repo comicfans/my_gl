@@ -14,3 +14,7 @@ SUBDIRS(test_array_buffer_object
      test_cull_face
      test_lighting
      test_texture)
+
+
+ADD_EXECUTABLE(TestFloatStore TestFloatStore.cpp)
+ADD_TEST(FloatStoreTest TestFloatStore)
