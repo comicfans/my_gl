@@ -14,3 +14,10 @@ ADD_EXECUTABLE(TestOpenCLPixelDrawer TestOpenCLPixelDrawer.cpp)
 TARGET_LINK_LIBRARIES(TestOpenCLPixelDrawer 
      OpenCLPixelDrawer FrameBuffer Vec Info)
 CHANGE_RUNNING_DIR(TestOpenCLPixelDrawer)
+
+
+ADD_EXECUTABLE(TestParall TestParall.cpp)
+TARGET_LINK_LIBRARIES(TestParall CLSource ${OPENCL_LIBRARY})
+CHANGE_RUNNING_DIR(TestParall)
+COPY_RUNTIME_FILE(TestParall.cl)
+ADD_TEST(ParallTest TestParall)
