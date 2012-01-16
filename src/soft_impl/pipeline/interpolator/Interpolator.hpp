@@ -32,6 +32,12 @@ namespace my_gl {
      struct CoordInfo;
      struct LineInfo;
 
+     /** 
+      * @brief abstract class of Interpolator 
+      *        sub this class to implement interpolate 
+      *        in Window Coord / Normalized Device Coord
+      *        Clipped Coord
+      */
      class Interpolator {
      public:
 
@@ -40,10 +46,10 @@ namespace my_gl {
 	   * from source to destination at percent,
 	   * write in result 
 	   * 
-	   * @param source
-	   * @param destination
-	   * @param percent
-	   * @param result
+	   * @param source source vec4 value 
+	   * @param destination destination vec4 value
+	   * @param percent how much percent from source to destination
+	   * @param result result value to write
 	   */
 	  static void calculate(const Vec4& source,
 		    const Vec4& destination,
@@ -58,11 +64,14 @@ namespace my_gl {
 	   * (for further use, offset param is provided
 	   * to skip unneeded channel)
 	   * 
-	   * @param attributeGroupSource
-	   * @param attributeGroupDestination
-	   * @param percent
-	   * @param attributeGroupResult
-	   * @param offset
+	   * @param attributeGroupSource grouped source value
+	   * @param attributeGroupDestination grouped destination value
+	   * @param percent how much percent from source to destination to interpolate
+	   * @param attributeGroupResult result value to write
+	   * @param offset offset index to begin interpolation, 
+	   * 		   can pass a value to skip 
+	   * 		   first n value (already interpolated)
+	   * 		   default is zero (interpolate all )
 	   */
 	  static void interpolateAttributeGroup(
 	       const ConstAttributeGroupRef& attributeGroupSource, 
@@ -73,6 +82,18 @@ namespace my_gl {
 
 	  virtual ~Interpolator();
 
+	  /** 
+	   * @brief get linear interpolate percent of two coordInfo
+	   * 	    sub-class can choose which field to do interpolation
+	   * 	    Window/Normalized/Homogenous Coord
+	   * 
+	   * @param coord1
+	   * @param coord2
+	   * @param lineInfo
+	   * @param toInterpolate
+	   * 
+	   * @return 
+	   */
 	  virtual double getPercent(
 		    const CoordInfo& coord1,const CoordInfo& coord2,
 		    const LineInfo& lineInfo,
