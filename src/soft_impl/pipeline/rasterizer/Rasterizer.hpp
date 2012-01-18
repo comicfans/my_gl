@@ -24,10 +24,10 @@
 
 #include <boost/ptr_container/ptr_vector.hpp>
 
-#include "shader/VertexAttributeBuffer.hpp"
+#include "soft_impl/shader/VertexAttributeBuffer.hpp"
 
-#include "Rectangle.hpp"
-#include "WinCoord.hpp"
+#include "soft_impl/Rectangle.hpp"
+#include "soft_impl/pipeline/rasterizer/WinCoord.hpp"
 
 namespace my_gl {
 
