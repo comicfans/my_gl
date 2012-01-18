@@ -26,3 +26,5 @@ ADD_SUBDIRECTORY(test)
 
 FILE(GLOB_RECURSE openCLSources *.cl)
 COPY_RUNTIME_FILE(${openCLSources})
+
+ADD_SUBDIRECTORY(pipeline)
