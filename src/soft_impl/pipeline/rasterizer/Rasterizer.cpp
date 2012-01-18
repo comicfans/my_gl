@@ -20,9 +20,8 @@
 
 #include <cmath>
 
-#include "pipeline/ClippedPrimitiveGroup.hpp"
-#include "shader/FragmentAttributeBuffer.hpp"
 #include "pipeline/interpolator/Interpolator.hpp"
+#include "shader/FragmentAttributeBuffer.hpp"
 #include "DepthRange.hpp"
 #include "pipeline/DepthBuffer.hpp"
 
@@ -56,42 +55,6 @@ namespace my_gl {
 
      Rasterizer::~Rasterizer(){}
 	       
-
-     void Rasterizer::rasterize(
-	       const ClippedPrimitiveGroup& clippedPrimitiveGroup)
-     {
-
-	  assert(clippedPrimitiveGroup.attributeNumber()==
-		    _fragmentAttributeBuffer.attributeNumber());
-
-	  auto& primitiveIndex=
-	       clippedPrimitiveGroup.getPrimitiveIndex();
-
-	  int vertexPerPrimitive=primitiveIndex.vertexPerPrimitive();
-
-	  int globalCounter=0;
-	  for (size_t elementCounter=0; 
-		    elementCounter<primitiveIndex.elementNumber(); 
-		    ++elementCounter)
-	  {
-
-	       ConstAttributeGroupRefList 
-		    attributeGroupRefs(vertexPerPrimitive);
-
-	       for(int vertexCounter=0;
-			 vertexCounter<vertexPerPrimitive;
-			 ++vertexCounter,++globalCounter)
-	       {
-		    int globalIndex=primitiveIndex[globalCounter];
-		    attributeGroupRefs.push_back(new 
-			      ConstAttributeGroupRef(
-				   clippedPrimitiveGroup[globalIndex]));
-	       }
-	       //do element rasterize
-	       elementRasterize(attributeGroupRefs);
-	  }
-
-     }
 
 
      template<typename T=int>

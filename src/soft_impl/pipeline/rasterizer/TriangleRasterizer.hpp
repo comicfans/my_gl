@@ -22,7 +22,7 @@
 
 #include <memory>
 
-#include "Rasterizer.hpp"
+#include "PerElementRasterizer.hpp"
 #include "Enum.hpp"
 
 namespace my_gl {
@@ -31,7 +31,7 @@ namespace my_gl {
 
      class LineRasterizer;
 
-     class TriangleRasterizer :public Rasterizer{
+     class TriangleRasterizer :public PerElementRasterizer{
 	  public:
 
 	       TriangleRasterizer

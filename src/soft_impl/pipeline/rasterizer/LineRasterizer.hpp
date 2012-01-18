@@ -22,7 +22,7 @@
 
 #include <functional>
 
-#include "Rasterizer.hpp"
+#include "PerElementRasterizer.hpp"
 
 namespace my_gl {
 
@@ -35,7 +35,7 @@ namespace my_gl {
      /** 
       * @brief Rasterizer to do line rasterize
       */
-     class LineRasterizer :public Rasterizer{
+     class LineRasterizer :public PerElementRasterizer{
      public:
 
 	  /** 

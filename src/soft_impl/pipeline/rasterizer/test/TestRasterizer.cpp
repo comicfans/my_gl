@@ -17,7 +17,7 @@
  */
 #include <cassert>
 #include <cmath>
-#include "Rasterizer.hpp"
+#include "PerElementRasterizer.hpp"
 #include "DepthRange.hpp"
 #include "pipeline/clipper/PointClipper.hpp"
 #include "pipeline/DepthBuffer.hpp"
@@ -51,7 +51,7 @@ DepthBuffer depthBuffer(width,height);
 
 ViewportParameter parameter{0,0,width,height};
 
-class ViewportTest:public Rasterizer
+class ViewportTest:public PerElementRasterizer
 {
      public: 
 	  void check()
@@ -74,7 +74,7 @@ class ViewportTest:public Rasterizer
 	  }
 
 	  ViewportTest():
-	       Rasterizer(parameter,interpolator,fragmentAttributeBuffer,depthBuffer,depthRange)
+	       PerElementRasterizer(parameter,interpolator,fragmentAttributeBuffer,depthBuffer,depthRange)
      {}
 	       
 	  virtual void elementRasterize

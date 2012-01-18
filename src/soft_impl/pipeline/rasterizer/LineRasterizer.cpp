@@ -43,7 +43,7 @@ namespace my_gl {
 		FragmentAttributeBuffer& fragmentAttributeBuffer,
 		     DepthBuffer& depthBuffer,
 		     DepthRange& depthRange)
-	       :Rasterizer
+	       :PerElementRasterizer
 		(viewportParameter,interpolator,
 		 fragmentAttributeBuffer,depthBuffer,depthRange){}
 

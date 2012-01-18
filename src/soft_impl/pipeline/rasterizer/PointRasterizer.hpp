@@ -20,11 +20,11 @@
 
 #define POINT_RASTERIZER_HPP
 
-#include "Rasterizer.hpp"
+#include "PerElementRasterizer.hpp"
 
 namespace my_gl {
 
-     class PointRasterizer :public Rasterizer{
+     class PointRasterizer :public PerElementRasterizer{
      public:
      	virtual ~PointRasterizer ();
 	  PointRasterizer

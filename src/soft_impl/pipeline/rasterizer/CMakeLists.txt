@@ -3,6 +3,7 @@ INCLUDE_DIRECTORIES(../../)
 ADD_LIBRARY(Info WinCoord.cpp LineInfo.cpp)
 
 ADD_LIBRARY(Rasterizer Rasterizer.cpp 
+     PerElementRasterizer.cpp
      PointRasterizer.cpp 
      LineRasterizer.cpp
      TriangleRasterizer.cpp

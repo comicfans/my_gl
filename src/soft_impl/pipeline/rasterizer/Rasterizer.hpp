@@ -51,8 +51,8 @@ namespace my_gl {
 		     DepthBuffer& depthBuffer,
 		     DepthRange& depthRange);
 
-	       void rasterize(
-			 const ClippedPrimitiveGroup& clippedPrimitiveGroup);
+	       virtual void rasterize(
+			 const ClippedPrimitiveGroup& clippedPrimitiveGroup)=0;
 
 	       void setInterpolator(Interpolator& interpolator);
 
@@ -64,24 +64,7 @@ namespace my_gl {
 	       static void viewportCorrect(Vec4& toCorrect,
 			 const WinCoord& windowCoordinates);
 
-
 	  protected:
-
-	       /** 
-		* @brief per-element rasterize,such as 
-		* point/line segment/triangle
-		* super class function rasterize use the 
-		* primitive information of PrimitiveIndex
-		* to determine how many vertex should be 
-		* grouped as a element
-		* 
-		* @param attributeGroupRefs attributeGroup of element vertex
-		* @param fragmentAttributeBuffer buffer to write fragment input
-		* 
-		* @return 
-		*/
-	       virtual void elementRasterize
-		    (const ConstAttributeGroupRefList& attributeGroupRefs)=0;
 
 	       WinCoord toWinCoord
 		    (const Vec4& normalizedDeviceCoordinates)const;

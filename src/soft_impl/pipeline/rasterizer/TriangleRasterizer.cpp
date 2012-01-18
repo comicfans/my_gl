@@ -47,7 +47,7 @@ namespace my_gl {
 	   DepthBuffer& depthBuffer,
 	   DepthRange& depthRange,
 	   LineRasterizer *pLineRasterizer)
-	  :Rasterizer
+	  :PerElementRasterizer
 	   (viewportParameter,interpolator,
 	    fragmentAttributeBuffer,depthBuffer,depthRange),
 	   _pLineRasterizer(pLineRasterizer)
