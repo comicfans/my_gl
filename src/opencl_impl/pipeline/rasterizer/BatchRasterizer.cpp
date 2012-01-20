@@ -47,7 +47,7 @@ namespace my_gl {
 	       (_CLContext,clSource.getSources());
 
 	  std::vector<cl::Device> devices= 
-	       _openCLContext.getInfo<CL_CONTEXT_DEVICES>();
+	       _CLContext.getInfo<CL_CONTEXT_DEVICES>();
 
 	  cl_int err=CL_SUCCESS;
 
@@ -56,7 +56,8 @@ namespace my_gl {
 	  assert(err==CL_SUCCESS || "program build failed");
 
 	  static const char* KERNEL_NAMES[]={
-	       "rasterizePoints","rasterizeLines",
+	       "rasterizePoints",
+	       "rasterizeLines",
 	       "rasterizeTriangles"};
 
 	  _kernel=cl::Kernel(program,
