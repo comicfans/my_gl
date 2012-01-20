@@ -55,6 +55,8 @@ namespace my_gl {
 	  using SuperType::begin;
 	  using SuperType::end;
 
+	  using SuperType::data;
+
 	  AttributeGroupRef writeNewFragment(const WinCoord& winCoord);
 
 	  ConstAttributeGroupRef operator()
