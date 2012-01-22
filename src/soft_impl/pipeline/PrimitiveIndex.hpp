@@ -21,7 +21,6 @@
 #define PRIMITIVE_INDEX_HPP
 
 #include <vector>
-#include <cstdint>
 #include <limits>
 
 #include "Enum.hpp"
@@ -30,13 +29,13 @@
 namespace my_gl {
 
      using std::vector;
-     using std::uint32_t;
+     using std::size_t;
      using std::numeric_limits;
 
 
      class IndexProvider;
-     class PrimitiveIndex:protected vector<uint32_t>{
-	  typedef vector<uint32_t> SuperType;
+     class PrimitiveIndex:protected vector<size_t>{
+	  typedef vector<size_t> SuperType;
      public:
      	PrimitiveIndex (const PrimitiveMode primitiveMode,
 		  size_t useVertexNumber,
