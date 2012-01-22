@@ -20,7 +20,6 @@
 
 #define BATCH_RASTERIZER_HPP
 
-
 #include <CL/cl.hpp>
 
 #include "Enum.hpp"
@@ -48,6 +47,7 @@ namespace my_gl {
 	       cl::Context& _CLContext;
 	       cl::CommandQueue _commandQueue;
 	       cl::Kernel _kernel;
+	       cl::Buffer _fragmentAttibuteCLBuffer;
      };
 
 } /* my_gl */

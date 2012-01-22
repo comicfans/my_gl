@@ -65,6 +65,19 @@ namespace my_gl {
 
 	  assert(err==CL_SUCCESS || "kernel create failed");
 
+	  size_t bufferSize=fragmentAttributeBuffer.width() * 
+	       fragmentAttributeBuffer.height()* 
+	       fragmentAttributeBuffer.attributeNumber() *
+	       sizeof(Vec4);
+
+
+
+	  _fragmentAttibuteCLBuffer=cl::Buffer(_CLContext,
+		    CL_MEM_READ_ONLY|CL_MEM_USE_HOST_PTR,
+		    _inputBufferSize,
+		    const_cast<void*>(pointer));
+
+
      }
 
 
@@ -72,6 +85,7 @@ namespace my_gl {
      void BatchRasterizer::rasterize(const 
 	       ClippedPrimitiveGroup& clippedPrimitiveGroup)
      {
+
 	  
      }
 
