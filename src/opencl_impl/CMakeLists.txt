@@ -28,3 +28,5 @@ FILE(GLOB_RECURSE openCLSources *.cl)
 COPY_RUNTIME_FILE(${openCLSources})
 
 ADD_SUBDIRECTORY(pipeline)
+ADD_SUBDIRECTORY(shader)
+
