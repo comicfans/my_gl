@@ -31,7 +31,7 @@
 #include <boost/multi_array.hpp>
 
 #include "common/Vec.hpp"
-#include "pipeline/rasterizer/WinCoord.hpp"
+#include "soft_impl/pipeline/rasterizer/WinCoord.hpp"
 
 
 namespace my_gl {

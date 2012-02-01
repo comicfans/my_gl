@@ -24,9 +24,9 @@ namespace my_gl {
 	  (size_t width,size_t height,size_t attributeNumber)
 	  :FragmentAttributeBuffer(width,height,attributeNumber){}
 
-     const void * OpenCLFragmentAttributeBuffer::rawData()const
+     const void * OpenCLFragmentAttributeBuffer::getRawData()const
      {
-	  return (*this)(0,0);
+	  return &(*this)(0,0)[0];
      }
 
 
