@@ -21,13 +21,15 @@
 
 #define RECTANGLE_HPP
 
+#include <cstdint>
+
 namespace my_gl {
 
      struct Rectangle{
-	  int x;
-	  int y;
-	  size_t width;
-	  size_t height;
+	  int32_t x;
+	  int32_t y;
+	  uint32_t width;
+	  uint32_t height;
      } /* optional variable list */;
 
      typedef Rectangle ViewportParameter;
