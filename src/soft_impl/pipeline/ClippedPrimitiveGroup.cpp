@@ -37,6 +37,8 @@ namespace my_gl {
 	      _mixedIndex(rhs._mixedIndex)
 	     {}
 
+     ClippedPrimitiveGroup::~ClippedPrimitiveGroup(){}
+
      void ClippedPrimitiveGroup::
 	  insertOriginalIndex(size_t original)
 	  {

@@ -43,6 +43,8 @@ namespace my_gl {
 	ClippedPrimitiveGroup
 	     (const ClippedPrimitiveGroup& rhs);
 
+	~ClippedPrimitiveGroup();
+
 	void insertOriginalIndex(size_t original);
 
 	pair<size_t,AttributeGroupRef> writeClipGeneratedAttribute();
