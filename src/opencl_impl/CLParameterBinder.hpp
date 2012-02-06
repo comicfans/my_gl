@@ -30,18 +30,19 @@ namespace my_gl
       * this interface is designed to standard bind to kernel 
       * function , in real use,bind to kernel can be complex
       * (one time bind,bind per call,or bind on change),so 
-      * only to be used internal (int class self),not for public
+      * only to be used internal (in class self),not for public
       * call,no virtual destructor,
       * not use this interface to store pointer
       */
      class CLParameterBinder {
-     protected:
+     public:
 	  /** 
 	   * @brief 
 	   * 
 	   * @param kernel kernel to bind to
+	   * @param idx    parameter begin index
 	   */
-	  virtual void bindToKernel(cl::Kernel kernel)=0;
+	  virtual void bindToKernel(cl::Kernel kernel,int idx)=0;
      };
 	
 } /* my_gl */

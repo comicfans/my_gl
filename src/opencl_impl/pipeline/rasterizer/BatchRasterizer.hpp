@@ -42,6 +42,7 @@ namespace my_gl {
 	       virtual void rasterize(
 			 const ClippedPrimitiveGroup& clippedPrimitiveGroup);
 
+	       virtual void bindToKernel(cl::Kernel kernel,int idx) override;
 
 	  protected:
 	       const PrimitiveMode _primitiveMode;
@@ -50,8 +51,6 @@ namespace my_gl {
 	       cl::Kernel _kernel;
 	       cl::Buffer _fragmentAttibuteCLBuffer;
 
-	  private:
-	       virtual void bindToKernel(cl::Kernel kernel) override;
      };
 
 } /* my_gl */

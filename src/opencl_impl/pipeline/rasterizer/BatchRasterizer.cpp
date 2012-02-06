@@ -84,7 +84,7 @@ namespace my_gl {
 	  
      }
 
-     void BatchRasterizer::bindToKernel(cl::Kernel kernel)
+     void BatchRasterizer::bindToKernel(cl::Kernel kernel,int idx)
      {
 
 	  _fragmentAttibuteCLBuffer=cl::Buffer(_CLContext,
