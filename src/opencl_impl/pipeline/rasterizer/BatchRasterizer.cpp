@@ -56,7 +56,7 @@ namespace my_gl {
 	  assert(err==CL_SUCCESS || "program build failed");
 
 	  static const char* KERNEL_NAMES[]={
-	       "rasterizePoints",
+	       "rasterizePointsWithEarlyZ",
 	       "rasterizeLines",
 	       "rasterizeTriangles"};
 
@@ -72,11 +72,6 @@ namespace my_gl {
 
 
 
-	  _fragmentAttibuteCLBuffer=cl::Buffer(_CLContext,
-		    CL_MEM_READ_ONLY|CL_MEM_USE_HOST_PTR,
-		    _inputBufferSize,
-		    const_cast<void*>(pointer));
-
 
      }
 
@@ -89,6 +84,16 @@ namespace my_gl {
 	  
      }
 
+     void BatchRasterizer::bindToKernel(cl::Kernel kernel)
+     {
+
+	  _fragmentAttibuteCLBuffer=cl::Buffer(_CLContext,
+		    CL_MEM_READ_ONLY|CL_MEM_USE_HOST_PTR,
+		    _inputBufferSize,
+		    const_cast<void*>(pointer));
+
+
+     }
 
 	
 } /* my_gl */

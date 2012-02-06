@@ -24,10 +24,11 @@
 
 #include "Enum.hpp"
 #include "soft_impl/pipeline/rasterizer/Rasterizer.hpp"
+#include "opencl_impl/CLParameterBinder.hpp"
 
 namespace my_gl {
 
-     class BatchRasterizer :public Rasterizer{
+     class BatchRasterizer :public Rasterizer,protected CLParameterBinder{
 	  public:
 	       BatchRasterizer
 		    (ViewportParameter& viewportParameter,
@@ -48,6 +49,9 @@ namespace my_gl {
 	       cl::CommandQueue _commandQueue;
 	       cl::Kernel _kernel;
 	       cl::Buffer _fragmentAttibuteCLBuffer;
+
+	  private:
+	       virtual void bindToKernel(cl::Kernel kernel) override;
      };
 
 } /* my_gl */
