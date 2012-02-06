@@ -53,17 +53,27 @@ bool outOfRange(uint2 widthHeight,int2 intXY)
 	  (intXY.x>=widthHeight.s0) || (intXY.y>=widthHeight.s1);
 }
 
-kernel void rasterizePointsWithEarlyZ(global size_t* primitiveIndex,
+/** 
+ * @brief map to wincoord,and return the attributeGroup pointer
+ * 
+ * @param primitiveIndex primitiveIndex of ClippedPrimitiveGroup
+ * @param attributeNumber how many attributeNumber in a attributeGroup
+ * @param originalSize    how many group is refered by original attributeGroups
+ * @param originalVertexAttributes pointer of originalVertexAttributes
+ * @param clipGeneratedAttributes  pointer of clip generated vertex attributes
+ * @param viewportParameter 
+ * @param depthRange
+ * 
+ * @return attributeGroup processed pointer
+ */
+float4* pointPreAction(global uint* primitiveIndex,
 	  const uint attributeNumber,
 	  const uint originalSize,
 	  global float4* originalVertexAttributes,
 	  global float4* clipGeneratedAttributes,
-	  //------------ primitive index and data -----------//
 	  const ViewportParameter viewportParameter,
 	  const DepthRange depthRange,
-	  global float4* fragmentAttributeBuffer,
-	  global float *zBuffer,
-	  const uint2 widthHeight)
+	  global float4 *fragmentAttributeBuffer)
 {
      size_t workId;
      workId=get_global_id(0);
@@ -84,7 +94,27 @@ kernel void rasterizePointsWithEarlyZ(global size_t* primitiveIndex,
      attributeGroup[0].xy=toWinCoord
 	  (attributeGroup[0].xy,viewportParameter);
 
+     return attributeGroup;
+}
+
+kernel void rasterizePointsWithEarlyZ(global uint* primitiveIndex,
+	  const uint attributeNumber,
+	  const uint originalSize,
+	  global float4* originalVertexAttributes,
+	  global float4* clipGeneratedAttributes,
+	  //------------ primitive index and data -----------//
+	  const ViewportParameter viewportParameter,
+	  const DepthRange depthRange,
+	  global float4* fragmentAttributeBuffer,
+	  global float *zBuffer,
+	  const uint2 widthHeight)
+{
      //not considered half-exit rule yet
+
+     global float4 * attributeGroup=pointPreAction
+	  (primitiveIndex,attributeNumber,originalSize,
+	   originalVertexAttributes,clipGeneratedAttributes,
+	   viewportParameter,depthRange);
 
      int2 intXY=convert_int2(attributeGroup[0].xy);
      //TODO out of range check, need or needless?
@@ -95,6 +125,8 @@ kernel void rasterizePointsWithEarlyZ(global size_t* primitiveIndex,
      }
 
      //early-z test,only less than is supported
+
+     //--------------------
 
      //a little confused, x component refers row major ,that is "y" index
      int xyIndex=intXY.s0*widthHeight.x+intXY.s1;
