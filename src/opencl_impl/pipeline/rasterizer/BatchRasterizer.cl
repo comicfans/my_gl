@@ -66,14 +66,13 @@ bool outOfRange(uint2 widthHeight,int2 intXY)
  * 
  * @return attributeGroup processed pointer
  */
-float4* pointPreAction(global uint* primitiveIndex,
+global float4* pointPreAction(global uint* primitiveIndex,
 	  const uint attributeNumber,
 	  const uint originalSize,
 	  global float4* originalVertexAttributes,
 	  global float4* clipGeneratedAttributes,
 	  const ViewportParameter viewportParameter,
-	  const DepthRange depthRange,
-	  global float4 *fragmentAttributeBuffer)
+	  const DepthRange depthRange)
 {
      size_t workId;
      workId=get_global_id(0);
@@ -97,6 +96,86 @@ float4* pointPreAction(global uint* primitiveIndex,
      return attributeGroup;
 }
 
+bool earlyZTestAndUpdate(int xyIndex,float thisZValue,global float *zBuffer)
+{
+
+     //early-z test,only less than is supported
+
+     global void *temp=zBuffer;
+     global int *intZBuffer=temp;
+     
+
+     int reinterpretIntZ=as_int(thisZValue);
+
+     int oldZ=atomic_min(intZBuffer+xyIndex,reinterpretIntZ);
+
+	  //z buffer test rejected
+     return oldZ>reinterpretIntZ;
+}
+
+/** 
+ * @brief 
+ * 
+ * @param intXY
+ * @param zBuffer
+ * 
+ * @return true if this pixel is updatable
+ */
+bool orderTestAndUpdate(int xyIndex,int thisOrder,global int *intZBuffer)
+{
+     int oldOrder=atomic_max(intZBuffer+xyIndex,thisOrder);
+
+     return oldOrder<thisOrder;
+
+}
+
+kernel void rasterizePointsByOrder(global uint* primitiveIndex,
+	  const uint attributeNumber,
+	  const uint originalSize,
+	  global float4* originalVertexAttributes,
+	  global float4* clipGeneratedAttributes,
+	  //------------ primitive index and data -----------//
+	  const ViewportParameter viewportParameter,
+	  const DepthRange depthRange,
+	  global float4* fragmentAttributeBuffer,
+	  global float *zBuffer,
+	  const uint2 widthHeight)
+{
+     //not considered half-exit rule yet
+
+     global float4 * attributeGroup=pointPreAction
+	  (primitiveIndex,attributeNumber,originalSize,
+	   originalVertexAttributes,clipGeneratedAttributes,
+	   viewportParameter,depthRange);
+
+     int2 intXY=convert_int2(attributeGroup[0].xy);
+     //TODO out of range check, need or needless?
+     //new fragment is generated
+
+     if(outOfRange(widthHeight,intXY))
+     {
+	  return ;
+     }
+
+     //a little confused, x component refers row major ,that is "y" index
+     int xyIndex=intXY.s0*widthHeight.x+intXY.s1;
+
+     global void *temp=zBuffer;
+     global int* intZBuffer=temp;
+
+     if(!orderTestAndUpdate(xyIndex,get_global_id(0),intZBuffer))
+     {
+	  return;
+     }
+
+     //copy values
+     for(int i=0;i<attributeNumber;++i)
+     {
+	  fragmentAttributeBuffer[xyIndex+i]=attributeGroup[i];
+     }
+
+}
+
 kernel void rasterizePointsWithEarlyZ(global uint* primitiveIndex,
 	  const uint attributeNumber,
 	  const uint originalSize,
@@ -118,38 +197,24 @@ kernel void rasterizePointsWithEarlyZ(global uint* primitiveIndex,
 
      int2 intXY=convert_int2(attributeGroup[0].xy);
      //TODO out of range check, need or needless?
+     //new fragment is generated
 
      if(outOfRange(widthHeight,intXY))
      {
-	  return;
+	  return ;
      }
-
-     //early-z test,only less than is supported
-
-     //--------------------
 
      //a little confused, x component refers row major ,that is "y" index
      int xyIndex=intXY.s0*widthHeight.x+intXY.s1;
 
-     int reinterpretIntZ=as_int(attributeGroup[0].z);
-
-     global void *temp=zBuffer;
-     global int *intZBuffer=temp;
-     
-
-     int oldZ=atomic_min(intZBuffer+xyIndex,reinterpretIntZ);
-
-     if(oldZ<=reinterpretIntZ)
+     if(!earlyZTestAndUpdate(xyIndex,attributeGroup[0].z,zBuffer))
      {
-	  //z buffer test rejected
 	  return;
      }
 
-     //new fragment is generated
-
+     //copy values
      for(int i=0;i<attributeNumber;++i)
      {
-	  //copy values
 	  fragmentAttributeBuffer[xyIndex+i]=attributeGroup[i];
      }
 
