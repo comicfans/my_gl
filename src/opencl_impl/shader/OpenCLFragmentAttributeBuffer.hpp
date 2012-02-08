@@ -31,7 +31,7 @@ namespace my_gl
 
 	  virtual ~OpenCLFragmentAttributeBuffer ();
 
-	  const void* getRawData()const;
+	  void* getRawData();
      };
 	
 } /* my_gl */
