@@ -1,0 +1,1 @@
+ADD_COMPARE_TEST(Points)

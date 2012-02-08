@@ -13,7 +13,8 @@ SUBDIRS(test_array_buffer_object
      test_perspective_project
      test_cull_face
      test_lighting
-     test_texture)
+     test_texture
+     test_points)
 
 
 ADD_EXECUTABLE(TestFloatStore TestFloatStore.cpp)
