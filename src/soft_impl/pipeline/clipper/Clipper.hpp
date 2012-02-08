@@ -22,7 +22,7 @@
 
 
 
-#include "shader/VertexAttributeBuffer.hpp"
+#include "soft_impl/shader/VertexAttributeBuffer.hpp"
 #include <boost/ptr_container/ptr_vector.hpp>
 
 
