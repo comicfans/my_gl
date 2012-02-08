@@ -28,13 +28,16 @@
 
 namespace my_gl {
 
+     class OpenCLFragmentAttributeBuffer;
+     class OpenCLDepthBuffer;
+
      class BatchRasterizer :public Rasterizer,protected CLParameterBinder{
 	  public:
 	       BatchRasterizer
 		    (ViewportParameter& viewportParameter,
 		     Interpolator& interpolator,
-		     FragmentAttributeBuffer& fragmentAttributeBuffer,
-		     DepthBuffer& depthBuffer,
+		     OpenCLFragmentAttributeBuffer& fragmentAttributeBuffer,
+		     OpenCLDepthBuffer& depthBuffer,
 		     DepthRange& depthRange,
 		     PrimitiveMode primitiveMode,
 		     cl::Context& clContext);
@@ -42,14 +45,16 @@ namespace my_gl {
 	       virtual void rasterize(
 			 const ClippedPrimitiveGroup& clippedPrimitiveGroup);
 
-	       virtual void bindToKernel(cl::Kernel kernel,int idx) override;
+	       virtual int bindToKernel(cl::Kernel kernel,int idx) override;
 
 	  protected:
+
 	       const PrimitiveMode _primitiveMode;
 	       cl::Context& _CLContext;
 	       cl::CommandQueue _commandQueue;
 	       cl::Kernel _kernel;
 	       cl::Buffer _fragmentAttibuteCLBuffer;
+	       cl::Buffer _depthBufferCLBuffer;
 
      };
 

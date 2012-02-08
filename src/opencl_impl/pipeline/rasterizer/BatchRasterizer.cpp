@@ -23,15 +23,19 @@
 #include <vector>
 
 #include "opencl_impl/CLSource.hpp"
+#include "opencl_impl/pipeline/OpenCLClippedPrimitiveGroup.hpp"
 
+#include "opencl_impl/shader/OpenCLFragmentAttributeBuffer.hpp"
+#include "opencl_impl/pipeline/OpenCLDepthBuffer.hpp"
+#include "soft_impl/DepthRange.hpp"
 
 namespace my_gl {
 
      BatchRasterizer::BatchRasterizer
 		    (ViewportParameter& viewportParameter,
 		     Interpolator& interpolator,
-		     FragmentAttributeBuffer& fragmentAttributeBuffer,
-		     DepthBuffer& depthBuffer,
+		     OpenCLFragmentAttributeBuffer& fragmentAttributeBuffer,
+		     OpenCLDepthBuffer& depthBuffer,
 		     DepthRange& depthRange,
 		     PrimitiveMode primitiveMode,
 		     cl::Context& clContext)
@@ -65,34 +69,68 @@ namespace my_gl {
 
 	  assert(err==CL_SUCCESS || "kernel create failed");
 
-	  size_t bufferSize=fragmentAttributeBuffer.width() * 
+	  //bind FragmentAttributeBuffer
+	  size_t fragmentAttributeBufferSize=fragmentAttributeBuffer.width() * 
 	       fragmentAttributeBuffer.height()* 
 	       fragmentAttributeBuffer.attributeNumber() *
 	       sizeof(Vec4);
 
+	  _fragmentAttibuteCLBuffer=cl::Buffer(_CLContext,
+		    CL_MEM_READ_ONLY|CL_MEM_USE_HOST_PTR,
+		    fragmentAttributeBufferSize,
+		    fragmentAttributeBuffer.getRawData());
 
+	  //magic need refactor?
+	  int idx=7;
+	  _kernel.setArg(idx++,_fragmentAttibuteCLBuffer);
 
+	  //bind DepthBuffer
+	  
+	  size_t depthBufferSize=depthBuffer.width()
+	       *depthBuffer.height()*sizeof(float);
+
+	  _depthBufferCLBuffer=cl::Buffer(_CLContext,
+		    CL_MEM_READ_ONLY|CL_MEM_USE_HOST_PTR,
+		    depthBufferSize,depthBuffer.getRawData());
+	  _kernel.setArg(idx++,_depthBufferCLBuffer);
+	  //bind widthHeight
+
+	  const uint32_t widthHeight[2]=
+	  {depthBuffer.width(),depthBuffer.height()};
+
+	  _kernel.setArg(idx++,widthHeight);
 
      }
-
 
 	  
      void BatchRasterizer::rasterize(const 
 	       ClippedPrimitiveGroup& clippedPrimitiveGroup)
      {
 
+	  const OpenCLClippedPrimitiveGroup& temp
+	       =static_cast<const OpenCLClippedPrimitiveGroup&>(clippedPrimitiveGroup);
+
+	  OpenCLClippedPrimitiveGroup& openCLClippedPrimitiveGroup
+	       =const_cast<OpenCLClippedPrimitiveGroup&>(temp);
+
+	  int paramIdx=0;
+
+	  paramIdx=openCLClippedPrimitiveGroup.
+	       bindToKernel(_kernel, paramIdx);
+
+	  bindToKernel(_kernel,paramIdx);
+
 	  
      }
 
-     void BatchRasterizer::bindToKernel(cl::Kernel kernel,int idx)
+     int BatchRasterizer::bindToKernel(cl::Kernel kernel,int idx)
      {
 
-	  _fragmentAttibuteCLBuffer=cl::Buffer(_CLContext,
-		    CL_MEM_READ_ONLY|CL_MEM_USE_HOST_PTR,
-		    _inputBufferSize,
-		    const_cast<void*>(pointer));
+	  kernel.setArg(idx++,_viewportParameter);
 
+	  kernel.setArg(idx++,_depthRange);
 
+	  return idx;
      }
 
 	

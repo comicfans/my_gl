@@ -20,8 +20,8 @@ typedef struct Rectangle{
 
 global float4* readAt(size_t idx,
 	  global size_t* primitiveIndex,
-	  const size_t attributeNumber,
-	  const size_t originalSize,
+	  constant size_t attributeNumber,
+	  constant size_t originalSize,
 	  global float4* originalVertexAttributes,
 	  global float4* clipGeneratedAttributes)
 {
@@ -40,7 +40,7 @@ global float4* readAt(size_t idx,
 }
 
 float2 toWinCoord(float2 normalizedDeviceCoordinateXY,
-	  const ViewportParameter viewportParameter) 
+	  constant ViewportParameter viewportParameter) 
 {
      return normalizedDeviceCoordinateXY*
 	  convert_float2(viewportParameter.widthHeight)+
@@ -67,12 +67,12 @@ bool outOfRange(uint2 widthHeight,int2 intXY)
  * @return attributeGroup processed pointer
  */
 global float4* pointPreAction(global uint* primitiveIndex,
-	  const uint attributeNumber,
-	  const uint originalSize,
+	  constant uint attributeNumber,
+	  constant uint originalSize,
 	  global float4* originalVertexAttributes,
 	  global float4* clipGeneratedAttributes,
-	  const ViewportParameter viewportParameter,
-	  const DepthRange depthRange)
+	  constant ViewportParameter viewportParameter,
+	  constant DepthRange depthRange)
 {
      size_t workId;
      workId=get_global_id(0);
@@ -130,16 +130,16 @@ bool orderTestAndUpdate(int xyIndex,int thisOrder,global int *intZBuffer)
 }
 
 kernel void rasterizePointsByOrder(global uint* primitiveIndex,
-	  const uint attributeNumber,
-	  const uint originalSize,
+	  constant uint attributeNumber,
+	  constant uint originalSize,
 	  global float4* originalVertexAttributes,
 	  global float4* clipGeneratedAttributes,
 	  //------------ primitive index and data -----------//
-	  const ViewportParameter viewportParameter,
-	  const DepthRange depthRange,
+	  constant ViewportParameter viewportParameter,
+	  constant DepthRange depthRange,
 	  global float4* fragmentAttributeBuffer,
 	  global float *zBuffer,
-	  const uint2 widthHeight)
+	  constant uint2 widthHeight)
 {
      //not considered half-exit rule yet
 
@@ -177,16 +177,16 @@ kernel void rasterizePointsByOrder(global uint* primitiveIndex,
 }
 
 kernel void rasterizePointsWithEarlyZ(global uint* primitiveIndex,
-	  const uint attributeNumber,
-	  const uint originalSize,
+	  constant uint attributeNumber,
+	  constant uint originalSize,
 	  global float4* originalVertexAttributes,
 	  global float4* clipGeneratedAttributes,
 	  //------------ primitive index and data -----------//
-	  const ViewportParameter viewportParameter,
-	  const DepthRange depthRange,
+	  constant ViewportParameter viewportParameter,
+	  constant DepthRange depthRange,
 	  global float4* fragmentAttributeBuffer,
 	  global float *zBuffer,
-	  const uint2 widthHeight)
+	  constant uint2 widthHeight)
 {
      //not considered half-exit rule yet
 

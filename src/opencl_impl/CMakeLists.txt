@@ -1,7 +1,7 @@
 
 INCLUDE_DIRECTORIES(${OPENCL_INCLUDE_DIR})
 
-ADD_DEFINITIONS(-D__CL_ENABLE_EXCEPTIONS)
+ADD_DEFINITIONS(-D__CL_ENABLE_EXCEPTIONS -DCL_USE_DEPRECATED_OPENCL_1_1_APIS)
 
 ADD_LIBRARY(CLSource CLSource.cpp)
 TARGET_LINK_LIBRARIES(CLSource ${Boost_LIBRARIES})
@@ -16,8 +16,12 @@ ADD_LIBRARY(OpenCLImpl OpenCLContext.cpp)
 #currently link all SoftContext stuff to OpenCLImpl Context
 #will splite different library further
 TARGET_LINK_LIBRARIES(OpenCLImpl 
-     SoftImpl
      OpenCLPixelDrawer
+     CLRasterizer
+     OpenCLShader
+     OpenCLClippedPrimitiveGroup
+     OpenCLFrameBuffer
+     SoftImpl
      ${OPENCL_LIBRARY})
 
 

@@ -36,6 +36,12 @@ namespace my_gl {
 
      	virtual ~OpenCLContext ();
 
+     protected:
+	virtual void clipPrimitive
+	     (const PrimitiveIndex& primitiveIndex,
+		  PrimitiveMode catalog) override;
+
+
      private:
 
 	std::unique_ptr<cl::Context> _CLContext;

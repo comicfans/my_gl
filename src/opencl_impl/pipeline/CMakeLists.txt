@@ -1,1 +1,5 @@
 ADD_SUBDIRECTORY(rasterizer)
+
+ADD_LIBRARY(OpenCLFrameBuffer OpenCLDepthBuffer.cpp)
+
+ADD_LIBRARY(OpenCLClippedPrimitiveGroup OpenCLClippedPrimitiveGroup.cpp)
