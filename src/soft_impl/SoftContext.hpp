@@ -432,7 +432,16 @@ namespace my_gl {
 
 	void fragmentShaderStage();
 
-	void clipPrimitive
+	/** 
+	 * @brief currently override this function to use custom 
+	 *        ClippedPrimitiveGroup,need refactor (use factory ?)
+	 * 
+	 * @param primitiveIndex
+	 * @param catalog
+	 * 
+	 * @return 
+	 */
+	virtual void clipPrimitive
 	     (const PrimitiveIndex& primitiveIndex,
 		  PrimitiveMode catalog);
 
