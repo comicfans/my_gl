@@ -41,8 +41,10 @@ namespace my_gl
 	   * 
 	   * @param kernel kernel to bind to
 	   * @param idx    parameter begin index
+	   *
+	   * @return next index value
 	   */
-	  virtual void bindToKernel(cl::Kernel kernel,int idx)=0;
+	  virtual int bindToKernel(cl::Kernel kernel,int idx)=0;
      };
 	
 } /* my_gl */
