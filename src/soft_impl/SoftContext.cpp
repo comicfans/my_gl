@@ -425,6 +425,10 @@ namespace my_gl {
 				catalog=PrimitiveMode::TRIANGLES;
 				break;
 			   }
+		  case PrimitiveMode::POINTS:
+			   {
+				break;
+			   }
 			 default:
 			   {
 				//impossble
