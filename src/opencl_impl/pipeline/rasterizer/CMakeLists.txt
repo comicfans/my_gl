@@ -1,5 +1,5 @@
 
-ADD_LIBRARY(CLRasterizer BatchRasterizer.cpp)
+ADD_LIBRARY(CLRasterizer OpenCLPointRasterizer.cpp)
 
 TARGET_LINK_LIBRARIES(CLRasterizer Rasterizer)
 

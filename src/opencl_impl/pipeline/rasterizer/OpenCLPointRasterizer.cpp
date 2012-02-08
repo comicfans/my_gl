@@ -1,7 +1,7 @@
 /*
  * =====================================================================================
  *
- *       Filename:  BatchRasterizer.cpp
+ *       Filename:  OpenCLPointRasterizer.cpp
  *
  *    Description:  
  *
@@ -16,7 +16,7 @@
  * =====================================================================================
  */
 
-#include "BatchRasterizer.hpp"
+#include "OpenCLPointRasterizer.hpp"
 
 
 #include <cassert>
@@ -31,7 +31,7 @@
 
 namespace my_gl {
 
-     BatchRasterizer::BatchRasterizer
+     OpenCLPointRasterizer::OpenCLPointRasterizer
 		    (ViewportParameter& viewportParameter,
 		     Interpolator& interpolator,
 		     OpenCLFragmentAttributeBuffer& fragmentAttributeBuffer,
@@ -45,7 +45,7 @@ namespace my_gl {
 			    _primitiveMode(primitiveMode),
 			    _CLContext(clContext)
      {
-	  CLSource clSource("BatchRasterizer.cl");
+	  CLSource clSource("OpenCLPointRasterizer.cl");
 
 	  cl::Program program
 	       (_CLContext,clSource.getSources());
@@ -102,8 +102,11 @@ namespace my_gl {
 
      }
 
+     OpenCLPointRasterizer::~OpenCLPointRasterizer()
+     {}
+
 	  
-     void BatchRasterizer::rasterize(const 
+     void OpenCLPointRasterizer::rasterize(const 
 	       ClippedPrimitiveGroup& clippedPrimitiveGroup)
      {
 
@@ -123,7 +126,7 @@ namespace my_gl {
 	  
      }
 
-     int BatchRasterizer::bindToKernel(cl::Kernel kernel,int idx)
+     int OpenCLPointRasterizer::bindToKernel(cl::Kernel kernel,int idx)
      {
 
 	  kernel.setArg(idx++,_viewportParameter);

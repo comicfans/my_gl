@@ -25,7 +25,7 @@
 #include "opencl_impl/OpenCLPixelDrawer.hpp"
 #include "opencl_impl/pipeline/OpenCLClippedPrimitiveGroup.hpp"
 #include "opencl_impl/shader/OpenCLFragmentAttributeBuffer.hpp"
-#include "opencl_impl/pipeline/rasterizer/BatchRasterizer.hpp"
+#include "opencl_impl/pipeline/rasterizer/OpenCLPointRasterizer.hpp"
 
 #include "opencl_impl/pipeline/OpenCLDepthBuffer.hpp"
 
@@ -60,7 +60,7 @@ namespace my_gl {
 		   PrimitiveMode::LINES,PrimitiveMode::TRIANGLES})
 	 {
 	      _rasterizers.replace(int(primitiveMode),
-			new BatchRasterizer(_viewportParameter,
+			new OpenCLPointRasterizer(_viewportParameter,
 			     *_interpolatorPtr,
 
 			     static_cast<OpenCLFragmentAttributeBuffer&>

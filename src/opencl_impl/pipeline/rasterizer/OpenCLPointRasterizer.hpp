@@ -1,7 +1,7 @@
 /*
  * =====================================================================================
  *
- *       Filename:  BatchRasterizer.hpp
+ *       Filename:  OpenCLPointRasterizer.hpp
  *
  *    Description:  
  *
@@ -16,9 +16,9 @@
  * =====================================================================================
  */
 
-#ifndef BATCH_RASTERIZER_HPP
+#ifndef OPENCL_POINT_RASTERIZER_HPP
 
-#define BATCH_RASTERIZER_HPP
+#define OPENCL_POINT_RASTERIZER_HPP
 
 #include <CL/cl.hpp>
 
@@ -31,9 +31,9 @@ namespace my_gl {
      class OpenCLFragmentAttributeBuffer;
      class OpenCLDepthBuffer;
 
-     class BatchRasterizer :public Rasterizer,protected CLParameterBinder{
+     class OpenCLPointRasterizer :public Rasterizer,protected CLParameterBinder{
 	  public:
-	       BatchRasterizer
+	       OpenCLPointRasterizer
 		    (ViewportParameter& viewportParameter,
 		     Interpolator& interpolator,
 		     OpenCLFragmentAttributeBuffer& fragmentAttributeBuffer,
@@ -41,6 +41,8 @@ namespace my_gl {
 		     DepthRange& depthRange,
 		     PrimitiveMode primitiveMode,
 		     cl::Context& clContext);
+
+	       virtual ~OpenCLPointRasterizer();
 
 	       virtual void rasterize(
 			 const ClippedPrimitiveGroup& clippedPrimitiveGroup);
@@ -61,4 +63,4 @@ namespace my_gl {
 } /* my_gl */
 
 
-#endif /* end of include guard: BATCH_RASTERIZER_HPP */
+#endif /* end of include guard: OPENCL_POINT_RASTERIZER_HPP */
