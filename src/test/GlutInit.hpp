@@ -24,8 +24,8 @@
 
 namespace my_gl {
 	
-     const int DEFAULT_WIDTH=400;
-     const int DEFAULT_HEIGHT=300;
+     const int DEFAULT_WIDTH=500;
+     const int DEFAULT_HEIGHT=400;
 
      void initGlutGlew(const char *p="test");
 
