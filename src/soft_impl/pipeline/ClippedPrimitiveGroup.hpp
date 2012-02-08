@@ -25,7 +25,7 @@
 
 #include "PrimitiveIndex.hpp"
 
-#include "shader/VertexAttributeBuffer.hpp"
+#include "soft_impl/shader/VertexAttributeBuffer.hpp"
 #include "common/VecFwd.hpp"
 
 namespace my_gl {
@@ -62,6 +62,8 @@ namespace my_gl {
 	size_t elementNumber()const;
 
 	size_t attributeNumber()const;
+
+	size_t originalSize()const;
 
      private:
 

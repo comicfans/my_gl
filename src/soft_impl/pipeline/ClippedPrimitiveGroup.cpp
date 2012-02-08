@@ -134,4 +134,9 @@ namespace my_gl {
 	{
 	     return _originalVertexAttribute.attributeNumber();
 	}
+
+	size_t ClippedPrimitiveGroup::originalSize()const
+	{
+	     return _originalVertexAttribute.elementNumber();
+	}
 } /* my_gl */
