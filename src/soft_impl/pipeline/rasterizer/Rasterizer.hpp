@@ -72,15 +72,13 @@ namespace my_gl {
 	       bool earlyZTest(const WinCoord& winCoord);
 
 
-	  private:
 
 	       const ViewportParameter& _viewportParameter;
-	  protected:
+	       const DepthRange& _depthRange;
+
 	       Interpolator& _interpolator;
 	       FragmentAttributeBuffer& _fragmentAttributeBuffer;
-	  private:
 	       DepthBuffer& _depthBuffer;
-	       const DepthRange& _depthRange;
 
 
 

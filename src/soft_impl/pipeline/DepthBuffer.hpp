@@ -77,7 +77,7 @@ namespace my_gl {
 
 	static const int ORDER_INDEX=1;
      
-     private:
+     protected:
 
 	multi_array<double,2> _impl;
 

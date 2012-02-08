@@ -99,4 +99,6 @@ namespace my_gl {
 	  {
 	       return _activeFragWinCoords;
 	  }
+
+     FragmentAttributeBuffer::~FragmentAttributeBuffer(){}
 } /* my_gl */

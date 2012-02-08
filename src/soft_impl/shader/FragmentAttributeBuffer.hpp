@@ -50,6 +50,8 @@ namespace my_gl {
 	  FragmentAttributeBuffer 
 	     (size_t width,size_t height,size_t attributeNumber);
 
+	  virtual ~FragmentAttributeBuffer();
+
 	  size_t attributeNumber()const;
 
 	  using SuperType::begin;
