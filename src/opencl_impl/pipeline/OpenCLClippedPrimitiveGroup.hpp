@@ -35,7 +35,7 @@ public:
 
 	virtual ~OpenCLClippedPrimitiveGroup ();
 
-	virtual int bindToKernel(cl::Kernel kernel,int idx) override;
+	virtual int bindToKernel(cl::Kernel kernel,int idx) ;
 
 private:
 

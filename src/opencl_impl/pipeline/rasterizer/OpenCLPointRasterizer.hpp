@@ -47,7 +47,7 @@ namespace my_gl {
 	       virtual void rasterize(
 			 const ClippedPrimitiveGroup& clippedPrimitiveGroup);
 
-	       virtual int bindToKernel(cl::Kernel kernel,int idx) override;
+	       virtual int bindToKernel(cl::Kernel kernel,int idx) ;
 
 	  protected:
 
