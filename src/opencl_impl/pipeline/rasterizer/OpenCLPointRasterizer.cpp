@@ -95,8 +95,11 @@ namespace my_gl {
 	  _kernel.setArg(idx++,_depthBufferCLBuffer);
 	  //bind widthHeight
 
-	  const uint32_t widthHeight[2]=
-	  {depthBuffer.width(),depthBuffer.height()};
+
+	  struct {
+	       uint32_t width;
+	       uint32_t height;
+	  } widthHeight{depthBuffer.width(),depthBuffer.height()};
 
 	  _kernel.setArg(idx++,widthHeight);
 
