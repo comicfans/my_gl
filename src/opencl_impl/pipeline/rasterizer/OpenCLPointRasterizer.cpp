@@ -132,9 +132,9 @@ namespace my_gl {
      int OpenCLPointRasterizer::bindToKernel(cl::Kernel kernel,int idx)
      {
 
-	  kernel.setArg(idx++,_viewportParameter);
+	  kernel.setArg(idx++,ViewportParameter(_viewportParameter));
 
-	  kernel.setArg(idx++,_depthRange);
+	  kernel.setArg(idx++,DepthRange(_depthRange));
 
 	  return idx;
      }
