@@ -68,11 +68,13 @@ namespace my_gl {
 	       size_t originalVertexAttributesSize=originalVertexNumber*
 		    attributeNumber()*sizeof(Vec4);
 
+	       void* ptr=const_cast<Vec4*>(&(*this)[0][0]);
+
+	       assert((uint32_t(ptr)%sizeof(Vec4)==0)|| "memory not alignmened");
+
 	       _originalVertexAttributesBuffer=cl::Buffer(CLContext,
 			 CL_MEM_READ_ONLY|CL_MEM_USE_HOST_PTR,
-			 originalVertexAttributesSize,
-			 const_cast<Vec4*>
-			 (&(*this)[0][0]));
+			 originalVertexAttributesSize,ptr);
 	       kernel.setArg(idx++,originalVertexAttributeBuffer);
 	  }
 	  else
@@ -89,10 +91,13 @@ namespace my_gl {
 	       size_t clipGeneratedVertexAttributeSize=clipGeneratedVertexNumber
 		    *attributeNumber()*sizeof(Vec4);
 
+	       void *ptr=const_cast<Vec4*>(&(*this)[originalVertexNumber][0]);
+
+	       assert((uint32_t(ptr)%sizeof(Vec4)==0)|| "memory not alignmened");
+
 	       _clipGeneratedAttributesBuffer=cl::Buffer(CLContext,
 			 CL_MEM_READ_ONLY|CL_MEM_USE_HOST_PTR,
-			 clipGeneratedVertexAttributeSize,
-			 const_cast<Vec4*>(&(*this)[originalVertexNumber][0]));
+			 clipGeneratedVertexAttributeSize,ptr);
 
 	       kernel.setArg(idx++,_clipGeneratedAttributesBuffer);
 
