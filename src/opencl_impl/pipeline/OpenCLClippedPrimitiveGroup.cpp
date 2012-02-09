@@ -55,7 +55,8 @@ namespace my_gl {
 
 	  kernel.setArg(idx++,cl_uint(attributeNumber()));
 
-	  size_t originalVertexNumber=originalSize();
+	  size_t originalVertexNumber=
+	       getRefVertexAttributeBuffer().elementNumber();
 
 	  kernel.setArg(idx++,cl_uint(originalVertexNumber));
 
@@ -64,7 +65,7 @@ namespace my_gl {
 	  //workaround originalVertexAttributes null condition
 	  if (originalVertexNumber)
 	  {
-	       size_t originalVertexAttributesSize=originalSize()*
+	       size_t originalVertexAttributesSize=originalVertexNumber*
 		    attributeNumber()*sizeof(Vec4);
 
 	       _originalVertexAttributesBuffer=cl::Buffer(CLContext,
@@ -81,17 +82,18 @@ namespace my_gl {
 
 	  //workaround clipGeneratedAttributes null condition
 	  size_t clipGeneratedVertexNumber=
-	       attributeNumber()-originalVertexNumber;
+	       getClipGeneratedElementNumber();
 
 	  if (clipGeneratedVertexNumber)
 	  {
 	       size_t clipGeneratedVertexAttributeSize=clipGeneratedVertexNumber
-		    *attributeNumber()*sizeof(uint32_t);
+		    *attributeNumber()*sizeof(Vec4);
 
 	       _clipGeneratedAttributesBuffer=cl::Buffer(CLContext,
 			 CL_MEM_READ_ONLY|CL_MEM_USE_HOST_PTR,
 			 clipGeneratedVertexAttributeSize,
 			 const_cast<Vec4*>(&(*this)[originalVertexNumber][0]));
+
 	       kernel.setArg(idx++,_clipGeneratedAttributesBuffer);
 
 	  }

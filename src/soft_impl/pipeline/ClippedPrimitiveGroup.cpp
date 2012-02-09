@@ -122,8 +122,10 @@ namespace my_gl {
 	ConstAttributeGroupRef ClippedPrimitiveGroup::
 	     getClipGeneratedAttribute(size_t index)const
 	     {
-		  return _clipGeneratedVertexAttribute[
-		       index-_originalVertexAttribute.elementNumber()];
+		  int reindex=index-_originalVertexAttribute.elementNumber();
+		  assert(reindex<_clipGeneratedVertexAttribute.elementNumber()
+			    || "index of _clipGeneratedVertexAttribute out_of_range");
+		  return _clipGeneratedVertexAttribute[reindex];
 	     }
 	size_t ClippedPrimitiveGroup::elementNumber()const
 	{
@@ -135,8 +137,9 @@ namespace my_gl {
 	     return _originalVertexAttribute.attributeNumber();
 	}
 
-	size_t ClippedPrimitiveGroup::originalSize()const
+	size_t ClippedPrimitiveGroup::getClipGeneratedElementNumber()const
 	{
-	     return _originalVertexAttribute.elementNumber();
+	     return _clipGeneratedVertexAttribute.elementNumber();
 	}
+
 } /* my_gl */

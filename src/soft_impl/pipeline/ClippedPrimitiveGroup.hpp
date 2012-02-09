@@ -63,7 +63,7 @@ namespace my_gl {
 
 	size_t attributeNumber()const;
 
-	size_t originalSize()const;
+	size_t getClipGeneratedElementNumber()const;
 
      private:
 
