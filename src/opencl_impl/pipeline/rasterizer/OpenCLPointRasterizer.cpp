@@ -45,7 +45,7 @@ namespace my_gl {
 			    _primitiveMode(primitiveMode),
 			    _CLContext(clContext)
      {
-	  CLSource clSource("OpenCLPointRasterizer.cl");
+	  CLSource clSource("BatchRasterizer.cl");
 
 	  cl::Program program
 	       (_CLContext,clSource.getSources());
