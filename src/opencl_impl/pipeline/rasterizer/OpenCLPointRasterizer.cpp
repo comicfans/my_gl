@@ -47,11 +47,14 @@ namespace my_gl {
      {
 	  CLSource clSource("BatchRasterizer.cl");
 
+
 	  cl::Program program
 	       (_CLContext,clSource.getSources());
 
 	  std::vector<cl::Device> devices= 
 	       _CLContext.getInfo<CL_CONTEXT_DEVICES>();
+
+	  _commandQueue=cl::CommandQueue(clContext,devices[0]);
 
 	  cl_int err=CL_SUCCESS;
 
@@ -126,6 +129,11 @@ namespace my_gl {
 
 	  bindToKernel(_kernel,paramIdx);
 
+	  cl::NDRange(clippedPrimitiveGroup.elementNumber());
+
+	  _commandQueue.enqueueTask(_kernel);
+
+	  _commandQueue.finish();
 	  
      }
 
@@ -134,7 +142,15 @@ namespace my_gl {
 
 	  kernel.setArg(idx++,ViewportParameter(_viewportParameter));
 
-	  kernel.setArg(idx++,DepthRange(_depthRange));
+	  struct 
+	  {
+	       float nearValue;
+	       float farValue;
+	       float diff;
+	  } floatDepthRange{(float)_depthRange.nearValue,
+	       (float)_depthRange.farValue,(float)_depthRange.diff};
+
+	  kernel.setArg(idx++,floatDepthRange);
 
 	  return idx;
      }
