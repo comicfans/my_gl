@@ -43,7 +43,7 @@ namespace my_gl {
 	ClippedPrimitiveGroup
 	     (const ClippedPrimitiveGroup& rhs);
 
-	~ClippedPrimitiveGroup();
+	virtual ~ClippedPrimitiveGroup();
 
 	void insertOriginalIndex(size_t original);
 
