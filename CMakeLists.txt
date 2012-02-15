@@ -2,15 +2,25 @@ PROJECT (my_gl)
 
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 
-IF(${CMAKE_BUILD_TYPE} MATCHES Debug)
-     SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pg -fprofile-arcs -ftest-coverage")
+
+     
+IF(CMAKE_COMPILER_IS_GNUCXX)
+     SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x -Wall /clr")
+     IF(${CMAKE_BUILD_TYPE} MATCHES Debug)
+	  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pg -fprofile-arcs -ftest-coverage")
+     ENDIF()
+ELSEIF(MSVC)
+     SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /clr")
 ENDIF()
+
+
+
+
 
 set(EXTRA_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMakeModules")
 set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};${EXTRA_MODULE_PATH}")
 INCLUDE("${EXTRA_MODULE_PATH}/TestUtils.cmake")
 
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x -Wall")
 
 INCLUDE_DIRECTORIES( "include" src )
 

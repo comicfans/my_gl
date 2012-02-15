@@ -79,7 +79,7 @@ namespace my_gl {
      template<>
 	  struct DataTypeTraits<DataType::FIXED>
 	  {
-#warning FIXED is not implemented ,this is a dummy
+		  //WARNING not implement
 	       typedef uint32_t underlineType;
 	       static const int size=4;
 	       static float normalize(underlineType value)

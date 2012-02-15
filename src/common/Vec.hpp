@@ -22,11 +22,9 @@
 #define VEC_HPP
 
 #include <cstddef>
-#include <initializer_list>
 
 namespace my_gl {
 	  
-     using std::initializer_list;
 
      template<size_t L>
      struct VecBase{
@@ -37,7 +35,7 @@ namespace my_gl {
 
 	       VecBase(const float* values,size_t copyN=L);
 
-	       VecBase(const initializer_list<float>& initList);
+		   VecBase(float x,float y=0,float z=0,float w=1);
 
 	       VecBase(const VecBase& rhs);
 

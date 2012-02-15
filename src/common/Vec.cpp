@@ -49,22 +49,15 @@ namespace my_gl {
 	  _values[LENGTH-1]=1;
      }
 
-     template<size_t L>
-     VecBase<L>::VecBase(const initializer_list<float>& initList)
-     {
-	  _values[LENGTH-1]=1;
-	  size_t counter=0;
-	  for (auto value:initList)
-	  {
-	       _values[counter]=value;
-	       ++counter;
-	       if (counter>=LENGTH)
-	       {
-		    break;
-	       }
-	  }
+	 template<size_t L>
+	 VecBase<L>::VecBase(float x,float y,float z,float w)
+	 {
+		 _values[0]=x;
+		 _values[1]=y;
+		 _values[2]=z;
+		 _values[3]=w;
+	 }
 
-     }
 
      template<size_t L>
 	  VecBase<L>::VecBase(const VecBase& rhs)
@@ -254,10 +247,10 @@ namespace my_gl {
 
 
 
-     template struct VecBase<3>;
-     template struct VecBase<2>;
+     extern template struct VecBase<3>;
+     extern template struct VecBase<2>;
 
-     template struct VecBase<4>;
+extern     template struct VecBase<4>;
 	
 
      //--------------------template instantiation//
@@ -280,7 +273,8 @@ namespace my_gl {
      {
 	  Vec3 ret;
 
-#warning not implemented
+	  assert(false ||"not impled");
+
 
 	  return ret;
      }
