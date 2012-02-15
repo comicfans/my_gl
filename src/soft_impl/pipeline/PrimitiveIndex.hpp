@@ -31,6 +31,7 @@ namespace my_gl {
 
      using std::vector;
      using std::uint32_t;
+     using std::size_t;
      using std::numeric_limits;
 
 
