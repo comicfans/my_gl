@@ -60,7 +60,6 @@ namespace my_gl {
 
 	  kernel.setArg(idx++,cl_uint(originalVertexNumber));
 
-	  cl::Buffer originalVertexAttributeBuffer;
 
 	  //workaround originalVertexAttributes null condition
 	  if (originalVertexNumber)
@@ -70,12 +69,12 @@ namespace my_gl {
 
 	       void* ptr=const_cast<Vec4*>(&(*this)[0][0]);
 
-	       assert((uint32_t(ptr)%sizeof(Vec4)==0)|| "memory not alignmened");
+	       assert((size_t(ptr)%sizeof(Vec4)==0)|| "memory not alignmened");
 
 	       _originalVertexAttributesBuffer=cl::Buffer(CLContext,
 			 CL_MEM_READ_ONLY|CL_MEM_USE_HOST_PTR,
 			 originalVertexAttributesSize,ptr);
-	       kernel.setArg(idx++,originalVertexAttributeBuffer);
+	       kernel.setArg(idx++,_originalVertexAttributesBuffer);
 	  }
 	  else
 	  {
@@ -93,7 +92,7 @@ namespace my_gl {
 
 	       void *ptr=const_cast<Vec4*>(&(*this)[originalVertexNumber][0]);
 
-	       assert((uint32_t(ptr)%sizeof(Vec4)==0)|| "memory not alignmened");
+	       assert((size_t(ptr)%sizeof(Vec4)==0)|| "memory not alignmened");
 
 	       _clipGeneratedAttributesBuffer=cl::Buffer(CLContext,
 			 CL_MEM_READ_ONLY|CL_MEM_USE_HOST_PTR,

@@ -79,11 +79,11 @@ int main(int argc, const char *argv[])
 
      void *addrBuf=buff.get();
 
-     if (uint32_t(addrBuf)%16!=0)
+     if (size_t(addrBuf)%16!=0)
      {
 	  std::cout<<"output not aligned";
 
-	  addrBuf=(void*)((uint32_t(addrBuf)+16)/16*16);
+	  addrBuf=(void*)((size_t(addrBuf)+16)/16*16);
 
 	  std::cout<<"align to "<<addrBuf<<'\n';
 
@@ -92,11 +92,11 @@ int main(int argc, const char *argv[])
 
      void *addrInput=input.get();
 
-     if (uint32_t(addrInput)%16!=0)
+     if (size_t(addrInput)%16!=0)
      {
 	  std::cout<<"input not aligned";
 
-	  addrInput=(void*)((uint32_t(addrInput)+16)/16*16);
+	  addrInput=(void*)((size_t(addrInput)+16)/16*16);
 
 	  std::cout<<"align to "<<addrInput<<'\n';
      }

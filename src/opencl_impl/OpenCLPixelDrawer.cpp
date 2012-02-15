@@ -98,7 +98,7 @@ namespace my_gl {
 	  const void* pointer=
 	       (&(_currentBindedFrameBuffer->operator()(0,0)));
 
-	  int address=reinterpret_cast<int>(pointer);
+	  size_t address=reinterpret_cast<size_t>(pointer);
 
 	  assert((address %16==0)||
 		    "vec address not align to 16 byte");
