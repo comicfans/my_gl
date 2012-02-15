@@ -58,7 +58,7 @@ namespace my_gl {
 
 	  cl_int err=CL_SUCCESS;
 
-	  err=program.build(devices);
+	  err=program.build(devices,"-g -O0");
 
 	  assert(err==CL_SUCCESS || "program build failed");
 
@@ -102,7 +102,7 @@ namespace my_gl {
 	  struct {
 	       uint32_t width;
 	       uint32_t height;
-	  } widthHeight{depthBuffer.width(),depthBuffer.height()};
+	  } widthHeight{uint32_t(depthBuffer.width()),uint32_t(depthBuffer.height())};
 
 	  _kernel.setArg(idx++,widthHeight);
 
@@ -129,9 +129,10 @@ namespace my_gl {
 
 	  bindToKernel(_kernel,paramIdx);
 
-	  cl::NDRange(clippedPrimitiveGroup.elementNumber());
+	  cl::NDRange globalNDRange(clippedPrimitiveGroup.elementNumber());
 
-	  _commandQueue.enqueueTask(_kernel);
+	  _commandQueue.enqueueNDRangeKernel
+	       (_kernel,cl::NDRange(),globalNDRange, cl::NDRange(1));
 
 	  _commandQueue.finish();
 	  
