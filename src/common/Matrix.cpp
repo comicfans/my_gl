@@ -225,7 +225,7 @@ namespace my_gl {
 
 
 	      
-	 const float PI=4*atan(1);
+	 const float PI=4*atan<float>(1);
 
 	 inline float toRad(float degree)
 	 {
@@ -236,7 +236,7 @@ namespace my_gl {
 	 {
 	      Matrix4 ret=Matrix4::identity();
 
-	      Vec3 rotateAxis={x,y,z};
+	      Vec3 rotateAxis(x,y,z);
 
 	      normalize(rotateAxis);
 
@@ -390,9 +390,9 @@ namespace my_gl {
 		   return ret;
 	      }
 
-	 template struct MatrixBase<2>;
-	 template struct MatrixBase<3>;
-	 template struct MatrixBase<4>;
+	extern template class MatrixBase<2>;
+	 extern template class MatrixBase<3>;
+	 extern template class MatrixBase<4>;
 
 	 template void inplaceMultiVec(const MatrixBase<4>& lhs,float *pointer) ;
 	 template void inplaceMultiVec(const MatrixBase<3>& lhs,float *pointer) ;
