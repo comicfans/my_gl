@@ -74,12 +74,17 @@ namespace my_gl {
 	       _originalVertexAttributesBuffer=cl::Buffer(CLContext,
 			 CL_MEM_READ_ONLY|CL_MEM_USE_HOST_PTR,
 			 originalVertexAttributesSize,ptr);
-	       kernel.setArg(idx++,_originalVertexAttributesBuffer);
 	  }
 	  else
 	  {
-	       kernel.setArg(idx++,nullptr);
+	       size_t dummyNullArraySize=sizeof(decltype(_dummyNullArray));
+	       void * ptr=&_dummyNullArray;
+	       _originalVertexAttributesBuffer=cl::Buffer(CLContext,
+			 CL_MEM_READ_ONLY|CL_MEM_USE_HOST_PTR,
+			 dummyNullArraySize,ptr);
 	  }
+	       
+	  kernel.setArg(idx++,_originalVertexAttributesBuffer);
 
 	  //workaround clipGeneratedAttributes null condition
 	  size_t clipGeneratedVertexNumber=
@@ -97,14 +102,17 @@ namespace my_gl {
 	       _clipGeneratedAttributesBuffer=cl::Buffer(CLContext,
 			 CL_MEM_READ_ONLY|CL_MEM_USE_HOST_PTR,
 			 clipGeneratedVertexAttributeSize,ptr);
-
-	       kernel.setArg(idx++,_clipGeneratedAttributesBuffer);
-
 	  }
 	  else
 	  {
-	       kernel.setArg(idx++,nullptr);
+	       size_t dummyNullArraySize=sizeof(decltype(_dummyNullArray));
+	       void * ptr=&_dummyNullArray;
+	       _clipGeneratedAttributesBuffer=cl::Buffer(CLContext,
+			 CL_MEM_READ_ONLY|CL_MEM_USE_HOST_PTR,
+			 dummyNullArraySize,ptr);
 	  }
+	       
+	  kernel.setArg(idx++,_clipGeneratedAttributesBuffer);
 
 	  return idx;
 

@@ -42,6 +42,9 @@ private:
 	cl::Buffer _primitiveIndexBuffer;
 	cl::Buffer _originalVertexAttributesBuffer;
 	cl::Buffer _clipGeneratedAttributesBuffer;
+	cl_uint _dummyNullArray;
+
+
 };
 
 } /* my_gl */
