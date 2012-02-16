@@ -52,9 +52,18 @@ namespace my_gl {
 	 template<size_t L>
 	 VecBase<L>::VecBase(float x,float y,float z,float w)
 	 {
+		 //temp hack
+		 if(L<1)
+		 {return;}
 		 _values[0]=x;
+		 if(L<2)
+		 {return;}
 		 _values[1]=y;
+		 if(L<3)
+		 {return;}
 		 _values[2]=z;
+		 if(L<4)
+		 {return;}
 		 _values[3]=w;
 	 }
 
