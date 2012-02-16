@@ -221,9 +221,9 @@ namespace my_gl {
 	       //only infinite light can color it 
 	       //
 
-	       Vec4 ambient={0,0,0,0},
-	       diffuse={0,0,0,0},
-	       specular={0,0,0,0};
+	       Vec4 ambient(0,0,0,0),
+	       diffuse(0,0,0,0),
+	       specular(0,0,0,0);
 
 	       Vec3 eyeCoordNormal=fnormal(inNormal);
 
@@ -257,7 +257,7 @@ namespace my_gl {
 			 finiteLight(perLightParam,
 				   //OpenGL ES 1.0 only support infinite viewer
 				   //eye vector will always be {0,0,1}
-				   eyeCoordNormal,Vec3{0,0,1},
+				   eyeCoordNormal,Vec3(0,0,1),
 				   eyeCoordPosition,
 				   ambient,diffuse,specular);
 		    }

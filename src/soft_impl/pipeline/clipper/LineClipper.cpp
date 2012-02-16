@@ -34,8 +34,8 @@ using std::minmax;
 
 namespace my_gl {
 
-     static const LineClipper::ClipPercent OUT_OF_PERCENT={2,-2};
-     static const LineClipper::ClipPercent ALL_IN_PERCENT={0,1};
+     static const LineClipper::ClipPercent OUT_OF_PERCENT(2,-2);
+     static const LineClipper::ClipPercent ALL_IN_PERCENT(0,1);
 
      LineClipper::~LineClipper(){}
 
