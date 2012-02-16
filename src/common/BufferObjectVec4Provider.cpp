@@ -33,7 +33,7 @@ namespace my_gl {
      Vec4 BufferObjectVec4Provider::getValue(size_t index)
      {
 	  return castRead(add(
-			 _bufferObject.getBufferPointer(),_offset),
+			 _bufferObject.getBufferPointer<float>(),_offset),
 			 index);
      }
 

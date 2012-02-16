@@ -44,10 +44,10 @@ namespace my_gl {
 	  template<typename T>
 	       T const & operator[](size_t idx)const ;
 
-	  template<typename T=int8_t>
+	  template<typename T>
 	       T const * get()const ;
 
-	  template<typename T=int8_t>
+	  template<typename T>
 	       T * get() ;
 
      private:
