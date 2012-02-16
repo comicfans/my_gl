@@ -11,6 +11,8 @@ IF(CMAKE_COMPILER_IS_GNUCXX)
      ENDIF()
 ELSEIF(MSVC)
      SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /clr")
+     STRING(REGEX REPLACE "/EHs[c]" "" CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
+     MESSAGE("replace msvc cxx flags to ${CMAKE_CXX_FLAGS}, for common language runtime support" )
 ENDIF()
 
 
