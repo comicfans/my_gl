@@ -102,7 +102,7 @@ namespace my_gl {
 	virtual void elementRasterize
 	       (const ConstAttributeGroupRefList& attributeGroupRefs);
 
-	template<bool hasCallback=false>
+	template<bool hasCallback>
 	     /** 
 	      * @brief rasterize from attributeGroups,extract WinCoord
 	      * 	from AttributeGroup , and call 
@@ -120,7 +120,7 @@ namespace my_gl {
 	      */
 	     void rasterizeImpl
 	     (const ConstAttributeGroupRefList& attributeGroupRefs,
-	      StepCallback stepCallback);
+	      StepCallback stepCallback=StepCallback());
 
 	/** 
 	 * @brief rasterize from two WinCoords
@@ -145,7 +145,7 @@ namespace my_gl {
 
      private:
 
-	template<bool hasCallback=false>
+	template<bool hasCallback>
 	     /** 
 	      * @brief when rasterize a line,
 	      * 
