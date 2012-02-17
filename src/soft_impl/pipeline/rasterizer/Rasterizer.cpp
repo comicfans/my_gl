@@ -55,7 +55,9 @@ namespace my_gl {
 
      void Rasterizer::setFragmentAttributeBuffer
 	  (FragmentAttributeBuffer& fragmentAttributeBuffer)
-	  {_fragmentAttributeBuffer=fragmentAttributeBuffer;}
+	  {
+		  FragmentAttributeBuffer *p=&_fragmentAttributeBuffer;
+		  p=&fragmentAttributeBuffer;}
 
 
      Rasterizer::~Rasterizer(){}
