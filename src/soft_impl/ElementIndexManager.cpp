@@ -45,7 +45,7 @@ namespace my_gl {
 	       //ELEMENT_ARRAY_BUFFER, indices is treated as 
 	       //offset of buffer object in machine units
 	       actualIndices=add(
-			 _bindedArrayBufferObjectPtr->getBufferPointer(),
+			 _bindedArrayBufferObjectPtr->getBufferPointer<float>(),
 			 toInt(indices));
 	  }
 	  //drawElements is the final function call
