@@ -19,7 +19,7 @@
 #include "MatrixStack.hpp"
 
      
-template class std::stack<my_gl::Matrix4>;
+extern template class std::stack<my_gl::Matrix4>;
 
 namespace my_gl {
 
