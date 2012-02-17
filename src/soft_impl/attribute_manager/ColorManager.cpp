@@ -26,13 +26,13 @@ namespace my_gl {
      {
 	  //default current color is 1,1,1,1
 	  //see glColor4f
-	  setValue({1,1,1,1});
+	  setValue(Vec4(1,1,1,1));
      }
 
      void ColorManager::color4f(float red,float green,
 	       float blue,float alpha)
      {
-	  setValue({red,green,blue,alpha});
+	  setValue(Vec4(red,green,blue,alpha));
      }
 
 

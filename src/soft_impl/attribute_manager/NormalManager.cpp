@@ -29,7 +29,7 @@ namespace my_gl {
 	  :TwoSourceVec4Manager(BIND_STATE)
      {
 	  //default value of normal ,see reference manual
-	  setValue(Vec4{0,0,1,0});
+	  setValue(Vec4(0,0,1,0));
      }
 
      void NormalManager::normal3f(float nx,float ny,float nz)
@@ -41,7 +41,7 @@ namespace my_gl {
 
 	  assert(!vertexArrayEnabled());
 
-	  setValue(Vec4{nx,ny,nz});
+	  setValue(Vec4(nx,ny,nz));
 
      }
 

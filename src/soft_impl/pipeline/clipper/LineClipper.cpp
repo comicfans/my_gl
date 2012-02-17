@@ -216,8 +216,8 @@ namespace my_gl {
      LineClipper::ClipPercent LineClipper::mergePercent
 	  (const ClipPercent& lhs,const ClipPercent& rhs)
 	  {
-	       return {max(lhs.first,rhs.first),
-		    min(lhs.second,rhs.second)};
+	       return ClipPercent(max(lhs.first,rhs.first),
+		    min(lhs.second,rhs.second));
 
 	  }
 
