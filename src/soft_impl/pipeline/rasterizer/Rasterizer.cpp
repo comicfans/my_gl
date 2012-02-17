@@ -27,7 +27,12 @@
 
 namespace my_gl {
 
-     using std::nearbyint;
+
+	//TODO a temp hack
+     int Rasterizer::nearbyint(double value)
+	 {
+		 return value;
+	 }
 
      Rasterizer::Rasterizer
 	       (ViewportParameter& viewportParameter,
@@ -57,7 +62,7 @@ namespace my_gl {
 	       
 
 
-     template<typename T=int>
+     template<typename T>
      static inline double viewportCorrectImpl
 	  (float normalizedDeviceCoordinate,
 	   T begin,T length)
