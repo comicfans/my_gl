@@ -36,7 +36,7 @@ namespace my_gl {
 	  (ObjectNameManager& objectNameManager):
 	       _objectNameManager(objectNameManager)
      {
-	  fill_n(_arrayAndElements,2,nullptr);
+	  fill_n(_arrayAndElements,2, NULL);
      }
 
      ArrayBufferObject* ArrayBufferObjectManager::
