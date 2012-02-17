@@ -32,7 +32,7 @@ namespace my_gl {
 
      using boost::multi_array;
 
-     class WinCoord;
+     struct WinCoord;
 
      class DepthBuffer :public FrameBuffer{
      public:
