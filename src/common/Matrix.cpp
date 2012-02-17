@@ -25,7 +25,7 @@
 #include "Vec.hpp"
 
 using std::fill_n;
-using std::tan;
+using std::atan;
 using std::copy_n;
 using std::swap;
 using std::cos;
@@ -225,7 +225,7 @@ namespace my_gl {
 
 
 	      
-	 const float PI=4*atan<float>(1);
+	 const float PI=4*(std::atan(1.0));
 
 	 inline float toRad(float degree)
 	 {
