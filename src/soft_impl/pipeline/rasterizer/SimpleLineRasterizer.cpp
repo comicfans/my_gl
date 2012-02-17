@@ -27,7 +27,7 @@
 
 namespace my_gl {
 
-     using std::nearbyint;
+
 
      SimpleLineRasterizer::SimpleLineRasterizer
 	       (ViewportParameter& viewportParameter,
