@@ -120,7 +120,7 @@ namespace my_gl {
 	      */
 	     void rasterizeImpl
 	     (const ConstAttributeGroupRefList& attributeGroupRefs,
-	      StepCallback stepCallback=StepCallback());
+	      StepCallback stepCallback);
 
 	/** 
 	 * @brief rasterize from two WinCoords
