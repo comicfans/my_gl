@@ -35,7 +35,7 @@ namespace my_gl {
 
      class ClippedPrimitiveGroup;
      class FragmentAttributeBuffer;
-     class DepthRange;
+     struct DepthRange;
      class DepthBuffer;
      class Interpolator;
 
@@ -63,6 +63,9 @@ namespace my_gl {
 
 	       static void viewportCorrect(Vec4& toCorrect,
 			 const WinCoord& windowCoordinates);
+
+		   //TODO a temp hack,msvc c++ has no nearbyint
+		   static int nearbyint(double value);
 
 	  protected:
 
