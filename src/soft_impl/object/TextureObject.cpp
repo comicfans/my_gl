@@ -33,7 +33,8 @@ namespace my_gl {
      using std::bind;
      using std::placeholders::_1;
      using std::placeholders::_2;
-     using std::nearbyint;
+
+	 int nearbyint(double value){return value;}
 
      float clamp(float value,float total)
      {
