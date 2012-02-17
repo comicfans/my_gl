@@ -44,6 +44,8 @@ namespace my_gl {
 
 	       VertexAttributeBuffer();
 
+		   VertexAttributeBuffer(const VertexAttributeBuffer& rhs);
+
 	       size_t elementNumber()const ;
 
 	       size_t attributeNumber()const;
