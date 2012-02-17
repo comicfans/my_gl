@@ -92,7 +92,7 @@ namespace my_gl {
 
 	       if (point1In&&point2In)
 	       {
-		    return {0,1};
+		    return ClipPercent(0,1);
 	       }
 	       
 		     
@@ -193,11 +193,11 @@ namespace my_gl {
 			      minMax.first:minMax.second;
 			 if (point1In)
 			 {
-			      return {0,between};
+			      return ClipPercent(0,between);
 			 }
 			 else
 			 {
-			      return {between,1};
+			      return ClipPercent(between,1);
 			 }
 		    }
 	       }
@@ -231,7 +231,7 @@ namespace my_gl {
 	       auto &point2=getVertex(originalAttributeGroups[1]);
 
 
-	       ClipPercent result={0,1};
+	       ClipPercent result(0,1);
 
 	       for (int i=0; i<3 ; ++i)
 	       {

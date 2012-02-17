@@ -64,7 +64,7 @@ namespace my_gl {
 
 	  void ColorBuffer::clearColor(float r,float g,float b,float a)
 	  {
-	       _clearColor={r,g,b,a};
+	       _clearColor=Vec4(r,g,b,a);
 	  }
 
 	  ColorBuffer::~ColorBuffer(){}

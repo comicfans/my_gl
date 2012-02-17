@@ -72,8 +72,8 @@ namespace my_gl {
 			    +newLength-1;
 		  _mixedIndex.insertNew(thisIndex);
 
-		  return {thisIndex,_clipGeneratedVertexAttribute.
-		       back()};
+		  return pair<size_t,AttributeGroupRef>(thisIndex,_clipGeneratedVertexAttribute.
+		       back());
 	     }
 
 	ConstAttributeGroupRef ClippedPrimitiveGroup
