@@ -225,7 +225,7 @@ namespace my_gl {
 
 
 	      
-	 const float PI=4*(std::atan(1.0));
+	 const float PI=4*atan(1.0f);
 
 	 inline float toRad(float degree)
 	 {
@@ -295,7 +295,7 @@ namespace my_gl {
 	 template<size_t L>
 	      void multiVecTo(const MatrixBase<L>& lhs, const float* vector, float *result) 
 	      {
-		   fill_n(result,MatrixBase<L>::LENGTH,0);
+		   fill_n(result,MatrixBase<L>::LENGTH,0.0f);
 
 		   for (int row=0; row<MatrixBase<L>::LENGTH; ++row)
 		   {
