@@ -29,7 +29,9 @@ using namespace my_gl;
 
 using std::unordered_map;
 using std::unordered_set;
-using std::nearbyint;
+
+int nearbyint(double value)
+{return value;}
 
 #ifdef __cplusplus
 
@@ -68,12 +70,14 @@ extern "C"
      Context::getInstance().clear(internalMask);
 }
 
+  using std::make_pair;
   void   glCullFace( GLenum mode )
 {
-     static unordered_map<GLenum,Face,EnumHash> map={
-	  {GL_FRONT,Face::FRONT},
-	  {GL_BACK,Face::BACK},
-	  {GL_FRONT_AND_BACK,Face::FRONT_AND_BACK}};
+     static unordered_map<GLenum,Face,EnumHash> map;
+
+	 map.insert(make_pair(GL_FRONT,Face::FRONT));
+	 map.insert(make_pair(GL_BACK,Face::BACK));
+	 map.insert(make_pair(GL_FRONT_AND_BACK,Face::FRONT_AND_BACK));
 
      Context::getInstance().cullFace(map[mode]);
 
