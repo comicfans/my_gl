@@ -593,7 +593,7 @@ namespace my_gl {
 		  size_t width,size_t height)
 	{
 	     _viewportParameter=
-		  {x,y,uint32_t(width),uint32_t(height)};
+		  ViewportParameter{x,y,uint32_t(width),uint32_t(height)};
 	}
 
 	void SoftContext::loadIdentity()
