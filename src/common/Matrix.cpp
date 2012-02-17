@@ -352,7 +352,7 @@ namespace my_gl {
 	 template<size_t L>
 	      void multiVecTo(const MatrixBase<L>& lhs, const VecBase<L>& vec, float *result) 
 	      {
-		   multiVecTo(lhs,vec,result);
+		   multiVecTo(lhs,vec.values(),result);
 	      }
 
      
