@@ -53,8 +53,8 @@ namespace my_gl {
 	   _pLineRasterizer(pLineRasterizer)
      {
 	  _cullFaceEnabled=false;
-	  _frontFaceMode=FaceMode::CCW;
-	  _cullFace=Face::BACK;
+	  _frontFaceMode=GL_CCW;
+	  _cullFace=GL_BACK;
      }
 
 
@@ -218,7 +218,7 @@ namespace my_gl {
 	       return false;
 	  }
 
-	  else if (_cullFace==Face::FRONT_AND_BACK)
+	  else if (_cullFace==GL_FRONT_AND_BACK)
 	  {
 	       //cull all
 	       return true;
@@ -237,7 +237,7 @@ namespace my_gl {
 
 	  //positive -> towards to reader CCW
 	  //negative -> away from reader  CW
-	  FaceMode faceMode=FaceMode(int(positive));
+	  GLenum faceMode=positive?GL_CCW:GL_CW;
 
 	  return _cullFaceMode==faceMode;
      }
@@ -251,22 +251,32 @@ namespace my_gl {
 		    _cullFaceEnabled=false;
 	       }
 
-	       void TriangleRasterizer::frontFace(FaceMode faceMode)
+	       void TriangleRasterizer::frontFace(GLenum faceMode)
 	       {
 		    _frontFaceMode=faceMode;
 	       }
 
-	       void TriangleRasterizer::cullFace(Face face)
+	       void TriangleRasterizer::cullFace(GLenum face)
 	       {
 		    _cullFace=face;
-		    if (face==Face::FRONT)
+		    if (face==GL_FRONT)
 		    {
 			 _cullFaceMode=_frontFaceMode;
 		    }
-		    else if (face==Face::BACK)
+		    else if (face==GL_BACK)
 		    {
-			 _cullFaceMode=
-			      FaceMode(1-int(_frontFaceMode));
+			 if (_frontFaceMode==GL_FRONT)
+			 {
+			      _cullFaceMode=GL_BACK;
+			 }
+			 else if(_frontFaceMode==GL_BACK)
+			 {
+			      _cullFaceMode==GL_FRONT;
+			 }
+			 else
+			 {
+			      assert(false ||"wrong face passed");
+			 }
 		    }
 		    _cullFace=face;
 	       }

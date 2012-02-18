@@ -50,9 +50,9 @@ namespace my_gl {
 
 	       void disableCullFace();
 
-	       void frontFace(FaceMode faceMode);
+	       void frontFace(GLenum faceMode);
 
-	       void cullFace(Face face);
+	       void cullFace(GLenum face);
 
 	  protected:
 
@@ -69,13 +69,13 @@ namespace my_gl {
 
 	       LineRasterizer *_pLineRasterizer;
 
-	       FaceMode _cullFaceMode;
+	       GLenum _cullFaceMode;
 
 	       bool _cullFaceEnabled;
 
-	       Face _cullFace;
+	       GLenum _cullFace;
 
-	       FaceMode _frontFaceMode;
+	       GLenum _frontFaceMode;
      };
 
 } /* my_gl */

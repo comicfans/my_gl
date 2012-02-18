@@ -36,6 +36,18 @@ namespace my_gl {
 	  return true;
      }
 
+     bool checkBindState(GLenum value)
+     {
+	  GLenum validValues[]={GL_VERTEX_ARRAY,GL_NORMAL_ARRAY,
+	       GL_COLOR_ARRAY,GL_TEXTURE_COORD_ARRAY};
+
+	  int arrayLength=sizeof(validValues)/sizeof(GLenum);
+	  assert(find(validValues,validValues+arrayLength,value)!=validValues+arrayLength
+		    || "wrong data value enum ");
+
+	  return true;
+     }
+
      bool checkLightN(GLenum value)
      {
 	  GLenum validValues[]={GL_LIGHT0,GL_LIGHT1,
@@ -62,6 +74,19 @@ namespace my_gl {
 		    || "wrong data value enum ");
 
 	  return true;
+     }
+
+     bool checkNormalize(GLenum value)
+     {
+	  GLenum validValues[]={GL_NORMALIZE,GL_RESCALE_NORMAL};
+
+	  int arrayLength=sizeof(validValues)/sizeof(GLenum);
+
+	  assert(find(validValues,validValues+arrayLength,value)!=validValues+arrayLength
+		    || "wrong normalized normal value enum ");
+
+	  return true;
+ 
      }
 	
 } /* my_gl */

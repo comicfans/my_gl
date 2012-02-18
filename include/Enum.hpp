@@ -48,7 +48,6 @@ typedef unsigned int GLenum;
       */
 #define GL_ARRAY_BUFFER                   0x8892
 #define GL_ELEMENT_ARRAY_BUFFER           0x8893
-     enum BufferTarget{ARRAY_BUFFER,ELEMENT_ARRAY_BUFFER};
 
      //TODO
 #define GL_COLOR_BUFFER_BIT               0x00004000
@@ -62,7 +61,6 @@ typedef unsigned int GLenum;
 
 #define GL_STATIC_DRAW                    0x88E4
 #define GL_DYNAMIC_DRAW                   0x88E8
-     enum DataUsage{STATIC_DRAW,DYNAMIC_DRAW};
 
      /** 
       * @brief glMatrixMode()
@@ -70,7 +68,6 @@ typedef unsigned int GLenum;
 #define GL_MODELVIEW 0x1700
 #define GL_PROJECTION 0x1701
 #define GL_TEXTURE 0x1702
-     enum MatrixMode{MODEL_VIEW,PROJECTION,TEXTURE};
 
 
      /** 
@@ -95,8 +92,6 @@ typedef unsigned int GLenum;
 #define GL_NOTEQUAL 0x0205
 #define GL_GEQUAL 0x0206
 #define GL_ALWAYS 0x0207
-     enum DepthFunc{NEVER,ALWAYS,LESS,LEQUAL,
-	  EQUAL,GREATER,GEQUAL,NOTEQUAL};
 
 #define GL_LIGHTING 0x0B50
 #define GL_LIGHT0 0x4000
@@ -134,21 +129,16 @@ typedef unsigned int GLenum;
 #define GL_FRONT_FACE 0x0B46
 #define GL_BACK                           0x0405
 #define GL_FRONT_AND_BACK                 0x0408
-     enum Face{FRONT,BACK,FRONT_AND_BACK};
 
 #define GL_CW                             0x0900
 #define GL_CCW                            0x0901
-     enum FaceMode{CW=0,CCW=1};
 
 
 #define GL_NORMALIZE 0x0BA1
 #define GL_RESCALE_NORMAL                 0x803A
-     //TODO
-     enum NormalizeNormal{RESCALE_NORMAL,NORMALIZE};
 
      //in opengl es 1.0, only TEXTURE_2D is supported
 #define GL_TEXTURE_2D 0x0DE1
-     enum TexTarget{TEXTURE_2D};
 
 #define GL_NEAREST 0x2600
 #define GL_LINEAR 0x2601

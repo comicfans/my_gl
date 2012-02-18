@@ -21,7 +21,7 @@
 #include <boost/assign/list_of.hpp>
 
 #include "common/Vec.hpp"
-
+#include "common/CheckEnum.hpp"
 #include "common/Matrix.hpp"
 
 #include "MatrixParam.hpp"
@@ -45,8 +45,10 @@ namespace my_gl {
 	  return _matrixParam.modelViewProjection*inVertex;
      }
 	       
-     void VertexShader::enable(NormalizeNormal normalizeNormal)
+     void VertexShader::enable(GLenum normalizeNormal)
      {
+
+	  checkNormalize(normalizeNormal);
 
 	  switch(normalizeNormal)
 	  {
@@ -59,8 +61,10 @@ namespace my_gl {
 	  }
      }
 
-     void VertexShader::disable(NormalizeNormal normalizeNormal)
+     void VertexShader::disable(GLenum normalizeNormal)
      {
+	  checkNormalize(normalizeNormal);
+
 	  switch(normalizeNormal)
 	  {
 	       case NormalizeNormal::NORMALIZE:

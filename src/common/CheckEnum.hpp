@@ -28,6 +28,7 @@ namespace my_gl {
      bool checkPrimitiveMode(GLenum value);
      bool checkImageFormat(GLenum value);
      bool checkLightN(GLenum value);
+     bool checkBindState(GLenum value);
 	
 } /* my_gl */
 

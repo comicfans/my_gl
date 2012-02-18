@@ -48,9 +48,9 @@ namespace my_gl {
 	       virtual void shade(const Vec4* inputAttributes,
 			 AttributeGroupRef outputAttributes);
 
-	       void enable(NormalizeNormal normalizeNormal);
+	       void enable(GLenum normalizeNormal);
 
-	       void disable(NormalizeNormal normalizeNormal);
+	       void disable(GLenum normalizeNormal);
 
 	       virtual void shade(
 

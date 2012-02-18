@@ -152,7 +152,7 @@ namespace my_gl {
 	virtual void depthRange(double near,double far)=0;
 
 	//glDepthFunc
-	virtual void depthFunc(DepthFunc func)=0;
+	virtual void depthFunc(GLenum func)=0;
 
 	//glFrontFace
 	virtual void frontFace(GLenum faceMode)=0;

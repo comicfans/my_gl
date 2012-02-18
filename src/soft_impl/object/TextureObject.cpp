@@ -20,6 +20,8 @@
 
 #include <cmath>
 
+#include <boost/assign/list_of.hpp>
+
 #include "common/UntypedArray.hpp"
 #include "common/PointerFunction.hpp"
 #include "pipeline/interpolator/Interpolator.hpp"
@@ -57,8 +59,9 @@ namespace my_gl {
 	       mirrorPart;
      }
 
-     const static TextureObject::Wrapper 
-	  WRAPPERS[]={clamp,repeat,mirrorRepeat};
+     static unordered_map<GLenum,TextureObject::Wrapper>
+	  WRAPPERS=boost::assign::map_list_of
+	  (GL_CLAMP,clamp)(GL_REPEAT,repeat)(GL_MIRRORED_REPEAT,mirrorRepeat);
 
      TextureObject::TextureObject(Name name)
 	  :PixelObject(name)
@@ -68,35 +71,34 @@ namespace my_gl {
 	  texParameter(TexWrapName::TEXTURE_WRAP_T,
 		    TexWrapMode::REPEAT);
 
-	  ALL_FILTERS[int(TexFilterMode::LINEAR)]=
+	  ALL_FILTERS[GL_LINEAR]=
 	       bind(&TextureObject::linear,this,_1,_2);
 
-	  ALL_FILTERS[int(TexFilterMode::NEAREST)]=
+	  ALL_FILTERS[GL_NEAREST]=
 	       bind(&TextureObject::nearest,this,_1,_2);
 
 
-	  texParameter(TexFilterName::TEXTURE_MAG_FILTER,
-		    TexFilterMode::LINEAR);
+	  texParameter(GL_TEXTURE_MAG_FILTER,
+		    GL_LINEAR);
 
-	  texParameter(TexFilterName::TEXTURE_MIN_FILTER,
-		    TexFilterMode::LINEAR);
+	  texParameter(GL_TEXTURE_MIN_FILTER,
+		    GL_LINEAR);
 
      }
 	
      void TextureObject::texParameter
-	  (TexWrapName warpName,TexWrapMode warpMode)
+	  (GLenum pname,GLenum value)
      {
-	  int idx=int(warpName);
-	  _stWrapMode[idx]=warpMode;
-	  _stWrapper[idx]=WRAPPERS[int(warpMode)];
-     }
-
-     void TextureObject::texParameter
-	  (TexFilterName filterName,TexFilterMode filterMode)
+	  if(pname==GL_TEXTURE_WRAP_S || pname==GL_TEXTURE_WRAP_T)
 	  {
-	       int idx=int(filterName);
-	       _magMinFilter[idx]=ALL_FILTERS[int(filterMode)];
+	       _stWrapMode[pname]=value;
+	       _stWrapper[pname]=WRAPPERS[value];
 	  }
+	  else
+	  {
+	       _magMinFilter[pname]=ALL_FILTERS[value];
+	  }
+     }
 
      Vec4 TextureObject::operator()(float s,float t)const
 	{
@@ -108,7 +110,8 @@ namespace my_gl {
 		       (t*height()-HALF_PIXEL,height()-HALF_PIXEL);
 
 	     //TODO currently use MAG_FILTER as filter
-	     return ALL_FILTERS[0](u,v);
+#warning right here?
+	     return ALL_FILTERS[GL_TEXTURE_MAG_FILTER](u,v);
 	}
 
 

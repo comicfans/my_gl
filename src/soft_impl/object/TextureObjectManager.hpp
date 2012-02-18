@@ -48,18 +48,18 @@ namespace my_gl {
 
 	void genTextures(size_t n,Name * names);
 
-	void bindTexture(TexTarget/* ignored*/,Name texture);
+	void bindTexture(GLenum /* ignored*/,Name texture);
 
 	void deleteTextures(size_t n,const Name *names);
 
-	void texImage2D(TexTarget/*ignored*/,int level/* ignored*/
+	void texImage2D(GLenum /*ignored*/,int level/* ignored*/
 		  ,int internalFormat/*ignored*/,size_t width,
 		  //OpenGL ES 1.0 border must be 0
 		  size_t height,int border/* ignored */,
 		  GLenum imageFormat,GLenum storeType,
 		  const void *texels);
 
-	void texSubImage2D(TexTarget/*ignored*/,
+	void texSubImage2D(GLenum/*ignored*/,
 		  int level/* ignored*/,
 		  int xoffset,int yoffset,
 		  size_t width,size_t height,
@@ -68,13 +68,10 @@ namespace my_gl {
 		  const void *texels);
 
 
-	void texParameter(TexTarget target/*ignored*/,
-		  TexWrapName wrapName,
-		  TexWrapMode texWrapMode);
+	void texParameter(GLenum target/*ignored*/,
+		  GLenum wrapName,
+		  GLenum texWrapMode);
 
-	void texParameter(TexTarget target/*ignored*/,
-		  TexFilterName filterName,
-		  TexFilterMode texFilterMode);
      private:
 
 	ObjectNameManager & _objectNameManager;

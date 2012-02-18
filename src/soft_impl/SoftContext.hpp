@@ -21,8 +21,10 @@
 #define SOFT_CONTEXT_HPP
 
 #include <memory>
+#include <unordered_map>
 #include <vector>
 
+#include <boost/ptr_container/ptr_unordered_map.hpp>
 #include <boost/ptr_container/ptr_array.hpp>
 
 #include "common/Context.hpp"
@@ -43,8 +45,10 @@
 namespace my_gl {
 
      using std::unique_ptr;
+     using std::unordered_map;
      using std::vector;
 
+     using boost::ptr_unordered_map;
      using boost::ptr_array;
 
      class BufferObject;
@@ -93,19 +97,19 @@ namespace my_gl {
 		    size_t size,const void* data);
 
 	//glEnableClient
-	virtual void enableClientState(BindState bindState);
+	virtual void enableClientState(GLenum bindState);
 	//glDisableClient
-	virtual void disableClientState(BindState bindState);
+	virtual void disableClientState(GLenum bindState);
 
 	//glVertexPointer
-	virtual void vertexPointer(int componentSize,DataType type, 
+	virtual void vertexPointer(int componentSize,GLenum type, 
 		  size_t stride, const void* pointer);
 
 	//glNormal3f
 	virtual void normal3f(float nx,float ny,float nz);
 
 	//glNormalPointer
-	virtual void normalPointer(DataType type,
+	virtual void normalPointer(GLenum type,
 		  size_t stride,const void *pointer);
 	//glColor4f
 	virtual void color4f(float red,float green,
@@ -116,7 +120,7 @@ namespace my_gl {
 		  uint8_t blue,uint8_t alpha) ;
 
 	//glColorPointer
-	virtual void colorPointer(int componentSize,DataType type,
+	virtual void colorPointer(int componentSize,GLenum type,
 		  size_t stride,const void *pointer);
 
 	//glTexCoordPointer
@@ -134,7 +138,7 @@ namespace my_gl {
 	 * @param pointer
 	 */
 	virtual void texCoordPointer(int componentSize, 
-		  DataType type, size_t stride, const void* pointer);
+		  GLenum type, size_t stride, const void* pointer);
 
 	//glMatrixMode
 	virtual void matrixMode(MatrixMode matrixMode);
@@ -164,12 +168,12 @@ namespace my_gl {
 	virtual void multMatrixf(const float* matrix);
 
 	//glDrawArrays 
-	virtual void drawArrays(PrimitiveMode primitiveMode,
+	virtual void drawArrays(GLenum primitiveMode,
 		  int first,size_t count);
 
 	//glDrawElements 
-	virtual void drawElements(PrimitiveMode primitiveMode,
-		  size_t count,DataType dataType,const void* indices);
+	virtual void drawElements(GLenum primitiveMode,
+		  size_t count,GLenum dataType,const void* indices);
 
 	//glFrustumf
 	virtual void frustum(double left,double right,
@@ -216,65 +220,35 @@ namespace my_gl {
 	virtual void depthFunc(DepthFunc func);
 
 	//glLightf
-	virtual void lightf(LightIndex lightIndex,
-		  LightParamName paramName,float param);
+	virtual void lightf(GLenum lightIndex,
+		  GLenum paramName,float param);
 
 	//glLightfv
-	virtual void lightfv(LightIndex lightIndex,
-		  LightParamName paramName,const float* param);
+	virtual void lightfv(GLenum lightIndex,
+		  GLenum paramName,const float* param);
 
 	//glMaterialf
 	virtual void materialf
-	     (Face face,LightParamName paramName,float param);
+	     (GLenum face,GLenum paramName,float param);
 
 	//glMaterialfv
 	virtual void materialfv
-	     (Face face,LightParamName paramName,const float *param);
+	     (GLenum face,GLenum paramName,const float *param);
 
 	//glLightModelfv
-	virtual void lightModelfv(LightParamName paramName,const float* param);
+	virtual void lightModelfv(GLenum paramName,const float* param);
 
 	//glLightModelf
-	virtual void lightModelf(LightParamName paramName,float param);
-
-	//glEnable lighting
-	virtual void enableLighting();
-
-	//glDisable lighting
-	virtual void disableLighting();
-
-	//glEnable  (LIGHTn override)
-	virtual void enable(LightIndex lightIndex);
-
-	//glDisable  (LIGHTn override)
-	virtual void disable(LightIndex lightIndex);
-
-	//glEnable (texture override)
-	virtual void enable(TexTarget texTarget);
-
-	//glDisable (texture override)
-	virtual void disable(TexTarget texTarget);
+	virtual void lightModelf(GLenum paramName,float param);
 
 	//glGenTextures
 	virtual void genTextures(size_t n,Name * names);
 
-	//glEnable (cullFace override)
-	virtual void enableCullFace();
-
-	//glDisable (cullFace override)
-	virtual void disableCullFace();
-
-	//glEnable (normlize override)
-	virtual void enable(NormalizeNormal normalizeNormal);
-	       
-	//glDisable (cullFace override)
-	virtual void disable(NormalizeNormal normalizeNormal);
-
 	//glFrontFace
-	virtual void frontFace(FaceMode faceMode);
+	virtual void frontFace(GLenum faceMode);
 
 	//glCullFace
-	virtual void cullFace(Face face);
+	virtual void cullFace(GLenum face);
 
 	//glTexEnvi
 	/** 
@@ -304,7 +278,7 @@ namespace my_gl {
 		  ,int internalFormat/*ignored*/,size_t width,
 		  //OpenGL ES 1.0 border must be 0
 		  size_t height,int border/* ignored */,
-		  ImageFormat imageFormat,StoreType storeType,
+		  GLenum imageFormat,GLenum storeType,
 		  const void *texels);
 
 	//glTexSubImage2D
@@ -312,8 +286,8 @@ namespace my_gl {
 		  int level/* ignored*/,
 		  int xoffset,int yoffset,
 		  size_t width,size_t height,
-		  ImageFormat imageFormat,
-		  StoreType storeType,
+		  GLenum imageFormat,
+		  GLenum storeType,
 		  const void *texels);
 
 
@@ -329,7 +303,7 @@ namespace my_gl {
 
 	//glCopyTexImage2D
 	virtual void copyTexImage2D(TexTarget /*ignored*/,int level/* ignored*/,
-		  ImageFormat internalFormat,
+		  GLenum internalFormat,
 		  int x,int y,size_t width,size_t height,int border);
  
 	//glCopyTexSubImage2D
@@ -339,6 +313,34 @@ namespace my_gl {
 		  int x,int y,size_t width,size_t height);
 
      protected:
+
+	//glEnable lighting
+	virtual void enableLighting();
+	//glDisable lighting
+	virtual void disableLighting();
+
+	//glEnable  (LIGHTn override)
+	virtual void enableLightN(GLenum lightIndex);
+	//glDisable  (LIGHTn override)
+	virtual void disableLightN(GLenum lightIndex);
+
+	//glEnable (texture override)
+	virtual void enableTexTarget(GLenum texTarget);
+	//glDisable (texture override)
+	virtual void disableTexTarget(GLenum texTarget);
+
+	//glEnable (cullFace override)
+	virtual void enableCullFace();
+	//glDisable (cullFace override)
+	virtual void disableCullFace();
+
+	//glEnable (normlize override)
+	virtual void enableNormal(GLenum normalizeNormal);
+	       
+	//glDisable (cullFace override)
+	virtual void disableNormal(GLenum normalizeNormal);
+
+
 
 	size_t _height;
 
@@ -350,7 +352,7 @@ namespace my_gl {
 
 	TextureObjectManager _textureObjectManager;
 
-	ptr_array<Vec4Manager,4> _allVec4Manager;
+	ptr_unordered_map<GLenum,Vec4Manager> _allVec4Manager;
 
 	ElementIndexManager _elementIndexManager;
 
@@ -365,7 +367,7 @@ namespace my_gl {
 
 	MatrixMode _matrixMode;
 
-	MatrixStack _matrixStacks[3];
+	unordered_map<GLenum,MatrixStack> _matrixStacks;
 
 	void multMatrixf(const Matrix4& matrix);
 
@@ -388,9 +390,9 @@ namespace my_gl {
 
 	unique_ptr<PixelDrawer> _pixelDrawerPtr;
 
-	ptr_array<Clipper,3> _clippers;
+	ptr_unordered_map<GLenum,Clipper> _clippers;
 
-	ptr_array<Rasterizer,3> _rasterizers;
+	ptr_unordered_map<GLenum,Rasterizer> _rasterizers;
 	/** 
 	 * @brief after vertex transform,store vertex attribute
 	 * here
@@ -400,7 +402,7 @@ namespace my_gl {
 	ViewportParameter _viewportParameter;
 	DepthRange _depthRange;
 
-	vector<BindState> _activeStreams;
+	vector<GLenum> _activeStreams;
 
 
 	/** 
@@ -410,7 +412,7 @@ namespace my_gl {
 	 * client vertex pointer is used
 	 *
 	 */
-	void copyArrayBufferBind(BindState bindState);
+	void copyArrayBufferBind(GLenum bindState);
 
 	/** 
 	 * @brief using VertexShader to process
@@ -443,18 +445,18 @@ namespace my_gl {
 	 */
 	virtual void clipPrimitive
 	     (const PrimitiveIndex& primitiveIndex,
-		  PrimitiveMode catalog);
+		  GLenum catalog);
 
 	/** 
 	 * @brief rasterize the clipped primitive
 	 */
-	void rasterizePrimitive(PrimitiveMode catalog);
+	void rasterizePrimitive(GLenum catalog);
 
 
 	/** 
 	 * @brief common route of drawArrays/drawElements
 	 */
-	void enterPipeline(PrimitiveMode primitiveMode,
+	void enterPipeline(GLenum primitiveMode,
 		  size_t vertexNumber,
 		  const IndexProvider& indexProvider);
 

@@ -197,7 +197,7 @@ extern "C"
   void   glMaterialf( GLenum face, GLenum pname, GLfloat param )
 {
      Context::getInstance().materialf
-	  (Face::FRONT_AND_BACK,GL_SHININESS,param);
+	  (GL_FRONT_AND_BACK,GL_SHININESS,param);
 }
 
 

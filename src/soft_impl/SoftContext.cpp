@@ -21,6 +21,8 @@
 #include <climits>
 #include <algorithm>
 
+#include <boost/assign/ptr_map_inserter.hpp>
+
 #include "attribute_manager/NormalManager.hpp"
 #include "attribute_manager/ColorManager.hpp"
 #include "attribute_manager/VertexManager.hpp"
@@ -58,6 +60,7 @@
 #include "pipeline/ClippedPrimitiveGroup.hpp"
 
 #include "SDLPixelDrawer.hpp"
+#include "common/CheckEnum.hpp"
 
 namespace my_gl {
 
@@ -74,16 +77,21 @@ namespace my_gl {
 	  _width=width;
 
 	  //init vec4 manager;
-	  _allVec4Manager.replace(int(BindState::NORMAL),new NormalManager());
-	  _allVec4Manager.replace(int(BindState::COLOR),new ColorManager());
-	  _allVec4Manager.replace(int(BindState::VERTEX),new VertexManager());
-	  _allVec4Manager.replace(int(BindState::TEXCOORD),new TexCoordManager());
+	  boost::assign::ptr_map_insert<VertexManager>
+	       (_allVec4Manager)(GL_VERTEX_ARRAY);
+	  boost::assign::ptr_map_insert<NormalManager>
+	       (_allVec4Manager)(GL_NORMAL_ARRAY);
+	  boost::assign::ptr_map_insert<ColorManager>
+	       (_allVec4Manager)(GL_COLOR_ARRAY);
+	  boost::assign::ptr_map_insert<TexCoordManager>
+	       (_allVec4Manager)(GL_TEXTURE_COORD_ARRAY);
+
 
 	  //init active streams
 	  //if light is not turned on,texture and normal will not transfered
 
-	  _activeStreams.push_back(BindState::VERTEX);
-	  _activeStreams.push_back(BindState::COLOR);
+	  _activeStreams.push_back(GL_VERTEX_ARRAY);
+	  _activeStreams.push_back(GL_COLOR_ARRAY);
 
 	  _pixelDrawerPtr.reset(new SDLPixelDrawer());
 	  _pixelDrawerPtr->onInit(width,height);
@@ -105,12 +113,13 @@ namespace my_gl {
 
 	  //init clippers;
 
-	  _clippers.replace(int(GL_POINTS),
-		    new PointClipper());
-	  _clippers.replace(int(GL_LINES),
-		    new LineClipper());
-	  _clippers.replace(int(GL_TRIANGLES),
-		    new TriangleClipper());
+	  boost::assign::ptr_map_insert<PointClipper>
+	       (_clippers)(GL_POINTS);
+	  boost::assign::ptr_map_insert<LineClipper>
+	       (_clippers)(GL_LINES);
+	  boost::assign::ptr_map_insert<TriangleClipper>
+	       (_clippers)(GL_TRIANGLES);
+
 
 	  //then rasterizers
 
@@ -127,29 +136,31 @@ namespace my_gl {
 	  _interpolatorPtr.reset(new WinCoordInterpolator());
 	  //init rasterizers
 
-	  _rasterizers.replace(int(GL_POINTS),
-		    new PointRasterizer(_viewportParameter,
-			 *_interpolatorPtr,*_fragmentAttributeBufferPtr,
-			 getFrameBuffer<DepthBuffer>(),_depthRange));
 
-	  _rasterizers.replace(int(GL_LINES),
-		    new SimpleLineRasterizer
-		    (_viewportParameter,
-			 *_interpolatorPtr,*_fragmentAttributeBufferPtr,
-			 getFrameBuffer<DepthBuffer>(),_depthRange));
+	  boost::assign::ptr_map_insert<PointRasterizer>(_rasterizers)
+	       (GL_POINTS,
+		_viewportParameter,*_interpolatorPtr,*_fragmentAttributeBufferPtr,
+		getFrameBuffer<DepthBuffer>(),_depthRange);
 
-	  Rasterizer *pLineRasterizer=&_rasterizers[1];
+	  boost::assign::ptr_map_insert<SimpleLineRasterizer>(_rasterizers)
+	       (GL_LINES,
+		_viewportParameter, *_interpolatorPtr,*_fragmentAttributeBufferPtr,
+		getFrameBuffer<DepthBuffer>(),_depthRange);
+
+
+	  Rasterizer *pLineRasterizer=&_rasterizers[GL_LINES];
 
 	  //what triangle rasterizer do is depends on 
 	  //its internal LineRasterizer
-	  _rasterizers.replace(int(GL_TRIANGLES),
-		    new TriangleRasterizer
-		    (_viewportParameter,
+	  boost::assign::ptr_map_insert<TriangleRasterizer>(_rasterizers)
+	       (GL_TRIANGLES,
+		_viewportParameter,
 			 *_interpolatorPtr,
 			 *_fragmentAttributeBufferPtr,
 			 getFrameBuffer<DepthBuffer>(),
 			 _depthRange,
-			 static_cast<LineRasterizer*>(pLineRasterizer)));
+			 static_cast<LineRasterizer*>(pLineRasterizer));
+
 
 	  setInstance(this);
      }
@@ -233,22 +244,29 @@ namespace my_gl {
 	  _arrayBufferObjectManager.bufferSubData(target,offset,size,data);
      }
 
-     void SoftContext::enableClientState(BindState bindState)
+     void SoftContext::enableClientState(GLenum bindState)
      {
-	  assert(bindState!=BindState::ELEMENTS);
+	  checkBindState(bindState);
 
-	  _allVec4Manager[int(bindState)].enableVertexArray(true);
+	  assert(bindState!=GL_ELEMENT_ARRAY_BUFFER);
+
+	  auto it=_allVec4Manager.find(bindState);
+
+	  assert(it!=_allVec4Manager.end());
+
+	  it->enableVertexArray(true);
+
      }
 
-     void SoftContext::disableClientState(BindState bindState)
+     void SoftContext::disableClientState(GLenum bindState)
      {
-	  assert(bindState!=BindState::ELEMENTS);
+	  assert(bindState!=GL_ELEMENT_ARRAY_BUFFER);
 
 	  _allVec4Manager[int(bindState)].enableVertexArray(false);
      }
 
 	
-     void SoftContext::copyArrayBufferBind(BindState bindState)
+     void SoftContext::copyArrayBufferBind(GLenum bindState)
      {
 	  _allVec4Manager[int(bindState)].bindArrayBufferObject(
 			 _arrayBufferObjectManager.getArrayBuffer());
@@ -260,9 +278,9 @@ namespace my_gl {
      }
 
      void SoftContext::normalPointer
-	  (DataType type,size_t stride, const void *pointer)
+	  (GLenum type,size_t stride, const void *pointer)
      {
-	  copyArrayBufferBind(BindState::NORMAL);
+	  copyArrayBufferBind(GL_NORMAL_ARRAY);
 
 	  getVec4Manager<NormalManager>().
 	       normalPointer(type, stride, pointer);
@@ -282,29 +300,29 @@ namespace my_gl {
 	}
 
 	void SoftContext::colorPointer(int componentSize,
-		  DataType type,size_t stride,const void *pointer)
+		  GLenum type,size_t stride,const void *pointer)
 	{
-	     copyArrayBufferBind(BindState::COLOR);
+	     copyArrayBufferBind(GL_COLOR_ARRAY);
 
 	     getVec4Manager<ColorManager>().
 		  colorPointer(componentSize, type, stride, pointer);
 	}
 
 	void SoftContext::vertexPointer(int componentSize, 
-		  DataType type, size_t stride, const void* pointer)
+		  GLenum type, size_t stride, const void* pointer)
 	{
 	  
-	     copyArrayBufferBind(BindState::VERTEX);
+	     copyArrayBufferBind(GL_VERTEX_ARRAY);
 
 	     getVec4Manager<VertexManager>().vertexPointer
 		  (componentSize, type, stride, pointer);
 	}
 
 	void SoftContext::texCoordPointer(int componentSize, 
-		  DataType type, size_t stride, const void* pointer)
+		  GLenum type, size_t stride, const void* pointer)
 	{
 
-	     copyArrayBufferBind(BindState::TEXCOORD);
+	     copyArrayBufferBind(GL_TEXTURE_COORD_ARRAY);
 
 	     getVec4Manager<TexCoordManager>().texCoordPointer
 		  (componentSize, type, stride, pointer);
@@ -316,7 +334,7 @@ namespace my_gl {
 	}
 
 	MatrixStack& SoftContext::currentMatrixStack()
-	{return _matrixStacks[int(_matrixMode)];}
+	{return _matrixStacks[_matrixMode];}
 
 	void SoftContext::pushMatrix()
 	{
@@ -365,7 +383,7 @@ namespace my_gl {
 	     multMatrixf(Matrix4(matrix));
 	}
 
-	void SoftContext::drawArrays(PrimitiveMode primitiveMode, int first, size_t count)
+	void SoftContext::drawArrays(GLenum primitiveMode, int first, size_t count)
 	{
 	     //TODO GL spec : if GL_VERTEX_ARRAY is not enabled ,no geom constructed
 
@@ -375,8 +393,8 @@ namespace my_gl {
 	}
 
 	void SoftContext::drawElements
-	     (PrimitiveMode primitiveMode, size_t count, 
-		  DataType dataType, const void* indices)
+	     (GLenum primitiveMode, size_t count, 
+		  GLenum dataType, const void* indices)
 	{
 	     assert(dataType==GL_UNSIGNED_BYTE || 
 		       dataType==GL_UNSIGNED_SHORT);
@@ -392,7 +410,7 @@ namespace my_gl {
 	}
 
 	void SoftContext::enterPipeline
-	     (PrimitiveMode primitiveMode,size_t count,
+	     (GLenum primitiveMode,size_t count,
 	      const IndexProvider& indexProvider)
 	{
 
@@ -409,7 +427,7 @@ namespace my_gl {
 		       primitiveMode,count,
 		       NaturalOrderIndexProvider());
 
-	     PrimitiveMode catalog=GL_POINTS;
+	     GLenum catalog=GL_POINTS;
 
 	     switch (primitiveMode)
 	     {
@@ -463,7 +481,7 @@ namespace my_gl {
 
 	     }
 
-	void SoftContext::rasterizePrimitive(PrimitiveMode catalog)
+	void SoftContext::rasterizePrimitive(GLenum catalog)
 	{
 	     _depthRange.update();
 
@@ -478,7 +496,7 @@ namespace my_gl {
 	}
 
 	void SoftContext::clipPrimitive
-	     (const PrimitiveIndex& primitiveIndex,PrimitiveMode catalog)
+	     (const PrimitiveIndex& primitiveIndex,GLenum catalog)
 	     {
 		  //choose right clipper
 		  Clipper& clipper=_clippers[int(catalog)];
@@ -551,7 +569,7 @@ namespace my_gl {
 	     matrix(2,3)=-1;
 	     matrix(3,3)=1;
 
-	     _matrixStacks[int(GL_PROJECTION)].
+	     _matrixStacks[GL_PROJECTION].
 		  multiTop(matrix);
 
 	}
@@ -576,16 +594,16 @@ namespace my_gl {
 	     matrix(3,2)=tz;
 	     matrix(3,3)=1;
 
-	     _matrixStacks[int(GL_PROJECTION)]
+	     _matrixStacks[GL_PROJECTION]
 		  .multiTop(matrix);
 	}
 
 	void SoftContext::prepareGlobalUniform()
 	{
 	     _matrixParam.updateAll
-		  (_matrixStacks[int(GL_MODEL_VIEW)].top(),
-		  _matrixStacks[int(GL_PROJECTION)].top(),
-		  _matrixStacks[int(GL_TEXTURE)].top());
+		  (_matrixStacks[GL_MODELVIEW].top(),
+		  _matrixStacks[GL_PROJECTION].top(),
+		  _matrixStacks[GL_TEXTURE].top());
 	
 	}
 
@@ -601,42 +619,42 @@ namespace my_gl {
 	     currentMatrixStack().top()=Matrix4::identity();
 	}
 
-	void SoftContext::lightf(LightIndex lightIndex,
-		  LightParamName paramName,float param)
+	void SoftContext::lightf(GLenum lightIndex,
+		  GLenum paramName,float param)
 	{
 	     _groupLightingParam.lightf
 		  (lightIndex,paramName,param);
 	}
 	  
 	void SoftContext::lightModelf
-	       (LightParamName paramName,float param)
+	       (GLenum paramName,float param)
 	       {
 		    assert(paramName==GL_TWO_SIDE);
 		    _twoSideLightingEnabled=(param!=0);
 	       }
 
 	void SoftContext::lightModelfv
-	     (LightParamName paramName,const float* param)
+	     (GLenum paramName,const float* param)
 	     {
 		  _groupLightingParam.lightModelfv(paramName,param);
 	     }
 
-	void SoftContext::lightfv(LightIndex lightIndex,
-		  LightParamName paramName,const float* param)
+	void SoftContext::lightfv(GLenum lightIndex,
+		  GLenum paramName,const float* param)
 	{
 	     _groupLightingParam.lightfv(lightIndex,paramName,param,
-		       _matrixStacks[int(GL_MODEL_VIEW)].
+		       _matrixStacks[GL_MODELVIEW].
 		       top());
 	}
 
 	void SoftContext::materialf
-	     (Face face,LightParamName paramName,float param)
+	     (GLenum face,GLenum paramName,float param)
 	     {
 		  _groupLightingParam.materialf(face,paramName,param);
 	     }
 
 	void SoftContext::materialfv
-	     (Face face,LightParamName paramName,const float *param)
+	     (GLenum face,GLenum paramName,const float *param)
 	     {
 		  _groupLightingParam.materialfv(face,paramName,param);
 	     }
@@ -673,7 +691,7 @@ namespace my_gl {
 		  ,int internalFormat/*ignored*/,size_t width,
 		  //OpenGL ES 1.0 border must be 0
 		  size_t height,int border/* ignored */,
-		  ImageFormat imageFormat,StoreType storeType,
+		  GLenum imageFormat,GLenum storeType,
 		  const void *texels)
 	{
 	     _textureObjectManager.texImage2D(target,level,internalFormat,
@@ -684,8 +702,8 @@ namespace my_gl {
 		  int level/* ignored*/,
 		  int xoffset,int yoffset,
 		  size_t width,size_t height,
-		  ImageFormat imageFormat,
-		  StoreType storeType,
+		  GLenum imageFormat,
+		  GLenum storeType,
 		  const void *texels)
 	{
 	     _textureObjectManager.texSubImage2D(target,level,
@@ -729,19 +747,19 @@ namespace my_gl {
 	     }
 	}
 	       
-	void SoftContext::enable(NormalizeNormal normalizeNormal)
+	void SoftContext::enableNormal(GLenum normalizeNormal)
 	{
 	     _vertexShaderPtr->enable(normalizeNormal);
 	}
 
 	       
-	void SoftContext::disable(NormalizeNormal normalizeNormal)
+	void SoftContext::disableNormal(GLenum normalizeNormal)
 	{
 	     _vertexShaderPtr->disable(normalizeNormal);
 	}
 
 
-	void SoftContext::enable(LightIndex lightIndex)
+	void SoftContext::enableLightN(GLenum lightIndex)
 	{
 	     if (_lightingEnabled)
 	     {
@@ -749,7 +767,7 @@ namespace my_gl {
 	     }
 	}
 
-	void SoftContext::disable(LightIndex lightIndex)
+	void SoftContext::disableLightN(GLenum lightIndex)
 	{
 	     if (!_lightingEnabled)
 	     {
@@ -759,7 +777,7 @@ namespace my_gl {
 	     _groupLightingParam.disable(lightIndex);
 	}
 
-	static void uniqueProcess(vector<BindState>& all,BindState toProcess,bool add)
+	static void uniqueProcess(vector<GLenum>& all,GLenum toProcess,bool add)
 	{
 		  auto pos=find(all.begin(),all.end(),toProcess);
 
@@ -790,9 +808,9 @@ namespace my_gl {
 
 	     //enable NORMAL if lighting is enabled
 	     //remove if disabled
-	     uniqueProcess(_activeStreams,BindState::NORMAL,_lightingEnabled);
+	     uniqueProcess(_activeStreams,GL_NORMAL_ARRAY,_lightingEnabled);
 	     //when lighting is enabled, color is decided by lighting param
-	     uniqueProcess(_activeStreams,BindState::COLOR,!_lightingEnabled);
+	     uniqueProcess(_activeStreams,GL_COLOR_ARRAY,!_lightingEnabled);
 
 
 	     unique_ptr<VertexShader> finalPtr;
@@ -832,7 +850,7 @@ namespace my_gl {
 
 	     //enable TEXCOORD if texture is enabled
 	     //remove if disable
-	     uniqueProcess(_activeStreams,BindState::TEXCOORD,_textureEnabled);
+	     uniqueProcess(_activeStreams,GL_TEXTURE_COORD_ARRAY,_textureEnabled);
 
 	     if (_textureEnabled){
 
@@ -859,7 +877,7 @@ namespace my_gl {
 
 	void SoftContext::copyTexImage2D
 	     (TexTarget /*ignored*/,int level/* ignored*/,
-	      ImageFormat internalFormat/*ignored*/,
+	      GLenum internalFormat/*ignored*/,
 	      int x,int y,size_t width,size_t height,
 		  int border/*ignored*/)
 	     {
@@ -933,7 +951,7 @@ namespace my_gl {
 	}
 
 	//glFrontFace
-	void SoftContext::frontFace(FaceMode faceMode)
+	void SoftContext::frontFace(GLenum faceMode)
 	{
 	     static_cast<TriangleRasterizer&>
 		  (_rasterizers[int(GL_TRIANGLES)]).
@@ -942,7 +960,7 @@ namespace my_gl {
 
 
 	//glCullFace
-	void SoftContext::cullFace(Face face)
+	void SoftContext::cullFace(GLenum face)
 	{
 	     static_cast<TriangleRasterizer&>
 		  (_rasterizers[int(GL_TRIANGLES)]).
@@ -955,7 +973,7 @@ namespace my_gl {
      template<typename T>
 	  T& SoftContext::getVec4Manager()
 	  { return static_cast<T&>(_allVec4Manager
-		    [int(T::BIND_STATE)]);}
+		    [T::BIND_STATE]);}
 
      template<typename T>
 	  T& SoftContext::getFrameBuffer()
@@ -963,3 +981,5 @@ namespace my_gl {
 
 	
 } /* my_gl */
+
+

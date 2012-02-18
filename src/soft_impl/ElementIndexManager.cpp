@@ -33,8 +33,8 @@ namespace my_gl {
 	  _bindedArrayBufferObjectPtr=toBind;
      }
 	  const ArrayIndexProvider& ElementIndexManager::
-	       elements(PrimitiveMode primitiveMode,
-		    size_t count,DataType dataType,const void * indices,
+	       elements(GLenum primitiveMode,
+		    size_t count,GLenum dataType,const void * indices,
 		    size_t actualVertexNumber)
      {
 
