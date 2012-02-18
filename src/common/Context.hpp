@@ -51,14 +51,14 @@ namespace my_gl {
 
 
 	//glVertexPointer
-	virtual void  vertexPointer(int componentSize,DataType type, 
+	virtual void  vertexPointer(int componentSize,GLenum type, 
 		  size_t stride, const void * pointer)=0;
 
 	//glNormal3f
 	virtual void  normal3f(float nx,float ny,float nz)=0;
 
 	//glNormalPointer
-	virtual void  normalPointer(DataType type,
+	virtual void  normalPointer(GLenum type,
 		  size_t stride,const void  *pointer)=0;
 	//glColor4f
 	virtual void  color4f(float red,float green,
@@ -69,12 +69,12 @@ namespace my_gl {
 		  uint8_t blue,uint8_t alpha) =0;
 
 	//glColorPointer
-	virtual void  colorPointer(int componentSize,DataType type,
+	virtual void  colorPointer(int componentSize,GLenum type,
 		  size_t stride,const void  *pointer)=0;
 
 	//glTexCoordPointer
 	virtual void  texCoordPointer(int componentSize, 
-		  DataType type, size_t stride, const void * pointer)=0;
+		  GLenum type, size_t stride, const void * pointer)=0;
 
 	//glMatrixMode
 	virtual void matrixMode(MatrixMode matrixMode)=0;
@@ -131,7 +131,7 @@ namespace my_gl {
 
 	//glDrawElements 
 	virtual void drawElements(PrimitiveMode primitiveMode,
-		  size_t count,DataType dataType,const void* indices)=0;
+		  size_t count,GLenum dataType,const void* indices)=0;
 
 	//glFlush
 	virtual void flush()=0;
@@ -215,7 +215,7 @@ namespace my_gl {
 		  ,int internalFormat/*ignored*/,size_t width,
 		  //OpenGL ES 1.0 border must be 0
 		  size_t height,int border/* ignored */,
-		  ImageFormat imageFormat,StoreType storeType,
+		  ImageFormat imageFormat,GLenum storeType,
 		  const void *texels)=0;
 
 	//glTexSubImage2D
@@ -224,7 +224,7 @@ namespace my_gl {
 		  int xoffset,int yoffset,
 		  size_t width,size_t height,
 		  ImageFormat imageFormat,
-		  StoreType storeType,
+		  GLenum storeType,
 		  const void *texels)=0;
 
 	//glCopyTexImage2D
