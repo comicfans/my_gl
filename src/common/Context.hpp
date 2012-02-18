@@ -39,14 +39,14 @@ namespace my_gl {
 	virtual bool isBuffer(Name name) const =0;
 
 	//glBindBuffer
-	virtual void bindBuffer(BufferTarget target,Name name)=0;
+	virtual void bindBuffer(GLenum target,Name name)=0;
 
 	//glBufferData
-	virtual void bufferData(BufferTarget target,size_t size,
-		    const void* data, DataUsage usage)=0;
+	virtual void bufferData(GLenum target,size_t size,
+		    const void* data, GLenum usage)=0;
 
 	//glBufferSubData
-	virtual void bufferSubData(BufferTarget target,ptrdiff_t offset,
+	virtual void bufferSubData(GLenum target,ptrdiff_t offset,
 		    size_t size,const void* data)=0;
 
 
@@ -76,8 +76,8 @@ namespace my_gl {
 	virtual void  texCoordPointer(int componentSize, 
 		  GLenum type, size_t stride, const void * pointer)=0;
 
-	//glMatrixMode
-	virtual void matrixMode(MatrixMode matrixMode)=0;
+	//glGLenum
+	virtual void matrixMode(GLenum matrixMode)=0;
 
 	//glPushMatrix
 	virtual void pushMatrix()=0;
@@ -120,17 +120,17 @@ namespace my_gl {
 		  size_t width,size_t height)=0;
 
 	//glEnableClient
-	virtual void enableClientState(BindState bindState)=0;
+	virtual void enableClientState(GLenum bindState)=0;
 
 	//glDisableClient
-	virtual void disableClientState(BindState bindState)=0;
+	virtual void disableClientState(GLenum bindState)=0;
 
 	//glDrawArrays 
-	virtual void drawArrays(PrimitiveMode primitiveMode,
+	virtual void drawArrays(GLenum primitiveMode,
 		  int first,size_t count)=0;
 
 	//glDrawElements 
-	virtual void drawElements(PrimitiveMode primitiveMode,
+	virtual void drawElements(GLenum primitiveMode,
 		  size_t count,GLenum dataType,const void* indices)=0;
 
 	//glFlush
@@ -154,87 +154,66 @@ namespace my_gl {
 	//glDepthFunc
 	virtual void depthFunc(DepthFunc func)=0;
 
-
-	//glEnable (cullFace override)
-	virtual void enableCullFace()=0;
-
-	//glDisable (cullFace override)
-	virtual void disableCullFace()=0;
-
 	//glFrontFace
-	virtual void frontFace(FaceMode faceMode)=0;
+	virtual void frontFace(GLenum faceMode)=0;
 
 	//glCullFace
-	virtual void cullFace(Face face)=0;
+	virtual void cullFace(GLenum face)=0;
 
-	//glEnable lighting
-	virtual void enableLighting()=0;
+	void enable(GLenum cap);
+	void disable(GLenum cap);
 
-	//glDisable lighting
-	virtual void disableLighting()=0;
-
-	//glEnable (normlize override)
-	virtual void enable(NormalizeNormal normalizeNormal)=0;
-	       
-	//glDisable (cullFace override)
-	virtual void disable(NormalizeNormal normalizeNormal)=0;
-
-	//glEnable  (LIGHTn override)
-	virtual void enable(LightIndex lightIndex)=0;
-
-	//glDisable  (LIGHTn override)
-	virtual void disable(LightIndex lightIndex)=0;
 
 	//glMaterialf
 	virtual void materialf
-	     (Face face,LightParamName paramName,float param)=0;
+	     (GLenum face,GLenum paramName,float param)=0;
 
 	//glMaterialfv
 	virtual void materialfv
-	     (Face face,LightParamName paramName,const float *param)=0;
+	     (GLenum face,GLenum paramName,const float *param)=0;
 
 	//glDeleteTexture
 	virtual void deleteTextures(size_t n,const Name *names)=0;
 
 	//glLightf
-	virtual void lightf(LightIndex lightIndex,
-		  LightParamName paramName,float param)=0;
+	virtual void lightf(GLenum lightIndex,
+		  GLenum paramName,float param)=0;
 
 	//glLightfv
-	virtual void lightfv(LightIndex lightIndex,
-		  LightParamName paramName,const float* param)=0;
+	virtual void lightfv(GLenum lightIndex,
+		  GLenum paramName,const float* param)=0;
 
 	//glLightModelf
-	virtual void lightModelf(LightParamName paramName,float param)=0;
+	virtual void lightModelf(GLenum paramName,float param)=0;
 
 	//glLightModelfv
-	virtual void lightModelfv(LightParamName paramName,const float *param)=0;
+	virtual void lightModelfv(GLenum paramName,const float *param)=0;
 
 	//glTexImage2D
-	virtual void texImage2D(TexTarget/*ignored*/,int level/* ignored*/
+	virtual void texImage2D(GLenum/*ignored*/,int level/* ignored*/
 		  ,int internalFormat/*ignored*/,size_t width,
 		  //OpenGL ES 1.0 border must be 0
 		  size_t height,int border/* ignored */,
-		  ImageFormat imageFormat,GLenum storeType,
+		  GLenum imageFormat,GLenum storeType,
 		  const void *texels)=0;
 
 	//glTexSubImage2D
-	virtual void texSubImage2D(TexTarget/*ignored*/,
+	virtual void texSubImage2D(GLenum/*ignored*/,
 		  int level/* ignored*/,
 		  int xoffset,int yoffset,
 		  size_t width,size_t height,
-		  ImageFormat imageFormat,
+		  GLenum imageFormat,
 		  GLenum storeType,
 		  const void *texels)=0;
 
 	//glCopyTexImage2D
-	virtual void copyTexImage2D(TexTarget /*ignored*/,int level/* ignored*/,
-		  ImageFormat internalFormat,
+	virtual void copyTexImage2D(GLenum /*ignored*/,int level/* ignored*/,
+		  GLenum internalFormat,
 		  int x,int y,size_t width,size_t height,int border)=0;
  
 	//glCopyTexSubImage2D
 	virtual void copyTexSubImage2D(
-		  TexTarget /*ignored*/,int level/* ignored*/,
+		  GLenum /*ignored*/,int level/* ignored*/,
 		  int xoffset,int yoffset,
 		  int x,int y,size_t width,size_t height)=0;
 
@@ -242,27 +221,17 @@ namespace my_gl {
 	virtual void genTextures(size_t n,Name * names)=0;
 
 	//glBindTexture
-	virtual void bindTexture(TexTarget/* ignored*/,Name texture)=0;
+	virtual void bindTexture(GLenum/* ignored*/,Name texture)=0;
 
 	//glIsTexture
 	virtual bool isTexture(Name name)=0;
-
-	//glEnable (texture override)
-	virtual void enable(TexTarget texTarget)=0;
-
-	//glDisable (texture override)
-	virtual void disable(TexTarget texTarget)=0;
-
-	virtual void texParameteri(TexTarget target/*ignored*/,
-		  TexFilterName filterName,
-		  TexFilterMode texFilterMode)=0;
 		
-	virtual void texParameteri(TexTarget target/*ignored*/,
-		  TexWrapName wrapName,
-		  TexWrapMode texWrapMode)=0;
+	virtual void texParameteri(GLenum target/*ignored*/,
+		  GLenum pname,
+		  GLenum value)=0;
 	
 	virtual void texEnvf(int target/*ignored*/,
-		  int pname/* ignored*/,TexEnvMode texEnvMode)=0;
+		  int pname/* ignored*/,GLenum texEnvMode)=0;
 
 	virtual ~Context();
 
@@ -271,6 +240,31 @@ namespace my_gl {
      protected:
 
 	static void setInstance(Context * instance);
+
+	//glEnable (normlize override)
+	virtual void enableNormal(GLenum normalizeNormal)=0;
+	//glDisable (cullFace override)
+	virtual void disableNormal(GLenum normalizeNormal)=0;
+
+	//glEnable (cullFace override)
+	virtual void enableCullFace()=0;
+	//glDisable (cullFace override)
+	virtual void disableCullFace()=0;
+	
+	//glEnable  (LIGHTn override)
+	virtual void enableLightN(GLenum lightIndex)=0;
+	//glDisable  (LIGHTn override)
+	virtual void disableLightN(GLenum lightIndex)=0;
+
+	//glEnable (texture override)
+	virtual void enableTexTarget(GLenum texTarget)=0;
+	//glDisable (texture override)
+	virtual void disableTexTarget(GLenum texTarget)=0;
+
+	//glEnable lighting
+	virtual void enableLighting()=0;
+	//glDisable lighting
+	virtual void disableLighting()=0;
 
      private:
 

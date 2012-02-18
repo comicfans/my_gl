@@ -20,9 +20,9 @@
 
 #define ENUM_HPP
 
-namespace my_gl {
+     
+typedef unsigned int GLenum;
 
-     typedef unsigned int GLenum;
 
 #define GL_RGB 0x1907
 #define GL_RGBA 0x1908
@@ -52,6 +52,13 @@ namespace my_gl {
      enum BufferTarget{ARRAY_BUFFER,ELEMENT_ARRAY_BUFFER};
 
      //TODO
+#define GL_COLOR_BUFFER_BIT               0x00004000
+#define GL_DEPTH_BUFFER_BIT               0x00000100
+
+#define GL_VERTEX_ARRAY 0x8074
+#define GL_NORMAL_ARRAY 0x8075
+#define GL_COLOR_ARRAY 0x8076
+#define GL_TEXTURE_COORD_ARRAY 0x8078
      enum BindState{VERTEX,COLOR,NORMAL,TEXCOORD,ELEMENTS};
 
 
@@ -95,6 +102,7 @@ namespace my_gl {
      enum DepthFunc{NEVER,ALWAYS,LESS,LEQUAL,
 	  EQUAL,GREATER,GEQUAL,NOTEQUAL};
 
+#define GL_LIGHTING 0x0B50
 #define GL_LIGHT0 0x4000
 #define GL_LIGHT1 0x4001
 #define GL_LIGHT2 0x4002
@@ -117,14 +125,18 @@ namespace my_gl {
 #define GL_LINEAR_ATTENUATION 0x1208
 #define GL_QUADRATIC_ATTENUATION 0x1209
 
+#define GL_EMISSION 0x1600
+#define GL_SHININESS 0x1601
+#define GL_AMBIENT_AND_DIFFUSE 0x1602
      enum LightParamName{
 	  AMBIENT,DIFFUSE,SPECULAR,LINEAR_ATTENUATION,QUADRATIC_ATTENUATION,SPOT_CUTOFF,CONSTANT_ATTENUATION,
 	  SPOT_DIRECTION,SPOT_EXPONENT,POSITION,
-
-	       //TODO
 	  AMBIENT_AND_DIFFUSE,SHININESS,EMISSION, TWO_SIDE};
 
+#define GL_CULL_FACE 0x0B44
 #define GL_FRONT                          0x0404
+#define GL_CULL_FACE_MODE 0x0B45
+#define GL_FRONT_FACE 0x0B46
 #define GL_BACK                           0x0405
 #define GL_FRONT_AND_BACK                 0x0408
      enum Face{FRONT,BACK,FRONT_AND_BACK};
@@ -134,6 +146,8 @@ namespace my_gl {
      enum FaceMode{CW=0,CCW=1};
 
 
+#define GL_NORMALIZE 0x0BA1
+#define GL_RESCALE_NORMAL                 0x803A
      //TODO
      enum NormalizeNormal{RESCALE_NORMAL,NORMALIZE};
 
@@ -163,8 +177,6 @@ namespace my_gl {
 #define GL_DECAL 0x2101
 #define GL_REPLACE 0x1E01
      enum TexEnvMode{REPLACE,MODULATE,DECAL};
-} /* my_gl */
-
 
 
 #endif /* end of include guard: ENUM_HPP */
