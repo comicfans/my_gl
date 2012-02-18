@@ -27,25 +27,20 @@ namespace my_gl {
     
      enum ImageFormat{RGB,RGBA};
 
-#define GL_UNSIGNED_BYTE                  0x1401
 #define GL_UNSIGNED_SHORT_4_4_4_4         0x8033
 #define GL_UNSIGNED_SHORT_5_5_5_1         0x8034
 #define GL_UNSIGNED_SHORT_5_6_5           0x8363
+#define GL_UNSIGNED_BYTE                  0x1401
 
 
-     enum StoreType{UNSIGNED_BYTE,UNSIGNED_SHORT_5_6_5,
-	       UNSIGNED_SHORT_4_4_4_4,UNSIGNED_SHORT_5_5_5_1};
 
 #define GL_BYTE                           0x1400
 #define GL_SHORT                          0x1402
 #define GL_UNSIGNED_SHORT                 0x1403
-#define GL_UNSIGNED_INT                   0x1405
 #define GL_FLOAT                          0x1406
 #define GL_FIXED                          0x140C
 
 
-     enum DataType{BYTE,UNSIGNED_BYTE,
-	  SHORT,UNSIGNED_SHORT,FIXED,FLOAT};
     
      /** 
       * @brief glBindBuffer
