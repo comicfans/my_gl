@@ -22,6 +22,8 @@
 
 namespace my_gl {
 
+     typedef unsigned int GLenum;
+
 #define GL_RGB 0x1907
 #define GL_RGBA 0x1908
     
