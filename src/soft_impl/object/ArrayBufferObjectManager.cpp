@@ -42,7 +42,7 @@ namespace my_gl {
      ArrayBufferObject* ArrayBufferObjectManager::
 	  getArrayBuffer()const 
      {
-	  auto p=_arrayAndElements[int(BufferTarget::ARRAY_BUFFER)];
+	  auto p=_arrayAndElements[int(GL_ARRAY_BUFFER)];
 	  //if 0 is bind
 	  // 
 	  // null is returned
@@ -50,7 +50,7 @@ namespace my_gl {
      }
 
      void ArrayBufferObjectManager::bindBuffer
-	  (BufferTarget target,Name name) 
+	  (GLenum target,Name name) 
      {
 
 	  //if zero is binded, no buffer is used
@@ -94,14 +94,14 @@ namespace my_gl {
 	       {
 
 		    if (pos->second.get()==_arrayAndElements
-			      [int(BufferTarget::ARRAY_BUFFER)])
+			      [int(GL_ARRAY_BUFFER)])
 		    {
-			 bindBuffer(BufferTarget::ARRAY_BUFFER,0);
+			 bindBuffer(GL_ARRAY_BUFFER,0);
 		    }
 		    
 		    else if (pos->second.get()==_arrayAndElements
-			      [int(BufferTarget::ELEMENT_ARRAY_BUFFER)]){
-			 bindBuffer(BufferTarget::ELEMENT_ARRAY_BUFFER,0);
+			      [int(GL_ELEMENT_ARRAY_BUFFER)]){
+			 bindBuffer(GL_ELEMENT_ARRAY_BUFFER,0);
 		    }
 		    _objects.erase(pos);
 		    _objectNameManager.recycleName(thisName);
@@ -111,7 +111,7 @@ namespace my_gl {
      }
 
      void ArrayBufferObjectManager::bufferData
-	  (BufferTarget target,size_t size,
+	  (GLenum target,size_t size,
 	   const void* data, DataUsage usage)
 	  {
 
@@ -122,7 +122,7 @@ namespace my_gl {
 	  }
 
      void ArrayBufferObjectManager::bufferSubData
-	  (BufferTarget target,ptrdiff_t offset,
+	  (GLenum target,ptrdiff_t offset,
 		    size_t size,const void* data)
      {
 	       ArrayBufferObject *pBuffer=_arrayAndElements[int(target)];
@@ -135,7 +135,7 @@ namespace my_gl {
 	  getElementsBuffer() const 
 	  {
 	       auto p=_arrayAndElements
-		    [int(BufferTarget::ELEMENT_ARRAY_BUFFER)];
+		    [int(GL_ELEMENT_ARRAY_BUFFER)];
 	       assert(p);
 
 	       return p;

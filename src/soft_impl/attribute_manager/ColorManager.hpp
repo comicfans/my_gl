@@ -36,10 +36,10 @@ namespace my_gl {
 
 	       void color4ub(uint8_t red,uint8_t green,uint8_t blue,uint8_t alpha);
 
-	       void colorPointer(int componentSize,DataType type,
+	       void colorPointer(int componentSize,GLenum type,
 			 size_t stride,const void* pointer);
 
-	       static const BindState BIND_STATE=BindState::COLOR;
+	       static const GLenum BIND_STATE=GL_COLOR_ARRAY;
 
      };
 	

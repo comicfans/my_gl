@@ -282,7 +282,7 @@ namespace my_gl {
 	       for (int i=0; i<Vec4::LENGTH; ++i)
 	       {
 		    auto& value=finalColor[i];
-		    value=DataTypeTraits<DataType::FLOAT>
+		    value=DataTypeTraits<GL_FLOAT>
 			 ::normalize(value);
 	       }
 

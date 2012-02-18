@@ -36,17 +36,17 @@ static const float directLines[][2]={{10,10},{10,200},{200,200},{200,10},{150,5}
 
 void testLines()
 {
-     context.matrixMode(MatrixMode::MODEL_VIEW);
+     context.matrixMode(GL_MODEL_VIEW);
 
      context.loadIdentity();
 
      context.clear(COLOR_BUFFER_BIT);
 
-     context.vertexPointer(2, DataType::FLOAT, 0, quodVertex);
+     context.vertexPointer(2, GL_FLOAT, 0, quodVertex);
 
 	context.color4f(0.5, 0.5, 0.5, 0.5);
 
-	context.drawArrays(PrimitiveMode::LINE_LOOP, 0, 4);
+	context.drawArrays(GL_LINE_LOOP, 0, 4);
 
 	context.flush();
 
@@ -58,16 +58,16 @@ void testLines()
 void testSpecialLine()
 {
 
-     context.matrixMode(MatrixMode::MODEL_VIEW);
+     context.matrixMode(GL_MODEL_VIEW);
 
      context.loadIdentity();
      context.clear(COLOR_BUFFER_BIT);
 
-     context.vertexPointer(2, DataType::FLOAT, 0, directLines);
+     context.vertexPointer(2, GL_FLOAT, 0, directLines);
 
 	context.color4f(0.5, 0.5, 0.5, 0.5);
 
-	context.drawArrays(PrimitiveMode::LINE_LOOP, 0, 5);
+	context.drawArrays(GL_LINE_LOOP, 0, 5);
 
 	context.flush();
 
@@ -81,13 +81,13 @@ void init()
 
 	context.enableClientState(BindState::VERTEX);
 
-	context.matrixMode(MatrixMode::PROJECTION);
+	context.matrixMode(GL_PROJECTION);
 
 	context.loadIdentity();
 
 	context.ortho( 0,width,0,height,-1,1);
 
-	context.matrixMode(MatrixMode::MODEL_VIEW);
+	context.matrixMode(GL_MODEL_VIEW);
 
 	context.loadIdentity();
 
@@ -97,7 +97,7 @@ void init()
 void testTriangles()
 {
 
-     context.matrixMode(MatrixMode::MODEL_VIEW);
+     context.matrixMode(GL_MODEL_VIEW);
 	  
      context.color4f(0.2, 0.8, 0.0, 0.0);
      for (int i=0; i<10; ++i)
@@ -109,10 +109,10 @@ void testTriangles()
 	  context.translatef(-10*i,-10*i,0);
 	  //context.rotatef(12,0,0,1);
 
-	  context.vertexPointer(2,DataType::FLOAT,0,&stripVertex[0][0]);
+	  context.vertexPointer(2,GL_FLOAT,0,&stripVertex[0][0]);
 
 
-	  context.drawArrays(PrimitiveMode::TRIANGLE_STRIP,1,3);
+	  context.drawArrays(GL_TRIANGLE_STRIP,1,3);
 	
 	  context.flush();
 
@@ -125,18 +125,18 @@ void testTriangles()
 void testLineClip()
 {
 
-     context.matrixMode(MatrixMode::MODEL_VIEW);
+     context.matrixMode(GL_MODEL_VIEW);
 
      context.loadIdentity();
      context.clear(COLOR_BUFFER_BIT);
 
-     context.vertexPointer(2, DataType::FLOAT, 0, directLines);
+     context.vertexPointer(2, GL_FLOAT, 0, directLines);
 
 	context.color4f(0.5, 0.5, 0.5, 0.5);
 
 	context.translatef(0,-30,0);
 
-	context.drawArrays(PrimitiveMode::LINE_LOOP, 0, 5);
+	context.drawArrays(GL_LINE_LOOP, 0, 5);
 
 	context.flush();
 

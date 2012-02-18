@@ -23,6 +23,7 @@
 
 #include "index_provider/IndexProvider.hpp"
 #include "common/TypeTraits.hpp"
+#include "common/CheckEnum.hpp"
 
 using std::min;
 using std::max;
@@ -35,17 +36,17 @@ namespace my_gl {
 
 
      PrimitiveIndex::PrimitiveIndex
-	  (const PrimitiveMode primitiveMode)
+	  (const GLenum primitiveMode)
 		:_vertexPerPrimitive(
-			  VERTEX_PER_PRIMITIVE[int(primitiveMode)]),
+			  VERTEX_PER_PRIMITIVE[primitiveMode]),
 		_primitiveMode(primitiveMode),_elementNumber(0)
 	  {
-
+	       checkPrimitiveMode(primitiveMode);
 	  }
 
 
      PrimitiveIndex::PrimitiveIndex
-	  (const PrimitiveMode primitiveMode,
+	  (const GLenum primitiveMode,
 	   const size_t useVertexNumber,
 	   const IndexProvider& indexProvider,
 	   const size_t actualVertexNumber)
@@ -54,25 +55,27 @@ namespace my_gl {
 	  _primitiveMode(primitiveMode)
      {
 
+	  checkPrimitiveMode(primitiveMode);
+
 	  //vertex number less equal than vertex attribute buffer length 
 	  int actualVertex=min
 	       (useVertexNumber,actualVertexNumber);
 
 	  switch(primitiveMode)
 	  {
-	       case PrimitiveMode::POINTS:
+	       case GL_POINTS:
 		    {fillPointIndex(actualVertex,
 			      indexProvider);break;}
 
-	       case PrimitiveMode::LINE_LOOP:
-	       case PrimitiveMode::LINE_STRIP:
-	       case PrimitiveMode::LINES:
+	       case GL_LINE_LOOP:
+	       case GL_LINE_STRIP:
+	       case GL_LINES:
 		    {fillLineIndex(actualVertex,
 			      indexProvider);break;}
 
-	       case PrimitiveMode::TRIANGLES:
-	       case PrimitiveMode::TRIANGLE_STRIP:
-	       case PrimitiveMode::TRIANGLE_FAN:
+	       case GL_TRIANGLES:
+	       case GL_TRIANGLE_STRIP:
+	       case GL_TRIANGLE_FAN:
 		    {fillTriangleIndex(actualVertex,
 			      indexProvider);break;}
 	  }
@@ -124,7 +127,7 @@ namespace my_gl {
 	  {
 
 
-	       if (_primitiveMode==PrimitiveMode::LINES)
+	       if (_primitiveMode==GL_LINES)
 	       {
 		    _elementNumber=atMostVertexNumber/2;
 
@@ -151,7 +154,7 @@ namespace my_gl {
 			 (*this)[i*2+1]=indexProvider.getIndex(i+1);
 		    }
 
-		    if (_primitiveMode==PrimitiveMode::LINE_STRIP)
+		    if (_primitiveMode==GL_LINE_STRIP)
 		    {
 			 --_elementNumber;
 			 resize(size()-2);
@@ -172,7 +175,7 @@ namespace my_gl {
 	  {
 	       switch(_primitiveMode)
 	       {
-		    case PrimitiveMode::TRIANGLES:
+		    case GL_TRIANGLES:
 			 {
 			      _elementNumber=atMostVertexNumber/3;
 			      resize(_elementNumber*3);
@@ -185,7 +188,7 @@ namespace my_gl {
 
 			 }
 
-		    case PrimitiveMode::TRIANGLE_STRIP:
+		    case GL_TRIANGLE_STRIP:
 			 {
 			      _elementNumber=max<int>(atMostVertexNumber-2,0);
 			      resize(_elementNumber*3);
@@ -199,7 +202,7 @@ namespace my_gl {
 			      }
 			      break;
 			 }
-		    case PrimitiveMode::TRIANGLE_FAN:
+		    case GL_TRIANGLE_FAN:
 			 {
 			      _elementNumber=max<int>(atMostVertexNumber-2,0);
 			      resize(_elementNumber*3);
@@ -226,6 +229,6 @@ namespace my_gl {
      }
 
 	
-     PrimitiveMode PrimitiveIndex::primitiveMode()const
+     GLenum PrimitiveIndex::primitiveMode()const
      {return _primitiveMode;}
 } /* my_gl */

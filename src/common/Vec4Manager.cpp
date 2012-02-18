@@ -31,7 +31,7 @@ namespace my_gl{
 	  :_bindedArrayBufferObject(nullptr),
 	  _bindState(bindState),_vertexArrayEnabled(false)
      {
-	  assert(bindState==GL_VERTEX_ARRY ||
+	  assert(bindState==GL_VERTEX_ARRAY ||
 		    bindState==GL_COLOR_ARRAY ||
 		    bindState==GL_TEXTURE_COORD_ARRAY||
 		    bindState==GL_NORMAL_ARRAY ||
@@ -47,7 +47,7 @@ namespace my_gl{
 	  _bindedArrayBufferObject=toBind;
      }
 
-     BindState Vec4Manager::getBindState() const 
+     GLenum Vec4Manager::getBindState() const 
      {
 	  return _bindState;
      }
@@ -70,7 +70,7 @@ namespace my_gl{
      }
 
      void Vec4Manager::vertexArrayChange(int componentSize,  
-DataType type,  size_t stride,  const void *pointer,bool normalize)
+	       GLenum type,  size_t stride,  const void *pointer,bool normalize)
      {
 	       //should this a assert?
 	       //OpenGL defined that if 

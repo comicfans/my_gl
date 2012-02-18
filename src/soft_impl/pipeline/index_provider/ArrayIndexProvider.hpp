@@ -44,17 +44,17 @@ namespace my_gl {
      public:
 
 	  ArrayIndexProvider
-	       (DataType dataType,const void* indices);
+	       (GLenum dataType,const void* indices);
 
 	  virtual ~ArrayIndexProvider ();
 
 	  virtual size_t getIndex(size_t index)const;
      private:
 
-	  template<DataType dataType>
+	  template<GLenum dataType>
 	       size_t castRead(size_t index)const;
 	
-	  const DataType _dataType;
+	  const GLenum _dataType;
 
 	  const void *_indices;
 

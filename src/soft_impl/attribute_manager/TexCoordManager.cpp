@@ -26,7 +26,7 @@ namespace my_gl {
      {}
 
      void TexCoordManager::texCoordPointer(int componentSize,
-	       DataType type,size_t stride,const void *pointer)
+	       GLenum type,size_t stride,const void *pointer)
      {
 	  vertexArrayChange(componentSize, type, stride, pointer);
      }

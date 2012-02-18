@@ -21,12 +21,13 @@
 #include <cassert>
 
 #include "common/TypeTraits.hpp"
+#include "common/CheckEnum.hpp"
 #include "common/PointerFunction.hpp"
 
 namespace my_gl {
 
      ArrayIndexProvider::ArrayIndexProvider
-	  (DataType dataType,const void* indices)
+	  (GLenum dataType,const void* indices)
 	  :_dataType(dataType),_indices(indices)
 	  {}
 
@@ -41,11 +42,13 @@ namespace my_gl {
       * 
       * @return 
       */
-     template<DataType dataType>
+     template<GLenum dataType>
 	  
 	  size_t ArrayIndexProvider::castRead
 	  (size_t index)const
 	  {
+
+	       checkDataType(dataType);
 
 	       auto *thisValuePointer=
 		    add(_indices,DataTypeTraits<dataType>::size*index);
@@ -62,16 +65,16 @@ namespace my_gl {
      size_t ArrayIndexProvider::getIndex(size_t index)const
      {
 	  //gles only support UNSIGNED_BYTE and UNSIGNED_SHORT
-	  if (_dataType==DataType::UNSIGNED_BYTE)
+	  if (_dataType==GL_UNSIGNED_BYTE)
 	  {
-	       return castRead<DataType::UNSIGNED_BYTE>
+	       return castRead<GL_UNSIGNED_BYTE>
 		    (index);
 	  }
-	  else if(_dataType==DataType::UNSIGNED_SHORT)
+	  else if(_dataType==GL_UNSIGNED_SHORT)
 	  {
-	       return castRead<DataType::UNSIGNED_SHORT>
+	       return castRead<GL_UNSIGNED_SHORT>
 		    (index);
 	  }
-	  assert(false);
+	  assert(false||"gles only support UNSIGNED_BYTE and UNSIGNED_SHORT");
      }
 } /* my_gl */

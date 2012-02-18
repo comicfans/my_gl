@@ -29,7 +29,7 @@ namespace my_gl {
      
 	  public:
 
-	       TwoSourceVec4Manager(BindState bindState);
+	       TwoSourceVec4Manager(GLenum bindState);
 
 	  protected:
 

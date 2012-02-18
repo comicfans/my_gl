@@ -52,7 +52,7 @@ namespace my_gl {
 	   * 
 	   * @param func
 	   */
-	  void depthFunc(DepthFunc func);
+	  void depthFunc(GLenum func);
 	  virtual void clear();
 
 	  size_t width()const;
@@ -83,7 +83,7 @@ namespace my_gl {
 
 	double _clearDepth;
 
-	DepthFunc _func;
+	GLenum _func;
 
 	bool outOfRange(const WinCoord& winCoord)const;
 

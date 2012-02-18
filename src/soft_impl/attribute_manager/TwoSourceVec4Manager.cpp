@@ -24,7 +24,7 @@
 
 namespace my_gl {
 
-     TwoSourceVec4Manager::TwoSourceVec4Manager(BindState bindState)
+     TwoSourceVec4Manager::TwoSourceVec4Manager(GLenum bindState)
 	  :Vec4Manager(bindState)
      {
 	  clientStateChangeCallback(false);

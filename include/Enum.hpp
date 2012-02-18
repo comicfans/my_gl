@@ -27,7 +27,6 @@ typedef unsigned int GLenum;
 #define GL_RGB 0x1907
 #define GL_RGBA 0x1908
     
-     enum ImageFormat{RGB,RGBA};
 
 #define GL_UNSIGNED_SHORT_4_4_4_4         0x8033
 #define GL_UNSIGNED_SHORT_5_5_5_1         0x8034
@@ -59,7 +58,6 @@ typedef unsigned int GLenum;
 #define GL_NORMAL_ARRAY 0x8075
 #define GL_COLOR_ARRAY 0x8076
 #define GL_TEXTURE_COORD_ARRAY 0x8078
-     enum BindState{VERTEX,COLOR,NORMAL,TEXCOORD,ELEMENTS};
 
 
 #define GL_STATIC_DRAW                    0x88E4
@@ -85,8 +83,6 @@ typedef unsigned int GLenum;
 #define GL_TRIANGLES                      0x0004
 #define GL_TRIANGLE_STRIP                 0x0005
 #define GL_TRIANGLE_FAN                   0x0006
-     enum PrimitiveMode{POINTS,LINES,TRIANGLES,LINE_STRIP,LINE_LOOP,
-	  TRIANGLE_STRIP,TRIANGLE_FAN};
 
      /** 
       * @brief glDepthFunc
@@ -111,8 +107,6 @@ typedef unsigned int GLenum;
 #define GL_LIGHT5 0x4005
 #define GL_LIGHT6 0x4006
 #define GL_LIGHT7 0x4007
-     enum LightIndex{LIGHT0,LIGHT1,LIGHT2,
-	  LIGHT3,LIGHT4,LIGHT5,LIGHT6,LIGHT7};
 
 #define GL_AMBIENT 0x1200
 #define GL_DIFFUSE 0x1201
@@ -124,10 +118,11 @@ typedef unsigned int GLenum;
 #define GL_CONSTANT_ATTENUATION 0x1207
 #define GL_LINEAR_ATTENUATION 0x1208
 #define GL_QUADRATIC_ATTENUATION 0x1209
-
 #define GL_EMISSION 0x1600
 #define GL_SHININESS 0x1601
 #define GL_AMBIENT_AND_DIFFUSE 0x1602
+#define GL_LIGHT_MODEL_TWO_SIDE 0x0B52
+
      enum LightParamName{
 	  AMBIENT,DIFFUSE,SPECULAR,LINEAR_ATTENUATION,QUADRATIC_ATTENUATION,SPOT_CUTOFF,CONSTANT_ATTENUATION,
 	  SPOT_DIRECTION,SPOT_EXPONENT,POSITION,

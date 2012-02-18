@@ -37,10 +37,10 @@ namespace my_gl{
 	  void normal3f(float nx,float ny,float nz);
 
 	  //glNormalPointer
-	  void normalPointer(DataType type,size_t stride,
+	  void normalPointer(GLenum type,size_t stride,
 		    const void* pointer);
 
-	  static const BindState BIND_STATE=BindState::NORMAL;
+	  static const GLenum BIND_STATE=GL_NORMAL_ARRAY;
 
      };
 	

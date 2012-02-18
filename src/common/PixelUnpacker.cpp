@@ -114,8 +114,8 @@ namespace my_gl {
      {
 	  if (type==GL_UNSIGNED_BYTE)
 	  {
-	       assert(format==ImageFormat::RGB || format==ImageFormat::RGBA);
-	       _unpacker=(format==ImageFormat::RGB?RGBUnpack:RGBAUnpack);
+	       assert(format==GL_RGB || format==GL_RGBA);
+	       _unpacker=(format==GL_RGB?RGBUnpack:RGBAUnpack);
 	  }
 	  else
 	  {

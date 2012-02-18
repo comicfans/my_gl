@@ -21,7 +21,7 @@
 namespace my_gl {
      ClippedPrimitiveGroup::ClippedPrimitiveGroup 
 	     (const VertexAttributeBuffer& originalVertexAttribute,
-	      PrimitiveMode primitiveMode)
+	      GLenum primitiveMode)
 	     :_originalVertexAttribute(originalVertexAttribute),
 	     _mixedIndex(primitiveMode)
 	     {

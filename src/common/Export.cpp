@@ -186,18 +186,18 @@ extern "C"
 
   void   glLightModelf( GLenum pname, GLfloat param )
 {
-     Context::getInstance().lightModelf(LightParamName::TWO_SIDE,param);
+     Context::getInstance().lightModelf(GL_LIGHT_MODEL_TWO_SIDE,param);
 }
 
   void   glLightModelfv( GLenum pname, const GLfloat *params )
 {
-     Context::getInstance().lightModelfv(LightParamName::AMBIENT,params);
+     Context::getInstance().lightModelfv(GL_AMBIENT,params);
 }
 
   void   glMaterialf( GLenum face, GLenum pname, GLfloat param )
 {
      Context::getInstance().materialf
-	  (Face::FRONT_AND_BACK,LightParamName::SHININESS,param);
+	  (Face::FRONT_AND_BACK,GL_SHININESS,param);
 }
 
 

@@ -79,7 +79,7 @@ namespace my_gl {
 	  void GroupLightingParam::lightModelfv
 	       (LightParamName paramName,const float* param)
 	       {
-		    assert(paramName==LightParamName::AMBIENT);
+		    assert(paramName==GL_AMBIENT);
 
 		    lightModel.ambient=param;
 	       }

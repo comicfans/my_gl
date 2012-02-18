@@ -105,11 +105,11 @@ namespace my_gl {
 
 	  //init clippers;
 
-	  _clippers.replace(int(PrimitiveMode::POINTS),
+	  _clippers.replace(int(GL_POINTS),
 		    new PointClipper());
-	  _clippers.replace(int(PrimitiveMode::LINES),
+	  _clippers.replace(int(GL_LINES),
 		    new LineClipper());
-	  _clippers.replace(int(PrimitiveMode::TRIANGLES),
+	  _clippers.replace(int(GL_TRIANGLES),
 		    new TriangleClipper());
 
 	  //then rasterizers
@@ -127,12 +127,12 @@ namespace my_gl {
 	  _interpolatorPtr.reset(new WinCoordInterpolator());
 	  //init rasterizers
 
-	  _rasterizers.replace(int(PrimitiveMode::POINTS),
+	  _rasterizers.replace(int(GL_POINTS),
 		    new PointRasterizer(_viewportParameter,
 			 *_interpolatorPtr,*_fragmentAttributeBufferPtr,
 			 getFrameBuffer<DepthBuffer>(),_depthRange));
 
-	  _rasterizers.replace(int(PrimitiveMode::LINES),
+	  _rasterizers.replace(int(GL_LINES),
 		    new SimpleLineRasterizer
 		    (_viewportParameter,
 			 *_interpolatorPtr,*_fragmentAttributeBufferPtr,
@@ -142,7 +142,7 @@ namespace my_gl {
 
 	  //what triangle rasterizer do is depends on 
 	  //its internal LineRasterizer
-	  _rasterizers.replace(int(PrimitiveMode::TRIANGLES),
+	  _rasterizers.replace(int(GL_TRIANGLES),
 		    new TriangleRasterizer
 		    (_viewportParameter,
 			 *_interpolatorPtr,
@@ -378,8 +378,8 @@ namespace my_gl {
 	     (PrimitiveMode primitiveMode, size_t count, 
 		  DataType dataType, const void* indices)
 	{
-	     assert(dataType==DataType::UNSIGNED_BYTE || 
-		       dataType==DataType::UNSIGNED_SHORT);
+	     assert(dataType==GL_UNSIGNED_BYTE || 
+		       dataType==GL_UNSIGNED_SHORT);
 
 	     _elementIndexManager.bindArrayBufferObject
 		  (_arrayBufferObjectManager.getElementsBuffer());
@@ -409,23 +409,23 @@ namespace my_gl {
 		       primitiveMode,count,
 		       NaturalOrderIndexProvider());
 
-	     PrimitiveMode catalog=PrimitiveMode::POINTS;
+	     PrimitiveMode catalog=GL_POINTS;
 
 	     switch (primitiveMode)
 	     {
-		  case PrimitiveMode::LINES:
-		  case PrimitiveMode::LINE_LOOP:
-		  case PrimitiveMode::LINE_STRIP:
-		       {catalog=PrimitiveMode::LINES;
+		  case GL_LINES:
+		  case GL_LINE_LOOP:
+		  case GL_LINE_STRIP:
+		       {catalog=GL_LINES;
 			   break;}
-		  case PrimitiveMode::TRIANGLE_FAN:
-		  case PrimitiveMode::TRIANGLE_STRIP:
-		  case PrimitiveMode::TRIANGLES:
+		  case GL_TRIANGLE_FAN:
+		  case GL_TRIANGLE_STRIP:
+		  case GL_TRIANGLES:
 			   {
-				catalog=PrimitiveMode::TRIANGLES;
+				catalog=GL_TRIANGLES;
 				break;
 			   }
-		  case PrimitiveMode::POINTS:
+		  case GL_POINTS:
 			   {
 				break;
 			   }
@@ -551,7 +551,7 @@ namespace my_gl {
 	     matrix(2,3)=-1;
 	     matrix(3,3)=1;
 
-	     _matrixStacks[int(MatrixMode::PROJECTION)].
+	     _matrixStacks[int(GL_PROJECTION)].
 		  multiTop(matrix);
 
 	}
@@ -576,16 +576,16 @@ namespace my_gl {
 	     matrix(3,2)=tz;
 	     matrix(3,3)=1;
 
-	     _matrixStacks[int(MatrixMode::PROJECTION)]
+	     _matrixStacks[int(GL_PROJECTION)]
 		  .multiTop(matrix);
 	}
 
 	void SoftContext::prepareGlobalUniform()
 	{
 	     _matrixParam.updateAll
-		  (_matrixStacks[int(MatrixMode::MODEL_VIEW)].top(),
-		  _matrixStacks[int(MatrixMode::PROJECTION)].top(),
-		  _matrixStacks[int(MatrixMode::TEXTURE)].top());
+		  (_matrixStacks[int(GL_MODEL_VIEW)].top(),
+		  _matrixStacks[int(GL_PROJECTION)].top(),
+		  _matrixStacks[int(GL_TEXTURE)].top());
 	
 	}
 
@@ -611,7 +611,7 @@ namespace my_gl {
 	void SoftContext::lightModelf
 	       (LightParamName paramName,float param)
 	       {
-		    assert(paramName==LightParamName::TWO_SIDE);
+		    assert(paramName==GL_TWO_SIDE);
 		    _twoSideLightingEnabled=(param!=0);
 	       }
 
@@ -625,7 +625,7 @@ namespace my_gl {
 		  LightParamName paramName,const float* param)
 	{
 	     _groupLightingParam.lightfv(lightIndex,paramName,param,
-		       _matrixStacks[int(MatrixMode::MODEL_VIEW)].
+		       _matrixStacks[int(GL_MODEL_VIEW)].
 		       top());
 	}
 
@@ -919,7 +919,7 @@ namespace my_gl {
 	void SoftContext::enableCullFace()
 	{
 	     static_cast<TriangleRasterizer&>
-		  (_rasterizers[int(PrimitiveMode::TRIANGLES)]).
+		  (_rasterizers[int(GL_TRIANGLES)]).
 		  enableCullFace();
 	}
 
@@ -927,7 +927,7 @@ namespace my_gl {
 	void SoftContext::disableCullFace()
 	{
 	     static_cast<TriangleRasterizer&>
-		  (_rasterizers[int(PrimitiveMode::TRIANGLES)]).
+		  (_rasterizers[int(GL_TRIANGLES)]).
 		  disableCullFace();
 
 	}
@@ -936,7 +936,7 @@ namespace my_gl {
 	void SoftContext::frontFace(FaceMode faceMode)
 	{
 	     static_cast<TriangleRasterizer&>
-		  (_rasterizers[int(PrimitiveMode::TRIANGLES)]).
+		  (_rasterizers[int(GL_TRIANGLES)]).
 		  frontFace(faceMode);
 	}
 
@@ -945,7 +945,7 @@ namespace my_gl {
 	void SoftContext::cullFace(Face face)
 	{
 	     static_cast<TriangleRasterizer&>
-		  (_rasterizers[int(PrimitiveMode::TRIANGLES)]).
+		  (_rasterizers[int(GL_TRIANGLES)]).
 		  cullFace(face);
 	}
 

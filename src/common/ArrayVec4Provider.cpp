@@ -21,15 +21,14 @@
 #include <cassert>
 
 #include "PointerFunction.hpp"
+#include "CheckEnum.hpp"
 
 namespace my_gl {
 
      static size_t calcBlockSize(GLenum type,int componentNumber,
 	       size_t stride)
      {
-	  assert(type==GL_BYTE || type==GL_UNSIGNED_BYTE || 
-		    type==GL_SHORT || type==GL_FIXED 
-		    ||type==GL_FLOAT || "wrong data type enum ");
+	  checkDataType(type);
 
 	  return stride? stride :
 	  DATA_TYPE_UNDERLINE_SIZE[type]*componentNumber;

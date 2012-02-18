@@ -63,7 +63,7 @@ namespace my_gl {
      {
 	  //glspec default GL_DEPTH_CLEAR_VALUE
 	  _clearDepth=1;
-	  _func=DepthFunc::ALWAYS;
+	  _func=GL_ALWAYS;
      }
 
      DepthBuffer::~DepthBuffer()
@@ -74,7 +74,7 @@ namespace my_gl {
 	  _clearDepth=depth;
      }
 
-     void DepthBuffer::depthFunc(DepthFunc func)
+     void DepthBuffer::depthFunc(GLenum func)
      {
 	  _func=func;
      }

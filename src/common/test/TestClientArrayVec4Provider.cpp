@@ -25,7 +25,7 @@ int main(int argc, const char *argv[])
 {
      float values[2]={0.6,0.2};
 
-     ClientArrayVec4Provider provider(values,2,DataType::FLOAT,0);
+     ClientArrayVec4Provider provider(values,2,GL_FLOAT,0);
 
      Vec4 readOut=provider.getValue(0);
 

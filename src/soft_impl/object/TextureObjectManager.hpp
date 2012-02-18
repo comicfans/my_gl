@@ -56,15 +56,15 @@ namespace my_gl {
 		  ,int internalFormat/*ignored*/,size_t width,
 		  //OpenGL ES 1.0 border must be 0
 		  size_t height,int border/* ignored */,
-		  ImageFormat imageFormat,StoreType storeType,
+		  GLenum imageFormat,GLenum storeType,
 		  const void *texels);
 
 	void texSubImage2D(TexTarget/*ignored*/,
 		  int level/* ignored*/,
 		  int xoffset,int yoffset,
 		  size_t width,size_t height,
-		  ImageFormat imageFormat,
-		  StoreType storeType,
+		  GLenum imageFormat,
+		  GLenum storeType,
 		  const void *texels);
 
 

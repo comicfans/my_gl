@@ -45,12 +45,12 @@ namespace my_gl {
 
 	  void deleteBuffers(size_t size,const Name *names) ;
 
-	  void bindBuffer(BufferTarget target,Name name);
+	  void bindBuffer(GLenum target,Name name);
 
-	  void bufferData(BufferTarget target,size_t size,
+	  void bufferData(GLenum target,size_t size,
 		    const void* data, DataUsage usage);
 
-	  void bufferSubData(BufferTarget target,ptrdiff_t offset,
+	  void bufferSubData(GLenum target,ptrdiff_t offset,
 		    size_t size,const void* data);
 
 	  ArrayBufferObject* getArrayBuffer()const ;

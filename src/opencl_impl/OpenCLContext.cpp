@@ -56,8 +56,8 @@ namespace my_gl {
 	 _pixelDrawerPtr->onInit(width,height);
 
 	 //set rasterizer
-	 for(auto primitiveMode : {PrimitiveMode::POINTS
-		   //,PrimitiveMode::LINES,PrimitiveMode::TRIANGLES
+	 for(auto primitiveMode : {GL_POINTS
+		   //,GL_LINES,GL_TRIANGLES
 		   })
 	 {
 	      _rasterizers.replace(int(primitiveMode),

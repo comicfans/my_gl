@@ -31,10 +31,10 @@ namespace my_gl {
      public:
      	TexCoordManager ();
 
-	void texCoordPointer(int componentSize,DataType type,
+	void texCoordPointer(int componentSize,GLenum type,
 		 size_t stride,const void* pointer);
 
-	static const BindState BIND_STATE=BindState::TEXCOORD;
+	static const GLenum BIND_STATE=GL_TEXTURE_COORD_ARRAY;
      
      };
 	

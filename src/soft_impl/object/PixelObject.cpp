@@ -33,17 +33,17 @@ namespace my_gl {
      }
 
 	
-     ImageFormat PixelObject::getFormat()const 
+     GLenum PixelObject::getFormat()const 
      {return _format;}
 
-	StoreType PixelObject::getType()const 
+	GLenum PixelObject::getType()const 
 	{
 	     return _type;
 	}
 
 
      void PixelObject::bindImage(size_t width,size_t height,
-		  ImageFormat format,StoreType type,const void *p)
+		  GLenum format,GLenum type,const void *p)
      {
 	  _width=width;
 	  _height=height;
@@ -59,7 +59,7 @@ namespace my_gl {
      }
 
      void PixelObject::directBindImage
-	  (size_t width,size_t height,ImageFormat internalFormat)
+	  (size_t width,size_t height,GLenum internalFormat)
 	  {
 	       size_t byteSize=width*height*4*sizeof(float);
 
@@ -71,7 +71,7 @@ namespace my_gl {
 	       _format=internalFormat;
 
 	       //this is only a stub
-	       _type=StoreType::UNSIGNED_BYTE;
+	       _type=GL_UNSIGNED_BYTE;
 
 	  }
 
@@ -98,8 +98,8 @@ namespace my_gl {
      }
 
      void PixelObject::subImage(int xOffset,  int yOffset,
-	        size_t width,  size_t height,  ImageFormat format,
-		StoreType type,const void *p)
+	        size_t width,  size_t height,  GLenum format,
+		GLenum type,const void *p)
      {
 	  assert(xOffset>=0 && xOffset<_width);
 	  assert(yOffset>=0 && yOffset<_height);

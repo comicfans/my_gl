@@ -23,7 +23,7 @@ TARGET_LINK_LIBRARIES(Vec4Manager Vec4Provider)
 
 ADD_LIBRARY(Context Context.cpp)
 
-ADD_LIBRARY(Common UntypedArray.cpp PixelUnpacker.cpp )
+ADD_LIBRARY(Common UntypedArray.cpp PixelUnpacker.cpp CheckEnum.cpp)
 
 FIND_LIBRARY(OpenGL REQUIRED)
 

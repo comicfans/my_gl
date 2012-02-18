@@ -45,7 +45,7 @@ namespace my_gl {
 
      }
 
-     void NormalManager::normalPointer(DataType type,
+     void NormalManager::normalPointer(GLenum type,
 	       size_t stride, const void *pointer)
      {
 	  vertexArrayChange(3,type,stride,pointer);
