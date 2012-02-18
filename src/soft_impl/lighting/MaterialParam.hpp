@@ -34,9 +34,9 @@ namespace my_gl {
 
 	  MaterialParam();
 
-	  void materialf(Face face,LightParamName paramName,float param);
+	  void materialf(GLenum face,GLenum paramName,float param);
 
-	  void materialfv(Face face,LightParamName paramName,const float* param);
+	  void materialfv(GLenum face,GLenum paramName,const float* param);
 
      } /* optional variable list */;
 	

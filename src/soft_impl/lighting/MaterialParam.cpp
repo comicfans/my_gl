@@ -33,7 +33,7 @@ namespace my_gl {
      }
 
      void MaterialParam::materialf
-	  (Face /*ignore*/,LightParamName paramName,float param)
+	  (GLenum /*ignore*/,GLenum paramName,float param)
 	  {
 	       assert(paramName==GL_SHININESS);
 
@@ -41,7 +41,7 @@ namespace my_gl {
 	  }
 
      void MaterialParam::materialfv
-	  (Face /*ignore*/,LightParamName paramName,const float* param)
+	  (GLenum /*ignore*/,GLenum paramName,const float* param)
 	  {
 	       switch (paramName)
 	       {

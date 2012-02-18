@@ -27,6 +27,7 @@ namespace my_gl {
      bool checkDataType(GLenum value);
      bool checkPrimitiveMode(GLenum value);
      bool checkImageFormat(GLenum value);
+     bool checkLightN(GLenum value);
 	
 } /* my_gl */
 

@@ -66,22 +66,22 @@ namespace my_gl {
 
 	  	  const PerLightParam getPerLightParam(size_t idx)const;
 
-	  void lightf(LightIndex lightIndex,
-		    LightParamName paramName,float param);
+	  void lightf(GLenum lightIndex,
+		    GLenum paramName,float param);
 
-	  void lightfv(LightIndex lightIndex,
-		    LightParamName paramName,const float* param,
+	  void lightfv(GLenum lightIndex,
+		    GLenum paramName,const float* param,
 		    const Matrix4& modelViewMatrix);
 
-	  void lightModelfv(LightParamName paramName,const float* param);
+	  void lightModelfv(GLenum paramName,const float* param);
 
-	  void materialf(Face face,LightParamName paramName,float param);
+	  void materialf(GLenum face,GLenum paramName,float param);
 
-	  void materialfv(Face face,LightParamName paramName,const float* param);
+	  void materialfv(GLenum face,GLenum paramName,const float* param);
 
-	  void enable(LightIndex lightIndex);
+	  void enable(GLenum lightIndex);
 
-	  void disable(LightIndex lightIndex);
+	  void disable(GLenum lightIndex);
 
 	  void updateAll();
 

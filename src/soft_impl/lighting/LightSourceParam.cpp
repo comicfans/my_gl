@@ -49,7 +49,7 @@ namespace my_gl {
 
      }
 
-     void LightSourceParam::lightf(LightParamName paramName,float param)
+     void LightSourceParam::lightf(GLenum paramName,float param)
      {
 	  switch (paramName)
 	  {
@@ -76,7 +76,7 @@ namespace my_gl {
 
      }
 
-     void LightSourceParam::lightfv(LightParamName paramName,
+     void LightSourceParam::lightfv(GLenum paramName,
 	       const float* param,const Matrix4& modelViewMatrix)
      {
 	  switch (paramName)

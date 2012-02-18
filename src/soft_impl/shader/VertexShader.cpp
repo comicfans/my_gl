@@ -18,6 +18,8 @@
 
 #include "VertexShader.hpp"
 
+#include <boost/assign/list_of.hpp>
+
 #include "common/Vec.hpp"
 
 #include "common/Matrix.hpp"
@@ -91,11 +93,12 @@ namespace my_gl {
 	  (const Vec4* inputAttributes,
 	   AttributeGroupRef outputAttributes)
 	  {
+
 	       shade(
-			 inputAttributes[int(BindState::VERTEX)],
-			 inputAttributes[int(BindState::COLOR)],
-			 Vec3(inputAttributes[int(BindState::NORMAL)].values(),3),
-			 inputAttributes[int(BindState::TEXCOORD)],
+			 inputAttributes[0],
+			 inputAttributes[1],
+			 Vec3(inputAttributes[2].values(),3),
+			 inputAttributes[3],
 
 			 outputAttributes[int(
 			      VertexAttributeBuffer::OutIndex::POSITION)],

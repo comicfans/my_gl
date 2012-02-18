@@ -32,10 +32,10 @@ namespace my_gl {
 
      class TextureFunc {
      public:
-     	TextureFunc (TexEnvMode texEnvMode=TexEnvMode::REPLACE);
+     	TextureFunc (GLenum texEnvMode=GL_REPLACE);
 
 	Vec4 operator()
-	     (ImageFormat imageFormat,
+	     (GLenum imageFormat,
 	      const Vec4& fragmentColor,
 	      const Vec4& textureColor)const;
 
@@ -43,7 +43,7 @@ namespace my_gl {
 
      private:
 
-	TexEnvMode _texEnvMode;
+	GLenum _texEnvMode;
 
      };
 	

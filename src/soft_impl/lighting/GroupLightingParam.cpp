@@ -20,6 +20,7 @@
 
 #include <algorithm>
 #include <cassert>
+#include "common/CheckEnum.hpp"
 
 using std::remove;
 
@@ -52,7 +53,7 @@ namespace my_gl {
 	       return _activeIndices.size();
 	  }
 
-	  void GroupLightingParam::enable(LightIndex lightIndex)
+	  void GroupLightingParam::enable(GLenum lightIndex)
 	{
 	     //check LIGHTING enabled is outside work
 
@@ -67,7 +68,7 @@ namespace my_gl {
 	     }
 	}
 
-	void GroupLightingParam::disable(LightIndex lightIndex)
+	void GroupLightingParam::disable(GLenum lightIndex)
 	{
 	     auto removeEndIt=remove(_activeIndices.begin(),
 		       _activeIndices.end(),int(lightIndex));
@@ -77,36 +78,38 @@ namespace my_gl {
 	}
 
 	  void GroupLightingParam::lightModelfv
-	       (LightParamName paramName,const float* param)
+	       (GLenum paramName,const float* param)
 	       {
 		    assert(paramName==GL_AMBIENT);
 
 		    lightModel.ambient=param;
 	       }
 
-	  void GroupLightingParam::lightf(LightIndex lightIndex,
-		    LightParamName paramName,float param)
+	  void GroupLightingParam::lightf(GLenum lightIndex,
+		    GLenum paramName,float param)
 	  {
 	       _allLightSourceParams[int(lightIndex)]
 		    .lightf(paramName,param);
 	  }
 
-	  void GroupLightingParam::lightfv(LightIndex lightIndex,
-		    LightParamName paramName,const float* param,
+	  void GroupLightingParam::lightfv(GLenum lightIndex,
+		    GLenum paramName,const float* param,
 		    const Matrix4& modelViewMatrix)
 	  {
+	       checkLightN(lightIndex);
+
 	       _allLightSourceParams[int(lightIndex)]
 		    .lightfv(paramName,param,modelViewMatrix);
 	  }
 
-	  void GroupLightingParam::materialf(Face face,
-		    LightParamName paramName,float param)
+	  void GroupLightingParam::materialf(GLenum face,
+		    GLenum paramName,float param)
 	  {
 	       material.materialf(face,paramName,param);
 	  }
 
-	  void GroupLightingParam::materialfv(Face face,
-		    LightParamName paramName,const float* param)
+	  void GroupLightingParam::materialfv(GLenum face,
+		    GLenum paramName,const float* param)
 	  {
 	       material.materialfv(face,paramName,param);
 	  }

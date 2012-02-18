@@ -36,6 +36,20 @@ namespace my_gl {
 	  return true;
      }
 
+     bool checkLightN(GLenum value)
+     {
+	  GLenum validValues[]={GL_LIGHT0,GL_LIGHT1,
+	       GL_LIGHT2,GL_LIGHT3,GL_LIGHT4,
+	       GL_LIGHT5,GL_LIGHT6,GL_LIGHT7};
+
+	  int arrayLength=sizeof(validValues)/sizeof(GLenum);
+	  assert(find(validValues,validValues+arrayLength,value)!=validValues+arrayLength
+		    || "wrong data value enum ");
+
+	  return true;
+     
+     }
+
      bool checkPrimitiveMode(GLenum value)
      {
 
