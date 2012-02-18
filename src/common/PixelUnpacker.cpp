@@ -23,10 +23,10 @@
 namespace my_gl {
 
 	
-     static size_t calcBlockSize(ImageFormat format,  
-	       StoreType type)
+     static size_t calcBlockSize(GLenum format,  
+	       GLenum type)
      {
-	  if (type==StoreType::UNSIGNED_BYTE)
+	  if (type==GL_UNSIGNED_BYTE)
 	  {
 	       //RGB,RGBA + UNSIGNED_BYTE
 	       const int IMAGE_FORMAT_BYTE[]={3,4};
@@ -103,7 +103,7 @@ namespace my_gl {
 
      PixelUnpacker::PixelUnpacker (const void * source,
 	       float* dest,size_t width,size_t height,
-	       ImageFormat format,StoreType type,
+	       GLenum format,GLenum type,
 	       size_t jumpBlocks)
 	  :_blockSize(calcBlockSize(format,type)),
 	  _currentSource(static_cast<const int8_t*>(source)
@@ -112,7 +112,7 @@ namespace my_gl {
 	  _sourceEnd(_currentSource+(jumpBlocks+width*height)*_blockSize)
 	   
      {
-	  if (type==StoreType::UNSIGNED_BYTE)
+	  if (type==GL_UNSIGNED_BYTE)
 	  {
 	       assert(format==ImageFormat::RGB || format==ImageFormat::RGBA);
 	       _unpacker=(format==ImageFormat::RGB?RGBUnpack:RGBAUnpack);
@@ -121,11 +121,11 @@ namespace my_gl {
 	  {
 	       switch (type)
 	       {
-		    case StoreType::UNSIGNED_SHORT_5_6_5:
+		    case GL_UNSIGNED_SHORT_5_6_5:
 			 {_unpacker=Packed565Unpack;break;}
-		    case StoreType::UNSIGNED_SHORT_4_4_4_4:
+		    case GL_UNSIGNED_SHORT_4_4_4_4:
 			 {_unpacker=Packed4444Unpack;break;}
-		    case StoreType::UNSIGNED_SHORT_5_5_5_1:
+		    case GL_UNSIGNED_SHORT_5_5_5_1:
 			 {_unpacker=Packed5551Unpack;break;}
 		    default:
 			 {assert(false);}
