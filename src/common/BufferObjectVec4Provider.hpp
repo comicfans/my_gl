@@ -42,7 +42,7 @@ namespace my_gl {
      class BufferObjectVec4Provider :public ArrayVec4Provider{
      public:
      	BufferObjectVec4Provider (const BufferObject& bufferObject,
-		  size_t offset,int componentNumber,DataType dataType,
+		  size_t offset,int componentNumber,GLenum dataType,
 		  size_t stride,bool normalize=false);
 
 	virtual Vec4 getValue(size_t index);

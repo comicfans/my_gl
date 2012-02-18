@@ -27,7 +27,7 @@ namespace my_gl {
      class ClientArrayVec4Provider :public ArrayVec4Provider{
      public:
      	ClientArrayVec4Provider (const void* pointer,
-		  int componentNumber,DataType dataType,
+		  int componentNumber,GLenum dataType,
 		  size_t stride,bool normalize=false);
 
 	virtual Vec4 getValue(size_t index);

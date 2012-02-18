@@ -24,21 +24,25 @@
 
 namespace my_gl {
 
-     static size_t calcBlockSize(DataType type,int componentNumber,
+     static size_t calcBlockSize(GLenum type,int componentNumber,
 	       size_t stride)
      {
+	  assert(type==GL_BYTE || type==GL_UNSIGNED_BYTE || 
+		    type==GL_SHORT || type==GL_FIXED 
+		    ||type==GL_FLOAT || "wrong data type enum ");
+
 	  return stride? stride :
-	  DATA_TYPE_UNDERLINE_SIZE[int(type)]*componentNumber;
+	  DATA_TYPE_UNDERLINE_SIZE[type]*componentNumber;
      }
 
      ArrayVec4Provider::ArrayVec4Provider
-	  (int componentNumber,DataType type,size_t stride,bool normalize)
+	  (int componentNumber,GLenum type,size_t stride,bool normalize)
 	  :_dataType(type),_componentNumber(componentNumber),
 	  _blockSize(calcBlockSize(type,componentNumber,stride)),
 	  _normalize(normalize)
      {}
 
-	  template<DataType dataType>
+	  template<GLenum dataType>
 	       Vec4 ArrayVec4Provider::copyToFloats(const void* p)
 	       const 
 	       {
@@ -70,27 +74,27 @@ namespace my_gl {
 
 	       switch(_dataType)
 	       {
-		    case DataType::BYTE:
-			 {return this->copyToFloats<DataType::BYTE>
+		    case GL_BYTE:
+			 {return this->copyToFloats<GL_BYTE>
 			      (actualPointer);}
-		    case DataType::UNSIGNED_BYTE:
-			      {return copyToFloats<DataType::UNSIGNED_BYTE>
+		    case GL_UNSIGNED_BYTE:
+			      {return copyToFloats<GL_UNSIGNED_BYTE>
 			      (actualPointer);}
-		    case DataType::SHORT:
-			 {return copyToFloats<DataType::SHORT>
+		    case GL_SHORT:
+			 {return copyToFloats<GL_SHORT>
 			      (actualPointer);}
-		    case DataType::UNSIGNED_SHORT:
-			 {return copyToFloats<DataType::UNSIGNED_SHORT>
+		    case GL_UNSIGNED_SHORT:
+			 {return copyToFloats<GL_UNSIGNED_SHORT>
 			      (actualPointer);}
-		    case DataType::FIXED:
-			 {return copyToFloats<DataType::FIXED>
+		    case GL_FIXED:
+			 {return copyToFloats<GL_FIXED>
 			      (actualPointer);}
-		    case DataType::FLOAT:
-			      {return copyToFloats<DataType::FLOAT>
+		    case GL_FLOAT:
+			      {return copyToFloats<GL_FLOAT>
 				   (actualPointer);}
 		    default:
 				   //SHOULD NOT here
-				   {assert(false);}
+				   {assert(false || "wrong data type passed to castRead");}
 
 	       }
 	  }

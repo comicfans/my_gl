@@ -27,10 +27,16 @@
 
 namespace my_gl{
 	
-     Vec4Manager::Vec4Manager(BindState bindState)
+     Vec4Manager::Vec4Manager(GLenum bindState)
 	  :_bindedArrayBufferObject(nullptr),
 	  _bindState(bindState),_vertexArrayEnabled(false)
-     {}
+     {
+	  assert(bindState==GL_VERTEX_ARRY ||
+		    bindState==GL_COLOR_ARRAY ||
+		    bindState==GL_TEXTURE_COORD_ARRAY||
+		    bindState==GL_NORMAL_ARRAY ||
+		    "wrong vertex array attribute value");
+     }
 
      Vec4Manager::~Vec4Manager()
      {}

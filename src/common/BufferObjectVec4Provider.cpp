@@ -24,7 +24,7 @@ namespace my_gl {
 
      BufferObjectVec4Provider::BufferObjectVec4Provider 
 	  (const BufferObject& bufferObject,
-		  size_t offset,int componentNumber,DataType dataType,
+		  size_t offset,int componentNumber,GLenum dataType,
 		  size_t stride,bool normalize)
 	  :ArrayVec4Provider(componentNumber,dataType,stride,normalize),
 	  _bufferObject(bufferObject),_offset(offset)

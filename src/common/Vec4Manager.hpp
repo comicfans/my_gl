@@ -35,7 +35,7 @@ namespace my_gl {
      class Vec4Manager :public Vec4Provider{
      public:
 
-	  Vec4Manager(BindState bindState) ;
+	  Vec4Manager(GLenum bindState) ;
 
 	  virtual ~Vec4Manager();
 
@@ -63,7 +63,7 @@ namespace my_gl {
 
 	  const ArrayBufferObject *_bindedArrayBufferObject;
 
-	  const BindState _bindState;
+	  const GLenum _bindState;
 
 	  bool _vertexArrayEnabled;
 
