@@ -52,10 +52,10 @@ namespace my_gl {
 
 	  switch(normalizeNormal)
 	  {
-	       case NormalizeNormal::NORMALIZE:
+	       case GL_NORMALIZE:
 		    _normalizeNormal=true;
 		    break;
-	       case NormalizeNormal::RESCALE_NORMAL:
+	       case GL_RESCALE_NORMAL:
 		    _rescaleNormal=true;
 		    break;
 	  }
@@ -67,10 +67,10 @@ namespace my_gl {
 
 	  switch(normalizeNormal)
 	  {
-	       case NormalizeNormal::NORMALIZE:
+	       case GL_NORMALIZE:
 		    _normalizeNormal=false;
 		    break;
-	       case NormalizeNormal::RESCALE_NORMAL:
+	       case GL_RESCALE_NORMAL:
 		    _rescaleNormal=false;
 		    break;
 	  }

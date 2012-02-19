@@ -86,14 +86,14 @@ namespace my_gl {
 	virtual bool isBuffer(Name name) const ;
 
 	//glBindBuffer
-	virtual void bindBuffer(BufferTarget target,Name name);
+	virtual void bindBuffer(GLenum target,Name name);
 
 	//glBufferData
-	virtual void bufferData(BufferTarget target,size_t size,
-		    const void* data, DataUsage usage);
+	virtual void bufferData(GLenum target,size_t size,
+		    const void* data, GLenum usage);
 
 	//glBufferSubData
-	virtual void bufferSubData(BufferTarget target,ptrdiff_t offset,
+	virtual void bufferSubData(GLenum target,ptrdiff_t offset,
 		    size_t size,const void* data);
 
 	//glEnableClient
@@ -140,8 +140,8 @@ namespace my_gl {
 	virtual void texCoordPointer(int componentSize, 
 		  GLenum type, size_t stride, const void* pointer);
 
-	//glMatrixMode
-	virtual void matrixMode(MatrixMode matrixMode);
+	//glGLenum
+	virtual void matrixMode(GLenum matrixMode);
 
 	//glPushMatrix
 	virtual void pushMatrix();
@@ -217,7 +217,7 @@ namespace my_gl {
 	virtual void depthRange(double near,double far);
 
 	//glDepthFunc
-	virtual void depthFunc(DepthFunc func);
+	virtual void depthFunc(GLenum func);
 
 	//glLightf
 	virtual void lightf(GLenum lightIndex,
@@ -266,7 +266,7 @@ namespace my_gl {
 		  int pname/* ignored*/,TexEnvMode texEnvMode);
 
 	//glBindTexture
-	virtual void bindTexture(TexTarget/* ignored*/,Name texture);
+	virtual void bindTexture(GLenum/* ignored*/,Name texture);
 
 	//glDeleteTexture
 	virtual void deleteTextures(size_t n,const Name *names);
@@ -274,7 +274,7 @@ namespace my_gl {
 	virtual bool isTexture(Name name);
 
 	//glTexImage2D
-	virtual void texImage2D(TexTarget/*ignored*/,int level/* ignored*/
+	virtual void texImage2D(GLenum/*ignored*/,int level/* ignored*/
 		  ,int internalFormat/*ignored*/,size_t width,
 		  //OpenGL ES 1.0 border must be 0
 		  size_t height,int border/* ignored */,
@@ -282,7 +282,7 @@ namespace my_gl {
 		  const void *texels);
 
 	//glTexSubImage2D
-	virtual void texSubImage2D(TexTarget/*ignored*/,
+	virtual void texSubImage2D(GLenum/*ignored*/,
 		  int level/* ignored*/,
 		  int xoffset,int yoffset,
 		  size_t width,size_t height,
@@ -292,25 +292,27 @@ namespace my_gl {
 
 
 	//glTexParameter
-	virtual void texParameteri(TexTarget target/*ignored*/,
+	virtual void texParameteri(GLenum target/*ignored*/,
 		  TexWrapName wrapName,
 		  TexWrapMode texWrapMode);
 
 	//glTexParameter
-	virtual void texParameteri(TexTarget target/*ignored*/,
+	virtual void texParameteri(GLenum target/*ignored*/,
 		  TexFilterName filterName,
 		  TexFilterMode texFilterMode);
 
 	//glCopyTexImage2D
-	virtual void copyTexImage2D(TexTarget /*ignored*/,int level/* ignored*/,
+	virtual void copyTexImage2D(GLenum /*ignored*/,int level/* ignored*/,
 		  GLenum internalFormat,
 		  int x,int y,size_t width,size_t height,int border);
  
 	//glCopyTexSubImage2D
 	virtual void copyTexSubImage2D(
-		  TexTarget /*ignored*/,int level/* ignored*/,
+		  GLenum /*ignored*/,int level/* ignored*/,
 		  int xoffset,int yoffset,
 		  int x,int y,size_t width,size_t height);
+
+	typedef std::pair<GLenum,int> BindStateAndIndex;
 
      protected:
 
@@ -365,7 +367,7 @@ namespace my_gl {
 	template<typename T>
 	     T& getFrameBuffer();
 
-	MatrixMode _matrixMode;
+	GLenum _matrixMode;
 
 	unordered_map<GLenum,MatrixStack> _matrixStacks;
 
@@ -402,7 +404,9 @@ namespace my_gl {
 	ViewportParameter _viewportParameter;
 	DepthRange _depthRange;
 
-	vector<GLenum> _activeStreams;
+     
+
+	vector<BindStateAndIndex> _activeStreams;
 
 
 	/** 

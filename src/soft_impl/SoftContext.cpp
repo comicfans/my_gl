@@ -20,7 +20,10 @@
 
 #include <climits>
 #include <algorithm>
+#include <functional>
 
+// we neeed construct ptr_map mapped_value with many param
+#define BOOST_ASSIGN_MAX_PARAMS 7
 #include <boost/assign/ptr_map_inserter.hpp>
 
 #include "attribute_manager/NormalManager.hpp"
@@ -64,6 +67,13 @@
 
 namespace my_gl {
 
+	
+
+     const SoftContext::BindStateAndIndex VERTEX(GL_VERTEX_ARRAY,0);
+     const SoftContext::BindStateAndIndex COLOR(GL_COLOR_ARRAY,0);
+     const SoftContext::BindStateAndIndex NORMAL(GL_NORMAL_ARRAY,0);
+     const SoftContext::BindStateAndIndex TEXCOORD(GL_TEXTURE_COORD_ARRAY,0);
+
      using std::remove;
 
      using boost::extents;
@@ -90,8 +100,8 @@ namespace my_gl {
 	  //init active streams
 	  //if light is not turned on,texture and normal will not transfered
 
-	  _activeStreams.push_back(GL_VERTEX_ARRAY);
-	  _activeStreams.push_back(GL_COLOR_ARRAY);
+	  _activeStreams.push_back(VERTEX);
+	  _activeStreams.push_back(COLOR);
 
 	  _pixelDrawerPtr.reset(new SDLPixelDrawer());
 	  _pixelDrawerPtr->onInit(width,height);
@@ -139,27 +149,26 @@ namespace my_gl {
 
 	  boost::assign::ptr_map_insert<PointRasterizer>(_rasterizers)
 	       (GL_POINTS,
-		_viewportParameter,*_interpolatorPtr,*_fragmentAttributeBufferPtr,
-		getFrameBuffer<DepthBuffer>(),_depthRange);
+		std::ref(_viewportParameter),std::ref(*_interpolatorPtr),
+		std::ref(*_fragmentAttributeBufferPtr),
+		std::ref(getFrameBuffer<DepthBuffer>()),std::ref(_depthRange));
 
 	  boost::assign::ptr_map_insert<SimpleLineRasterizer>(_rasterizers)
 	       (GL_LINES,
-		_viewportParameter, *_interpolatorPtr,*_fragmentAttributeBufferPtr,
-		getFrameBuffer<DepthBuffer>(),_depthRange);
+		std::ref(_viewportParameter),std::ref(*_interpolatorPtr),
+		std::ref(*_fragmentAttributeBufferPtr),
+		std::ref(getFrameBuffer<DepthBuffer>()),std::ref(_depthRange));
 
-
-	  Rasterizer *pLineRasterizer=&_rasterizers[GL_LINES];
+	  Rasterizer *pLineRasterizer=_rasterizers.find(GL_LINES)->second;
 
 	  //what triangle rasterizer do is depends on 
 	  //its internal LineRasterizer
 	  boost::assign::ptr_map_insert<TriangleRasterizer>(_rasterizers)
 	       (GL_TRIANGLES,
-		_viewportParameter,
-			 *_interpolatorPtr,
-			 *_fragmentAttributeBufferPtr,
-			 getFrameBuffer<DepthBuffer>(),
-			 _depthRange,
-			 static_cast<LineRasterizer*>(pLineRasterizer));
+		std::ref(_viewportParameter),std::ref(*_interpolatorPtr),
+		std::ref(*_fragmentAttributeBufferPtr),
+		std::ref(getFrameBuffer<DepthBuffer>()),std::ref(_depthRange),
+		static_cast<LineRasterizer*>(pLineRasterizer));
 
 
 	  setInstance(this);
@@ -198,7 +207,7 @@ namespace my_gl {
 	  _depthRange.farValue=farValue;
      }
 
-     void SoftContext::depthFunc(DepthFunc func)
+     void SoftContext::depthFunc(GLenum func)
      {
 	  getFrameBuffer<DepthBuffer>().depthFunc(func);
      }
@@ -227,18 +236,18 @@ namespace my_gl {
 	  return _arrayBufferObjectManager.isBuffer(name);
      }
  	
-     void SoftContext::bindBuffer(BufferTarget target,Name name)
+     void SoftContext::bindBuffer(GLenum target,Name name)
      {
 	  _arrayBufferObjectManager.bindBuffer(target,name);
      }
 
-     void SoftContext::bufferData(BufferTarget target,size_t size,
-		    const void* data, DataUsage usage)
+     void SoftContext::bufferData(GLenum target,size_t size,
+		    const void* data, GLenum usage)
      {
 	  _arrayBufferObjectManager.bufferData(target, size, data, usage);
      }
 
-     void SoftContext::bufferSubData(BufferTarget target,ptrdiff_t offset,
+     void SoftContext::bufferSubData(GLenum target,ptrdiff_t offset,
 		    size_t size,const void* data)
      {
 	  _arrayBufferObjectManager.bufferSubData(target,offset,size,data);
@@ -254,22 +263,33 @@ namespace my_gl {
 
 	  assert(it!=_allVec4Manager.end());
 
-	  it->enableVertexArray(true);
+	  it->second->enableVertexArray(true);
 
      }
 
      void SoftContext::disableClientState(GLenum bindState)
      {
-	  assert(bindState!=GL_ELEMENT_ARRAY_BUFFER);
+	  
+	  checkBindState(bindState);
 
-	  _allVec4Manager[int(bindState)].enableVertexArray(false);
+	  auto it=_allVec4Manager.find(bindState);
+
+	  assert(it!=_allVec4Manager.end());
+
+	  it->second->enableVertexArray(false);
      }
 
 	
      void SoftContext::copyArrayBufferBind(GLenum bindState)
      {
-	  _allVec4Manager[int(bindState)].bindArrayBufferObject(
-			 _arrayBufferObjectManager.getArrayBuffer());
+	  checkBindState(bindState);
+
+	  auto it=_allVec4Manager.find(bindState);
+
+	  assert(it!=_allVec4Manager.end());
+
+	  it->second->bindArrayBufferObject
+			 (_arrayBufferObjectManager.getArrayBuffer());
      }
 
      void SoftContext::normal3f(float nx,float ny,float nz)
@@ -328,7 +348,7 @@ namespace my_gl {
 		  (componentSize, type, stride, pointer);
 	}
 
-	void SoftContext::matrixMode(MatrixMode matrixMode) 
+	void SoftContext::matrixMode(GLenum matrixMode) 
 	{
 	     _matrixMode=matrixMode;
 	}
@@ -488,7 +508,7 @@ namespace my_gl {
 	     _fragmentAttributeBufferPtr->clear();
 	     //choose rasterizer
 
-	     Rasterizer& rasterizer=_rasterizers[int(catalog)];
+	     Rasterizer& rasterizer=*(_rasterizers.find(catalog)->second);
 
 	     //write FragmentAttributeBuffer 
 	     rasterizer.rasterize(*_clippedPrimitiveGroupPtr);
@@ -499,7 +519,11 @@ namespace my_gl {
 	     (const PrimitiveIndex& primitiveIndex,GLenum catalog)
 	     {
 		  //choose right clipper
-		  Clipper& clipper=_clippers[int(catalog)];
+		  auto it=_clippers.find(catalog);
+
+		  assert(it!=_clippers.end());
+
+		  Clipper& clipper=*(it->second);
 		  
 		  //reset ClippedPrimitiveGroup
 
@@ -532,9 +556,13 @@ namespace my_gl {
 		  for (auto activeStream:_activeStreams)
 		  {
 		       //only transfer active streams
-		       int streamIdx=int(activeStream);
-		       auto& provider=_allVec4Manager[streamIdx];
-		       inStream[streamIdx]=
+		       auto it = _allVec4Manager.find(activeStream.first);
+
+		       assert(it!=_allVec4Manager.end());
+
+		       auto& provider=*(it->second);
+			    
+		       inStream[activeStream.second]=
 			    provider.getValue(thisVertexIndex);
 		  }
 
@@ -629,7 +657,7 @@ namespace my_gl {
 	void SoftContext::lightModelf
 	       (GLenum paramName,float param)
 	       {
-		    assert(paramName==GL_TWO_SIDE);
+		    assert(paramName==GL_LIGHT_MODEL_TWO_SIDE);
 		    _twoSideLightingEnabled=(param!=0);
 	       }
 
@@ -665,7 +693,7 @@ namespace my_gl {
 	}
 
 	void SoftContext::bindTexture
-	     (TexTarget target/* ignored*/,Name texture)
+	     (GLenum target/* ignored*/,Name texture)
 	     {
 		  _textureObjectManager.bindTexture(target,texture);
 	     }
@@ -687,7 +715,7 @@ namespace my_gl {
 	}
 
 	void SoftContext::texImage2D
-	     (TexTarget/*ignored*/target,int level/* ignored*/
+	     (GLenum/*ignored*/target,int level/* ignored*/
 		  ,int internalFormat/*ignored*/,size_t width,
 		  //OpenGL ES 1.0 border must be 0
 		  size_t height,int border/* ignored */,
@@ -698,7 +726,7 @@ namespace my_gl {
 		       width,height,border,imageFormat,storeType,texels);
 	}
 
-	void SoftContext::texSubImage2D(TexTarget/*ignored*/target,
+	void SoftContext::texSubImage2D(GLenum/*ignored*/target,
 		  int level/* ignored*/,
 		  int xoffset,int yoffset,
 		  size_t width,size_t height,
@@ -713,7 +741,7 @@ namespace my_gl {
 
 
 
-	void SoftContext::texParameteri(TexTarget target/*ignored*/,
+	void SoftContext::texParameteri(GLenum target/*ignored*/,
 		  TexWrapName wrapName,
 		  TexWrapMode texWrapMode)
 	{
@@ -721,7 +749,7 @@ namespace my_gl {
 		  texParameter(target,wrapName,texWrapMode);
 	}
 
-	void SoftContext::texParameteri(TexTarget target/*ignored*/,
+	void SoftContext::texParameteri(GLenum target/*ignored*/,
 		  TexFilterName filterName,
 		  TexFilterMode texFilterMode)
 	{
@@ -777,7 +805,7 @@ namespace my_gl {
 	     _groupLightingParam.disable(lightIndex);
 	}
 
-	static void uniqueProcess(vector<GLenum>& all,GLenum toProcess,bool add)
+	static void uniqueProcess(vector<pair<GLenum,int>>& all,SoftContext::BindStateAndIndex toProcess,bool add)
 	{
 		  auto pos=find(all.begin(),all.end(),toProcess);
 
@@ -808,9 +836,9 @@ namespace my_gl {
 
 	     //enable NORMAL if lighting is enabled
 	     //remove if disabled
-	     uniqueProcess(_activeStreams,GL_NORMAL_ARRAY,_lightingEnabled);
+	     uniqueProcess(_activeStreams,NORMAL,_lightingEnabled);
 	     //when lighting is enabled, color is decided by lighting param
-	     uniqueProcess(_activeStreams,GL_COLOR_ARRAY,!_lightingEnabled);
+	     uniqueProcess(_activeStreams,COLOR,!_lightingEnabled);
 
 
 	     unique_ptr<VertexShader> finalPtr;
@@ -850,7 +878,7 @@ namespace my_gl {
 
 	     //enable TEXCOORD if texture is enabled
 	     //remove if disable
-	     uniqueProcess(_activeStreams,GL_TEXTURE_COORD_ARRAY,_textureEnabled);
+	     uniqueProcess(_activeStreams,TEXCOORD,_textureEnabled);
 
 	     if (_textureEnabled){
 
@@ -876,7 +904,7 @@ namespace my_gl {
 	}
 
 	void SoftContext::copyTexImage2D
-	     (TexTarget /*ignored*/,int level/* ignored*/,
+	     (GLenum /*ignored*/,int level/* ignored*/,
 	      GLenum internalFormat/*ignored*/,
 	      int x,int y,size_t width,size_t height,
 		  int border/*ignored*/)
@@ -897,7 +925,7 @@ namespace my_gl {
 	     }
  
 	void SoftContext::copyTexSubImage2D(
-		  TexTarget /*ignored*/,int level/* ignored*/,
+		  GLenum /*ignored*/,int level/* ignored*/,
 		  int xoffset,int yoffset,
 		  int x,int y,size_t width,size_t height)
 	{
@@ -914,7 +942,7 @@ namespace my_gl {
 	}
 
 	//glEnable (texture override)
-	void SoftContext::enable(TexTarget texTarget)
+	void SoftContext::enableTexTarget(GLenum texTarget)
 	{
 	     if (!_textureEnabled)
 	     {
@@ -924,7 +952,7 @@ namespace my_gl {
 	}
 
 	//glDisable (texture override)
-	void SoftContext::disable(TexTarget texTarget)
+	void SoftContext::disableTexTarget(GLenum texTarget)
 	{
 	     if (_textureEnabled)
 	     {
@@ -936,35 +964,43 @@ namespace my_gl {
 	//glEnable (cullFace override)
 	void SoftContext::enableCullFace()
 	{
-	     static_cast<TriangleRasterizer&>
-		  (_rasterizers[int(GL_TRIANGLES)]).
-		  enableCullFace();
+	     auto it = _rasterizers.find(GL_TRIANGLES);
+
+	     assert(it!=_rasterizers.end());
+
+	     static_cast<TriangleRasterizer*>(it->second)->enableCullFace();
 	}
 
 	//glDisable (cullFace override)
 	void SoftContext::disableCullFace()
 	{
-	     static_cast<TriangleRasterizer&>
-		  (_rasterizers[int(GL_TRIANGLES)]).
-		  disableCullFace();
+	     auto it = _rasterizers.find(GL_TRIANGLES);
 
+	     assert(it!=_rasterizers.end());
+
+	     static_cast<TriangleRasterizer*>(it->second)->disableCullFace();
+	
 	}
 
 	//glFrontFace
 	void SoftContext::frontFace(GLenum faceMode)
 	{
-	     static_cast<TriangleRasterizer&>
-		  (_rasterizers[int(GL_TRIANGLES)]).
-		  frontFace(faceMode);
+	     auto it = _rasterizers.find(GL_TRIANGLES);
+
+	     assert(it!=_rasterizers.end());
+
+	     static_cast<TriangleRasterizer*>(it->second)->frontFace(faceMode);
 	}
 
 
 	//glCullFace
 	void SoftContext::cullFace(GLenum face)
 	{
-	     static_cast<TriangleRasterizer&>
-		  (_rasterizers[int(GL_TRIANGLES)]).
-		  cullFace(face);
+	     auto it = _rasterizers.find(GL_TRIANGLES);
+
+	     assert(it!=_rasterizers.end());
+
+	     static_cast<TriangleRasterizer*>(it->second)->cullFace(face);
 	}
 
 
@@ -972,8 +1008,10 @@ namespace my_gl {
 
      template<typename T>
 	  T& SoftContext::getVec4Manager()
-	  { return static_cast<T&>(_allVec4Manager
-		    [T::BIND_STATE]);}
+	  { 
+	       auto it = _allVec4Manager.find(T::BIND_STATE);
+	       assert(it!=_allVec4Manager.end());
+	       return static_cast<T&>(*(it->second));}
 
      template<typename T>
 	  T& SoftContext::getFrameBuffer()
