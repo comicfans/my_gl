@@ -48,7 +48,7 @@ namespace my_gl {
 	  void bindBuffer(GLenum target,Name name);
 
 	  void bufferData(GLenum target,size_t size,
-		    const void* data, DataUsage usage);
+		    const void* data, GLenum usage);
 
 	  void bufferSubData(GLenum target,ptrdiff_t offset,
 		    size_t size,const void* data);
@@ -61,7 +61,7 @@ namespace my_gl {
      
      private:
 
-	  ArrayBufferObject *_arrayAndElements[2];
+	  unordered_map<GLenum,ArrayBufferObject*> _arrayAndElements;
 
 	  typedef unique_ptr<ArrayBufferObject> UniquePointer;
 

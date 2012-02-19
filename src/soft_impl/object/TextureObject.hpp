@@ -73,13 +73,13 @@ namespace my_gl {
 
 	unordered_map<GLenum,GLenum>_stWrapMode;
 
-	unordered_map<GLenum,GLenum> _stWrapper;
+	unordered_map<GLenum,Wrapper> _stWrapper;
 
 	unordered_map<GLenum,GLenum> _magMinFilterMode;
 
-	unordered_map<GLenum,GLenum> _magMinFilter;
+	unordered_map<GLenum,Filter> _magMinFilter;
 
-	unordered_map<GLenum,Wrapper> ALL_FILTERS;
+	unordered_map<GLenum,Filter> ALL_FILTERS;
 
 	Vec4 nearest(float u,float v)const;
 

@@ -36,17 +36,18 @@ namespace my_gl {
 	  (ObjectNameManager& objectNameManager):
 	       _objectNameManager(objectNameManager)
      {
-	  fill_n(_arrayAndElements,2,nullptr);
+	  _arrayAndElements[GL_ARRAY_BUFFER]=nullptr;
+	  _arrayAndElements[GL_ELEMENT_ARRAY_BUFFER]=nullptr;
      }
 
      ArrayBufferObject* ArrayBufferObjectManager::
 	  getArrayBuffer()const 
      {
-	  auto p=_arrayAndElements[int(GL_ARRAY_BUFFER)];
+	  auto it=_arrayAndElements.find(GL_ARRAY_BUFFER);
 	  //if 0 is bind
 	  // 
 	  // null is returned
-	  return p;
+	  return it->second;
      }
 
      void ArrayBufferObjectManager::bindBuffer
@@ -57,7 +58,7 @@ namespace my_gl {
 
 	  if (name==RESERVED)
 	  {
-	       _arrayAndElements[int(target)]=nullptr;
+	       _arrayAndElements[target]=nullptr;
 	       return;
 	  }
 	  
@@ -74,7 +75,7 @@ namespace my_gl {
 	  }
 
 	  //already has data, to bind
-	  _arrayAndElements[int(target)]=pos->second.get();
+	  _arrayAndElements[target]=pos->second.get();
      }
 
      void ArrayBufferObjectManager::deleteBuffers(size_t size,const Name *names)
@@ -94,13 +95,13 @@ namespace my_gl {
 	       {
 
 		    if (pos->second.get()==_arrayAndElements
-			      [int(GL_ARRAY_BUFFER)])
+			      [GL_ARRAY_BUFFER])
 		    {
 			 bindBuffer(GL_ARRAY_BUFFER,0);
 		    }
 		    
 		    else if (pos->second.get()==_arrayAndElements
-			      [int(GL_ELEMENT_ARRAY_BUFFER)]){
+			      [GL_ELEMENT_ARRAY_BUFFER]){
 			 bindBuffer(GL_ELEMENT_ARRAY_BUFFER,0);
 		    }
 		    _objects.erase(pos);
@@ -112,10 +113,10 @@ namespace my_gl {
 
      void ArrayBufferObjectManager::bufferData
 	  (GLenum target,size_t size,
-	   const void* data, DataUsage usage)
+	   const void* data, GLenum usage)
 	  {
 
-	       ArrayBufferObject *pBuffer=_arrayAndElements[int(target)];
+	       ArrayBufferObject *pBuffer=_arrayAndElements[target];
 	       assert(pBuffer);
 	       pBuffer->bindData(size,data);
 
@@ -125,7 +126,7 @@ namespace my_gl {
 	  (GLenum target,ptrdiff_t offset,
 		    size_t size,const void* data)
      {
-	       ArrayBufferObject *pBuffer=_arrayAndElements[int(target)];
+	       ArrayBufferObject *pBuffer=_arrayAndElements[target];
 	       assert(pBuffer);
 	       pBuffer->subData(offset,size,data);
      }
@@ -134,11 +135,14 @@ namespace my_gl {
      ArrayBufferObject * ArrayBufferObjectManager::
 	  getElementsBuffer() const 
 	  {
-	       auto p=_arrayAndElements
-		    [int(GL_ELEMENT_ARRAY_BUFFER)];
-	       assert(p);
+	       auto it=_arrayAndElements.find
+		    (GL_ELEMENT_ARRAY_BUFFER);
 
-	       return p;
+	       assert(it!=_arrayAndElements.end());
+
+	       assert(it->second);
+
+	       return it->second;
 	  }
 
      void ArrayBufferObjectManager::genBuffers(size_t size,Name *names)

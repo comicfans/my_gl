@@ -100,7 +100,7 @@ namespace my_gl {
 		       {
 			    if (_activeTextureObject==pos->second.get())
 			    {
-				 bindTexture(GLenum::TEXTURE_2D,0);
+				 bindTexture(GL_TEXTURE_2D,0);
 			    }
 			    _textureObjects.erase(pos);
 			    _objectNameManager.recycleName(name);
@@ -145,22 +145,13 @@ namespace my_gl {
 
 	void TextureObjectManager::
 	     texParameter(GLenum target/*ignored*/,
-		  TexWrapName wrapName,
-		  TexWrapMode texWrapMode)
+		  GLenum wrapName,
+		  GLenum texWrapMode)
 	{
 	     getActiveTextureObject()->
 		  texParameter(wrapName,texWrapMode);
 	}
 
-	void TextureObjectManager::
-	     texParameter(GLenum target/*ignored*/,
-		  GLenum filterName,
-		  GLenum texFilterMode)
-	{
-	     getActiveTextureObject()->
-		  texParameter(filterName,texFilterMode);
-	}
-     
 
      TextureObject* TextureObjectManager::
 	  getActiveTextureObject()

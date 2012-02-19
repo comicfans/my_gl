@@ -104,14 +104,21 @@ namespace my_gl {
 	{
 	     //HALF_PIXEL adjust, makes 
 	     //wrapper treat coord zero-based
-	     float u=_stWrapper[int(TexWrapName::TEXTURE_WRAP_S)]
-		  (s*width()-HALF_PIXEL,width()-HALF_PIXEL),
-		  v=_stWrapper[int(TexWrapName::TEXTURE_WRAP_T)]
-		       (t*height()-HALF_PIXEL,height()-HALF_PIXEL);
+	     auto sWrapperIt=_stWrapper.find(GL_TEXTURE_WRAP_S);
+
+	     assert(sWrapperIt!=_stWrapper.end());
+
+	     float u=(sWrapperIt->second)(s*width()-HALF_PIXEL,width()-HALF_PIXEL);
+
+	     auto tWrapperIt=_stWrapper.find(GL_TEXTURE_WRAP_T);
+
+	     float v=(tWrapperIt->second)(t*height()-HALF_PIXEL,height()-HALF_PIXEL);
 
 	     //TODO currently use MAG_FILTER as filter
 #warning right here?
-	     return ALL_FILTERS[GL_TEXTURE_MAG_FILTER](u,v);
+	     auto it=ALL_FILTERS.find(GL_TEXTURE_MAG_FILTER);
+	     assert(it!=ALL_FILTERS.end());
+	     return (it->second)(u,v);
 	}
 
 
