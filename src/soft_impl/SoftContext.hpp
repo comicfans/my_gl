@@ -262,8 +262,8 @@ namespace my_gl {
 	 * @param pname
 	 * @param texEnvMode
 	 */
-	virtual void texEnvf(int target/*ignored*/,
-		  int pname/* ignored*/,TexEnvMode texEnvMode);
+	virtual void texEnvf(GLenum target/*ignored*/,
+		  GLenum pname/* ignored*/,GLenum texEnvMode);
 
 	//glBindTexture
 	virtual void bindTexture(GLenum/* ignored*/,Name texture);
@@ -293,13 +293,9 @@ namespace my_gl {
 
 	//glTexParameter
 	virtual void texParameteri(GLenum target/*ignored*/,
-		  TexWrapName wrapName,
-		  TexWrapMode texWrapMode);
+		  GLenum pname,
+		  GLenum value);
 
-	//glTexParameter
-	virtual void texParameteri(GLenum target/*ignored*/,
-		  TexFilterName filterName,
-		  TexFilterMode texFilterMode);
 
 	//glCopyTexImage2D
 	virtual void copyTexImage2D(GLenum /*ignored*/,int level/* ignored*/,

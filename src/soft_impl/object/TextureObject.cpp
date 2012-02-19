@@ -66,10 +66,10 @@ namespace my_gl {
      TextureObject::TextureObject(Name name)
 	  :PixelObject(name)
      {
-	  texParameter(TexWrapName::TEXTURE_WRAP_S,
-		    TexWrapMode::REPEAT);
-	  texParameter(TexWrapName::TEXTURE_WRAP_T,
-		    TexWrapMode::REPEAT);
+	  texParameter(GL_TEXTURE_WRAP_S,
+		    GL_REPEAT);
+	  texParameter(GL_TEXTURE_WRAP_T,
+		    GL_REPEAT);
 
 	  ALL_FILTERS[GL_LINEAR]=
 	       bind(&TextureObject::linear,this,_1,_2);

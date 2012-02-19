@@ -142,26 +142,21 @@ typedef unsigned int GLenum;
 
 #define GL_NEAREST 0x2600
 #define GL_LINEAR 0x2601
-     enum TexFilterMode{NEAREST,LINEAR};
 
 #define GL_TEXTURE_WRAP_S 0x2802
 #define GL_TEXTURE_WRAP_T 0x2803
-     enum TexWrapName{TEXTURE_WRAP_S,TEXTURE_WRAP_T};
 
 #define GL_TEXTURE_MAG_FILTER 0x2800
 #define GL_TEXTURE_MIN_FILTER 0x2801
 
-     enum	TexFilterName{TEXTURE_MAG_FILTER,TEXTURE_MIN_FILTER};
 
 #define GL_CLAMP 0x2900
 #define GL_REPEAT 0x2901
 #define GL_MIRRORED_REPEAT                0x8370
-     enum TexWrapMode{CLAMP,REPEAT,MIRRORED_REPEAT};
 
 #define GL_MODULATE 0x2100
 #define GL_DECAL 0x2101
 #define GL_REPLACE 0x1E01
-     enum TexEnvMode{REPLACE,MODULATE,DECAL};
 
 
 #endif /* end of include guard: ENUM_HPP */

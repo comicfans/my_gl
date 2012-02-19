@@ -39,7 +39,7 @@ namespace my_gl {
      protected:
 	virtual void clipPrimitive
 	     (const PrimitiveIndex& primitiveIndex,
-		  PrimitiveMode catalog) ;
+		  GLenum catalog) ;
 
 
      private:

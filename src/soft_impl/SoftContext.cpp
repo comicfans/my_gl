@@ -174,6 +174,15 @@ namespace my_gl {
 	  setInstance(this);
      }
 
+     template<typename T>
+	  T& SoftContext::getVec4Manager()
+	  { 
+	       GLenum key=T::BIND_STATE;
+	       auto it = _allVec4Manager.find(key);
+	       assert(it!=_allVec4Manager.end());
+	       return static_cast<T&>(*(it->second));}
+
+
      SoftContext::~SoftContext(){}
 
      void SoftContext::flush()
@@ -708,8 +717,8 @@ namespace my_gl {
 	     return _textureObjectManager.isTexture(name);
 	}
 
-	void SoftContext::texEnvf(int target/*ignored*/,
-		  int pname/* ignored*/,TexEnvMode texEnvMode)
+	void SoftContext::texEnvf(GLenum target/*ignored*/,
+		  GLenum pname/* ignored*/,GLenum texEnvMode)
 	{
 	     _textureFunc=TextureFunc(texEnvMode);
 	}
@@ -742,19 +751,11 @@ namespace my_gl {
 
 
 	void SoftContext::texParameteri(GLenum target/*ignored*/,
-		  TexWrapName wrapName,
-		  TexWrapMode texWrapMode)
+		  GLenum pname,
+		  GLenum value)
 	{
 	     _textureObjectManager.
-		  texParameter(target,wrapName,texWrapMode);
-	}
-
-	void SoftContext::texParameteri(GLenum target/*ignored*/,
-		  TexFilterName filterName,
-		  TexFilterMode texFilterMode)
-	{
-	     _textureObjectManager.
-		  texParameter(target,filterName,texFilterMode);
+		  texParameter(target,pname,value);
 	}
 
 	void SoftContext::enableLighting()
@@ -1004,14 +1005,6 @@ namespace my_gl {
 	}
 
 
-
-
-     template<typename T>
-	  T& SoftContext::getVec4Manager()
-	  { 
-	       auto it = _allVec4Manager.find(T::BIND_STATE);
-	       assert(it!=_allVec4Manager.end());
-	       return static_cast<T&>(*(it->second));}
 
      template<typename T>
 	  T& SoftContext::getFrameBuffer()

@@ -30,7 +30,7 @@
 namespace my_gl {
 
 
-     std::unordered_map<GLenum,int> VERTEX_PER_PRIMITIVE=
+     const std::unordered_map<GLenum,int> VERTEX_PER_PRIMITIVE=
 	  boost::assign::map_list_of(GL_POINTS,1)(GL_LINES,2)(GL_TRIANGLES,3)
 	  				(GL_LINE_STRIP,2)(GL_LINE_LOOP,2)(GL_TRIANGLE_STRIP,3)
 						 (GL_TRIANGLE_FAN,3);

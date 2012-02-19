@@ -60,7 +60,12 @@ namespace my_gl {
 		   //,GL_LINES,GL_TRIANGLES
 		   })
 	 {
-	      _rasterizers.replace(int(primitiveMode),
+
+	      auto it =_rasterizers.find(primitiveMode);
+
+	      assert(it!=_rasterizers.end());
+
+	      _rasterizers.replace(it,
 			new OpenCLPointRasterizer(_viewportParameter,
 			     *_interpolatorPtr,
 
@@ -90,11 +95,11 @@ namespace my_gl {
 
      void OpenCLContext::clipPrimitive(
 	       const my_gl::PrimitiveIndex &primitiveIndex, 
-	       my_gl::PrimitiveMode catalog)
+	       GLenum catalog)
      {
 	  //TODO copy & paste from super function ,need refactor
 	  //choose right clipper
-	  Clipper& clipper=_clippers[int(catalog)];
+	  Clipper& clipper=*(_clippers.find(catalog)->second);
 
 	  //reset ClippedPrimitiveGroup
 

@@ -230,8 +230,8 @@ namespace my_gl {
 		  GLenum pname,
 		  GLenum value)=0;
 	
-	virtual void texEnvf(int target/*ignored*/,
-		  int pname/* ignored*/,GLenum texEnvMode)=0;
+	virtual void texEnvf(GLenum target/*ignored*/,
+		  GLenum pname/* ignored*/,GLenum texEnvMode)=0;
 
 	virtual ~Context();
 

@@ -38,7 +38,7 @@ namespace my_gl {
      PrimitiveIndex::PrimitiveIndex
 	  (const GLenum primitiveMode)
 		:_vertexPerPrimitive(
-			  VERTEX_PER_PRIMITIVE[primitiveMode]),
+			  VERTEX_PER_PRIMITIVE.find(primitiveMode)->second),
 		_primitiveMode(primitiveMode),_elementNumber(0)
 	  {
 	       checkPrimitiveMode(primitiveMode);
@@ -51,7 +51,7 @@ namespace my_gl {
 	   const IndexProvider& indexProvider,
 	   const size_t actualVertexNumber)
 	  :_vertexPerPrimitive(
-		    VERTEX_PER_PRIMITIVE[int(primitiveMode)]),
+		    VERTEX_PER_PRIMITIVE.find(primitiveMode)->second),
 	  _primitiveMode(primitiveMode)
      {
 

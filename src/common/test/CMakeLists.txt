@@ -30,7 +30,7 @@ ADD_EXECUTABLE(TestMatrixMul TestMatrixMul.cpp)
 TARGET_LINK_LIBRARIES(TestMatrixMul TestFunction Matrix Vec)
 
 ADD_EXECUTABLE(TestClientArrayVec4Provider TestClientArrayVec4Provider.cpp)
-TARGET_LINK_LIBRARIES(TestClientArrayVec4Provider Vec4Provider)
+TARGET_LINK_LIBRARIES(TestClientArrayVec4Provider Vec4Provider Common)
 
 
 ADD_EXECUTABLE(TestVecNormalize TestVecNormalize.cpp)

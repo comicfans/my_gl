@@ -36,7 +36,7 @@ static const float directLines[][2]={{10,10},{10,200},{200,200},{200,10},{150,5}
 
 void testLines()
 {
-     context.matrixMode(GL_MODEL_VIEW);
+     context.matrixMode(GL_MODELVIEW);
 
      context.loadIdentity();
 
@@ -58,7 +58,7 @@ void testLines()
 void testSpecialLine()
 {
 
-     context.matrixMode(GL_MODEL_VIEW);
+     context.matrixMode(GL_MODELVIEW);
 
      context.loadIdentity();
      context.clear(COLOR_BUFFER_BIT);
@@ -87,7 +87,7 @@ void init()
 
 	context.ortho( 0,width,0,height,-1,1);
 
-	context.matrixMode(GL_MODEL_VIEW);
+	context.matrixMode(GL_MODELVIEW);
 
 	context.loadIdentity();
 
@@ -97,7 +97,7 @@ void init()
 void testTriangles()
 {
 
-     context.matrixMode(GL_MODEL_VIEW);
+     context.matrixMode(GL_MODELVIEW);
 	  
      context.color4f(0.2, 0.8, 0.0, 0.0);
      for (int i=0; i<10; ++i)
@@ -125,7 +125,7 @@ void testTriangles()
 void testLineClip()
 {
 
-     context.matrixMode(GL_MODEL_VIEW);
+     context.matrixMode(GL_MODELVIEW);
 
      context.loadIdentity();
      context.clear(COLOR_BUFFER_BIT);
