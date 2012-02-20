@@ -30,6 +30,7 @@ namespace my_gl {
 	  int32_t y;
 	  uint32_t width;
 	  uint32_t height;
+	  Rectangle(){}
 	  Rectangle(int32_t xSet,int32_t ySet,uint32_t widthSet,uint32_t heightSet)
 		  :x(xSet),y(ySet),width(widthSet),height(heightSet)
 	  {}
