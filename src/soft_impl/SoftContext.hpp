@@ -402,7 +402,7 @@ namespace my_gl {
 
      
 
-	vector<BindStateAndIndex> _activeStreams;
+	unordered_map<GLenum,int> _activeStreams;
 
 
 	/** 

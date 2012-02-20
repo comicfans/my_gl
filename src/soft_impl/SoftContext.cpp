@@ -70,13 +70,39 @@ namespace my_gl {
 	
 
      const SoftContext::BindStateAndIndex VERTEX(GL_VERTEX_ARRAY,0);
-     const SoftContext::BindStateAndIndex COLOR(GL_COLOR_ARRAY,0);
-     const SoftContext::BindStateAndIndex NORMAL(GL_NORMAL_ARRAY,0);
-     const SoftContext::BindStateAndIndex TEXCOORD(GL_TEXTURE_COORD_ARRAY,0);
+     const SoftContext::BindStateAndIndex COLOR(GL_COLOR_ARRAY,1);
+     const SoftContext::BindStateAndIndex NORMAL(GL_NORMAL_ARRAY,2);
+     const SoftContext::BindStateAndIndex TEXCOORD(GL_TEXTURE_COORD_ARRAY,3);
 
      using std::remove;
 
      using boost::extents;
+
+     
+     static void uniqueProcess(unordered_map<GLenum,int>& all,
+		  SoftContext::BindStateAndIndex toProcess,bool add)
+	{
+		  auto pos=all.find(toProcess.first);
+
+		  bool has=(pos!=all.end());
+		  if (add)
+		  {
+		       if (!has)
+		       {
+		       all.insert(toProcess);
+		       }
+		       return;
+		  }
+		  else
+		  {
+		       if (has)
+		       {
+			    all.erase(pos);
+		       }
+		       return;
+		  }
+	}
+
 
      SoftContext::SoftContext(size_t width,size_t height)
 	  :_arrayBufferObjectManager(_objectNameManager),
@@ -99,9 +125,8 @@ namespace my_gl {
 
 	  //init active streams
 	  //if light is not turned on,texture and normal will not transfered
-
-	  _activeStreams.push_back(VERTEX);
-	  _activeStreams.push_back(COLOR);
+	  uniqueProcess(_activeStreams,VERTEX,true);
+	  uniqueProcess(_activeStreams,COLOR,true);
 
 	  _pixelDrawerPtr.reset(new SDLPixelDrawer());
 	  _pixelDrawerPtr->onInit(width,height);
@@ -806,30 +831,7 @@ namespace my_gl {
 	     _groupLightingParam.disable(lightIndex);
 	}
 
-	static void uniqueProcess(vector<pair<GLenum,int>>& all,SoftContext::BindStateAndIndex toProcess,bool add)
-	{
-		  auto pos=find(all.begin(),all.end(),toProcess);
-
-		  bool has=(pos!=all.end());
-		  if (add)
-		  {
-		       if (!has)
-		       {
-		       all.push_back(toProcess);
-		       }
-		       return;
-		  }
-		  else
-		  {
-		       if (has)
-		       {
-			    all.erase(pos);
-		       }
-		       return;
-		  }
-	}
-
-
+	
 
 
 	void SoftContext::lightingStateChange()

@@ -20,8 +20,12 @@
 
 #include <algorithm>
 #include <array>
+#include <unordered_map>
 #include <functional>
 
+#include <boost/assign/list_of.hpp>
+
+#include "common/CheckEnum.hpp"
 #include "pipeline/rasterizer/WinCoord.hpp"
 
 namespace my_gl {
@@ -53,10 +57,12 @@ namespace my_gl {
 
      //enum class DepthFunc{NEVER,ALWAYS,LESS,LEQUAL,
      //	  EQUAL,GREATER,GEQUAL,NOTEQUAL};
-     static const ActualDepthFunc DEPTH_FUNCTIONS[]={never,always,
-	  less<double>(),less_equal<double>(),
-     equal_to<double>(),greater<double>(),
-     greater_equal<double>(),not_equal_to<double>()};
+     static const std::unordered_map<GLenum,ActualDepthFunc> DEPTH_FUNCTIONS=
+	  boost::assign::map_list_of<GLenum,ActualDepthFunc>(GL_NEVER,never)(GL_ALWAYS,always)
+	  (GL_LESS,less<double>())(GL_LEQUAL,less_equal<double>())
+	  (GL_EQUAL,equal_to<double>())(GL_GREATER,greater<double>())
+	  (GL_GEQUAL,greater_equal<double>())(GL_NOTEQUAL,not_equal_to<double>());
+
 
      DepthBuffer::DepthBuffer(size_t width,size_t height)
 	  :_impl(extents[height][width])
@@ -76,6 +82,7 @@ namespace my_gl {
 
      void DepthBuffer::depthFunc(GLenum func)
      {
+	  checkDepthFunc(func);
 	  _func=func;
      }
 
@@ -113,7 +120,9 @@ namespace my_gl {
 
 	  double& originValue=_impl[winCoord.y()][winCoord.x()];
 
-	  auto& testFunc=DEPTH_FUNCTIONS[int(_func)];
+	  auto it=DEPTH_FUNCTIONS.find(_func);
+
+	  auto& testFunc=it->second;
 
 	  if (testFunc(winCoord.z(),originValue))
 	  {

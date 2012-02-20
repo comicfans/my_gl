@@ -25,6 +25,19 @@ namespace my_gl {
 
      using std::find;
 
+     bool checkDepthFunc(GLenum value)
+     {
+	  GLenum validValues[]={GL_NEVER,GL_ALWAYS,GL_EQUAL,
+	       GL_NOTEQUAL,GL_LESS,GL_LEQUAL,GL_GREATER,GL_GEQUAL};
+
+	  int arrayLength=sizeof(validValues)/sizeof(GLenum);
+	  assert(find(validValues,validValues+arrayLength,value)!=validValues+arrayLength
+		    || "wrong data value enum ");
+
+	  return true;
+     }
+
+
      bool checkDataType(GLenum value)
      {
 	  GLenum validValues[]={GL_BYTE,GL_UNSIGNED_BYTE,GL_SHORT,GL_UNSIGNED_SHORT,GL_FIXED,GL_FLOAT};
