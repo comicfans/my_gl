@@ -22,6 +22,7 @@
 #include <algorithm>
 #include <functional>
 
+#include <boost/foreach.hpp>
 // we neeed construct ptr_map mapped_value with many param
 #define BOOST_ASSIGN_MAX_PARAMS 7
 #include <boost/assign/ptr_map_inserter.hpp>
@@ -174,15 +175,15 @@ namespace my_gl {
 
 	  boost::assign::ptr_map_insert<PointRasterizer>(_rasterizers)
 	       (GL_POINTS,
-		std::ref(_viewportParameter),std::ref(*_interpolatorPtr),
-		std::ref(*_fragmentAttributeBufferPtr),
-		std::ref(getFrameBuffer<DepthBuffer>()),std::ref(_depthRange));
+		boost::ref(_viewportParameter),boost::ref(*_interpolatorPtr),
+		boost::ref(*_fragmentAttributeBufferPtr),
+		boost::ref(getFrameBuffer<DepthBuffer>()),boost::ref(_depthRange));
 
 	  boost::assign::ptr_map_insert<SimpleLineRasterizer>(_rasterizers)
 	       (GL_LINES,
-		std::ref(_viewportParameter),std::ref(*_interpolatorPtr),
-		std::ref(*_fragmentAttributeBufferPtr),
-		std::ref(getFrameBuffer<DepthBuffer>()),std::ref(_depthRange));
+		boost::ref(_viewportParameter),boost::ref(*_interpolatorPtr),
+		boost::ref(*_fragmentAttributeBufferPtr),
+		boost::ref(getFrameBuffer<DepthBuffer>()),boost::ref(_depthRange));
 
 	  Rasterizer *pLineRasterizer=_rasterizers.find(GL_LINES)->second;
 
@@ -190,9 +191,9 @@ namespace my_gl {
 	  //its internal LineRasterizer
 	  boost::assign::ptr_map_insert<TriangleRasterizer>(_rasterizers)
 	       (GL_TRIANGLES,
-		std::ref(_viewportParameter),std::ref(*_interpolatorPtr),
-		std::ref(*_fragmentAttributeBufferPtr),
-		std::ref(getFrameBuffer<DepthBuffer>()),std::ref(_depthRange),
+		boost::ref(_viewportParameter),boost::ref(*_interpolatorPtr),
+		boost::ref(*_fragmentAttributeBufferPtr),
+		boost::ref(getFrameBuffer<DepthBuffer>()),boost::ref(_depthRange),
 		static_cast<LineRasterizer*>(pLineRasterizer));
 
 
@@ -526,7 +527,7 @@ namespace my_gl {
 		  _fragmentShaderPtr->setTextureObject
 		       (_textureObjectManager.getActiveTextureObject());
 
-		  for(auto &winCoord:activeFragWinCoords)
+		  BOOST_FOREACH(WinCoord &winCoord,activeFragWinCoords)
 		       {
 			    _fragmentShaderPtr->shade(
 				      (*_fragmentAttributeBufferPtr)(winCoord),
@@ -587,7 +588,7 @@ namespace my_gl {
 		  int thisVertexIndex=
 		       indexProvider.getIndex(vertexCounter);
 
-		  for (auto activeStream:_activeStreams)
+		  BOOST_FOREACH (BindStateAndIndex activeStream,_activeStreams)
 		  {
 		       //only transfer active streams
 		       auto it = _allVec4Manager.find(activeStream.first);
@@ -673,7 +674,7 @@ namespace my_gl {
 		  size_t width,size_t height)
 	{
 	     _viewportParameter=
-		  ViewportParameter{x,y,uint32_t(width),uint32_t(height)};
+		  ViewportParameter(x,y,uint32_t(width),uint32_t(height));
 	}
 
 	void SoftContext::loadIdentity()
