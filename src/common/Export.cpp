@@ -25,7 +25,10 @@
 
 using namespace my_gl;
 
-using std::nearbyint;
+int nearbyint(double value)
+{
+	return value;
+}
 
 #ifdef __cplusplus
 
