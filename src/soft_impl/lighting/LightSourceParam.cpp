@@ -28,15 +28,15 @@ namespace my_gl {
      using std::atan;
      using std::cos;
 
-     static const float PI=4*atan(1);
+     static const float PI=4*(std::atan(1.0));
 
      LightSourceParam::LightSourceParam(bool firstOne)
      {
-	  ambient={0,0,0,1};
-	  diffuse=(firstOne?Vec4{1,1,1,1}:Vec4{0,0,0,1});
-	  specular=(firstOne?Vec4{1,1,1,1}:Vec4{0,0,0,1});
-	  position={1,1,1,0};
-	  spotDirection={0,0,-1,0};//only 3 component used
+	  ambient=Vec4(0,0,0,1);
+	  diffuse=(firstOne?Vec4(1,1,1,1):Vec4(0,0,0,1));
+	  specular=(firstOne?Vec4(1,1,1,1):Vec4(0,0,0,1));
+	  position=Vec4(1,1,1,0);
+	  spotDirection=Vec3(0,0,-1);//only 3 component used
 
 	  spotExponent=0;
 	  spotCutoff=180;
@@ -117,7 +117,7 @@ namespace my_gl {
 	  //vertex-lightPostion direction vector and vertex-eye direction vector
 	  //in OpenGL ES 1.0, only infinite eye position is supported
 	  //so use {0,0,1} as eye direction
-	  halfVector=Vec3(position.values(),3)+Vec3{0,0,1};
+	  halfVector=Vec3(position.values(),3)+Vec3(0,0,1);
 
 	  normalize(halfVector);
 

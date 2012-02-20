@@ -25,10 +25,10 @@ namespace my_gl {
      MaterialParam::MaterialParam()
      {
 	  //OpenGL spec default value
-	  emission={0,0,0,1};
-	  ambient={0.2,0.2,0.2,1};
-	  diffuse={0.8,0.8,0.8,1};
-	  specular={0,0,0,1};
+	  emission=Vec4(0,0,0,1);
+	  ambient=Vec4(0.2,0.2,0.2,1);
+	  diffuse=Vec4(0.8,0.8,0.8,1);
+	  specular=Vec4(0,0,0,1);
 	  shininess=0;
      }
 
