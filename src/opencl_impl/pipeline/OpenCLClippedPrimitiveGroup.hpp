@@ -31,7 +31,7 @@ public:
 
 	OpenCLClippedPrimitiveGroup
 	     (const VertexAttributeBuffer& originalVertexAttribute,
-	      PrimitiveMode primitiveMode); 
+	      GLenum primitiveMode); 
 
 	virtual ~OpenCLClippedPrimitiveGroup ();
 

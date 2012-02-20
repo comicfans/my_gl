@@ -38,7 +38,7 @@ namespace my_gl {
      public:
      	ClippedPrimitiveGroup 
 	     (const VertexAttributeBuffer& originalVertexAttribute,
-	      PrimitiveMode primitiveMode); 
+	      GLenum primitiveMode); 
 
 	ClippedPrimitiveGroup
 	     (const ClippedPrimitiveGroup& rhs);

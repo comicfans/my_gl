@@ -31,7 +31,7 @@ namespace my_gl {
      using std::copy_n;
      class ArrayVec4Provider :public Vec4Provider{
      public:
-	  ArrayVec4Provider(int componentNumber,DataType type,
+	  ArrayVec4Provider(int componentNumber,GLenum type,
 		    size_t stride,bool normalize);
 
      protected:
@@ -39,12 +39,12 @@ namespace my_gl {
 	  Vec4 castRead(const void* pointer,size_t index)
 	       const ;
 
-	  const DataType _dataType;
+	  const GLenum _dataType;
 	  const int _componentNumber;
 	  const size_t _blockSize;
 	  const bool _normalize;
      private:
-	  template<DataType dataType>
+	  template<GLenum dataType>
 	       Vec4 copyToFloats(const void* p)
 	       const ;
      };

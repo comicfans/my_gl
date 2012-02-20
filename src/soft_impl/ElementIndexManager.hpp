@@ -62,8 +62,8 @@ namespace my_gl{
 	  void bindArrayBufferObject(const ArrayBufferObject* toBind);
 
 	  //partial glDrawElements
-	  const ArrayIndexProvider& elements(PrimitiveMode primitiveMode,
-		    size_t count,DataType dataType,const void * indices,
+	  const ArrayIndexProvider& elements(GLenum primitiveMode,
+		    size_t count,GLenum dataType,const void * indices,
 		    size_t actualVertexNumber=INT_MAX);
 
      private:

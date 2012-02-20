@@ -19,7 +19,7 @@
 
 namespace my_gl {
      ClientArrayVec4Provider::ClientArrayVec4Provider 
-	  (const void* pointer,int componentNumber,DataType dataType, 
+	  (const void* pointer,int componentNumber,GLenum dataType, 
 	   size_t stride,bool normalize)
 	  :ArrayVec4Provider(componentNumber,dataType,stride,normalize),
 	   _pointer(pointer)

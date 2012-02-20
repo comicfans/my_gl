@@ -33,31 +33,31 @@ namespace my_gl {
      }
 
      void MaterialParam::materialf
-	  (Face /*ignore*/,LightParamName paramName,float param)
+	  (GLenum /*ignore*/,GLenum paramName,float param)
 	  {
-	       assert(paramName==LightParamName::SHININESS);
+	       assert(paramName==GL_SHININESS);
 
 	       shininess=param;
 	  }
 
      void MaterialParam::materialfv
-	  (Face /*ignore*/,LightParamName paramName,const float* param)
+	  (GLenum /*ignore*/,GLenum paramName,const float* param)
 	  {
 	       switch (paramName)
 	       {
-		    case LightParamName::AMBIENT:
+		    case GL_AMBIENT:
 			 ambient=param;
 			 break;
-		    case LightParamName::DIFFUSE:
+		    case GL_DIFFUSE:
 			 diffuse=param;
 			 break;
-		    case LightParamName::SPECULAR:
+		    case GL_SPECULAR:
 			 specular=param;
 			 break;
-		    case LightParamName::EMISSION:
+		    case GL_EMISSION:
 			 emission=param;
 			 break;
-		    case LightParamName::AMBIENT_AND_DIFFUSE:
+		    case GL_AMBIENT_AND_DIFFUSE:
 			 ambient=diffuse=param;
 			 break;
 		    default:

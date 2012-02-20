@@ -39,7 +39,7 @@ namespace my_gl {
 		     OpenCLFragmentAttributeBuffer& fragmentAttributeBuffer,
 		     OpenCLDepthBuffer& depthBuffer,
 		     DepthRange& depthRange,
-		     PrimitiveMode primitiveMode,
+		     GLenum primitiveMode,
 		     cl::Context& clContext);
 
 	       virtual ~OpenCLPointRasterizer();
@@ -51,7 +51,7 @@ namespace my_gl {
 
 	  protected:
 
-	       const PrimitiveMode _primitiveMode;
+	       const GLenum _primitiveMode;
 	       cl::Context& _CLContext;
 	       cl::CommandQueue _commandQueue;
 	       cl::Kernel _kernel;

@@ -41,7 +41,7 @@ namespace my_gl {
 	PixelObject (Name name);
 
 	void bindImage(size_t width,size_t height,
-		  ImageFormat format,StoreType type,const void *p);
+		  GLenum format,GLenum type,const void *p);
 
 	/** 
 	 * @brief for copyTexImage2D use only,
@@ -56,11 +56,11 @@ namespace my_gl {
 	 * @return 
 	 */
 	void directBindImage(size_t width,size_t height,
-		  ImageFormat internalFormat);
+		  GLenum internalFormat);
 
-	ImageFormat getFormat()const ;
+	GLenum getFormat()const ;
 
-	StoreType getType()const ;
+	GLenum getType()const ;
 
 	size_t width()const;
 
@@ -68,7 +68,7 @@ namespace my_gl {
 
 	void subImage(int xOffset,int yOffset,
 		  size_t width,size_t height,
-		  ImageFormat format,StoreType type,const void *p);
+		  GLenum format,GLenum type,const void *p);
 
 	void directSubImage(int xOffset,int yOffset,
 		  size_t width,const float *p);
@@ -76,8 +76,8 @@ namespace my_gl {
      private:
 	size_t _width;
 	size_t _height;
-	ImageFormat _format;
-	StoreType _type;
+	GLenum _format;
+	GLenum _type;
      };
 	
 } /* my_gl */

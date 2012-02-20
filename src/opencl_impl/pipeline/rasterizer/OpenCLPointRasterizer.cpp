@@ -37,7 +37,7 @@ namespace my_gl {
 		     OpenCLFragmentAttributeBuffer& fragmentAttributeBuffer,
 		     OpenCLDepthBuffer& depthBuffer,
 		     DepthRange& depthRange,
-		     PrimitiveMode primitiveMode,
+		     GLenum primitiveMode,
 		     cl::Context& clContext)
 		    :Rasterizer(viewportParameter,
 			      interpolator,fragmentAttributeBuffer,

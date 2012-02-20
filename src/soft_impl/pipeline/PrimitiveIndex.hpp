@@ -39,13 +39,13 @@ namespace my_gl {
      class PrimitiveIndex:protected vector<uint32_t>{
 	  typedef vector<uint32_t> SuperType;
      public:
-     	PrimitiveIndex (const PrimitiveMode primitiveMode,
+     	PrimitiveIndex (const GLenum primitiveMode,
 		  size_t useVertexNumber,
 		  const IndexProvider& indexProvider,
 		  size_t actualVertexNumber=
 		  numeric_limits<size_t>::max());
 
-	PrimitiveIndex(const PrimitiveMode primitiveMode);
+	PrimitiveIndex(const GLenum primitiveMode);
 
 	PrimitiveIndex(const PrimitiveIndex& rhs);
 
@@ -66,13 +66,13 @@ namespace my_gl {
 	//insert new vertex index
 	void insertNew(size_t newIndex);
 
-	PrimitiveMode primitiveMode()const;
+	GLenum primitiveMode()const;
 
      private:
 
 	const size_t _vertexPerPrimitive;
 
-	const PrimitiveMode _primitiveMode;
+	const GLenum _primitiveMode;
 
 	size_t _elementNumber;
 

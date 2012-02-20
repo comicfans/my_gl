@@ -18,8 +18,10 @@
 
 #include "VertexShader.hpp"
 
-#include "common/Vec.hpp"
+#include <boost/assign/list_of.hpp>
 
+#include "common/Vec.hpp"
+#include "common/CheckEnum.hpp"
 #include "common/Matrix.hpp"
 
 #include "MatrixParam.hpp"
@@ -43,28 +45,32 @@ namespace my_gl {
 	  return _matrixParam.modelViewProjection*inVertex;
      }
 	       
-     void VertexShader::enable(NormalizeNormal normalizeNormal)
+     void VertexShader::enable(GLenum normalizeNormal)
      {
+
+	  checkNormalize(normalizeNormal);
 
 	  switch(normalizeNormal)
 	  {
-	       case NormalizeNormal::NORMALIZE:
+	       case GL_NORMALIZE:
 		    _normalizeNormal=true;
 		    break;
-	       case NormalizeNormal::RESCALE_NORMAL:
+	       case GL_RESCALE_NORMAL:
 		    _rescaleNormal=true;
 		    break;
 	  }
      }
 
-     void VertexShader::disable(NormalizeNormal normalizeNormal)
+     void VertexShader::disable(GLenum normalizeNormal)
      {
+	  checkNormalize(normalizeNormal);
+
 	  switch(normalizeNormal)
 	  {
-	       case NormalizeNormal::NORMALIZE:
+	       case GL_NORMALIZE:
 		    _normalizeNormal=false;
 		    break;
-	       case NormalizeNormal::RESCALE_NORMAL:
+	       case GL_RESCALE_NORMAL:
 		    _rescaleNormal=false;
 		    break;
 	  }
@@ -91,11 +97,12 @@ namespace my_gl {
 	  (const Vec4* inputAttributes,
 	   AttributeGroupRef outputAttributes)
 	  {
+
 	       shade(
-			 inputAttributes[int(BindState::VERTEX)],
-			 inputAttributes[int(BindState::COLOR)],
-			 Vec3(inputAttributes[int(BindState::NORMAL)].values(),3),
-			 inputAttributes[int(BindState::TEXCOORD)],
+			 inputAttributes[0],
+			 inputAttributes[1],
+			 Vec3(inputAttributes[2].values(),3),
+			 inputAttributes[3],
 
 			 outputAttributes[int(
 			      VertexAttributeBuffer::OutIndex::POSITION)],

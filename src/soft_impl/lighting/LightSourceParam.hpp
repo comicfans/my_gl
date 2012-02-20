@@ -45,9 +45,9 @@ namespace my_gl {
 
 	  LightSourceParam(bool firstOne=false);
 
-	  void lightf(LightParamName paramName,float param);
+	  void lightf(GLenum paramName,float param);
 
-	  void lightfv(LightParamName paramName,const float* param,
+	  void lightfv(GLenum paramName,const float* param,
 		    const Matrix4& modelViewMatrix);
 
 	  bool isInfinite()const;

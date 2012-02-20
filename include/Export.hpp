@@ -21,11 +21,14 @@
 #define EXPORT_HPP
 
 #include <cstddef>
+#include "Enum.hpp"
 #ifdef __cplusplus
 
 extern "C"
 {
 
+
+    
 
 typedef unsigned char GLboolean;
 typedef unsigned int GLbitfield;
@@ -45,100 +48,6 @@ typedef void GLvoid;
 typedef ptrdiff_t GLintptr;
 typedef ptrdiff_t GLsizeiptr;
 
-enum GLenum{
-     GL_STATIC_DRAW,
-
-     GL_COLOR_BUFFER_BIT,
-     GL_DEPTH_BUFFER_BIT,
-
-     GL_FRONT,
-     GL_BACK,
-     GL_FRONT_AND_BACK,
-
-     GL_CW,
-     GL_CCW,
-
-     GL_LIGHTING,
-
-     GL_LIGHT0,
-     GL_LIGHT1,
-     GL_LIGHT2,
-     GL_LIGHT3,
-     GL_LIGHT4,
-     GL_LIGHT5,
-     GL_LIGHT6,
-     GL_LIGHT7,
-
-     GL_DECAL,
-     GL_MODULATE,
-     GL_REPLACE,
-
-
-     GL_VERTEX_ARRAY,
-     GL_NORMAL_ARRAY,
-     GL_TEXTURE_COORD_ARRAY,
-     GL_COLOR_ARRAY,
-
-     GL_MODELVIEW,
-     GL_PROJECTION,
-
-     GL_NEAREST,
-     GL_LINEAR,
-
-     GL_CULL_FACE,
-
-     GL_NORMALIZE,
-     GL_RESCALE_NORMAL,
-
-     GL_TEXTURE_2D,
-     GL_TEXTURE,
-     GL_TEXTURE_ENV,
-     GL_TEXTURE_ENV_MODE,
-
-     GL_TEXTURE_WRAP_S,
-     GL_TEXTURE_WRAP_T,
-
-     GL_TEXTURE_MIN_FILTER,
-     GL_MIRRORED_REPEAT,
-     GL_CLAMP,
-     GL_REPEAT,
-     GL_TEXTURE_MAG_FILTER,
-
-     GL_POSITION,
-     GL_AMBIENT,
-     GL_EMISSION,
-     GL_DIFFUSE,
-     GL_AMBIENT_AND_DIFFUSE,
-     GL_SPECULAR,
-     GL_SPOT_DIRECTION,
-     GL_SPOT_EXPONENT,
-     GL_SPOT_CUTOFF,
-     GL_LINEAR_ATTENUATION,
-     GL_CONSTANT_ATTENUATION,
-     GL_SHININESS,
-     GL_LIGHT_MODEL_AMBIENT,
-     GL_QUADRATIC_ATTENUATION,
-
-     GL_RGB,
-     GL_RGBA,
-
-     GL_POINTS,
-     GL_LINES,
-     GL_LINE_STRIP,
-     GL_LINE_LOOP,
-     GL_TRIANGLES,
-     GL_TRIANGLE_STRIP,
-     GL_TRIANGLE_FAN,
-
-     GL_BYTE,
-     GL_SHORT,
-     GL_FLOAT,
-     GL_UNSIGNED_BYTE,
-     GL_UNSIGNED_SHORT,
-
-     GL_ARRAY_BUFFER,
-     GL_ELEMENT_ARRAY_BUFFER
-};
 
   void    glClearColor( GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha );
   void   glClear( GLbitfield mask );

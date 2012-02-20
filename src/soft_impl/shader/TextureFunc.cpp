@@ -83,13 +83,13 @@ namespace my_gl {
      };
 
      TextureFunc::TextureFunc 
-	  (TexEnvMode texEnvMode)
+	  (GLenum texEnvMode)
 	  :_texEnvMode(texEnvMode)
 	  {
 	  }
 
      Vec4 TextureFunc::operator()
-	  (ImageFormat textureFormat,
+	  (GLenum textureFormat,
 	   const Vec4& fragmentColor,const Vec4& textureColor)const
 	  {
 	       return ALL_FUNC[int(textureFormat)][int(_texEnvMode)]

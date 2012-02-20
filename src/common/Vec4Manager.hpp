@@ -35,13 +35,13 @@ namespace my_gl {
      class Vec4Manager :public Vec4Provider{
      public:
 
-	  Vec4Manager(BindState bindState) ;
+	  Vec4Manager(GLenum bindState) ;
 
 	  virtual ~Vec4Manager();
 
 	  void bindArrayBufferObject(const ArrayBufferObject* toBind);
 
-	  BindState getBindState()const ;
+	  GLenum getBindState()const ;
 
 	  void enableVertexArray(bool value);
 
@@ -54,7 +54,7 @@ namespace my_gl {
 	  virtual void clientStateChangeCallback(bool value);
 
 	  void vertexArrayChange(int componentSize,
-		    DataType type,size_t stride,const void* pointer,
+		    GLenum type,size_t stride,const void* pointer,
 		    bool normalize=false);
 
 	  unique_ptr<Vec4Provider> _pImpl;
@@ -63,7 +63,7 @@ namespace my_gl {
 
 	  const ArrayBufferObject *_bindedArrayBufferObject;
 
-	  const BindState _bindState;
+	  const GLenum _bindState;
 
 	  bool _vertexArrayEnabled;
 

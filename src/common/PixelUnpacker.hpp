@@ -49,7 +49,7 @@ namespace my_gl {
 	   */
      	PixelUnpacker (const void * source,float* dest,
 		  size_t width,size_t height,
-		  ImageFormat format,StoreType type,
+		  GLenum format,GLenum type,
 		  size_t jumpBlocks=0);
 
 	/** 

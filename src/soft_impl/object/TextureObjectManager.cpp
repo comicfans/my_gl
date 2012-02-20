@@ -68,7 +68,7 @@ namespace my_gl {
 	     }
 
 	void TextureObjectManager::bindTexture
-	     (TexTarget/* ignored*/,Name name)
+	     (GLenum/* ignored*/,Name name)
 	{
 	     auto pos=_textureObjects.find(name);
 	     assert(pos!=_textureObjects.end());
@@ -100,7 +100,7 @@ namespace my_gl {
 		       {
 			    if (_activeTextureObject==pos->second.get())
 			    {
-				 bindTexture(TexTarget::TEXTURE_2D,0);
+				 bindTexture(GL_TEXTURE_2D,0);
 			    }
 			    _textureObjects.erase(pos);
 			    _objectNameManager.recycleName(name);
@@ -110,11 +110,11 @@ namespace my_gl {
 	}
 
 	void TextureObjectManager::texImage2D
-	     (TexTarget/*ignored*/,int level/* ignored*/
+	     (GLenum/*ignored*/,int level/* ignored*/
 		  ,int internalFormat/*ignored*/,size_t width,
 		  //OpenGL ES 1.0 border must be 0
 		  size_t height,int border/* ignored */,
-		  ImageFormat imageFormat,StoreType storeType,
+		  GLenum imageFormat,GLenum storeType,
 		  const void *texels)
 	     {
 		  assert(_activeTextureObject);
@@ -125,12 +125,12 @@ namespace my_gl {
 	     }
 
 	void TextureObjectManager::texSubImage2D
-	     (TexTarget/*ignored*/,
+	     (GLenum/*ignored*/,
 		  int level/* ignored*/,
 		  int xoffset,int yoffset,
 		  size_t width,size_t height,
-		  ImageFormat imageFormat,
-		  StoreType storeType,
+		  GLenum imageFormat,
+		  GLenum storeType,
 		  const void *texels)
 	     {
 		  assert(_activeTextureObject);
@@ -144,23 +144,14 @@ namespace my_gl {
 	     }
 
 	void TextureObjectManager::
-	     texParameter(TexTarget target/*ignored*/,
-		  TexWrapName wrapName,
-		  TexWrapMode texWrapMode)
+	     texParameter(GLenum target/*ignored*/,
+		  GLenum wrapName,
+		  GLenum texWrapMode)
 	{
 	     getActiveTextureObject()->
 		  texParameter(wrapName,texWrapMode);
 	}
 
-	void TextureObjectManager::
-	     texParameter(TexTarget target/*ignored*/,
-		  TexFilterName filterName,
-		  TexFilterMode texFilterMode)
-	{
-	     getActiveTextureObject()->
-		  texParameter(filterName,texFilterMode);
-	}
-     
 
      TextureObject* TextureObjectManager::
 	  getActiveTextureObject()

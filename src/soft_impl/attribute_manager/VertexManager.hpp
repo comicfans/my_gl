@@ -30,9 +30,9 @@ namespace my_gl {
      	VertexManager ();
 
 	//glVertexPointer
-	void vertexPointer(int componentSize,DataType type,size_t stride,const void* pointer);
+	void vertexPointer(int componentSize,GLenum type,size_t stride,const void* pointer);
 
-	static const BindState BIND_STATE=BindState::VERTEX;
+	static const GLenum BIND_STATE=GL_VERTEX_ARRAY;
 
      };
 	

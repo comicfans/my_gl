@@ -38,7 +38,7 @@ int main(int argc, const char *argv[])
 	  
      }
 
-     ClippedPrimitiveGroup clipped(original,PrimitiveMode::POINTS);
+     ClippedPrimitiveGroup clipped(original,GL_POINTS);
 
      assert(clipped.elementNumber()==0);
 

@@ -22,7 +22,7 @@ namespace my_gl {
 
      OpenCLClippedPrimitiveGroup::OpenCLClippedPrimitiveGroup
 	     (const VertexAttributeBuffer& originalVertexAttribute,
-	      PrimitiveMode primitiveMode)
+	      GLenum primitiveMode)
 	     :ClippedPrimitiveGroup(originalVertexAttribute,primitiveMode){}
 
 

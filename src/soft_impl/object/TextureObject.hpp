@@ -21,6 +21,7 @@
 #define TEXTURE_OBJECT_HPP
 
 #include <functional>
+#include <unordered_map>
 
 #include "PixelObject.hpp"
 #include "common/Vec.hpp"
@@ -29,6 +30,7 @@
 namespace my_gl {
 
      using std::function;
+     using std::unordered_map;
 
      class TextureObject :public PixelObject{
      public:
@@ -37,8 +39,6 @@ namespace my_gl {
 
 	Vec4 operator()(float s,float t)const;
 
-	void texParameter
-	     (TexWrapName warpName,TexWrapMode warpMode);
 
 
 	/** 
@@ -62,7 +62,7 @@ namespace my_gl {
 	 * @return 
 	 */
 	void texParameter
-	     (TexFilterName filterName,TexFilterMode filterMode);
+	     (GLenum filterName,GLenum filterMode);
 
 	typedef function<float(float,float)> Wrapper;
 
@@ -71,15 +71,15 @@ namespace my_gl {
 
 	typedef function<Vec4(float ,float )> Filter;
 
-	TexWrapMode _stWrapMode[2];
+	unordered_map<GLenum,GLenum>_stWrapMode;
 
-	Wrapper _stWrapper[2];
+	unordered_map<GLenum,Wrapper> _stWrapper;
 
-	TexFilterMode _magMinFilterMode[2];
+	unordered_map<GLenum,GLenum> _magMinFilterMode;
 
-	Filter _magMinFilter[2];
+	unordered_map<GLenum,Filter> _magMinFilter;
 
-	Filter ALL_FILTERS[2];
+	unordered_map<GLenum,Filter> ALL_FILTERS;
 
 	Vec4 nearest(float u,float v)const;
 

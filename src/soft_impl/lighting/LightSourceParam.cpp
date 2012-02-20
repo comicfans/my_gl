@@ -49,22 +49,22 @@ namespace my_gl {
 
      }
 
-     void LightSourceParam::lightf(LightParamName paramName,float param)
+     void LightSourceParam::lightf(GLenum paramName,float param)
      {
 	  switch (paramName)
 	  {
-	       case LightParamName::SPOT_CUTOFF:
+	       case GL_SPOT_CUTOFF:
 		    spotCutoff=param;
 		    break;
-	       case LightParamName::SPOT_EXPONENT:
+	       case GL_SPOT_EXPONENT:
 		    spotExponent=param;
-	       case LightParamName::CONSTANT_ATTENUATION:
+	       case GL_CONSTANT_ATTENUATION:
 		    constantAttenuation=param;
 		    break;
-	       case LightParamName::LINEAR_ATTENUATION:
+	       case GL_LINEAR_ATTENUATION:
 		    linearAttenuation=param;
 		    break;
-	       case LightParamName::QUADRATIC_ATTENUATION:
+	       case GL_QUADRATIC_ATTENUATION:
 		    quadraticAttenuation=param;
 		    break;
 
@@ -76,23 +76,23 @@ namespace my_gl {
 
      }
 
-     void LightSourceParam::lightfv(LightParamName paramName,
+     void LightSourceParam::lightfv(GLenum paramName,
 	       const float* param,const Matrix4& modelViewMatrix)
      {
 	  switch (paramName)
 	  {
-	       case LightParamName::AMBIENT:
+	       case GL_AMBIENT:
 		    ambient=param;
 		    break;
-	       case LightParamName::DIFFUSE:
+	       case GL_DIFFUSE:
 		    diffuse=param;
-	       case LightParamName::SPECULAR:
+	       case GL_SPECULAR:
 		    specular=param;
 		    break;
-	       case LightParamName::POSITION:
+	       case GL_POSITION:
 		    position=modelViewMatrix*Vec4(param);
 		    break;
-	       case LightParamName::SPOT_DIRECTION:
+	       case GL_SPOT_DIRECTION:
 		    {
 
 		    Matrix3 mat3=upperLeft(modelViewMatrix)
