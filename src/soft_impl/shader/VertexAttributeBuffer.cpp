@@ -29,7 +29,7 @@ namespace my_gl {
      }
 
 	 VertexAttributeBuffer::VertexAttributeBuffer(const VertexAttributeBuffer& rhs)
-		 :SuperType(static_cast<SuperType&>(rhs))
+		 :SuperType(static_cast<const SuperType&>(rhs))
 	 {}
 
      size_t VertexAttributeBuffer::elementNumber()const
