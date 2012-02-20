@@ -30,37 +30,36 @@ namespace my_gl {
 	  SDL_Quit();
      }
 
-     template<int bpp>
-	  void setPixel(Uint8 *finalPixel,Uint32 toSet);
 
-     template<>
-	  void setPixel<1>(Uint8 *finalPixel,Uint32 toSet)
+	  void setPixelBpp8(Uint8 *finalPixel,Uint32 toSet)
 	  {
 	       *finalPixel=toSet;
 	  }
-     template<>
-	  void setPixel<2>(Uint8 *finalPixel,Uint32 toSet)
+  
+	  void setPixelBpp16(Uint8 *finalPixel,Uint32 toSet)
 	  {
 	       *(Uint16*)finalPixel = toSet;
 	  }
-     template<>
-	  void setPixel<4>(Uint8 *finalPixel,Uint32 toSet)
+     
+	  void setPixelBpp32(Uint8 *finalPixel,Uint32 toSet)
 	  {
 	       *(Uint32*)finalPixel = toSet;
 	  }
 
-     template<int bpp,bool litteEndian>
-	  void setPixel(Uint8 *finalPixel,Uint32 toSet);
+  
+	  template<bool littleEndia>
+	  void setPixelBpp24(Uint8 *finalPixel,Uint32 toSet);
 
-     template<>
-	  void setPixel<3,true>(Uint8 *finalPixel,Uint32 toSet)
+	  template<>
+	  void setPixelBpp24<true>(Uint8 *finalPixel,Uint32 toSet)
 	  {
 	       finalPixel[0] = toSet & 0xff;
 	       finalPixel[1] = (toSet>> 8) & 0xff;
 	       finalPixel[2] = (toSet>> 16) & 0xff;
 	  }
+
      template<>
-	  void setPixel<3,false>(Uint8 *finalPixel,Uint32 toSet)
+	  void setPixelBpp24<false>(Uint8 *finalPixel,Uint32 toSet)
 	  {
 	       finalPixel[0] = (toSet>> 16) & 0xff;
 	       finalPixel[1] = (toSet>> 8) & 0xff;
@@ -86,22 +85,22 @@ namespace my_gl {
 	  {
 	       case 1:
 		    {
-			 _setPixelFunc=setPixel<1>;
+			 _setPixelFunc=setPixelBpp8;
 			 break;
 		    }
 	       case 2:
 		    {
-			 _setPixelFunc=setPixel<2>;
+			 _setPixelFunc=setPixelBpp16;
 			 break;
 		    }
 	       case 3:
 		    {
-			 _setPixelFunc=setPixel<3,SDL_BYTEORDER==SDL_LIL_ENDIAN>;
+			 _setPixelFunc=setPixelBpp24<SDL_BYTEORDER==SDL_LIL_ENDIAN>;
 			 break;
 		    }
 	       case 4:
 		    {
-			 _setPixelFunc=setPixel<4>;
+			 _setPixelFunc=setPixelBpp32;
 			 break;
 		    }
 	       default:
