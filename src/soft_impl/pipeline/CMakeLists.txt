@@ -10,7 +10,7 @@ ADD_LIBRARY(ClippedPrimitiveGroup ClippedPrimitiveGroup.cpp)
 
 ADD_LIBRARY(FrameBuffer FrameBuffer.cpp ColorBuffer.cpp DepthBuffer.cpp)
 
-ADD_LIBRARY(Pipeline)
+ADD_LIBRARY(Pipeline DummyPipeline.cpp)
 
 TARGET_LINK_LIBRARIES(PrimitiveIndex IndexProvider Common)
 
