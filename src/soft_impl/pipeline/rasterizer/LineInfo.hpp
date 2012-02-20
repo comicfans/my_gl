@@ -33,7 +33,7 @@ namespace my_gl {
 	   */
      struct LineInfo {
 
-	  enum class DimAxis{X,Y};
+	  enum DimAxis{X,Y};
 
 	  /** 
 	   * @brief construct LineInfo from two coord

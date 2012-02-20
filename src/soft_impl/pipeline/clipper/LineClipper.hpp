@@ -46,7 +46,7 @@ namespace my_gl {
 
 	static bool onlyPoint(const ClipPercent& clipResult);
      
-	enum class ClipDim{X,Y,Z};
+	enum ClipDim{X,Y,Z};
 
 	static size_t insertInterpolatedAttributes
 	     (const ConstAttributeGroupRef& point1Attributes,
