@@ -47,8 +47,8 @@ namespace my_gl {
 
 	       _rawStrings.push_back(oneLine);
 
-	       _clSources.emplace_back
-		    (oneLine.c_str(),oneLine.length());
+	       _clSources.push_back
+		    (std::make_pair(oneLine.c_str(),oneLine.length()));
 	  }
 
 
