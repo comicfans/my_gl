@@ -44,7 +44,9 @@ namespace my_gl {
 	       static float normalize(underlineType);
 	  };
 
-     const int DATA_TYPE_UNDERLINE_SIZE[]={1,1,2,2,4,4};
+     const std::unordered_map<GLenum,int> DATA_TYPE_UNDERLINE_SIZE=
+	  boost::assign::map_list_of(GL_BYTE,1)(GL_UNSIGNED_BYTE,1)
+	  (GL_SHORT,2)(GL_UNSIGNED_SHORT,2)(GL_FIXED,4)(GL_FLOAT,4);
 
      template<>
 	  struct DataTypeTraits<GL_BYTE>

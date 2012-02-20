@@ -30,8 +30,14 @@ namespace my_gl {
      {
 	  checkDataType(type);
 
+	  auto it=DATA_TYPE_UNDERLINE_SIZE.find(type);
+
+	  assert(it!=DATA_TYPE_UNDERLINE_SIZE.end());
+
+	  int underlineSize=it->second;
+
 	  return stride? stride :
-	  DATA_TYPE_UNDERLINE_SIZE[type]*componentNumber;
+	  underlineSize*componentNumber;
      }
 
      ArrayVec4Provider::ArrayVec4Provider

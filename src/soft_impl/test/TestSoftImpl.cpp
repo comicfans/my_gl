@@ -79,7 +79,7 @@ void init()
 {
 	context.viewport(0,0,width,height);
 
-	context.enableClientState(BindState::VERTEX);
+	context.enableClientState(GL_VERTEX_ARRAY);
 
 	context.matrixMode(GL_PROJECTION);
 
