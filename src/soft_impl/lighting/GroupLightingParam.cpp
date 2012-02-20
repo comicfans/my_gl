@@ -20,6 +20,7 @@
 
 #include <algorithm>
 #include <cassert>
+#include <boost/foreach.hpp>
 #include "common/CheckEnum.hpp"
 
 using std::remove;
@@ -119,7 +120,7 @@ namespace my_gl {
 	       lightModelProduct.sceneColor=material.emission+
 		    componentMul(material.ambient,lightModel.ambient);
 
-	       for(auto i:_activeIndices)
+	       BOOST_FOREACH(int i,_activeIndices)
 	       {
 		    //Acm * Acli
 		    _allLightProducts[i].ambient=componentMul
