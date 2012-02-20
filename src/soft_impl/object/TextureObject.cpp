@@ -116,7 +116,7 @@ namespace my_gl {
 	     float v=(tWrapperIt->second)(t*height()-HALF_PIXEL,height()-HALF_PIXEL);
 
 	     //TODO currently use MAG_FILTER as filter
-#warning right here?
+//#warning right here?
 	     auto it=ALL_FILTERS.find(GL_TEXTURE_MAG_FILTER);
 	     assert(it!=ALL_FILTERS.end());
 	     return (it->second)(u,v);
