@@ -5,14 +5,10 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 
      
 IF(CMAKE_COMPILER_IS_GNUCXX)
-     SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x -Wall /clr")
+     SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x -Wall")
      IF(${CMAKE_BUILD_TYPE} MATCHES Debug)
 	  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pg -fprofile-arcs -ftest-coverage")
      ENDIF()
-ELSEIF(MSVC)
-     SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /clr")
-     STRING(REGEX REPLACE "/EHs[c]" "" CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
-     MESSAGE("replace msvc cxx flags to ${CMAKE_CXX_FLAGS}, for common language runtime support" )
 ENDIF()
 
 
