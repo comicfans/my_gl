@@ -26,7 +26,7 @@ namespace my_gl {
 
      class TextureObject;
 
-     class MatrixParam;
+     struct MatrixParam;
 
      class FragmentShader {
      public:
