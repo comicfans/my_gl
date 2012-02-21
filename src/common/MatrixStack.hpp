@@ -58,6 +58,5 @@ namespace my_gl {
 	
 } /* my */
 
-extern template class std::stack<my_gl::Matrix4>;
 
 #endif /* end of include guard: MATRIX_STACK_HPP */

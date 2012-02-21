@@ -96,8 +96,6 @@ namespace my_gl {
 
      bool isInfinit(const Vec4& vec4);
 
-     extern template struct VecBase<3>;
-     extern template struct VecBase<4>;
 	
 } /* my_gl */
 

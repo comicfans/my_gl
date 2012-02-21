@@ -92,10 +92,6 @@ namespace my_gl {
      typedef MatrixBase<2> Matrix2;
 
 
-     extern template class MatrixBase<3>;
-     extern template class MatrixBase<4>;
-     extern template class MatrixBase<2>;
-
      /** 
       * @brief return upper-left 3x3 matrix of matrix4
       * 

@@ -390,9 +390,9 @@ namespace my_gl {
 		   return ret;
 	      }
 
-	extern template class MatrixBase<2>;
-	 extern template class MatrixBase<3>;
-	 extern template class MatrixBase<4>;
+	 template class MatrixBase<2>;
+	  template class MatrixBase<3>;
+	  template class MatrixBase<4>;
 
 	 template void inplaceMultiVec(const MatrixBase<4>& lhs,float *pointer) ;
 	 template void inplaceMultiVec(const MatrixBase<3>& lhs,float *pointer) ;

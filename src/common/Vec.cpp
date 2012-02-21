@@ -22,6 +22,7 @@
 #include <cmath>
 #include <algorithm>
 #include <functional>
+#include <boost/foreach.hpp>
 
 using std::fill_n;
 using std::copy_n;
@@ -151,7 +152,7 @@ namespace my_gl {
      template<size_t L>
      void VecBase<L>::operator*=(float scalar)
      {
-	  for(float& component:_values)
+	  BOOST_FOREACH(float& component,_values)
 	  {
 	       component*=scalar;
 	  }
@@ -170,7 +171,7 @@ namespace my_gl {
      {
 	  VecBase<L> ret(*this);
 
-	  for(float& component:ret._values)
+	  BOOST_FOREACH(float& component,ret._values)
 	  {
 	       component=-component;
 	  }
@@ -256,10 +257,9 @@ namespace my_gl {
 
 
 
-     extern template struct VecBase<3>;
-     extern template struct VecBase<2>;
-
-extern     template struct VecBase<4>;
+ template struct VecBase<3>;
+ template struct VecBase<2>;
+  template struct VecBase<4>;
 	
 
      //--------------------template instantiation//
