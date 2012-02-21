@@ -30,7 +30,15 @@
 #include "soft_impl/DepthRange.hpp"
 
 namespace my_gl {
-
+	  struct WidthHeight{
+	       uint32_t width;
+	       uint32_t height;
+		   WidthHeight(uint32_t widthSet,uint32_t heightSet)
+		   {
+			   width=widthSet;
+			   height=heightSet;
+		   }
+	  };
      OpenCLPointRasterizer::OpenCLPointRasterizer
 		    (ViewportParameter& viewportParameter,
 		     Interpolator& interpolator,
@@ -99,10 +107,7 @@ namespace my_gl {
 	  //bind widthHeight
 
 
-	  struct {
-	       uint32_t width;
-	       uint32_t height;
-	  } widthHeight{uint32_t(depthBuffer.width()),uint32_t(depthBuffer.height())};
+    WidthHeight widthHeight(uint32_t(depthBuffer.width()),uint32_t(depthBuffer.height()));
 
 	  _kernel.setArg(idx++,widthHeight);
 
@@ -137,19 +142,26 @@ namespace my_gl {
 	  _commandQueue.finish();
 	  
      }
+  struct  FloatDepthRange
+	  {
+	       float nearValue;
+	       float farValue;
+	       float diff;
+		   FloatDepthRange(float n,float f,float d)
+		   {
+			   nearValue=n;
+			   farValue=f;
+			   diff=d;
+		   }
+	  };
 
      int OpenCLPointRasterizer::bindToKernel(cl::Kernel kernel,int idx)
      {
 
 	  kernel.setArg(idx++,ViewportParameter(_viewportParameter));
 
-	  struct 
-	  {
-	       float nearValue;
-	       float farValue;
-	       float diff;
-	  } floatDepthRange{(float)_depthRange.nearValue,
-	       (float)_depthRange.farValue,(float)_depthRange.diff};
+	 FloatDepthRange floatDepthRange((_depthRange.nearValue),
+	       (float)_depthRange.farValue,(float)_depthRange.diff);
 
 	  kernel.setArg(idx++,floatDepthRange);
 
