@@ -69,18 +69,30 @@
 namespace my_gl {
 
 	
+	
+	struct STATIC_INIT{
+     const SoftContext::BindStateAndIndex VERTEX;
+     const SoftContext::BindStateAndIndex COLOR;
+     const SoftContext::BindStateAndIndex NORMAL;
+     const SoftContext::BindStateAndIndex TEXCOORD;
+	 STATIC_INIT()
+		 :
+	VERTEX(GL_VERTEX_ARRAY,0),
+    COLOR(GL_COLOR_ARRAY,1),
+    NORMAL(GL_NORMAL_ARRAY,2),
+    TEXCOORD(GL_TEXTURE_COORD_ARRAY,3)
+	 {
+	}
+	};
 
-     const SoftContext::BindStateAndIndex VERTEX(GL_VERTEX_ARRAY,0);
-     const SoftContext::BindStateAndIndex COLOR(GL_COLOR_ARRAY,1);
-     const SoftContext::BindStateAndIndex NORMAL(GL_NORMAL_ARRAY,2);
-     const SoftContext::BindStateAndIndex TEXCOORD(GL_TEXTURE_COORD_ARRAY,3);
+
 
      using std::remove;
 
      using boost::extents;
 
      
-     static void uniqueProcess(unordered_map<GLenum,int>& all,
+     static void uniqueProcess(boost::unordered_map<GLenum,int>& all,
 		  SoftContext::BindStateAndIndex toProcess,bool add)
 	{
 		  auto pos=all.find(toProcess.first);
@@ -110,6 +122,8 @@ namespace my_gl {
 	  _textureObjectManager(_objectNameManager)
      {
 
+		 static STATIC_INIT initStatic;
+
 	  _height=height;
 	  _width=width;
 
@@ -126,8 +140,8 @@ namespace my_gl {
 
 	  //init active streams
 	  //if light is not turned on,texture and normal will not transfered
-	  uniqueProcess(_activeStreams,VERTEX,true);
-	  uniqueProcess(_activeStreams,COLOR,true);
+	  uniqueProcess(_activeStreams,initStatic.VERTEX,true);
+	  uniqueProcess(_activeStreams,initStatic.COLOR,true);
 
 	  _pixelDrawerPtr.reset(new SDLPixelDrawer());
 	  _pixelDrawerPtr->onInit(width,height);
@@ -838,11 +852,13 @@ namespace my_gl {
 	void SoftContext::lightingStateChange()
 	{
 
+		static STATIC_INIT initStatic;
+
 	     //enable NORMAL if lighting is enabled
 	     //remove if disabled
-	     uniqueProcess(_activeStreams,NORMAL,_lightingEnabled);
+	     uniqueProcess(_activeStreams,initStatic.NORMAL,_lightingEnabled);
 	     //when lighting is enabled, color is decided by lighting param
-	     uniqueProcess(_activeStreams,COLOR,!_lightingEnabled);
+	     uniqueProcess(_activeStreams,initStatic.COLOR,!_lightingEnabled);
 
 
 	     unique_ptr<VertexShader> finalPtr;
@@ -879,10 +895,10 @@ namespace my_gl {
 
 	void SoftContext::textureStateChange()
 	{
-
+		static STATIC_INIT initStatic;
 	     //enable TEXCOORD if texture is enabled
 	     //remove if disable
-	     uniqueProcess(_activeStreams,TEXCOORD,_textureEnabled);
+	     uniqueProcess(_activeStreams,initStatic.TEXCOORD,_textureEnabled);
 
 	     if (_textureEnabled){
 

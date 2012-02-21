@@ -21,7 +21,7 @@
 #define SOFT_CONTEXT_HPP
 
 #include <memory>
-#include <unordered_map>
+#include <boost/unordered/unordered_map.hpp>
 #include <vector>
 
 #include <boost/ptr_container/ptr_unordered_map.hpp>
@@ -45,7 +45,7 @@
 namespace my_gl {
 
      using std::unique_ptr;
-     using std::unordered_map;
+
      using std::vector;
 
      using boost::ptr_unordered_map;
@@ -402,7 +402,7 @@ namespace my_gl {
 
      
 
-	unordered_map<GLenum,int> _activeStreams;
+	boost::unordered_map<GLenum,int> _activeStreams;
 
 
 	/** 
