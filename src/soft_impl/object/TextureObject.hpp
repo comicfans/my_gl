@@ -23,6 +23,8 @@
 #include <functional>
 #include <unordered_map>
 
+#include <boost/unordered/unordered_map.hpp>
+
 #include "PixelObject.hpp"
 #include "common/Vec.hpp"
 
@@ -86,6 +88,7 @@ namespace my_gl {
 	Vec4 linear(float u,float v)const;
 
 	Vec4 getVec(size_t u,size_t v)const;
+
 
      };
 	

@@ -60,8 +60,8 @@ namespace my_gl {
 	       mirrorPart;
      }
 
-     static unordered_map<GLenum,TextureObject::Wrapper>
-	  WRAPPERS=boost::assign::map_list_of
+     const boost::unordered_map<GLenum,TextureObject::Wrapper>
+	  WRAPPERS=boost::assign::map_list_of<GLenum,TextureObject::Wrapper>
 	  (GL_CLAMP,clamp)(GL_REPEAT,repeat)(GL_MIRRORED_REPEAT,mirrorRepeat);
 
      TextureObject::TextureObject(Name name)
@@ -90,13 +90,25 @@ namespace my_gl {
      void TextureObject::texParameter
 	  (GLenum pname,GLenum value)
      {
+
+     static boost::unordered_map<GLenum,TextureObject::Wrapper>
+	  WRAPPERS=boost::assign::map_list_of<GLenum,TextureObject::Wrapper>
+	  (GL_CLAMP,clamp)(GL_REPEAT,repeat)(GL_MIRRORED_REPEAT,mirrorRepeat);
 	  if(pname==GL_TEXTURE_WRAP_S || pname==GL_TEXTURE_WRAP_T)
 	  {
+		 
+
 	       _stWrapMode[pname]=value;
-	       _stWrapper[pname]=WRAPPERS[value];
+
+		   auto it=WRAPPERS.find(value);
+
+		   assert((it!=WRAPPERS.end()));
+
+	       _stWrapper[pname]=it->second;
 	  }
 	  else
 	  {
+		  assert(ALL_FILTERS.find(value)!=ALL_FILTERS.end());
 	       _magMinFilter[pname]=ALL_FILTERS[value];
 	  }
      }
