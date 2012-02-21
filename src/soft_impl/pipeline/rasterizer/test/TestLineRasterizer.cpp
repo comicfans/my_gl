@@ -50,7 +50,7 @@ DepthBuffer depthBuffer(width,height);
 
 DepthRange depthRange;
 
-ViewportParameter parameter{0,0,width,height};
+ViewportParameter parameter(0,0,width,height);
 
 ColorBuffer frameBuffer(width,height);
 
@@ -71,7 +71,7 @@ class TestSimpleLineRasterizer:public  SimpleLineRasterizer
 		    int randX=rand()%width,
 			randY=rand()%height;
 
-		    return {randX,randY};
+		    return WinCoord(randX,randY);
 	  }
 
 	  static void writePixel(const WinCoord& winCoord,
