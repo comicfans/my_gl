@@ -22,7 +22,7 @@
 #include <array>
 #include <cassert>
 
-#include <SDL/SDL.h>
+#include <SDL.h>
 
 #include "opencl_impl/CLSource.hpp"
 #include "soft_impl/pipeline/ColorBuffer.hpp"
