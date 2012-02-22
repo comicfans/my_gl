@@ -3,10 +3,6 @@ INCLUDE_DIRECTORIES(../)
 
 SUBDIRS(clipper rasterizer interpolator index_provider test)
 
-IF(MSVC)
-     ADD_DEFINITIONS(-DNOMINMAX)
-ENDIF(MSVC)
-
 ADD_LIBRARY(PrimitiveIndex PrimitiveIndex.cpp)
 
 ADD_LIBRARY(ClippedPrimitiveGroup ClippedPrimitiveGroup.cpp)
