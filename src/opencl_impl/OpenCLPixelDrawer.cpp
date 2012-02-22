@@ -75,7 +75,10 @@ namespace my_gl {
 
 	  SDLPixelDrawer::onInit(width, height);
 
-	  std::array<size_t,3> sizeList{height,width,4};
+	  std::array<size_t,3> sizeList;
+	  sizeList[0]=height;
+	  sizeList[1]=width;
+	  sizeList[2]=4;
 	  _outputUint32Buffer.resize(sizeList);
 
 	  _outputCLBuffer=cl::Buffer(_openCLContext,

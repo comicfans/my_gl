@@ -18,7 +18,11 @@
 
 #include "OpenCLContext.hpp"
 
+#include<boost/foreach.hpp>
+
 #include <CL/cl.hpp>
+
+
 
 #include "soft_impl/pipeline/clipper/Clipper.hpp"
 
@@ -55,10 +59,12 @@ namespace my_gl {
 
 	 _pixelDrawerPtr->onInit(width,height);
 
+	 GLenum replaceMode[]={GL_POINTS
+		 //,GL_LINES,GL_TRIANGLES
+	 };
+
 	 //set rasterizer
-	 for(auto primitiveMode : {GL_POINTS
-		   //,GL_LINES,GL_TRIANGLES
-		   })
+	 BOOST_FOREACH(auto primitiveMode , replaceMode)
 	 {
 
 	      auto it =_rasterizers.find(primitiveMode);
