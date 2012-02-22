@@ -22,6 +22,7 @@
 
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
+#include <boost/foreach.hpp>
 
 using boost::filesystem::ifstream;
 
@@ -39,17 +40,25 @@ namespace my_gl {
 
 	  assert(clFile || "no opencl file loaded");
 
-	  std::string oneLine;
 
 	  while (!clFile.eof())
 	  {
+	  
+		  std::string oneLine;
+
 	       std::getline(clFile,oneLine);
+
+
 
 	       _rawStrings.push_back(oneLine);
 
-	       _clSources.push_back
-		    (std::make_pair(oneLine.c_str(),oneLine.length()));
 	  }
+
+	  BOOST_FOREACH(std::string& str, _rawStrings)
+	  {
+		  _clSources.push_back(std::make_pair(str.c_str(),str.length()));
+	  }
+
 
 
      }
