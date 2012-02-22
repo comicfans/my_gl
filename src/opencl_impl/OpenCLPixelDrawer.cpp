@@ -58,7 +58,7 @@ namespace my_gl {
 
 	  cl_int buildResult=program.build(devices);
 
-	  assert(buildResult==CL_SUCCESS);
+	  assert(buildResult==CL_SUCCESS || "OpenCLPixelDrawer.cl build fault");
 
 	  _expendKernel=cl::Kernel(program,"float4ToUchar4");
 
