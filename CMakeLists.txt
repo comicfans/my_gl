@@ -15,9 +15,6 @@ IF(MSVC)
 
      #fix numeric_limit<>::max clash
      ADD_DEFINITIONS(-DNOMINMAX)
-     #fix boost::multi_array copy_n bug
-    ADD_DEFINITIONS(-D_ITERATOR_DEBUG_LEVEL=0)
-
 ENDIF(MSVC)
 
 
