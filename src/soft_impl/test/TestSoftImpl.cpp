@@ -17,7 +17,7 @@
  */
 
 #include "SoftContext.hpp"
-#include "SDL.h"
+#include <SDL.h>
 
 using namespace my_gl;
 
