@@ -20,7 +20,8 @@
 
 #include <vector>
 #include <array>
-#include <cassert>
+
+#include <boost/assert.hpp>
 
 #include <SDL.h>
 
@@ -131,11 +132,11 @@ namespace my_gl {
 			 _ndRange,
 			 cl::NDRange(1,1));
 
-	  assert(result==CL_SUCCESS || "execute opencl failed");
+	  BOOST_ASSERT_MSG(result==CL_SUCCESS , "execute opencl failed");
 
 	  result=_commandQueue.finish();
 
-	  assert(result==CL_SUCCESS || "execute opencl finish failed");
+	  BOOST_ASSERT_MSG(result==CL_SUCCESS , "execute opencl finish failed");
 
 	  dropEvent();
      }
@@ -162,7 +163,7 @@ namespace my_gl {
 		    //but opengl default frameBuffer origin is left-lower
 
 		    Uint8 *p = (Uint8 *)_screenPtr ->pixels + 
-			 (height()-y) * _screenPtr->pitch + 
+			 (height()-y-1) * _screenPtr->pitch + 
 			 x * _screenPtr->format->BytesPerPixel;
 
 		    _setPixelFunc(p,packedValue);
