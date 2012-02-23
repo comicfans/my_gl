@@ -8,6 +8,7 @@ IF(CMAKE_COMPILER_IS_GNUCXX)
      SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x -Wall")
      IF(${CMAKE_BUILD_TYPE} MATCHES Debug)
 	  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pg -fprofile-arcs -ftest-coverage")
+     ENDIF()
 ENDIF()
 
 
