@@ -50,8 +50,8 @@ global float4* readAt(size_t idx,
 float2 toWinCoord(float2 normalizedDeviceCoordinateXY,
 	  const ViewportParameter viewportParameter) 
 {
-     return normalizedDeviceCoordinateXY*
-	  (float2) (viewportParameter.width,viewportParameter.height)+
+     return (normalizedDeviceCoordinateXY+(float2)(1.0f,1.0f))*
+	  (float2) (viewportParameter.width,viewportParameter.height) /2 +
 	  (float2) (viewportParameter.x,viewportParameter.y);
 }
 
@@ -105,18 +105,38 @@ bool earlyZTestAndUpdate(int xyIndex,float thisZValue,global float *zBuffer)
 
      int reinterpretIntZ=as_int(thisZValue);
 
-     int oldZ=atomic_min(intZBuffer+xyIndex,reinterpretIntZ);
+     global int *pOldZ=intZBuffer+xyIndex;
+     if(reinterpretIntZ<*pOldZ)
+     {
+	  *pOldZ=reinterpretIntZ;
+	  return true;
+     }
+     else
+     {
+	  return false;
+     }
 
-	  
-     return oldZ>reinterpretIntZ;
+     //int oldZ=atomic_min(intZBuffer+xyIndex,reinterpretIntZ);
+     //return oldZ>reinterpretIntZ;
 }
 
 
 bool orderTestAndUpdate(int xyIndex,int thisOrder,global int *intZBuffer)
 {
-     int oldOrder=atomic_max(intZBuffer+xyIndex,thisOrder);
+     global int *pOldOrder=intZBuffer+xyIndex;
 
-     return oldOrder<thisOrder;
+     if(thisOrder>*pOldOrder)
+     {
+	  *pOldOrder=thisOrder;
+	  return true;
+     }
+     else
+     {
+	  return false;
+     }
+
+     //int oldOrder=atomic_max(intZBuffer+xyIndex,thisOrder);
+     //return oldOrder<thisOrder;
 
 }
 
