@@ -22,7 +22,7 @@
 #define INTERPOLATOR_HPP
 
 #include "common/VecFwd.hpp"
-#include "shader/VertexAttributeBuffer.hpp"
+#include "soft_impl/shader/VertexAttributeBuffer.hpp"
 
 
 namespace my_gl {
