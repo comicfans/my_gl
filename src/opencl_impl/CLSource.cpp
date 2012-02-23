@@ -18,12 +18,15 @@
 
 #include "CLSource.hpp"
 
-#include <cassert>
+#include <memory>
 
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
+#include <boost/foreach.hpp>
+#include <boost/assert.hpp>
 
 using boost::filesystem::ifstream;
+using std::unique_ptr;
 
 namespace my_gl {
 
@@ -33,23 +36,29 @@ namespace my_gl {
 
 	  auto fullName=cwd/filename;
 
-	  ifstream clFile(fullName);
+	  ifstream clFile(fullName,ifstream::in|ifstream::binary);
 
-	  assert(boost::filesystem::exists(fullName) || "file not exists");
 
-	  assert(clFile || "no opencl file loaded");
+	  BOOST_ASSERT_MSG(boost::filesystem::exists(fullName),"file not exists");
 
-	  std::string oneLine;
+	  BOOST_ASSERT_MSG(clFile ,"file open failed");
 
-	  while (!clFile.eof())
-	  {
-	       std::getline(clFile,oneLine);
+	  clFile.seekg(0,ifstream::end);
 
-	       _rawStrings.push_back(oneLine);
+	  int fileSize=clFile.tellg();
 
-	       _clSources.emplace_back
-		    (oneLine.c_str(),oneLine.length());
-	  }
+	  clFile.seekg(0,ifstream::beg);
+
+	  unique_ptr<char[]> tempBuff(new char[fileSize+1]);
+
+	  clFile.read(tempBuff.get(),fileSize);
+
+	  tempBuff[fileSize]='\0';
+
+	  _rawStrings.push_back(std::string(tempBuff.get()));
+
+	  _clSources.push_back(std::make_pair(_rawStrings.back().c_str(),_rawStrings.back().length()));
+
 
 
      }
