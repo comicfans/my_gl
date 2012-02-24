@@ -66,12 +66,21 @@ namespace my_gl {
 
 	  cl_int err=CL_SUCCESS;
 
-	  err=program.build(devices,"-g -O0");
+	  //opencl function is selected at preprocess stage
+	  static const char* OPTIONS=
+#ifdef NDEBUG
+	       "-DNDEBUG"
+#else
+	       "-g -O0"
+#endif
+	       ;
+
+	  err=program.build(devices,OPTIONS);
 
 	  assert(err==CL_SUCCESS || "program build failed");
 
 	  static const char* KERNEL_NAMES[]={
-	       "rasterizePointsWithEarlyZ",
+	       "rasterizePoints",
 	       "rasterizeLines",
 	       "rasterizeTriangles"};
 

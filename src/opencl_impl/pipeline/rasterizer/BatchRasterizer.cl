@@ -78,7 +78,7 @@ global float4* pointPreAction(global uint* primitiveIndex,
 
 
 	 
-     global float4* attributeGroup=readAt(0,primitiveIndex,attributeNumber
+     global float4* attributeGroup=readAt(workId,primitiveIndex,attributeNumber
 	       ,originalSize,originalVertexAttributes,clipGeneratedAttributes);
 
      attributeGroup[0]/=attributeGroup[0].w;
@@ -94,11 +94,11 @@ global float4* pointPreAction(global uint* primitiveIndex,
      return attributeGroup;
 }
 
-bool earlyZTestAndUpdate(int xyIndex,float thisZValue,global float *zBuffer)
+bool depthTestAndUpdate(int xyIndex,float thisZValue,global float *zBuffer)
 {
 
-     
-
+#ifndef NDEBUG
+     //currently only less than is supported
      global void *temp=zBuffer;
      global int *intZBuffer=temp;
      
@@ -116,13 +116,18 @@ bool earlyZTestAndUpdate(int xyIndex,float thisZValue,global float *zBuffer)
 	  return false;
      }
 
-     //int oldZ=atomic_min(intZBuffer+xyIndex,reinterpretIntZ);
-     //return oldZ>reinterpretIntZ;
+#else
+     int oldZ=atomic_min(intZBuffer+xyIndex,reinterpretIntZ);
+     return oldZ>reinterpretIntZ;
+#endif
 }
 
 
 bool orderTestAndUpdate(int xyIndex,int thisOrder,global int *intZBuffer)
 {
+
+#ifndef NDEBUG
+     //currently gdebugger not support atomic debug
      global int *pOldOrder=intZBuffer+xyIndex;
 
      if(thisOrder>*pOldOrder)
@@ -134,9 +139,10 @@ bool orderTestAndUpdate(int xyIndex,int thisOrder,global int *intZBuffer)
      {
 	  return false;
      }
-
-     //int oldOrder=atomic_max(intZBuffer+xyIndex,thisOrder);
-     //return oldOrder<thisOrder;
+#else
+     int oldOrder=atomic_max(intZBuffer+xyIndex,thisOrder);
+     return oldOrder<thisOrder;
+#endif
 
 }
 
@@ -171,14 +177,6 @@ kernel void rasterizePointsByOrder(global uint* primitiveIndex,
      
      int xyIndex=intXY.s0*widthHeight.width+intXY.s1;
 
-     global void *temp=zBuffer;
-     global int* intZBuffer=temp;
-
-     if(!orderTestAndUpdate(xyIndex,get_global_id(0),intZBuffer))
-     {
-	  return;
-     }
-
      
      for(int i=0;i<attributeNumber;++i)
      {
@@ -187,7 +185,7 @@ kernel void rasterizePointsByOrder(global uint* primitiveIndex,
 
 }
 
-kernel void rasterizePointsWithEarlyZ(global uint* primitiveIndex,
+kernel void rasterizePoints(global uint* primitiveIndex,
 	  const uint attributeNumber,
 	  const uint originalSize,
 	  global float4* originalVertexAttributes,
@@ -217,10 +215,23 @@ kernel void rasterizePointsWithEarlyZ(global uint* primitiveIndex,
      
      int xyIndex=intXY.s0*widthHeight.width+intXY.s1;
 
-     if(!earlyZTestAndUpdate(xyIndex,attributeGroup[0].z,zBuffer))
+#ifdef ENABLE_DEPTH_TEST
+     //use early z test
+     if(!depthTestAndUpdate(xyIndex,attributeGroup[0].z,zBuffer))
      {
 	  return;
      }
+#else
+     //draw by order,treat zBuffer as atomic order recorde, should init to -INT_MAX
+     global void *temp=zBuffer;
+     global int* intZBuffer=temp;
+
+     if(!orderTestAndUpdate(xyIndex,get_global_id(0),intZBuffer))
+     {
+	  return;
+     }
+#endif//EARLY_Z
+
 
      
      for(int i=0;i<attributeNumber;++i)
