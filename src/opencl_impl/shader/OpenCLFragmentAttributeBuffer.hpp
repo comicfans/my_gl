@@ -32,6 +32,15 @@ namespace my_gl
 	  virtual ~OpenCLFragmentAttributeBuffer ();
 
 	  void* getRawData();
+
+	  /** 
+	   * @brief when use opencl rasterizer(currently only point rasterizer) ,win coord is stored
+	   * in float format (cut down to int), and only ClippedPrimitiveGroup has information
+	   * about which fragment is generated ,so we need this interface to iterate over ClippedPrimitiveGroup
+	   * to insert activeFragment
+	   * 
+	   */
+	  void insertActiveFragment(const Vec4& winCoordVec4);
      };
 	
 } /* my_gl */

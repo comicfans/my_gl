@@ -77,7 +77,7 @@ namespace my_gl {
 	  //get only active fragments
 	  const vector<WinCoord>& getActiveFragWinCoords()const;
 
-     private:
+     protected:
 
 	  vector<WinCoord> _activeFragWinCoords;
 

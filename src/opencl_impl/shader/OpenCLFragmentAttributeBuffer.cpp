@@ -33,5 +33,15 @@ namespace my_gl {
 	  return const_cast<void*>(temp);
      }
 
+     void OpenCLFragmentAttributeBuffer::insertActiveFragment(const Vec4& winCoordVec4)
+     {
+	  WinCoord winCoord(winCoordVec4.x(),winCoordVec4.y());
+
+	  if(inRange(winCoord))
+	  {
+	  _activeFragWinCoords.push_back(winCoord);
+	  }
+     }
+
 
 } /* my_gl */

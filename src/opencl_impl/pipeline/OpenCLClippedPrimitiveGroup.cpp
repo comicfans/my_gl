@@ -72,7 +72,7 @@ namespace my_gl {
 	       assert((size_t(ptr)%sizeof(Vec4)==0)|| "memory not alignmened");
 
 	       _originalVertexAttributesBuffer=cl::Buffer(CLContext,
-			 CL_MEM_READ_ONLY|CL_MEM_USE_HOST_PTR,
+			 CL_MEM_READ_WRITE|CL_MEM_USE_HOST_PTR,
 			 originalVertexAttributesSize,ptr);
 	  }
 	  else
@@ -80,7 +80,7 @@ namespace my_gl {
 	       size_t dummyNullArraySize=sizeof(decltype(_dummyNullArray));
 	       void * ptr=&_dummyNullArray;
 	       _originalVertexAttributesBuffer=cl::Buffer(CLContext,
-			 CL_MEM_READ_ONLY|CL_MEM_USE_HOST_PTR,
+			 CL_MEM_READ_WRITE|CL_MEM_USE_HOST_PTR,
 			 dummyNullArraySize,ptr);
 	  }
 	       
@@ -100,7 +100,7 @@ namespace my_gl {
 	       assert((size_t(ptr)%sizeof(Vec4)==0)|| "memory not alignmened");
 
 	       _clipGeneratedAttributesBuffer=cl::Buffer(CLContext,
-			 CL_MEM_READ_ONLY|CL_MEM_USE_HOST_PTR,
+			 CL_MEM_READ_WRITE|CL_MEM_USE_HOST_PTR,
 			 clipGeneratedVertexAttributeSize,ptr);
 	  }
 	  else

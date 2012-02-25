@@ -96,7 +96,7 @@ namespace my_gl {
 	       sizeof(Vec4);
 
 	  _fragmentAttibuteCLBuffer=cl::Buffer(_CLContext,
-		    CL_MEM_READ_ONLY|CL_MEM_USE_HOST_PTR,
+		    CL_MEM_WRITE_ONLY|CL_MEM_USE_HOST_PTR,
 		    fragmentAttributeBufferSize,
 		    fragmentAttributeBuffer.getRawData());
 
@@ -110,7 +110,7 @@ namespace my_gl {
 	       *depthBuffer.height()*sizeof(float);
 
 	  _depthBufferCLBuffer=cl::Buffer(_CLContext,
-		    CL_MEM_READ_ONLY|CL_MEM_USE_HOST_PTR,
+		    CL_MEM_READ_WRITE|CL_MEM_USE_HOST_PTR,
 		    depthBufferSize,depthBuffer.getRawData());
 	  _kernel.setArg(idx++,_depthBufferCLBuffer);
 	  //bind widthHeight
@@ -149,6 +149,20 @@ namespace my_gl {
 	       (_kernel,cl::NDRange(),globalNDRange, cl::NDRange(1));
 
 	  _commandQueue.finish();
+
+	  
+	       
+	  //insert processed point into active fragments;
+
+	  OpenCLFragmentAttributeBuffer& fragmentAttributeBuffer=
+	       static_cast<OpenCLFragmentAttributeBuffer&>(_fragmentAttributeBuffer);
+
+	  for(int i=0,all=clippedPrimitiveGroup.elementNumber();
+		    i<all;++i)
+	  {
+	       fragmentAttributeBuffer.insertActiveFragment
+		    (clippedPrimitiveGroup[i][0]);
+	  }
 	  
      }
   struct  FloatDepthRange
