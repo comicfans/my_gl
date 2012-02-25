@@ -62,7 +62,8 @@ bool outOfRange(WidthHeight widthHeight,int2 intXY)
 }
 
 
-global float4* pointPreAction(global uint* primitiveIndex,
+global float4* pointPreAction(int idx,
+	  global uint* primitiveIndex,
 	  const uint attributeNumber,
 	  const uint originalSize,
 	  global float4* originalVertexAttributes,
@@ -72,13 +73,7 @@ global float4* pointPreAction(global uint* primitiveIndex,
 {
 
 
-     size_t workId;
-     workId=get_global_id(0);
-
-
-
-	 
-     global float4* attributeGroup=readAt(workId,primitiveIndex,attributeNumber
+     global float4* attributeGroup=readAt(idx,primitiveIndex,attributeNumber
 	       ,originalSize,originalVertexAttributes,clipGeneratedAttributes);
 
      attributeGroup[0]/=attributeGroup[0].w;
@@ -146,45 +141,6 @@ bool orderTestAndUpdate(int xyIndex,int thisOrder,global int *intZBuffer)
 
 }
 
-kernel void rasterizePointsByOrder(global uint* primitiveIndex,
-	  const uint attributeNumber,
-	  const uint originalSize,
-	  global float4* originalVertexAttributes,
-	  global float4* clipGeneratedAttributes,
-	  
-	  const ViewportParameter viewportParameter,
-	  const DepthRange depthRange,
-	  global float4* fragmentAttributeBuffer,
-	  global float *zBuffer,
-	  const WidthHeight widthHeight)
-{
-     
-
-     global float4 * attributeGroup=pointPreAction
-	  (primitiveIndex,attributeNumber,originalSize,
-	   originalVertexAttributes,clipGeneratedAttributes,
-	   viewportParameter,depthRange);
-
-     int2 intXY=convert_int2(attributeGroup[0].xy);
-     
-     
-
-     if(outOfRange(widthHeight,intXY))
-     {
-	  return ;
-     }
-
-     
-     int xyIndex=intXY.s0*widthHeight.width+intXY.s1;
-
-     
-     for(int i=0;i<attributeNumber;++i)
-     {
-	  fragmentAttributeBuffer[xyIndex+i]=attributeGroup[i];
-     }
-
-}
-
 kernel void rasterizePoints(global uint* primitiveIndex,
 	  const uint attributeNumber,
 	  const uint originalSize,
@@ -197,9 +153,12 @@ kernel void rasterizePoints(global uint* primitiveIndex,
 	  global float *zBuffer,
 	  const WidthHeight widthHeight)
 {
+
+     size_t workId;
+     workId=get_global_id(0);
      
   global float4 * attributeGroup=pointPreAction
-	  (primitiveIndex,attributeNumber,originalSize,
+	  (workId,primitiveIndex,attributeNumber,originalSize,
 	   originalVertexAttributes,clipGeneratedAttributes,
 	   viewportParameter,depthRange);
 	   
@@ -233,7 +192,6 @@ kernel void rasterizePoints(global uint* primitiveIndex,
 #endif//EARLY_Z
 
 
-     
      for(int i=0;i<attributeNumber;++i)
      {
 	  fragmentAttributeBuffer[xyIndex+i]=attributeGroup[i];
