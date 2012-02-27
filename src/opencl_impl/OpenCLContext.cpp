@@ -114,5 +114,9 @@ namespace my_gl {
 
      }
 
+     void OpenCLContext::fragmentShaderStage()
+     {
+
+     }
 
 } /* my_gl */

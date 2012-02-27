@@ -41,6 +41,7 @@ namespace my_gl {
 	     (const PrimitiveIndex& primitiveIndex,
 		  GLenum catalog) ;
 
+	virtual void fragmentShaderStage();
 
      private:
 

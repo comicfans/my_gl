@@ -512,12 +512,12 @@ namespace my_gl {
 
 	     rasterizePrimitive(catalog);
 
-	     fragmentShaderStage();
+	     fragmentShaderStage(catalog);
 
 	     _pixelDrawerPtr->onDraw(getFrameBuffer<ColorBuffer>());
 	}
 
-	     void SoftContext::fragmentShaderStage()
+	     void SoftContext::fragmentShaderStage(GLenum catalog)
 	     {
 
 		  auto activeFragWinCoords=_fragmentAttributeBufferPtr

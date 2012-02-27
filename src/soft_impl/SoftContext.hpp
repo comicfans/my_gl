@@ -432,7 +432,7 @@ namespace my_gl {
 	void vertexShaderStage(size_t vertexNumber,
 		  const IndexProvider& indexProvider);
 
-	void fragmentShaderStage();
+	virtual void fragmentShaderStage(GLenum catalog);
 
 	/** 
 	 * @brief currently override this function to use custom 
