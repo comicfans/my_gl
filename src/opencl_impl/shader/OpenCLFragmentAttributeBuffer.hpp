@@ -34,13 +34,12 @@ namespace my_gl
 	  void* getRawData();
 
 	  /** 
-	   * @brief when use opencl rasterizer(currently only point rasterizer) ,win coord is stored
-	   * in float format (cut down to int), and only ClippedPrimitiveGroup has information
-	   * about which fragment is generated ,so we need this interface to iterate over ClippedPrimitiveGroup
-	   * to insert activeFragment
+	   * @brief when use opencl rasterizer(currently only point rasterizer) ,win coord is 
+	   * written into a opencl buffer,then iterate over it to insert by this
+	   * function
 	   * 
 	   */
-	  void insertActiveFragment(const Vec4& winCoordVec4);
+	  void insertActiveFragment(int x,int y);
      };
 	
 } /* my_gl */

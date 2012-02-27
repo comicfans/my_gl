@@ -120,12 +120,18 @@ namespace my_gl {
 
 	  _kernel.setArg(idx++,widthHeight);
 
+
      }
 
      OpenCLPointRasterizer::~OpenCLPointRasterizer()
      {}
 
 	  
+     struct ActiveFragmentCoord
+     {
+	  cl_int x;
+	  cl_int y;
+     };
      void OpenCLPointRasterizer::rasterize(const 
 	       ClippedPrimitiveGroup& clippedPrimitiveGroup)
      {
@@ -143,6 +149,15 @@ namespace my_gl {
 
 	  bindToKernel(_kernel,paramIdx);
 
+	  int elementNumber=clippedPrimitiveGroup.elementNumber();
+
+	  size_t activeFragmentsBufferSize=elementNumber*2*sizeof(cl_int);
+
+	  _activeFragmentsCLBuffer=cl::Buffer(_CLContext,
+		    CL_MEM_WRITE_ONLY,activeFragmentsBufferSize,nullptr);
+
+	  _kernel.setArg(10,_activeFragmentsCLBuffer);
+
 	  cl::NDRange globalNDRange(clippedPrimitiveGroup.elementNumber());
 
 	  _commandQueue.enqueueNDRangeKernel
@@ -151,18 +166,24 @@ namespace my_gl {
 	  _commandQueue.finish();
 
 	  
+	  OpenCLFragmentAttributeBuffer& fragmentAttributeBuffer=
+	       static_cast<OpenCLFragmentAttributeBuffer&>(Rasterizer::_fragmentAttributeBuffer);
 	       
 	  //insert processed point into active fragments;
 
-	  OpenCLFragmentAttributeBuffer& fragmentAttributeBuffer=
-	       static_cast<OpenCLFragmentAttributeBuffer&>(_fragmentAttributeBuffer);
+	  void *mappedBuffer=_commandQueue.enqueueMapBuffer(_activeFragmentsCLBuffer,true,
+		    CL_MAP_READ,0,activeFragmentsBufferSize);
 
-	  for(int i=0,all=clippedPrimitiveGroup.elementNumber();
-		    i<all;++i)
+	  ActiveFragmentCoord* pActiveFragmentCoord=
+	       reinterpret_cast<ActiveFragmentCoord*>(mappedBuffer);
+
+	  for(int i=0;i<elementNumber;++i)
 	  {
 	       fragmentAttributeBuffer.insertActiveFragment
-		    (clippedPrimitiveGroup[i][0]);
+		    (pActiveFragmentCoord[i].x,pActiveFragmentCoord[i].y);
 	  }
+
+	  _commandQueue.enqueueUnmapMemObject(_activeFragmentsCLBuffer,mappedBuffer);
 	  
      }
   struct  FloatDepthRange

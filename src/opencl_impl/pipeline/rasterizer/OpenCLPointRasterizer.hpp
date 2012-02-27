@@ -57,6 +57,7 @@ namespace my_gl {
 	       cl::Kernel _kernel;
 	       cl::Buffer _fragmentAttibuteCLBuffer;
 	       cl::Buffer _depthBufferCLBuffer;
+	       cl::Buffer _activeFragmentsCLBuffer;
 
      };
 

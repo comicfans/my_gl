@@ -91,8 +91,6 @@ global float4* pointPreAction(int idx,
 
 bool depthTestAndUpdate(int xyIndex,float thisZValue,global float *zBuffer)
 {
-
-#ifndef NDEBUG
      //currently only less than is supported
      global void *temp=zBuffer;
      global int *intZBuffer=temp;
@@ -100,6 +98,8 @@ bool depthTestAndUpdate(int xyIndex,float thisZValue,global float *zBuffer)
 
      int reinterpretIntZ=as_int(thisZValue);
 
+
+#ifndef NDEBUG
      global int *pOldZ=intZBuffer+xyIndex;
      if(reinterpretIntZ<*pOldZ)
      {
@@ -121,10 +121,8 @@ bool depthTestAndUpdate(int xyIndex,float thisZValue,global float *zBuffer)
 bool orderTestAndUpdate(int xyIndex,int thisOrder,global int *intZBuffer)
 {
 
-#ifndef NDEBUG
-     //currently gdebugger not support atomic debug
      global int *pOldOrder=intZBuffer+xyIndex;
-
+#ifndef NDEBUG
      if(thisOrder>*pOldOrder)
      {
 	  *pOldOrder=thisOrder;
@@ -135,7 +133,7 @@ bool orderTestAndUpdate(int xyIndex,int thisOrder,global int *intZBuffer)
 	  return false;
      }
 #else
-     int oldOrder=atomic_max(intZBuffer+xyIndex,thisOrder);
+     int oldOrder=atomic_max(pOldOrder,thisOrder);
      return oldOrder<thisOrder;
 #endif
 
@@ -151,7 +149,8 @@ kernel void rasterizePoints(global uint* primitiveIndex,
 	  const DepthRange depthRange,
 	  global float4* fragmentAttributeBuffer,
 	  global float *zBuffer,
-	  const WidthHeight widthHeight)
+	  const WidthHeight widthHeight,
+	  global int2* activeFragments)
 {
 
      size_t workId;
@@ -164,13 +163,16 @@ kernel void rasterizePoints(global uint* primitiveIndex,
 	   
      int2 intXY=convert_int2(attributeGroup[0].xy);
      
-     
+ 
+     //write activeFragments
+     activeFragments[workId]=intXY;
+
+    
 
      if(outOfRange(widthHeight,intXY))
      {
 	  return ;
      }
-
      
      int xyIndex=intXY.s0*widthHeight.width+intXY.s1;
 
