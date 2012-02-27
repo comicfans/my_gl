@@ -82,11 +82,11 @@ namespace my_gl {
 
      size_t FragmentAttributeBuffer::width()const
      {
-	  return shape()[1]-SIDE_OFFSET*2;
+	  return shape()[1];
      }
      size_t FragmentAttributeBuffer::height()const
      {
-	  return shape()[0]-SIDE_OFFSET*2;
+	  return shape()[0]-SIDE_OFFSET;
      }
 
      void FragmentAttributeBuffer::clear()
