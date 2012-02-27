@@ -46,7 +46,7 @@ namespace my_gl {
 	 //use OpenCLFragmentAttributeBuffer
 	 SoftContext::_fragmentAttributeBufferPtr.reset(
 		   new OpenCLFragmentAttributeBuffer(width,height,
-			VertexAttributeBuffer::DEFAULT_OUT_SIZE));
+			VertexAttributeBuffer::DEFAULT_OUT_SIZE,_CLContext));
 
 	  _allFrameBuffer.replace(DepthBuffer::ORDER_INDEX,
 		    new OpenCLDepthBuffer(width,height));

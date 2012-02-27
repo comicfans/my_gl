@@ -20,26 +20,34 @@
 
 #define OPENCL_FRAGMENT_ATTRIBUTE_BUFFER_HPP
 
+#include <CL/cl.hpp>
+
+#include "opencl_impl/CLParameterBinder.hpp"
 #include "soft_impl/shader/FragmentAttributeBuffer.hpp"
 
 namespace my_gl
 {
-     class OpenCLFragmentAttributeBuffer :public FragmentAttributeBuffer{
+     class OpenCLFragmentAttributeBuffer :public FragmentAttributeBuffer ,CLParameterBinder{
      public:
 	  OpenCLFragmentAttributeBuffer 
-	     (size_t width,size_t height,size_t attributeNumber);
+	     (size_t width,size_t height,size_t attributeNumber,cl::Context CLContext);
+
+	  void setActiveFragCoordsNumber(int number);
+
+	  void storeActiveFragCoords(cl::CommandQueue commandQueue);
 
 	  virtual ~OpenCLFragmentAttributeBuffer ();
 
-	  void* getRawData();
+	  virtual int bindToKernel(cl::Kernel kernel,int idx);
 
-	  /** 
-	   * @brief when use opencl rasterizer(currently only point rasterizer) ,win coord is 
-	   * written into a opencl buffer,then iterate over it to insert by this
-	   * function
-	   * 
-	   */
-	  void insertActiveFragment(int x,int y);
+     private:
+
+	  int _activeFragCoordsNumber;
+
+	  cl::Context _CLContext;
+	  cl::Buffer _fragmentAttributeCLBuffer;
+	  cl::Buffer _activeFragCoordsCLBuffer;
+
      };
 	
 } /* my_gl */

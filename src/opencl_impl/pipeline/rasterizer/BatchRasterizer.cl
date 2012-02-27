@@ -148,9 +148,9 @@ kernel void rasterizePoints(global uint* primitiveIndex,
 	  const ViewportParameter viewportParameter,
 	  const DepthRange depthRange,
 	  global float4* fragmentAttributeBuffer,
+	  global int2* activeFragments,
 	  global float *zBuffer,
-	  const WidthHeight widthHeight,
-	  global int2* activeFragments)
+	  const WidthHeight widthHeight)
 {
 
      size_t workId;

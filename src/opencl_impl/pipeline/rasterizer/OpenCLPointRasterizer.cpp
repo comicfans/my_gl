@@ -89,20 +89,10 @@ namespace my_gl {
 
 	  assert(err==CL_SUCCESS || "kernel create failed");
 
-	  //bind FragmentAttributeBuffer
-	  size_t fragmentAttributeBufferSize=fragmentAttributeBuffer.width() * 
-	       fragmentAttributeBuffer.height()* 
-	       fragmentAttributeBuffer.attributeNumber() *
-	       sizeof(Vec4);
-
-	  _fragmentAttibuteCLBuffer=cl::Buffer(_CLContext,
-		    CL_MEM_WRITE_ONLY|CL_MEM_USE_HOST_PTR,
-		    fragmentAttributeBufferSize,
-		    fragmentAttributeBuffer.getRawData());
 
 	  //magic need refactor?
-	  int idx=7;
-	  _kernel.setArg(idx++,_fragmentAttibuteCLBuffer);
+	  //
+	  int idx=9;
 
 	  //bind DepthBuffer
 	  
@@ -115,8 +105,7 @@ namespace my_gl {
 	  _kernel.setArg(idx++,_depthBufferCLBuffer);
 	  //bind widthHeight
 
-
-    WidthHeight widthHeight(uint32_t(depthBuffer.width()),uint32_t(depthBuffer.height()));
+	  WidthHeight widthHeight(uint32_t(depthBuffer.width()),uint32_t(depthBuffer.height()));
 
 	  _kernel.setArg(idx++,widthHeight);
 
@@ -127,11 +116,7 @@ namespace my_gl {
      {}
 
 	  
-     struct ActiveFragmentCoord
-     {
-	  cl_int x;
-	  cl_int y;
-     };
+
      void OpenCLPointRasterizer::rasterize(const 
 	       ClippedPrimitiveGroup& clippedPrimitiveGroup)
      {
@@ -147,16 +132,17 @@ namespace my_gl {
 	  paramIdx=openCLClippedPrimitiveGroup.
 	       bindToKernel(_kernel, paramIdx);
 
-	  bindToKernel(_kernel,paramIdx);
+	  paramIdx=bindToKernel(_kernel,paramIdx);
 
 	  int elementNumber=clippedPrimitiveGroup.elementNumber();
+ 
+	  OpenCLFragmentAttributeBuffer& fragmentAttributeBuffer=
+	       static_cast<OpenCLFragmentAttributeBuffer&>(Rasterizer::_fragmentAttributeBuffer);
 
-	  size_t activeFragmentsBufferSize=elementNumber*2*sizeof(cl_int);
+	  fragmentAttributeBuffer.setActiveFragCoordsNumber(elementNumber);
+	       
+	  fragmentAttributeBuffer.bindToKernel(_kernel,paramIdx);
 
-	  _activeFragmentsCLBuffer=cl::Buffer(_CLContext,
-		    CL_MEM_WRITE_ONLY,activeFragmentsBufferSize,nullptr);
-
-	  _kernel.setArg(10,_activeFragmentsCLBuffer);
 
 	  cl::NDRange globalNDRange(clippedPrimitiveGroup.elementNumber());
 
@@ -164,27 +150,12 @@ namespace my_gl {
 	       (_kernel,cl::NDRange(),globalNDRange, cl::NDRange(1));
 
 	  _commandQueue.finish();
-
-	  
-	  OpenCLFragmentAttributeBuffer& fragmentAttributeBuffer=
-	       static_cast<OpenCLFragmentAttributeBuffer&>(Rasterizer::_fragmentAttributeBuffer);
-	       
+	 	  
 	  //insert processed point into active fragments;
+	  //
+	  fragmentAttributeBuffer.storeActiveFragCoords(_commandQueue);
 
-	  void *mappedBuffer=_commandQueue.enqueueMapBuffer(_activeFragmentsCLBuffer,true,
-		    CL_MAP_READ,0,activeFragmentsBufferSize);
-
-	  ActiveFragmentCoord* pActiveFragmentCoord=
-	       reinterpret_cast<ActiveFragmentCoord*>(mappedBuffer);
-
-	  for(int i=0;i<elementNumber;++i)
-	  {
-	       fragmentAttributeBuffer.insertActiveFragment
-		    (pActiveFragmentCoord[i].x,pActiveFragmentCoord[i].y);
-	  }
-
-	  _commandQueue.enqueueUnmapMemObject(_activeFragmentsCLBuffer,mappedBuffer);
-	  
+  
      }
   struct  FloatDepthRange
 	  {
@@ -204,7 +175,7 @@ namespace my_gl {
 
 	  kernel.setArg(idx++,ViewportParameter(_viewportParameter));
 
-	 FloatDepthRange floatDepthRange((_depthRange.nearValue),
+	  FloatDepthRange floatDepthRange((_depthRange.nearValue),
 	       (float)_depthRange.farValue,(float)_depthRange.diff);
 
 	  kernel.setArg(idx++,floatDepthRange);
