@@ -114,7 +114,7 @@ namespace my_gl {
 
      }
 
-     void OpenCLContext::fragmentShaderStage()
+     void OpenCLContext::fragmentShaderStage(GLenum catalog)
      {
 
      }
