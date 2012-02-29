@@ -1,1 +1,2 @@
 ADD_COMPARE_TEST(Points)
+ADD_COMPARE_TEST(LotsPoints)

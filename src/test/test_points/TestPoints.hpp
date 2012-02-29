@@ -105,7 +105,7 @@ namespace my_gl {
 
 	       glColorPointer(3,GL_FLOAT,0,0);
 
-	       glDrawArrays(GL_POINTS,0,20);
+	       glDrawArrays(GL_POINTS,0,pointNumber);
 	  }
 
      };
