@@ -37,6 +37,10 @@ namespace my_gl {
 	       (ConstAttributeGroupRef attributeGroupRef,
 		 Vec4& fragColor);
 
+	  virtual void shade
+	       (Vec4* attributeGroupPointer,
+		Vec4& fragColor);
+
 	  virtual ~FragmentShader();
 
 	  void setTextureObject(TextureObject *textureObject);

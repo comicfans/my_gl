@@ -34,13 +34,14 @@ namespace my_gl {
 	       _textureObject=textureObject;
 	  }
 
+	  enum OutIndex{POSITION,POINT_SIZE,
+		    FRONT_COLOR,BACK_COLOR,TEXCOORD};
+
+
 	  void FragmentShader::shade
 	       (ConstAttributeGroupRef attributeGroupRef,
 		 Vec4& fragColor)
 	       {
-	       enum OutIndex{POSITION,POINT_SIZE,
-		    FRONT_COLOR,BACK_COLOR,TEXCOORD};
-
 
 		    shade(attributeGroupRef[int(VertexAttributeBuffer
 				   ::OutIndex::POSITION)],
@@ -54,6 +55,22 @@ namespace my_gl {
 				   ::OutIndex::TEXCOORD)],
 			      fragColor);
 	       }
+
+	  void FragmentShader::shade(Vec4* attributeGroupPointer,
+		    Vec4& fragColor)
+	  {
+		    shade(attributeGroupPointer[int(VertexAttributeBuffer
+				   ::OutIndex::POSITION)],
+			      attributeGroupPointer[int(VertexAttributeBuffer
+				   ::OutIndex::POINT_SIZE)],
+			      attributeGroupPointer[int(VertexAttributeBuffer
+				   ::OutIndex::FRONT_COLOR)],
+			      attributeGroupPointer[int(VertexAttributeBuffer
+				   ::OutIndex::BACK_COLOR)],
+			      attributeGroupPointer[int(VertexAttributeBuffer
+				   ::OutIndex::TEXCOORD)],
+			      fragColor);
+	  }
 
 
      FragmentShader::~FragmentShader(){}
