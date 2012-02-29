@@ -31,9 +31,11 @@ namespace my_gl {
 	  virtual ~OpenCLDepthBuffer ();
 
 	  void * getRawData();
+
+	  void orderClear();
      
      private:
-     	/* data */
+	  static const float ORDER_INIT_VALUE;
      };
 	
 } /* my_gl */
