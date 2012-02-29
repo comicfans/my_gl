@@ -1,28 +1,32 @@
 
-
 typedef struct 
 {
      float nearValue;
      float farValue;
      float diff;
-} DepthRange;
+} DepthRange ;
 
 
 
-typedef struct Rectangle{
+typedef struct {
      int x;
 	 int y;
 	 uint width;
 	 uint height;
      
-} ViewportParameter/* optional variable list */;
+} ViewportParameter ;
 
 
 typedef struct{
-uint width;
-uint height;
-} WidthHeight;
+int width;
+int height;
+} WidthHeight ;
 
+typedef struct {
+     ViewportParameter viewportParameter;
+     DepthRange depthRange;
+     WidthHeight widthHeight;
+} PackedParam;
 
 global float4* readAt(size_t idx,
 	  global uint* primitiveIndex,
@@ -37,13 +41,13 @@ global float4* readAt(size_t idx,
 
      if(vertexIndex>=originalSize)
      {
-	  return &clipGeneratedAttributes
-	       [(vertexIndex-originalSize)*attributeNumber];
+	  return clipGeneratedAttributes+
+	       (vertexIndex-originalSize)*attributeNumber;
      }
      else
      {
-	  return &originalVertexAttributes
-	       [vertexIndex*attributeNumber];
+	  return originalVertexAttributes+
+	       vertexIndex*attributeNumber;
      }
 }
 
@@ -103,7 +107,6 @@ bool depthTestAndUpdate(int xyIndex,float thisZValue,global float *zBuffer)
      global int *pOldZ=intZBuffer+xyIndex;
      if(reinterpretIntZ<*pOldZ)
      {
-	  *pOldZ=reinterpretIntZ;
 	  return true;
      }
      else
@@ -125,7 +128,6 @@ bool orderTestAndUpdate(int xyIndex,int thisOrder,global int *intZBuffer)
 #ifndef NDEBUG
      if(thisOrder>*pOldOrder)
      {
-	  *pOldOrder=thisOrder;
 	  return true;
      }
      else
@@ -144,13 +146,15 @@ kernel void rasterizePoints(global uint* primitiveIndex,
 	  const uint originalSize,
 	  global float4* originalVertexAttributes,
 	  global float4* clipGeneratedAttributes,
+
+	  const PackedParam packedParam,
 	  
-	  const ViewportParameter viewportParameter,
-	  const DepthRange depthRange,
-	  global float4* fragmentAttributeBuffer,
-	  global int2* activeFragments,
 	  global float *zBuffer,
-	  const WidthHeight widthHeight)
+
+	  global float4* fragmentAttributeBuffer,
+	  global int2* activeFragments
+
+	  )
 {
 
      size_t workId;
@@ -159,27 +163,29 @@ kernel void rasterizePoints(global uint* primitiveIndex,
   global float4 * attributeGroup=pointPreAction
 	  (workId,primitiveIndex,attributeNumber,originalSize,
 	   originalVertexAttributes,clipGeneratedAttributes,
-	   viewportParameter,depthRange);
+	   packedParam.viewportParameter,packedParam.depthRange);
 	   
      int2 intXY=convert_int2(attributeGroup[0].xy);
-     
  
-     //write activeFragments
-     activeFragments[workId]=intXY;
 
-    
+     //after clip , normalizedDeviceCoordinate may be a little 
+     //out of [-1,1] ,so this check is neccesary
+     if(outOfRange(packedParam.widthHeight,intXY))
+    {
 
-     if(outOfRange(widthHeight,intXY))
-     {
+	 activeFragments[workId]=(int2)(packedParam.widthHeight.width,
+		   packedParam.widthHeight.height);
 	  return ;
-     }
-     
-     int xyIndex=intXY.s0*widthHeight.width+intXY.s1;
+    }
+
+     int xyIndex=intXY.s1*packedParam.widthHeight.width+intXY.s0;
+
 
 #ifdef ENABLE_DEPTH_TEST
      //use early z test
      if(!depthTestAndUpdate(xyIndex,attributeGroup[0].z,zBuffer))
      {
+	  activeFragments[workId]=(int2)(22,22);
 	  return;
      }
 #else
@@ -187,16 +193,22 @@ kernel void rasterizePoints(global uint* primitiveIndex,
      global void *temp=zBuffer;
      global int* intZBuffer=temp;
 
-     if(!orderTestAndUpdate(xyIndex,get_global_id(0),intZBuffer))
+     if(!orderTestAndUpdate(xyIndex,workId,intZBuffer))
      {
+	  activeFragments[workId]=(int2)(22,22);
 	  return;
      }
 #endif//EARLY_Z
 
 
+     //write activeFragments
+     activeFragments[workId]=intXY;
+
+     int beginIndex=xyIndex*attributeNumber;
+
      for(int i=0;i<attributeNumber;++i)
      {
-	  fragmentAttributeBuffer[xyIndex+i]=attributeGroup[i];
+	  fragmentAttributeBuffer[beginIndex+i]=attributeGroup[i];
      }
 
 }

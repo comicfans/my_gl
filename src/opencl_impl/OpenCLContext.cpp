@@ -21,6 +21,8 @@
 #include <CL/cl.hpp>
 
 #include "soft_impl/pipeline/clipper/Clipper.hpp"
+#include "soft_impl/shader/FragmentShader.hpp"
+#include "soft_impl/pipeline/ColorBuffer.hpp"
 
 #include "opencl_impl/OpenCLPixelDrawer.hpp"
 #include "opencl_impl/pipeline/OpenCLClippedPrimitiveGroup.hpp"
@@ -46,7 +48,7 @@ namespace my_gl {
 	 //use OpenCLFragmentAttributeBuffer
 	 SoftContext::_fragmentAttributeBufferPtr.reset(
 		   new OpenCLFragmentAttributeBuffer(width,height,
-			VertexAttributeBuffer::DEFAULT_OUT_SIZE,_CLContext));
+			VertexAttributeBuffer::DEFAULT_OUT_SIZE,*_CLContext));
 
 	  _allFrameBuffer.replace(DepthBuffer::ORDER_INDEX,
 		    new OpenCLDepthBuffer(width,height));
@@ -116,6 +118,50 @@ namespace my_gl {
 
      void OpenCLContext::fragmentShaderStage(GLenum catalog)
      {
+	  //read from opencl buffer need map action,
+	  //a temp hack
+	  if (catalog!=GL_POINTS)
+	  {
+	       SoftContext::fragmentShaderStage(catalog);
+	       return;
+	  }
+
+	  OpenCLPointRasterizer* rasterizer=static_cast<OpenCLPointRasterizer*>
+	       (_rasterizers.find(GL_POINTS)->second);
+
+
+	  OpenCLFragmentAttributeBuffer& fragmentAttributeBuffer=
+	       static_cast<OpenCLFragmentAttributeBuffer&>(*_fragmentAttributeBufferPtr);
+
+	  Vec4 *temp;
+	  //currently use CL_MEM_USE_HOST_PTR to do fragmentAttributeBuffer
+	  //so only lock is needed, mapped ptr is the same as host ptr
+	  //when full opencl pipeline is supported ,need refactor here
+
+	  temp=static_cast<Vec4*>(fragmentAttributeBuffer.beginRead
+		    (rasterizer->getCommandQueue()));
+
+
+
+	  auto activeFragWinCoords=_fragmentAttributeBufferPtr
+	       ->getActiveFragWinCoords();
+
+	  _fragmentShaderPtr->setTextureObject
+	       (_textureObjectManager.getActiveTextureObject());
+
+
+
+	  int attributeNumber=_clippedPrimitiveGroupPtr->attributeNumber();
+
+	  for(auto &winCoord:activeFragWinCoords)
+	  {
+	       _fragmentShaderPtr->shade(
+			 temp+(winCoord.y()*_width+winCoord.x())*attributeNumber,
+				     getFrameBuffer<ColorBuffer>()(winCoord)
+			 );
+	  }
+
+	  fragmentAttributeBuffer.endRead(rasterizer->getCommandQueue(),temp);
 
      }
 

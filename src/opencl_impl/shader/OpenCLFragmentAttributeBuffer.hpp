@@ -40,6 +40,23 @@ namespace my_gl
 
 	  virtual int bindToKernel(cl::Kernel kernel,int idx);
 
+	  struct ReadLock
+	  {
+	       ReadLock(OpenCLFragmentAttributeBuffer& toLock,cl::CommandQueue commandQueue,void *p);
+	       ~ReadLock();
+	       private:
+	       OpenCLFragmentAttributeBuffer & _toLock;
+	       cl::CommandQueue _commandQueue;
+	       void *_p;
+	  };
+
+	  friend struct ReadLock;
+
+	  void *beginRead(cl::CommandQueue commandQueue);
+
+	  void endRead(cl::CommandQueue commandQueue,void *p);
+
+
      private:
 
 	  int _activeFragCoordsNumber;
@@ -47,6 +64,7 @@ namespace my_gl
 	  cl::Context _CLContext;
 	  cl::Buffer _fragmentAttributeCLBuffer;
 	  cl::Buffer _activeFragCoordsCLBuffer;
+
 
      };
 	

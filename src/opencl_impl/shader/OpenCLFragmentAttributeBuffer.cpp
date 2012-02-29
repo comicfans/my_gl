@@ -67,23 +67,62 @@ namespace my_gl {
 	  cl_int x;
 	  cl_int y;
      };
+
      void OpenCLFragmentAttributeBuffer::storeActiveFragCoords(cl::CommandQueue commandQueue)
      {
 	  void *mappedBuffer=commandQueue.enqueueMapBuffer(_activeFragCoordsCLBuffer,true,
-		    CL_MAP_READ,0,_activeFragCoordsNumber);
+		    CL_MAP_READ,0,_activeFragCoordsNumber*sizeof(ActiveFragmentCoord));
 
 	  ActiveFragmentCoord* pActiveFragmentCoord=
 	       reinterpret_cast<ActiveFragmentCoord*>(mappedBuffer);
 
 	  for(int i=0;i<_activeFragCoordsNumber;++i)
 	  {
-	       _activeFragWinCoords.push_back(WinCoord(pActiveFragmentCoord[i].x,
-			      pActiveFragmentCoord[i].y));
+	       WinCoord coord(pActiveFragmentCoord[i].x,
+			      pActiveFragmentCoord[i].y);
+
+	       if(FragmentAttributeBuffer::inRange(coord))
+	       {
+		    _activeFragWinCoords.push_back(coord);
+	       }
 
 	  }
 
 	  commandQueue.enqueueUnmapMemObject(_activeFragCoordsCLBuffer,mappedBuffer);
 	
+     }
+
+     OpenCLFragmentAttributeBuffer::ReadLock::ReadLock
+	  (OpenCLFragmentAttributeBuffer& toLock,
+	   cl::CommandQueue commandQueue,
+	   void *p)
+	  :_toLock(toLock)
+     {
+	  _commandQueue=commandQueue;
+	  _p=_toLock.beginRead(commandQueue);
+	  p=_p;
+     }
+
+     OpenCLFragmentAttributeBuffer::ReadLock::~ReadLock()
+     {
+	  _toLock.endRead(_commandQueue,_p);
+     }
+
+     void *OpenCLFragmentAttributeBuffer::beginRead(cl::CommandQueue commandQueue)
+     {
+	  //bind FragmentAttributeBuffer
+	  size_t fragmentAttributeBufferSize=width() *height()
+	       * attributeNumber() *  sizeof(Vec4);
+
+	  return commandQueue.enqueueMapBuffer
+	       (_fragmentAttributeCLBuffer,true,
+		CL_MAP_READ,0,fragmentAttributeBufferSize);
+     }
+
+     void OpenCLFragmentAttributeBuffer::endRead(cl::CommandQueue commandQueue,void *p)
+     {
+	  commandQueue.enqueueUnmapMemObject
+	       (_fragmentAttributeCLBuffer,p);
      }
 
 } /* my_gl */

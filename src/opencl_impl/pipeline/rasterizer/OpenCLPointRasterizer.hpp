@@ -49,6 +49,13 @@ namespace my_gl {
 
 	       virtual int bindToKernel(cl::Kernel kernel,int idx) ;
 
+	       /** 
+		* @brief return internal opencl command queue for buffer read sync
+		* 
+		* @return 
+		*/
+	       cl::CommandQueue getCommandQueue();
+
 	  protected:
 
 	       const GLenum _primitiveMode;
@@ -56,6 +63,9 @@ namespace my_gl {
 	       cl::CommandQueue _commandQueue;
 	       cl::Kernel _kernel;
 	       cl::Buffer _depthBufferCLBuffer;
+
+	      
+
 
      };
 

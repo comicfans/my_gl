@@ -20,6 +20,7 @@
 
 
 #include <cassert>
+#include <cfloat>
 #include <vector>
 
 #include "opencl_impl/CLSource.hpp"
@@ -27,18 +28,11 @@
 
 #include "opencl_impl/shader/OpenCLFragmentAttributeBuffer.hpp"
 #include "opencl_impl/pipeline/OpenCLDepthBuffer.hpp"
+
 #include "soft_impl/DepthRange.hpp"
 
 namespace my_gl {
-	  struct WidthHeight{
-	       uint32_t width;
-	       uint32_t height;
-		   WidthHeight(uint32_t widthSet,uint32_t heightSet)
-		   {
-			   width=widthSet;
-			   height=heightSet;
-		   }
-	  };
+
      OpenCLPointRasterizer::OpenCLPointRasterizer
 		    (ViewportParameter& viewportParameter,
 		     Interpolator& interpolator,
@@ -68,10 +62,10 @@ namespace my_gl {
 
 	  //opencl function is selected at preprocess stage
 	  static const char* OPTIONS=
-#ifdef NDEBUG
-	       "-DNDEBUG"
-#else
+#ifndef NDEBUG
 	       "-g -O0"
+#else
+	       "-DNDEBUG"
 #endif
 	       ;
 
@@ -89,25 +83,6 @@ namespace my_gl {
 
 	  assert(err==CL_SUCCESS || "kernel create failed");
 
-
-	  //magic need refactor?
-	  //
-	  int idx=9;
-
-	  //bind DepthBuffer
-	  
-	  size_t depthBufferSize=depthBuffer.width()
-	       *depthBuffer.height()*sizeof(float);
-
-	  _depthBufferCLBuffer=cl::Buffer(_CLContext,
-		    CL_MEM_READ_WRITE|CL_MEM_USE_HOST_PTR,
-		    depthBufferSize,depthBuffer.getRawData());
-	  _kernel.setArg(idx++,_depthBufferCLBuffer);
-	  //bind widthHeight
-
-	  WidthHeight widthHeight(uint32_t(depthBuffer.width()),uint32_t(depthBuffer.height()));
-
-	  _kernel.setArg(idx++,widthHeight);
 
 
      }
@@ -129,20 +104,24 @@ namespace my_gl {
 
 	  int paramIdx=0;
 
+	  //bind clippedPrimitiveGroup
 	  paramIdx=openCLClippedPrimitiveGroup.
 	       bindToKernel(_kernel, paramIdx);
 
 	  paramIdx=bindToKernel(_kernel,paramIdx);
 
+	  //bind fragmentAttributeBuffer
 	  int elementNumber=clippedPrimitiveGroup.elementNumber();
  
 	  OpenCLFragmentAttributeBuffer& fragmentAttributeBuffer=
 	       static_cast<OpenCLFragmentAttributeBuffer&>(Rasterizer::_fragmentAttributeBuffer);
 
 	  fragmentAttributeBuffer.setActiveFragCoordsNumber(elementNumber);
-	       
-	  fragmentAttributeBuffer.bindToKernel(_kernel,paramIdx);
 
+	  paramIdx=fragmentAttributeBuffer.bindToKernel(_kernel,paramIdx);
+	       
+
+	  //enqueueNDRangeKernel
 
 	  cl::NDRange globalNDRange(clippedPrimitiveGroup.elementNumber());
 
@@ -157,32 +136,77 @@ namespace my_gl {
 
   
      }
-  struct  FloatDepthRange
-	  {
-	       float nearValue;
-	       float farValue;
-	       float diff;
-		   FloatDepthRange(float n,float f,float d)
-		   {
-			   nearValue=n;
-			   farValue=f;
-			   diff=d;
-		   }
-	  };
 
-     int OpenCLPointRasterizer::bindToKernel(cl::Kernel kernel,int idx)
+
+		    
+ struct WidthHeight{
+		    cl_int width;
+		    cl_int height;
+	       };
+
+
+	       struct  FloatDepthRange
+	       {
+		    float nearValue;
+		    float farValue;
+		    float diff;
+	       };
+
+	       struct PackedParam{
+		    ViewportParameter viewportParameter;
+		    FloatDepthRange depthRange;
+		    WidthHeight widthHeight;
+	       };
+
+       int OpenCLPointRasterizer::bindToKernel(cl::Kernel kernel,int idx)
      {
 
-	  kernel.setArg(idx++,ViewportParameter(_viewportParameter));
+	  PackedParam packedParam{
+	       _viewportParameter,
 
-	  FloatDepthRange floatDepthRange((_depthRange.nearValue),
-	       (float)_depthRange.farValue,(float)_depthRange.diff);
+		    FloatDepthRange{
+		    float(_depthRange.nearValue),
+		    float(_depthRange.farValue),
+		    float(_depthRange.diff)
+		    },
 
-	  kernel.setArg(idx++,floatDepthRange);
+		    WidthHeight{
+		    _depthBuffer.width(),
+		    _depthBuffer.height()
+		    }
+	  };
+
+	  kernel.setArg(idx++,packedParam);
+
+	  //bind depthBuffer
+
+	  OpenCLDepthBuffer& depthBuffer=static_cast<OpenCLDepthBuffer&>(_depthBuffer);
+	  
+	  depthBuffer.orderClear();
+	  
+	  //TODO only draw by order is supported , depth test :TBD
+	  //
+	  //draw by order need depth buffer to be act as atomic order counter
+	  //so must clear it as -INT_MAX
+
+
+	  size_t depthBufferSize=depthBuffer.width()
+	       *depthBuffer.height()*sizeof(float);
+
+	  _depthBufferCLBuffer=cl::Buffer(_CLContext,
+		    CL_MEM_READ_WRITE|CL_MEM_USE_HOST_PTR,
+		    depthBufferSize,depthBuffer.getRawData());
+
+	  _kernel.setArg(idx++,_depthBufferCLBuffer);
+
 
 	  return idx;
      }
 
+     cl::CommandQueue OpenCLPointRasterizer::getCommandQueue()
+     {
+	  return _commandQueue;
+     }
 	
 } /* my_gl */
 
