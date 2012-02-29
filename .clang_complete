@@ -1,1 +1,1 @@
--I include -I src -I "D:/program files/AMD APP/include/"
+-I "F:\project\me\my_gl\include\" -I "F:\project\me\my_gl\src\" 
