@@ -178,13 +178,6 @@ kernel void rasterizePoints(global uint* primitiveIndex,
      int xyIndex=intXY.s1*packedParam.widthHeight.width+intXY.s0;
 
 
-#ifdef ENABLE_DEPTH_TEST
-     //use early z test
-     if(!depthTestAndUpdate(xyIndex,attributeGroup[0].z,zBuffer))
-     {
-	  return;
-     }
-#else
      //draw by order,treat zBuffer as atomic order recorde, should init to -INT_MAX
      global void *temp=zBuffer;
      global int* intZBuffer=temp;
@@ -193,8 +186,6 @@ kernel void rasterizePoints(global uint* primitiveIndex,
      {
 	  return;
      }
-#endif//EARLY_Z
-
 
      //write activeFragments
      activeFragments[workId]=intXY;
