@@ -54,7 +54,7 @@ namespace my_gl {
 	  {
 	       glEnableClientState(GL_VERTEX_ARRAY);
 
-	       pointNumber=1000;
+	       pointNumber=100000;
 
 	       GLfloat gridPoints[pointNumber*2];
 
