@@ -172,9 +172,6 @@ kernel void rasterizePoints(global uint* primitiveIndex,
      //out of [-1,1] ,so this check is neccesary
      if(outOfRange(packedParam.widthHeight,intXY))
     {
-
-	 activeFragments[workId]=(int2)(packedParam.widthHeight.width,
-		   packedParam.widthHeight.height);
 	  return ;
     }
 
@@ -185,7 +182,6 @@ kernel void rasterizePoints(global uint* primitiveIndex,
      //use early z test
      if(!depthTestAndUpdate(xyIndex,attributeGroup[0].z,zBuffer))
      {
-	  activeFragments[workId]=(int2)(22,22);
 	  return;
      }
 #else
@@ -195,7 +191,6 @@ kernel void rasterizePoints(global uint* primitiveIndex,
 
      if(!orderTestAndUpdate(xyIndex,workId,intZBuffer))
      {
-	  activeFragments[workId]=(int2)(22,22);
 	  return;
      }
 #endif//EARLY_Z
