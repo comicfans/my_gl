@@ -165,7 +165,7 @@ kernel void rasterizePoints(global uint* primitiveIndex,
 	   originalVertexAttributes,clipGeneratedAttributes,
 	   packedParam.viewportParameter,packedParam.depthRange);
 	   
-     int2 intXY=convert_int2(attributeGroup[0].xy);
+     int2 intXY=convert_int2_rte(attributeGroup[0].xy);
  
 
      //after clip , normalizedDeviceCoordinate may be a little 
