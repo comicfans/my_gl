@@ -131,4 +131,9 @@ namespace my_gl {
 	  }
 	  return false;
      }
+
+     GLenum DepthBuffer::getDepthFunc()const
+     {
+	  return _func;
+     }
 } /* my_gl */

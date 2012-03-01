@@ -53,6 +53,9 @@ namespace my_gl {
 	   * @param func
 	   */
 	  void depthFunc(GLenum func);
+
+	  GLenum getDepthFunc()const ;
+
 	  virtual void clear();
 
 	  size_t width()const;
