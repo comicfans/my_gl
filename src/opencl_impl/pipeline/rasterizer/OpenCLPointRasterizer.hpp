@@ -61,10 +61,16 @@ namespace my_gl {
 	       const GLenum _primitiveMode;
 	       cl::Context& _CLContext;
 	       cl::CommandQueue _commandQueue;
+	       cl::Program _program;
 	       cl::Kernel _kernel;
 	       cl::Buffer _depthBufferCLBuffer;
 
 	      
+
+	       /** 
+		* @brief switch opencl kernel by depthFunc
+		*/
+	       void chooseKernel();
 
 
      };

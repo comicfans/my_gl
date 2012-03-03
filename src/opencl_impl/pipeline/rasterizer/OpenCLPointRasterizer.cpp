@@ -20,8 +20,13 @@
 
 
 #include <cassert>
+#include <iostream>
 #include <cfloat>
+#include <unordered_map>
 #include <vector>
+
+#include <boost/filesystem.hpp>
+#include <boost/assert.hpp>
 
 #include "opencl_impl/CLSource.hpp"
 #include "opencl_impl/pipeline/OpenCLClippedPrimitiveGroup.hpp"
@@ -32,6 +37,7 @@
 #include "soft_impl/DepthRange.hpp"
 
 namespace my_gl {
+
 
      OpenCLPointRasterizer::OpenCLPointRasterizer
 		    (ViewportParameter& viewportParameter,
@@ -50,7 +56,7 @@ namespace my_gl {
 	  CLSource clSource("BatchRasterizer.cl");
 
 
-	  cl::Program program
+	  _program=cl::Program
 	       (_CLContext,clSource.getSources());
 
 	  std::vector<cl::Device> devices= 
@@ -60,30 +66,27 @@ namespace my_gl {
 
 	  cl_int err=CL_SUCCESS;
 
-	  //opencl function is selected at preprocess stage
-	  static const char* OPTIONS=
-#ifndef NDEBUG
-	       "-g -O0"
-#else
-	       "-DNDEBUG"
-#endif
-	       ;
 
-	  err=program.build(devices,OPTIONS);
+
+	  //pass include path to compiler
+	  auto cwd=boost::filesystem::current_path();
+
+	  std::string options;
+
+	  options.append("-I ").append(cwd.string());
+#ifdef NDEBUG
+	  options.append(" -DNDEBUG ");
+#else
+	  options.append(" -g -O0 ");
+#endif
+
+	  std::cout<<options;
+
+	  err=_program.build(devices,options.c_str());
 
 	  assert(err==CL_SUCCESS || "program build failed");
 
-	  static const char* KERNEL_NAMES[]={
-	       "rasterizePoints",
-	       "rasterizeLines",
-	       "rasterizeTriangles"};
-
-	  _kernel=cl::Kernel(program,
-		    KERNEL_NAMES[int(_primitiveMode)],&err);
-
-	  assert(err==CL_SUCCESS || "kernel create failed");
-
-
+	  chooseKernel();
 
      }
 
@@ -206,6 +209,32 @@ namespace my_gl {
      cl::CommandQueue OpenCLPointRasterizer::getCommandQueue()
      {
 	  return _commandQueue;
+     }
+
+     void OpenCLPointRasterizer::chooseKernel()
+     {
+
+	  static std::unordered_map<GLenum,const char*> FUNC_NAME_MAP=
+	  {
+	       {GL_ALWAYS,"orderRasterizePoints"},
+	       {GL_LESS,"lessRasterizePoints"},
+	       {GL_LEQUAL,"lessEqualRasterizePoints"},
+	       {GL_EQUAL,"equalRasterizePoints"},
+	       {GL_NOTEQUAL,"notEqualRasterizePoints"},
+	       {GL_GREATER,"greaterRasterizePoints"},
+	       {GL_GEQUAL,"greaterEqualRasterizePoints"}
+	  };
+
+
+	  const char* kernelName=FUNC_NAME_MAP[_depthBuffer.getDepthFunc()];
+
+	  cl_int err;
+
+	  _kernel=cl::Kernel(_program,
+		    kernelName,&err);
+
+	  assert(err==CL_SUCCESS || "kernel create failed");
+
      }
 	
 } /* my_gl */
