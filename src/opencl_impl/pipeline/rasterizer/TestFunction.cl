@@ -1,5 +1,7 @@
 
-bool orderTest(int thisOrder,global int *intZBuffer)
+struct OrderTest
+{
+static bool test(int thisOrder,global int *intZBuffer)
 {
 
 #ifndef NDEBUG
@@ -9,9 +11,12 @@ bool orderTest(int thisOrder,global int *intZBuffer)
 #endif
 
 }
+};
 
 
-bool depthLessTest(int reinterpretIntZ,global int *reinterpretIntZPtr)
+struct LessTest
+{
+static bool test(int reinterpretIntZ,global int *reinterpretIntZPtr)
 {
 
 #ifndef NDEBUG
@@ -20,9 +25,12 @@ bool depthLessTest(int reinterpretIntZ,global int *reinterpretIntZPtr)
      return atomic_min(reinterpretIntZPtr,reinterpretIntZ) > reinterpretIntZ;
 #endif
 }
+};
 
 
-bool depthLessEqualTest(int reinterpretIntZ,global int *reinterpretIntZPtr)
+struct LessEqualTest
+{
+static bool test(int reinterpretIntZ,global int *reinterpretIntZPtr)
 {
 
 #ifndef NDEBUG
@@ -31,9 +39,10 @@ bool depthLessEqualTest(int reinterpretIntZ,global int *reinterpretIntZPtr)
      return atomic_min(reinterpretIntZPtr,reinterpretIntZ) >= reinterpretIntZ;
 #endif
 }
+};
 
-
-bool depthGreaterTest(int reinterpretIntZ,global int *reinterpretIntZPtr)
+struct GreaterTest{
+static bool test(int reinterpretIntZ,global int *reinterpretIntZPtr)
 {
 
 #ifndef NDEBUG
@@ -42,9 +51,10 @@ bool depthGreaterTest(int reinterpretIntZ,global int *reinterpretIntZPtr)
      return atomic_max(reinterpretIntZPtr,reinterpretIntZ) < reinterpretIntZ;
 #endif
 }
+};
 
-
-bool depthGreaterEqualTest(int reinterpretIntZ,global int *reinterpretIntZPtr)
+struct GreaterEqualTest{
+static bool test(int reinterpretIntZ,global int *reinterpretIntZPtr)
 {
 
 #ifndef NDEBUG
@@ -53,13 +63,18 @@ bool depthGreaterEqualTest(int reinterpretIntZ,global int *reinterpretIntZPtr)
      return atomic_max(reinterpretIntZPtr,reinterpretIntZ) <= reinterpretIntZ;
 #endif
 }
+};
 
-bool depthEqualTest(int reinterpretIntZ,global int *reinterpretIntZPtr)
+struct EqualTest
+{
+static bool test(int reinterpretIntZ,global int *reinterpretIntZPtr)
 {
 	return reinterpretIntZ==*reinterpretIntZPtr;
-}
+}};
 
-bool depthNotEqualTest(int reinterpretIntZ,global int *reinterpretIntZPtr)
+struct NotEqualTest
+{
+static bool test(int reinterpretIntZ,global int *reinterpretIntZPtr)
 {
 #ifndef NDEBUG
      return reinterpretIntZ!=*reinterpretIntZPtr;
@@ -67,4 +82,5 @@ bool depthNotEqualTest(int reinterpretIntZ,global int *reinterpretIntZPtr)
      return atomic_xchg(reinterpretIntZPtr,reinterpretIntZ) != reinterpretIntZ;
 #endif
 }
+};
 

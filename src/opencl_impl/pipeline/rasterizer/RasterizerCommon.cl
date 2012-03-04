@@ -26,6 +26,18 @@ int width;
 int height;
 } WidthHeight ;
 
+/** 
+ * @brief pack three struct together. there is bug in AMD ocl
+ *       runtime, all struct parameter can not be passed in 
+ *	 correctly except first one
+ */
+typedef struct {
+     ViewportParameter viewportParameter;
+     DepthRange depthRange;
+     WidthHeight widthHeight;
+} PackedParam;
+
+
 
 /** 
  * @brief read attributeGroup from clippedPrimitiveGroup by vertexIndex 

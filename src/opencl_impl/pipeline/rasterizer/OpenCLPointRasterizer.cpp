@@ -20,7 +20,6 @@
 
 
 #include <cassert>
-#include <iostream>
 #include <cfloat>
 #include <unordered_map>
 #include <vector>
@@ -73,14 +72,12 @@ namespace my_gl {
 
 	  std::string options;
 
-	  options.append("-I ").append(cwd.string());
+	  options.append("-I ").append(cwd.string()).append(" -x clc++");
 #ifdef NDEBUG
 	  options.append(" -DNDEBUG ");
 #else
 	  options.append(" -g -O0 ");
 #endif
-
-	  std::cout<<options;
 
 	  err=_program.build(devices,options.c_str());
 
