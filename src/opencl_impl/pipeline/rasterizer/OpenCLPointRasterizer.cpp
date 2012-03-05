@@ -83,8 +83,6 @@ namespace my_gl {
 
 	  assert(err==CL_SUCCESS || "program build failed");
 
-	  chooseKernel();
-
      }
 
      OpenCLPointRasterizer::~OpenCLPointRasterizer()
@@ -95,6 +93,8 @@ namespace my_gl {
      void OpenCLPointRasterizer::rasterize(const 
 	       ClippedPrimitiveGroup& clippedPrimitiveGroup)
      {
+
+	  chooseKernel();
 
 	  const OpenCLClippedPrimitiveGroup& temp
 	       =static_cast<const OpenCLClippedPrimitiveGroup&>(clippedPrimitiveGroup);
@@ -221,7 +221,6 @@ namespace my_gl {
 	       {GL_GREATER,"greaterRasterizePoints"},
 	       {GL_GEQUAL,"greaterEqualRasterizePoints"}
 	  };
-
 
 	  const char* kernelName=FUNC_NAME_MAP[_depthBuffer.getDepthFunc()];
 
