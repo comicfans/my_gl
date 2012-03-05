@@ -116,8 +116,8 @@ namespace my_gl {
 
 	     //TODO currently use MAG_FILTER as filter
 #warning right here?
-	     auto it=ALL_FILTERS.find(GL_TEXTURE_MAG_FILTER);
-	     assert(it!=ALL_FILTERS.end());
+	     auto it=_magMinFilter.find(GL_TEXTURE_MAG_FILTER);
+	     assert(it!=_magMinFilter.end());
 	     return (it->second)(u,v);
 	}
 
