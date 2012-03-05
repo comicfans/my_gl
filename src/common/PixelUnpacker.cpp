@@ -29,8 +29,7 @@ namespace my_gl {
 	  if (type==GL_UNSIGNED_BYTE)
 	  {
 	       //RGB,RGBA + UNSIGNED_BYTE
-	       const int IMAGE_FORMAT_BYTE[]={3,4};
-	       return IMAGE_FORMAT_BYTE[int(format)];
+	       return format==GL_RGB?3:4;
 	  }
 	  else
 	  {
