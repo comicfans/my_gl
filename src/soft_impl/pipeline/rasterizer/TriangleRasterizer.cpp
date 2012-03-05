@@ -55,6 +55,7 @@ namespace my_gl {
 	  _cullFaceEnabled=false;
 	  _frontFaceMode=GL_CCW;
 	  _cullFace=GL_BACK;
+	  _cullFaceMode=GL_CW;
      }
 
 
