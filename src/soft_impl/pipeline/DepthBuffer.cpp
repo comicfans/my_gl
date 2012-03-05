@@ -122,6 +122,8 @@ namespace my_gl {
 
 	  auto it=DEPTH_FUNCTIONS.find(_func);
 
+	  assert(it!=DEPTH_FUNCTIONS.end());
+
 	  auto& testFunc=it->second;
 
 	  if (testFunc(winCoord.z(),originValue))
