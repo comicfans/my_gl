@@ -1,0 +1,4 @@
+INCLUDE_DIRECTORIES(${OPENCL_INCLUDE_DIR})
+ADD_LIBRARY(OpenCLImageComparator OpenCLImageComparator.cpp)
+
+TARGET_LINK_LIBRARIES(OpenCLImageComparator ${OPENCL_LIBRARY} CLSource)

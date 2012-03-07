@@ -1,4 +1,4 @@
-SUBDIRS(attribute_manager object test shader lighting pipeline )
+SUBDIRS(attribute_manager object test shader lighting pipeline image_compare)
 
 
 

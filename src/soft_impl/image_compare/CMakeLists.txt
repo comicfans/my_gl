@@ -1,0 +1,1 @@
+ADD_LIBRARY(SoftImageComparator SoftImageComparator.cpp)

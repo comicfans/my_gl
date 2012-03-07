@@ -1,6 +1,6 @@
-INCLUDE_DIRECTORIES(../soft_impl)
+INCLUDE_DIRECTORIES(../soft_impl ../)
 
-SUBDIRS(test)
+SUBDIRS(test image_compare)
 
 ADD_LIBRARY(Vec Vec.cpp)
 

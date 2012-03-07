@@ -27,6 +27,8 @@ TARGET_LINK_LIBRARIES(OpenCLImpl
 
 ADD_SUBDIRECTORY(test)
 
+ADD_SUBDIRECTORY(image_compare)
+
 
 FILE(GLOB_RECURSE openCLSources *.cl)
 COPY_RUNTIME_FILE(${openCLSources})
