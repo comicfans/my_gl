@@ -43,7 +43,22 @@ namespace my_gl {
      	virtual ~OpenCLLineRasterizer ();
      
      private:
-     	/* data */
+	       const GLenum _primitiveMode;
+	       cl::Context& _CLContext;
+	       cl::CommandQueue _commandQueue;
+	       cl::Program _program;
+	       cl::Kernel _rasterizeKernel;
+	       cl::Kernel _preprocessKernel;
+	       cl::Buffer _depthBufferCLBuffer;
+
+
+	       /** 
+		* @brief switch opencl kernel by depthFunc
+		*/
+	       void chooseKernel();
+
+	       void preprocessStage(const OpenCLClippedPrimitiveGroup& openCLClippedPrimitiveGroup);
+
      };
 	
 } /* my_gl */
