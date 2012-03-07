@@ -57,7 +57,7 @@ namespace my_gl {
 	{
 	     //check LIGHTING enabled is outside work
 
-	     int idx=int(lightIndex);
+	     int idx=lightIndex-GL_LIGHT0;
 
 	     assert(idx<MAX_LIGHTS);
 
@@ -71,7 +71,7 @@ namespace my_gl {
 	void GroupLightingParam::disable(GLenum lightIndex)
 	{
 	     auto removeEndIt=remove(_activeIndices.begin(),
-		       _activeIndices.end(),int(lightIndex));
+		       _activeIndices.end(),int(lightIndex)-GL_LIGHT0);
 
 	     _activeIndices.resize
 		  (_activeIndices.end()-removeEndIt);
@@ -88,7 +88,7 @@ namespace my_gl {
 	  void GroupLightingParam::lightf(GLenum lightIndex,
 		    GLenum paramName,float param)
 	  {
-	       _allLightSourceParams[int(lightIndex)]
+	       _allLightSourceParams[int(lightIndex)-int(GL_LIGHT0)]
 		    .lightf(paramName,param);
 	  }
 
@@ -98,7 +98,7 @@ namespace my_gl {
 	  {
 	       checkLightN(lightIndex);
 
-	       _allLightSourceParams[int(lightIndex)]
+	       _allLightSourceParams[int(lightIndex)-int(GL_LIGHT0)]
 		    .lightfv(paramName,param,modelViewMatrix);
 	  }
 
