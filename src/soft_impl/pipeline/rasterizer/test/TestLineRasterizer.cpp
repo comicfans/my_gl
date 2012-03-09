@@ -19,9 +19,9 @@
 #include <functional>
 #include <cstdlib>
 #include <algorithm>
+#include <thread>
 #include <cmath>
 
-#include <SDL.h>
 
 #include "pipeline/interpolator/WinCoordInterpolator.hpp"
 #include "pipeline/rasterizer/SimpleLineRasterizer.hpp"
@@ -115,15 +115,13 @@ class TestSimpleLineRasterizer:public  SimpleLineRasterizer
 		    pixelDrawer.onDraw(frameBuffer);
 
 		    pixelDrawer.onFlush();
-		    SDL_Delay(10);
+		    std::this_thread::sleep_for(std::chrono::milliseconds(20));
 
 	       }
 
 	  }
 };
 
-extern "C"
-{
 int main(int argc, char **)
 {
      pixelDrawer.onInit(width,height);
@@ -133,5 +131,4 @@ int main(int argc, char **)
      test.test();
 
      return 0;
-}
 }

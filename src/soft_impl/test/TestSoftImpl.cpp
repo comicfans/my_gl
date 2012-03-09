@@ -16,8 +16,8 @@
  * =====================================================================================
  */
 
+#include <thread>
 #include "SoftContext.hpp"
-#include "SDL.h"
 
 using namespace my_gl;
 
@@ -50,8 +50,8 @@ void testLines()
 
 	context.flush();
 
-	SDL_Delay(2000);
 
+	std::this_thread::sleep_for(std::chrono::milliseconds(200));
 
 }
 
@@ -71,7 +71,7 @@ void testSpecialLine()
 
 	context.flush();
 
-	SDL_Delay(2000);
+	std::this_thread::sleep_for(std::chrono::milliseconds(200));
 
 }
 
@@ -116,7 +116,7 @@ void testTriangles()
 	
 	  context.flush();
 
-	  SDL_Delay(200);
+	  std::this_thread::sleep_for(std::chrono::milliseconds(200));;
 
      }
 
@@ -140,7 +140,7 @@ void testLineClip()
 
 	context.flush();
 
-	SDL_Delay(2000);
+	std::this_thread::sleep_for(std::chrono::milliseconds(200));
 
 
 }

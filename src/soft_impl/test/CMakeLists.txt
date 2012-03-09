@@ -12,6 +12,8 @@ ADD_TEST(SDLPixelDrawerTest TestSDLPixelDrawer)
 
 
 ADD_EXECUTABLE(TestSoftImpl TestSoftImpl.cpp)
+
 TARGET_LINK_LIBRARIES(TestSoftImpl SoftImpl)
+
 
 ADD_TEST(SoftImplTest TestSoftImpl)
